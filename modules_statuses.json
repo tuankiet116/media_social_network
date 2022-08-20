@@ -1,0 +1,7 @@
+{
+    "Admin": true,
+    "User": true,
+    "Api": true,
+    "ApiTest": true,
+    "API": true
+}
