@@ -14,5 +14,5 @@
 use Illuminate\Support\Facades\Route;
 
 Route::name('user.')->group(function() {
-    Route::get('/', 'UserController@index');
+    Route::get('/', 'UserController@login');
 });
