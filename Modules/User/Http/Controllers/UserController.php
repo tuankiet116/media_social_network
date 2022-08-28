@@ -9,7 +9,13 @@ use Modules\User\Http\Requests\UserLoginRequest;
 
 class UserController extends Controller
 {
-    public function login() {
+    public function login()
+    {
         return view('user::login');
+    }
+
+    public function loginAttemp(UserLoginRequest $request)
+    {
+        dd($request);
     }
 }

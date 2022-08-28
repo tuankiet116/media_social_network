@@ -2,9 +2,9 @@
 return [
     'common' => [
         'email' => 'Email',
-        'password' => 'Password'
+        'password' => 'Mật khẩu'
     ],
     'login' => [
-        'form_title' => 'Login',
+        'form_title' => 'Đăng nhập',
     ]
 ];
