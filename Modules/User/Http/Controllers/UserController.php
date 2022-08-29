@@ -14,7 +14,7 @@ class UserController extends Controller
         return view('user::login');
     }
 
-    public function loginAttemp(UserLoginRequest $request)
+    public function attempLogin(UserLoginRequest $request)
     {
         dd($request);
     }

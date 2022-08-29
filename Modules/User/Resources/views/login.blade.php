@@ -3,31 +3,28 @@
     
 <div class="container">
     <div class="image">
-        <h1>Welcome To <span>CodeFun</span></h1>
+        <h1>Welcome To <span>Movies Sharing</span></h1>
     </div>
     <div class="content">
         <h1>Login</h1>
-        <div class="form-group">
-            <label for="">Email</label>
-            <br>
-            <input type="text" class="form-control input-custom" name="" id="email" aria-describedby="helpId" placeholder="Email">
-
-        </div>
-        <div class="form-group">
-            <label for="">Password</label>
-            <br>
-            <input type="password" class="form-control input-custom" name="" id="password" placeholder="Password">
-        </div>
-        <div class="form-group">
-            <label>Or Login With</label>
-            <div class="row">
-                
+        <form class="form-inline" method="POST" action="">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control input-custom" name="email" id="email" aria-describedby="helpId" placeholder="Email">
             </div>
-        </div>
-        <br>
-        <a class="fp" href="index.html">Forgot Password?</a>
-        <br>
-        <button type="button" class="btn"><a href="index.html">Login</a></button>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control input-custom" name="password" id="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label>Or Login With</label>
+                <div class="row">
+    
+                </div>
+            </div>
+            <a class="fp" href="index.html">Forgot Password?</a>
+            <button type="button" class="btn"><a href="index.html">Login</a></button>
+        </form>
     </div>
 </div>
 @endsection

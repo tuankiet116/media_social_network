@@ -14,7 +14,7 @@ body {
 
 .container {
     height: 400px;
-    width: 650px;
+    width: auto;
     box-shadow: 0px 30px 40px black;
     display: flex;
     border-radius: 10px;
@@ -44,7 +44,6 @@ span {
 .content {
     flex: 50%;
     background-color: white;
-    text-align: center;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -57,8 +56,8 @@ span {
 }
 
 .input-custom {
-    margin: 10px;
-    padding: 5px;
+    margin: 0;
+    padding: 0;
     border: none;
     background-color: rgba(156, 77, 156, 0.3);
     border-radius: 10px;
@@ -104,4 +103,8 @@ button:hover {
 button a {
     text-decoration: none;
     color: white;
+}
+
+.container {
+    padding: 0 !important;
 }

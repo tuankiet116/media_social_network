@@ -7,8 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title }}</title>
 
-    <link rel="stylesheet" href="{{ mix('css/User/user.css') }}">
-    <script src="{{ mix('js/User/user.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/User/user.css') }}">
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <script src="{{ asset('js/User/user.js') }}"></script>
 </head>
 
 <body>

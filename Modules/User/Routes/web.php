@@ -12,7 +12,9 @@
 */
 
 use Illuminate\Support\Facades\Route;
+use Modules\User\Http\Controllers\UserController;
 
 Route::name('user.')->group(function() {
-    Route::get('/', 'UserController@login');
+    Route::get('/login', 'UserController@login');
+    Route::post('/login', 'UserController@attempLogin');
 });
