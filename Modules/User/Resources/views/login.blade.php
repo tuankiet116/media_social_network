@@ -7,24 +7,34 @@
     </div>
     <div class="content">
         <h1>Login</h1>
-        <form class="form-inline" method="POST" action="">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" class="form-control input-custom" name="email" id="email" aria-describedby="helpId" placeholder="Email">
+        <form class="row" method="POST" action="">
+            <div class="row">
+                <label class="col-3" for="email">Email</label>
+                <input type="text" class="input-custom col-9" name="email" id="email" aria-describedby="helpId" placeholder="Email">
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control input-custom" name="password" id="password" placeholder="Password">
+            <div class="row">
+                <label class="col-3" for="password">Password</label>
+                <input type="password" class="input-custom col-9" name="password" id="password" placeholder="Password">
             </div>
-            <div class="form-group">
-                <label>Or Login With</label>
+            <div class="row">
+                <label align="center">Or Login With</label>
                 <div class="row">
-    
+                    
                 </div>
             </div>
             <a class="fp" href="index.html">Forgot Password?</a>
-            <button type="button" class="btn"><a href="index.html">Login</a></button>
+            <button type="button" class="btn btn-primary">Login</button>
         </form>
     </div>
 </div>
+<style>
+    .row {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 5px
+    }
+    .form-control {
+        width: auto !important;
+    }
+</style>
 @endsection
