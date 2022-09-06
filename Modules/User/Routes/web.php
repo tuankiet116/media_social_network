@@ -11,10 +11,9 @@
 |
 */
 
-use Illuminate\Support\Facades\Route;
 use Modules\User\Http\Controllers\UserController;
 
 Route::name('user.')->group(function() {
-    Route::get('/login', 'UserController@login');
-    Route::post('/login', 'UserController@attempLogin');
+    Route::get('/login', 'UserController@login')->name('get_login');
+    Route::post('/login', 'UserController@attempLogin')->name('post_login');
 });

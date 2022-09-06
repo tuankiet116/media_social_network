@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/User/user.css') }}">
     <script src="{{ asset('js/bootstrap.js') }}"></script>
-    <script src="{{ asset('js/User/user.js') }}"></script>
+    <script src="{{ asset('js/User/user.js') }}"></script>\
+    <script src="https://kit.fontawesome.com/62474f8a4e.js" crossorigin="anonymous"></script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v14.0&appId=520447719756704&autoLogAppEvents=1" nonce="lMhgNhPU"></script>
 </head>
 
 <body>
