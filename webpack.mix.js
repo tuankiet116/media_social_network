@@ -15,4 +15,9 @@ mix.js('resources/js/app.js', 'public/vue/js')
     .vue()
 
 mix.js('resources/js/bootstrap.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/bootstrap.scss', 'public/css');
+
+mix.sass('resources/sass/bulma.scss', 'public/css');
+
+mix.js('Modules/User/Resources/assets/js/app.js', 'js/userLogin.js')
+    .css('Modules/User/Resources/assets/css/app.css', 'css/userLogin.css');

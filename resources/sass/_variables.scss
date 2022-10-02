@@ -5,3 +5,13 @@ $body-bg: #f8fafc;
 $font-family-sans-serif: 'Nunito', sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
+
+@font-face { 
+    font-family: LemonJelly; 
+    src: url('/fonts/LemonJellyPersonalUse-dEqR.ttf');
+}
+
+@font-face {
+    font-family: StoryElementRegular; 
+    src: url('/fonts/StoryElementRegular-X3RWa.ttf');
+}

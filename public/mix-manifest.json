@@ -1,5 +1,8 @@
 {
     "/vue/js/app.js": "/vue/js/app.js",
     "/js/bootstrap.js": "/js/bootstrap.js",
-    "/css/app.css": "/css/app.css"
+    "/js/userLogin.js": "/js/userLogin.js",
+    "/css/bootstrap.css": "/css/bootstrap.css",
+    "/css/userLogin.css": "/css/userLogin.css",
+    "/css/bulma.css": "/css/bulma.css"
 }

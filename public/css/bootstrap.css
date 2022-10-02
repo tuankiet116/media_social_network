@@ -1,5 +1,14 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);
-@charset "UTF-8"; /*!
+@charset "UTF-8";
+@font-face {
+  font-family: LemonJelly;
+  src: url("/fonts/LemonJellyPersonalUse-dEqR.ttf");
+}
+@font-face {
+  font-family: StoryElementRegular;
+  src: url("/fonts/StoryElementRegular-X3RWa.ttf");
+}
+/*!
  * Bootstrap  v5.2.0 (https://getbootstrap.com/)
  * Copyright 2011-2022 The Bootstrap Authors
  * Copyright 2011-2022 Twitter, Inc.

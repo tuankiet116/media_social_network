@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.7.10"
     },
     "dependencies": {
+        "bulma": "^0.9.4",
         "vue-axios": "^3.4.1"
     }
 }
