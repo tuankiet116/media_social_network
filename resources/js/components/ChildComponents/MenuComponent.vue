@@ -16,11 +16,11 @@
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-start">
                 <a class="navbar-item">
-                    Home
+                    {{ $t('homepage') }}
                 </a>
 
                 <a class="navbar-item">
-                    Documentation
+                    {{ $t('film') }}
                 </a>
 
                 <div class="navbar-item has-dropdown is-hoverable">
@@ -61,6 +61,12 @@
         </div>
     </nav>
 </template>
+
+<script>
+    created: {
+
+    }
+</script>
 
 <style scoped>
 
