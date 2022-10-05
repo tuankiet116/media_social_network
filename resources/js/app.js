@@ -8,24 +8,25 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 import AppComponent from './components/App';
-import en from './lang/en';
-import vi from './lang/vi';
+import en from './lang/en.json';
+import vi from './lang/vi.json';
 
-
+Vue.use(VueI18n);
 const i18n = new VueI18n({
-    en: en,
-    vi: vi
+    locale: navigator.language,
+    messages: {
+        en: en,
+        vi: vi
+    },
 });
-Vue.use(i18n);
 
-function detectLanguageBrowser() {
-
-}
+i18n.locale = 'vi';
 
 const app = new Vue({
     el: '#app',
+    i18n,
     components: {
         AppComponent
     },
-    template: '<AppComponent></AppComponent>'
+    template: '<AppComponent></AppComponent>',
 });

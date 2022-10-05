@@ -63,8 +63,10 @@
 </template>
 
 <script>
-    created: {
-
+    export default {
+        data(){
+            return {}
+        }
     }
 </script>
 

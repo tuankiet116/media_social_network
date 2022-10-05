@@ -3,8 +3,6 @@
 namespace Modules\User\Http\Controllers;
 
 use App\Services\User\UserAuthenticationService;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
 use Modules\User\Http\Requests\UserLoginRequest;
@@ -24,19 +22,20 @@ class UserController extends Controller
         return view('user::login');
     }
 
-    public function attempLogin(UserLoginRequest $request) {
+    public function attempLogin(UserLoginRequest $request)
+    {
         $token = $this->UserAuthService->login($request->validated());
         if ($token === false) {
             return redirect()->back()->withErrors(['login_error' => __('auth.login.error_login')]);
         }
-        return redirect()->route('home')->with(['token' => $token]);
+        return redirect()->route('home')->with('plainTextToken', 'aaaa');
     }
 
-    public function register() {
-
+    public function register()
+    {
     }
 
-    public function forgotPassword() {
-        
+    public function forgotPassword()
+    {
     }
 }

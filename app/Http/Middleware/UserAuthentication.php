@@ -15,11 +15,13 @@ class UserAuthentication
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next, $guard)
     {
-        if (auth()->user()) {
+        if (auth($guard)->user()) {
+            dd('true');
             return $next($request);
         }
+        dd('fail');
         return redirect()->route('user.get_login');
     }
 }
