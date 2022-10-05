@@ -2,7 +2,7 @@
     "/vue/js/app.js": "/vue/js/app.js",
     "/js/bootstrap.js": "/js/bootstrap.js",
     "/js/userLogin.js": "/js/userLogin.js",
+    "/css/bulma.css": "/css/bulma.css",
     "/css/bootstrap.css": "/css/bootstrap.css",
-    "/css/userLogin.css": "/css/userLogin.css",
-    "/css/bulma.css": "/css/bulma.css"
+    "/css/userLogin.css": "/css/userLogin.css"
 }
