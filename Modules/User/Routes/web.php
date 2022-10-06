@@ -11,7 +11,7 @@
 |
 */
 
-Route::middleware('guest:sanctum')->name('user.')->group(function() {
+Route::middleware('guest')->name('user.')->group(function() {
     Route::get('/login', 'UserController@login')->name('get_login');
     Route::post('/login', 'UserController@attempLogin')->name('post_login');
 
@@ -22,6 +22,4 @@ Route::middleware('guest:sanctum')->name('user.')->group(function() {
     Route::post('/register', 'UserController@login')->name('post_register');
 });
 
-Route::get('/', function() {
-    return view('user::home');
-})->name('home');
+Route::view('/', 'user::home')->name('home');

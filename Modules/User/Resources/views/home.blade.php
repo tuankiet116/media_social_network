@@ -9,13 +9,9 @@
 </head>
 <body>
     <div id="app"></div>
-    @if (isset($plainTextToken))
-    
-    {{ dd($plainTextToken) }}
-    @else
-        NOTOKEN
-        {{ auth()->logout() }}
-    @endif
     <script src="{{ asset('vue/js/app.js') }}"></script>
+    @auth
+        {{ dd(auth()) }}
+    @endauth
 </body>
 </html>
