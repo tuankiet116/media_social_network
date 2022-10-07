@@ -11,7 +11,7 @@
     <div id="app"></div>
     <script src="{{ asset('vue/js/app.js') }}"></script>
     @auth
-        {{ dd(auth()) }}
+        
     @endauth
 </body>
 </html>
