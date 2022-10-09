@@ -46,7 +46,7 @@
                 </div>
             </div>
 
-            <div class="navbar-end">
+            <div class="navbar-end" v-if="user===null">
                 <div class="navbar-item">
                     <div class="buttons">
                         <a class="button is-primary">
@@ -58,18 +58,33 @@
                     </div>
                 </div>
             </div>
+            <div class="navbar-end" v-else>
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button">
+                            <strong>{{ user.name }}</strong>
+                        </a>
+                        <figure class="image">
+                            <img class="is-rounded" src="/storage/default/avatar_default.png">
+                        </figure>
+                        <a class="button is-light">
+                            {{ $t('logout') }}
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </nav>
 </template>
 
 <script>
-    export default {
-        data(){
-            return {}
-        }
+export default {
+    props: ["user"],
+    data() {
+        return {}
     }
+}
 </script>
 
 <style scoped>
-
 </style>

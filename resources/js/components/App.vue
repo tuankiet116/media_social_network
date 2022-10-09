@@ -19,7 +19,7 @@
         mounted() {
             let _this = this;
             detectUser().then(result => {
-                _this.user = result;    
+                _this.user = result.data;    
             }).catch(err => _this.user = null);
         }
     }

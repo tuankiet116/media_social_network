@@ -13,7 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth.api')->get('/user', function () {
-    dd('a');
-    return auth()->user();
-});
+Route::middleware('auth.api')->get('/user', 'UserController@getUserInformation');

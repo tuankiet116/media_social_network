@@ -8,4 +8,8 @@ trait ApiResponse {
             'code' => '403'
         ]);
     }
+
+    protected function responseSuccess($data, $code = 200) {
+        return response()->json($data);
+    }
 }

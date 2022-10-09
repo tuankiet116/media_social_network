@@ -3,12 +3,14 @@
 namespace Modules\User\Http\Controllers;
 
 use App\Services\User\UserAuthenticationService;
+use App\Traits\ApiResponse;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
 use Modules\User\Http\Requests\UserLoginRequest;
 
 class UserController extends Controller
 {
+    use ApiResponse;
     private $UserAuthService;
 
     public function __construct(UserAuthenticationService $UserAuthService)
@@ -37,5 +39,11 @@ class UserController extends Controller
 
     public function forgotPassword()
     {
+    }
+
+    public function getUserInformation()
+    {
+        $data = auth()->user();
+        return $this->responseSuccess($data);
     }
 }
