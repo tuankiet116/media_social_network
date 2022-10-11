@@ -1,5 +1,8 @@
 {
     "homepage": "Home",
     "film_feed": "Video Feed",
-    "logout": "Logout"
+    "logout": "Logout",
+    "profile": "Your Profile",
+    "login": "Login",
+    "signup": "Signup"
 }

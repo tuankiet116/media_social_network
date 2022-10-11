@@ -1,5 +1,8 @@
 {
     "homepage": "Trang chủ",
     "film_feed": "Video Feed",
-    "logout": "Đăng xuất"
+    "logout": "Đăng xuất",
+    "profile": "Trang Cá Nhân",
+    "login": "Đăng Nhập",
+    "signup": "Đăng Ký"
 }

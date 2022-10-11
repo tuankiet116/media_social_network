@@ -6,7 +6,7 @@ trait ApiResponse {
         return response()->json([
             'message' => 'Unauthorized',
             'code' => '403'
-        ]);
+        ], 403);
     }
 
     protected function responseSuccess($data, $code = 200) {

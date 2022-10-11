@@ -5,28 +5,34 @@
  */
 
 
-import Vue from 'vue';
-import VueI18n from 'vue-i18n';
+import { createApp } from 'vue';
+import { createI18n } from 'vue-i18n';
+import { createStore } from 'vuex';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import AppComponent from './components/App';
 import en from './lang/en.json';
 import vi from './lang/vi.json';
+import routes from './routes.js';
+import stores from './store/stores';
 
-Vue.use(VueI18n);
-const i18n = new VueI18n({
-    locale: navigator.language,
+const i18n = createI18n({
+    locale: 'vi',
     messages: {
         en: en,
         vi: vi
     },
 });
 
-i18n.locale = 'vi';
-
-const app = new Vue({
-    el: '#app',
-    i18n,
-    components: {
-        AppComponent
-    },
-    template: '<AppComponent></AppComponent>',
+const router = createRouter({
+    history: createWebHashHistory(),
+    routes
 });
+
+const store = createStore(stores);
+
+const app = createApp(AppComponent);
+app.use(i18n);
+app.use(store);
+app.use(router);
+
+app.mount('#app');

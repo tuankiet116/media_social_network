@@ -2,7 +2,7 @@
     <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item" href="https://bulma.io">
-                <img src="/storage/default/brand.png">
+                <img src="/images/default/brand.png">
             </a>
 
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menus">
@@ -19,7 +19,7 @@
                 </a>
 
                 <a class="navbar-item">
-                    {{ $t('film') }}
+                    {{ $t('film_feed') }}
                 </a>
 
                 <div class="navbar-item has-dropdown is-hoverable">
@@ -49,10 +49,10 @@
                 <div class="navbar-item">
                     <div class="buttons">
                         <a class="button is-primary">
-                            <strong>Sign up</strong>
+                            <strong>{{ $t('login') }}</strong>
                         </a>
                         <a class="button is-light">
-                            Log in
+                            {{ $t('login') }}
                         </a>
                     </div>
                 </div>
@@ -61,9 +61,9 @@
                 <div class="navbar-item has-dropdown is-hoverable">
 
                     <a class="navbar-link">
-                        <strong>{{ user.name }}</strong>
+                        <strong>AA</strong>
                         <span>
-                            <img class="is-rounded" src="/storage/default/avatar_default.png">
+                            <img class="is-rounded" src="/images/default/avatar_default.png">
                         </span>
                     </a>
                     <div class="navbar-dropdown">
@@ -71,7 +71,7 @@
                             {{ $t('profile') }}
                         </a>
                         <hr class="navbar-divider">
-                        <a class="navbar-item">
+                        <a class="navbar-item" :click="logout()">
                             {{ $t('logout') }}
                         </a>
                     </div>
@@ -83,9 +83,13 @@
 
 <script>
 export default {
-    props: ["user"],
     data() {
         return {}
+    },
+    methods: {
+        logout() {
+            this.user = null;
+        }
     }
 }
 </script>

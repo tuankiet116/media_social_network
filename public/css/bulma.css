@@ -172,8 +172,7 @@ fieldset[disabled] .file-name, fieldset[disabled] .select select, .select fields
 }
 
 .control.is-loading::after, .select.is-loading::after, .loader, .button.is-loading::after {
-  -webkit-animation: spinAround 500ms infinite linear;
-          animation: spinAround 500ms infinite linear;
+  animation: spinAround 500ms infinite linear;
   border: 2px solid hsl(0deg, 0%, 86%);
   border-radius: 9999px;
   border-right-color: transparent;
@@ -433,15 +432,6 @@ table th:not([align]) {
 }
 table th {
   color: hsl(0deg, 0%, 21%);
-}
-
-@-webkit-keyframes spinAround {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(359deg);
-  }
 }
 
 @keyframes spinAround {
@@ -2207,14 +2197,10 @@ div.icon-text {
   background-image: linear-gradient(to right, hsl(348deg, 86%, 61%) 30%, hsl(0deg, 0%, 93%) 30%);
 }
 .progress:indeterminate {
-  -webkit-animation-duration: 1.5s;
-          animation-duration: 1.5s;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-  -webkit-animation-name: moveIndeterminate;
-          animation-name: moveIndeterminate;
-  -webkit-animation-timing-function: linear;
-          animation-timing-function: linear;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-name: moveIndeterminate;
+  animation-timing-function: linear;
   background-color: hsl(0deg, 0%, 93%);
   background-image: linear-gradient(to right, hsl(0deg, 0%, 29%) 30%, hsl(0deg, 0%, 93%) 30%);
   background-position: top left;
@@ -2238,15 +2224,6 @@ div.icon-text {
 }
 .progress.is-large {
   height: 1.5rem;
-}
-
-@-webkit-keyframes moveIndeterminate {
-  from {
-    background-position: 200% 0;
-  }
-  to {
-    background-position: -200% 0;
-  }
 }
 
 @keyframes moveIndeterminate {
@@ -7633,7 +7610,6 @@ label.panel-block:hover {
   flex-basis: 0;
   flex-grow: 1;
   flex-shrink: 1;
-  min-height: -webkit-min-content;
   min-height: -moz-min-content;
   min-height: min-content;
 }

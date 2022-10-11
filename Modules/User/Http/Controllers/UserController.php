@@ -33,6 +33,10 @@ class UserController extends Controller
         return redirect()->route('home')->with('plainTextToken', 'aaaa');
     }
 
+    public function showFormRegister() {
+
+    }
+
     public function register()
     {
     }
@@ -45,5 +49,9 @@ class UserController extends Controller
     {
         $data = auth()->user();
         return $this->responseSuccess($data);
+    }
+
+    public function logout() {
+        
     }
 }
