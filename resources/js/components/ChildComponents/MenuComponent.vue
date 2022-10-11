@@ -83,8 +83,9 @@
 
 <script>
 export default {
+    props: ['user'],
     data() {
-        return {}
+        return {};
     },
     methods: {
         logout() {

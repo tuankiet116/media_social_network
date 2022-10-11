@@ -9,15 +9,17 @@
     export default {
         data() {
             return {
+                user: null
             };
         },
         components: {
             MenuComponent
         },
+        beforeMount() {
+            this.$store.commit('getUserInformation');
+        },
         mounted() {
-            let _this = this;
-            debugger
-            this.$store.commit('getUserInformation')
+            this.user = this.$store.state.user;
         }
     }
 </script>
