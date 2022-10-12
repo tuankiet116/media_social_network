@@ -28,9 +28,10 @@ class UserController extends Controller
     {
         $token = $this->UserAuthService->login($request->validated());
         if ($token === false) {
+            
             return redirect()->back()->withErrors(['login_error' => __('auth.login.error_login')]);
         }
-        return redirect()->route('home')->with('plainTextToken', 'aaaa');
+        return redirect()->route('home');
     }
 
     public function showFormRegister() {
@@ -52,6 +53,7 @@ class UserController extends Controller
     }
 
     public function logout() {
-        
+        $this->UserAuthService->logout();
+        return $this->responseSuccess([true]);
     }
 }

@@ -1,9 +1,10 @@
 <template>
     <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-            <a class="navbar-item" href="https://bulma.io">
+            <router-link class="navbar-item" :to="{ name: 'home'}">
                 <img src="/images/default/brand.png">
-            </a>
+            </router-link>
+
 
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menus">
                 <span aria-hidden="true"></span>
@@ -14,9 +15,9 @@
 
         <div id="navbar-menus" class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item">
+                <router-link class="navbar-item" :to="{ name: 'home'}">
                     {{ $t('homepage') }}
-                </a>
+                </router-link>
 
                 <a class="navbar-item">
                     {{ $t('film_feed') }}
@@ -45,14 +46,14 @@
                 </div>
             </div>
 
-            <div class="navbar-end" v-if="user===null">
+            <div class="navbar-end" v-if="user==null">
                 <div class="navbar-item">
                     <div class="buttons">
-                        <a class="button is-primary">
+                        <a class="button is-primary" href="/login">
                             <strong>{{ $t('login') }}</strong>
                         </a>
-                        <a class="button is-light">
-                            {{ $t('login') }}
+                        <a class="button is-light" href="/register">
+                            {{ $t('signup') }}
                         </a>
                     </div>
                 </div>
@@ -61,7 +62,7 @@
                 <div class="navbar-item has-dropdown is-hoverable">
 
                     <a class="navbar-link">
-                        <strong>AA</strong>
+                        <strong>{{ user.name }}</strong>
                         <span>
                             <img class="is-rounded" src="/images/default/avatar_default.png">
                         </span>
@@ -71,7 +72,7 @@
                             {{ $t('profile') }}
                         </a>
                         <hr class="navbar-divider">
-                        <a class="navbar-item" :click="logout()">
+                        <a class="navbar-item" @click="logout">
                             {{ $t('logout') }}
                         </a>
                     </div>
@@ -89,7 +90,7 @@ export default {
     },
     methods: {
         logout() {
-            this.user = null;
+            this.$store.commit('logoutUser');
         }
     }
 }

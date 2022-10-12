@@ -8,6 +8,10 @@
   font-family: StoryElementRegular;
   src: url("/fonts/StoryElementRegular-X3RWa.ttf");
 }
+@font-face {
+  font-family: "VPSTH";
+  src: url("/fonts/VPSTHT.ttf");
+}
 /*! bulma.io v0.9.4 | MIT License | github.com/jgthms/bulma */
 /* Bulma Utilities */
 .pagination-previous,

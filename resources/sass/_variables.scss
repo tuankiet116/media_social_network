@@ -6,12 +6,17 @@ $font-family-sans-serif: 'Nunito', sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
-@font-face { 
-    font-family: LemonJelly; 
+@font-face {
+    font-family: LemonJelly;
     src: url('/fonts/LemonJellyPersonalUse-dEqR.ttf');
 }
 
 @font-face {
-    font-family: StoryElementRegular; 
+    font-family: StoryElementRegular;
     src: url('/fonts/StoryElementRegular-X3RWa.ttf');
+}
+
+@font-face {
+    font-family: 'VPSTH';
+    src: url('/fonts/VPSTHT.ttf');
 }

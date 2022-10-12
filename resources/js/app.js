@@ -8,7 +8,7 @@
 import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n';
 import { createStore } from 'vuex';
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import AppComponent from './components/App';
 import en from './lang/en.json';
 import vi from './lang/vi.json';
@@ -24,7 +24,7 @@ const i18n = createI18n({
 });
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes
 });
 

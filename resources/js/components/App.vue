@@ -9,17 +9,21 @@
     export default {
         data() {
             return {
-                user: null
+                
             };
         },
         components: {
             MenuComponent
         },
-        beforeMount() {
-            this.$store.commit('getUserInformation');
+        computed: {
+            user() {
+                return this.$store.state.user;
+            }
+        },
+        async beforeMount() {
+            await this.$store.commit('getUserInformation');
         },
         mounted() {
-            this.user = this.$store.state.user;
         }
     }
 </script>

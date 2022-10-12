@@ -8,6 +8,10 @@
   font-family: StoryElementRegular;
   src: url("/fonts/StoryElementRegular-X3RWa.ttf");
 }
+@font-face {
+  font-family: "VPSTH";
+  src: url("/fonts/VPSTHT.ttf");
+}
 /*!
  * Bootstrap  v5.2.2 (https://getbootstrap.com/)
  * Copyright 2011-2022 The Bootstrap Authors

@@ -28,4 +28,13 @@ class UserAuthenticationService
     public function createUser($data) {
 
     }
+
+    public function logout() {
+        $user = auth()->user();
+        if ($user) {
+            $user->tokens()->delete();
+            auth()->logout();
+        }
+        return true;
+    }
 }
