@@ -6,12 +6,12 @@
       <div class="col-xs-8 col-lg-4">
         <form id="form" class="p-4" action="{{ route('user.post_login') }}" method="POST">
           @csrf
-          {{ dd(app()->getLocale()); }}
+          {{-- {{ dd(app()->getLocale()); }} --}}
           @error('login_error')
             <div class="alert alert-danger">{{ $message }}</div>
           @enderror
           <h1>{{ __('auth.login.form_title') }}</h1>
-          <h4>{!! __('auth.login.if_dont_have_account', ['link' => route('user.get_register')]) !!}</h4>
+          <h5>{!! __('auth.login.if_dont_have_account', ['link' => route('user.get_register')]) !!}</h5>
           <div class="mb-3">
             <label for="email" class="form-label">{{ __('auth.common.email') }}:</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
@@ -29,7 +29,7 @@
           </div>
           <div class="separator">
             <div class="line"></div>
-            <h4>{{ __('auth.login.or_login_with') }}</h4>
+            <h5>{{ __('auth.login.or_login_with') }}</h5>
             <div class="line"></div>
           </div>
         </form>

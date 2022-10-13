@@ -5,7 +5,6 @@ namespace Modules\User\Http\Controllers;
 use App\Services\User\UserAuthenticationService;
 use App\Traits\ApiResponse;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\App;
 use Modules\User\Http\Requests\UserLoginRequest;
 
 class UserController extends Controller
@@ -20,7 +19,6 @@ class UserController extends Controller
 
     public function login()
     {
-        App::setlocale(request()->getPreferredLanguage());
         return view('user::login');
     }
 
@@ -28,7 +26,7 @@ class UserController extends Controller
     {
         $token = $this->UserAuthService->login($request->validated());
         if ($token === false) {
-            
+            // dd(app()->getLocale());
             return redirect()->back()->withErrors(['login_error' => __('auth.login.error_login')]);
         }
         return redirect()->route('home');
