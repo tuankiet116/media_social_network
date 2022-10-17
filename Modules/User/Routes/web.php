@@ -18,8 +18,8 @@ Route::middleware('guest')->name('user.')->group(function() {
     Route::get('/forgot', 'UserContrller@forgotPassword')->name('get_forgot_password');
     Route::post('/forgot', 'UserContrller@forgotPassword')->name('post_forgot_password');
 
-    Route::get('/register', 'UserController@login')->name('get_register');
-    Route::post('/register', 'UserController@login')->name('post_register');
+    Route::get('/register', 'UserController@showFormRegister')->name('get_register');
+    Route::post('/register', 'UserController@register')->name('post_register');
 });
 
 Route::view('/', 'user::home')->name('home');

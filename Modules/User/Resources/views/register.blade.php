@@ -1,36 +1,30 @@
-@extends('user::layouts.master', ['title' => __('auth.login.form_title')])
+@extends('user::layouts.master', ['title' => __('auth.register.register')])
 @section('content')
   <div id="fb-root"></div>
-  <div class="row brand align-items-center" style="z-index: 1000; color: white">
-    <img src="/images/default/brand.png">
-    <div class="brand-title" style="width: 100px">
-      <h3>{{ config('app.name') }}</h3>
-    </div>
-  </div>
   <div class="container_fluid align-items-center row">
     <div class="row justify-content-center main">
       <div class="col-xs-8 col-lg-4">
-        <form id="form" class="p-4" action="{{ route('user.post_login') }}" method="POST">
+        <form id="form" class="p-4" action="{{ route('user.post_register') }}" method="POST">
           @csrf
           @error('login_error')
             <div class="alert alert-danger">{{ $message }}</div>
           @enderror
-          <h1>{{ __('auth.login.form_title') }}</h1>
-          <h5>{!! __('auth.login.if_dont_have_account', ['link' => route('user.get_register')]) !!}</h5>
-          <div class="mb-3">
+          <h1>{{ __('auth.register.form_title') }}</h1>
+          <h5>{!! __('auth.register.if_have_account', ['link' => route('user.get_login')]) !!}</h5>
+          <div class="mb-lg-3">
             <label for="email" class="form-label">{{ __('auth.common.email') }}:</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
           </div>
-          <div class="mb-3">
+          <div class="mb-lg-3">
             <label for="password" class="form-label">{{ __('auth.common.password') }}:</label>
             <input type="password" class="form-control" id="password" name="password">
           </div>
-          <div class="mb-3">
+          <div class="mb-lg-3">
             <label for="remember_me">{{ __('auth.common.remember_me') }}</label>
             <input id="remmeber_me" name="remember_me" type="checkbox" value="1">
           </div>
-          <div class="mb-5 justify-content-center row">
-            <button type="submit" class="btn btn-primary col-lg-6 btn-lg">{{ __('auth.login.login') }}</button>
+          <div class="mb-lg-5 mb-md-8 justify-content-center row">
+            <button type="submit" class="btn btn-primary col-6 btn-lg">{{ __('auth.login.login') }}</button>
           </div>
           <div class="separator">
             <div class="line"></div>

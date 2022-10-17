@@ -33,7 +33,7 @@ class UserController extends Controller
     }
 
     public function showFormRegister() {
-
+        return view('user::register');
     }
 
     public function register()
