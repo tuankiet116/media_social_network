@@ -49,6 +49,12 @@
 
       FB.AppEvents.logPageView();
 
+      function checkUserFBLogin() {
+        FB.getLoginStatus(function(response) {
+          debugger
+          statusChangeCallback(response);
+        });
+      }
     };
 
     (function(d, s, id) {
@@ -61,6 +67,7 @@
       js.src = "https://connect.facebook.net/en_US/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
+
   </script>
 @endsection
 

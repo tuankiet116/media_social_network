@@ -9,8 +9,9 @@
 
   <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
   <link rel="stylesheet" href="{{ asset('css/userLogin.css') }}">
-  <script src="{{ asset('js/bootstrap.js') }}"></script>
-  <script src="{{ asset('js/userLogin.js') }}"></script>
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+  <script  type = "text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
+  <script  type = "text/javascript" src="{{ asset('js/userLogin.js') }}"></script>
   <script src="https://kit.fontawesome.com/62474f8a4e.js" crossorigin="anonymous"></script>
   @yield('js')
   @yield('css')

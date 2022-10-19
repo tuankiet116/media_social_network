@@ -199,10 +199,14 @@ label {
 }
 
 h1 {
-    font-family: VPSTH;
-    font-size: 50px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .row {
     width: 100%;
+}
+
+a {
+    text-decoration: none;
+    font-weight: bold;
 }
