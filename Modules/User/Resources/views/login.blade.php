@@ -44,7 +44,7 @@
             <div class="col-12" id="fb-login-button">
               <div class="fb-login-button row p-2" data-width="" data-size="large" data-button-type="continue_with"
                 data-layout="rounded" data-onlogin="checkUserFBLogin()" data-auto-logout-link="false"
-                data-use-continue-as="false">
+                data-use-continue-as="true" data-scope="public_profile,email">
               </div>
             </div>
           </div>
@@ -55,48 +55,6 @@
 @endsection
 
 @section('js')
-  <script>
-    $(document).ready(function() {
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId: '520447719756704',
-          xfbml: true,
-          version: 'v15.0'
-        });
-        FB.AppEvents.logPageView();
-        checkUserFBLogin();
-      };
-
-      (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {
-          return;
-        }
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "https://connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-
-      (function(d) {
-        var js, id = 'facebook-jssdk';
-        if (d.getElementById(id)) {
-          return;
-        }
-        js = d.createElement('script');
-        js.id = id;
-        js.async = true;
-        js.src = "https://connect.facebook.net/es_LA/all.js";
-        d.getElementsByTagName('head')[0].appendChild(js);
-      }(document));
-    });
-
-    function checkUserFBLogin() {
-      FB.getLoginStatus(function(response) {
-        debugger
-      });
-    }
-  </script>
 @endsection
 
 @section('css')

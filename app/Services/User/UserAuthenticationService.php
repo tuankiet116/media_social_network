@@ -3,12 +3,14 @@
 namespace App\Services\User;
 
 use App\Models\User;
+use App\Models\FacebookUser;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\Sanctum;
 
 class UserAuthenticationService
 {
-    public function login($data) {
+    public function login($data)
+    {
         $credentials = array(
             'email' => $data['email'],
             'password' => $data['password']
@@ -25,16 +27,25 @@ class UserAuthenticationService
         }
     }
 
-    public function createUser($data) {
-
+    public function createUser($data)
+    {
     }
 
-    public function logout() {
+    public function logout()
+    {
         $user = auth()->user();
         if ($user) {
             $user->tokens()->delete();
             auth()->logout();
         }
         return true;
+    }
+
+    public function facebookLogin($data)
+    {
+        Log:;debug('debug', $data);
+        $user = FacebookUser::where([
+            'user_id_fb' => $data
+        ])->get();
     }
 }

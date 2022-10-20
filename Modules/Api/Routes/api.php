@@ -16,3 +16,5 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/api', function (Request $request) {
     return $request->user();
 });
+
+Route::middleware('auth:api')->post('/user/facebook_login', );
