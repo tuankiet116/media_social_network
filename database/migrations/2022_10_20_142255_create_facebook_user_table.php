@@ -13,12 +13,15 @@ class CreateFacebookUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('facebook_user', function (Blueprint $table) {
+        Schema::create('facebook_users', function (Blueprint $table) {
             $table->id();
             $table->string('access_token');
-            $table->integer('user_id_fb');
+            $table->integer('fb_user_id');
+            $table->integer('data_access_expiration_time');
+            $table->integer('expires_in');
             $table->bigInteger('user_id', false, true);
             $table->timestamps();
+
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

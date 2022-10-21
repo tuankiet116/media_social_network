@@ -1,3 +1,5 @@
+const { default: axios } = require("axios");
+
 $(document).ready(function () {
     window.fbAsyncInit = function () {
         FB.init({
@@ -22,15 +24,24 @@ $(document).ready(function () {
 });
 
 function checkUserFBLogin() {
-    FB.getLoginStatus(function (response) {
-        if (response.status == "connected") {
+    FB.getLoginStatus(function (result) {
+        if (result.status == "connected") {
+            let data = result.authResponse;
             FB.api('/me?fields=name,id,email', function (response) {
-                debugger
+                data.email = response.email;
+                data.name = response.name;
+                userAPI(data).then((result) => {
+
+                });
             });
         }
     });
 }
 
-function userAPI() {
-    $.ajax('')
+function userAPI(data) {
+    return axios({
+        method: 'POST',
+        url: '/api/user/facebook_login',
+        data: data
+    })
 }

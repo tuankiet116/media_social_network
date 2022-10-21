@@ -5,6 +5,7 @@ namespace App\Services\User;
 use App\Models\User;
 use App\Models\FacebookUser;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Laravel\Sanctum\Sanctum;
 
 class UserAuthenticationService
@@ -27,8 +28,11 @@ class UserAuthenticationService
         }
     }
 
-    public function createUser($data)
+    public function createUser($data, $accountType = null)
     {
+        if ($accountType == FB) {
+
+        }
     }
 
     public function logout()
@@ -41,11 +45,16 @@ class UserAuthenticationService
         return true;
     }
 
-    public function facebookLogin($data)
+    public function facebookLogin($request)
     {
-        Log:;debug('debug', $data);
-        $user = FacebookUser::where([
-            'user_id_fb' => $data
+        $data = $request->all();
+        $user = FacebookUser::with('user')->where([
+            'fb_user_id' => $data['userID']
         ])->get();
+        if ($user) {
+            dd('No USer');
+        } else {
+            $this->createUser($data, FB);
+        }
     }
 }
