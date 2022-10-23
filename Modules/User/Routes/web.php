@@ -11,7 +11,7 @@
 |
 */
 
-Route::middleware('guest')->name('user.')->group(function() {
+Route::middleware('guest:web')->name('user.')->group(function() {
     Route::get('/login', 'UserController@login')->name('get_login');
     Route::post('/login', 'UserController@attempLogin')->name('post_login');
 

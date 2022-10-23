@@ -11,12 +11,14 @@ class FacebookUser extends Model
     protected $fillable = [
         'access_token',
         'user_id',
-        'user_id_fb',
+        'fb_user_id',
+        'data_access_expiration_time',
+        'expires_in',
         'created_at',
         'updated_at'
     ];
 
     public function user() {
-        return $this->belongsTo('users');
+        return $this->belongsTo(User::class);
     }
 }

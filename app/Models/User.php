@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_has_page'
     ];
 
     /**
@@ -41,4 +42,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected function setPasswordAttribute($value) {
+        $this->attributes['password'] = bcrypt($value);
+    }
 }

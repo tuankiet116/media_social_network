@@ -12,15 +12,10 @@ class Authenticate extends Middleware
     use ApiResponse;
     public function handle($request, Closure $next, ...$guards)
     {
-        dd($guards);
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
                 $this->authenticate($request, $guards);
                 return $next($request);
-            }
-
-            if ($guard == 'api') {
-                return $this->responseJsonForbidden();
             }
         }
         auth()->logout();

@@ -4,12 +4,12 @@
   <script async defer crossorigin="anonymous"
     src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v15.0&appId=520447719756704&autoLogAppEvents=1"
     nonce="Sr2unXDw"></script>
-  <div class="row brand align-items-center" style="z-index: 1000; color: white">
+  <a href="{{ route('home') }}" class="row brand align-items-center" style="z-index: 1000; color: white">
     <img src="/images/default/brand.png">
     <div class="brand-title" style="width: 100px">
       <h3>{{ config('app.name') }}</h3>
     </div>
-  </div>
+  </a>
   <div class="container_fluid align-items-center row">
     <div class="row justify-content-center main">
       <div class="col-xs-8 col-lg-4">
@@ -43,7 +43,7 @@
           <div class="row align-content-center">
             <div class="col-12" id="fb-login-button">
               <div class="fb-login-button row p-2" data-width="" data-size="large" data-button-type="continue_with"
-                data-layout="rounded" data-onlogin="checkUserFBLogin()" data-auto-logout-link="false"
+                data-layout="rounded" data-auto-logout-link="false"
                 data-use-continue-as="true" data-scope="public_profile,email">
               </div>
             </div>

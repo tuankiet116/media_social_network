@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateFacebookUserTable extends Migration
@@ -16,7 +17,7 @@ class CreateFacebookUserTable extends Migration
         Schema::create('facebook_users', function (Blueprint $table) {
             $table->id();
             $table->string('access_token');
-            $table->integer('fb_user_id');
+            $table->bigInteger('fb_user_id', false, true);
             $table->integer('data_access_expiration_time');
             $table->integer('expires_in');
             $table->bigInteger('user_id', false, true);

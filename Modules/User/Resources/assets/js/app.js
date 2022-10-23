@@ -8,7 +8,25 @@ $(document).ready(function () {
             version: 'v15.0'
         });
         FB.AppEvents.logPageView();
-        checkUserFBLogin();
+        FB.getLoginStatus(async function (result) {
+            if (result.status == "connected") {
+                let data = result.authResponse;
+                let res = await getUserFbInfor();
+                data.name = res.name;
+                data.email = res.email;
+                await userFbAuthHandle(data);
+            }
+        });
+
+        FB.Event.subscribe('auth.authResponseChange', async function (result) {
+            if (result.status == "connected") {
+                let data = result.authResponse;
+                let res = await getUserFbInfor();
+                data.name = res.name;
+                data.email = res.email;
+                await userFbAuthHandle(data);
+            }
+        });
     };
 
     (function (d, s, id) {
@@ -23,25 +41,22 @@ $(document).ready(function () {
     }(document, 'script', 'facebook-jssdk'));
 });
 
-function checkUserFBLogin() {
-    FB.getLoginStatus(function (result) {
-        if (result.status == "connected") {
-            let data = result.authResponse;
-            FB.api('/me?fields=name,id,email', function (response) {
-                data.email = response.email;
-                data.name = response.name;
-                userAPI(data).then((result) => {
-
-                });
-            });
-        }
+function getUserFbInfor() {
+    return new Promise(async function (resolve, reject) {
+        await FB.api('/me?fields=name,id,email', function (response) {
+            resolve(response);
+        });
     });
 }
 
-function userAPI(data) {
-    return axios({
-        method: 'POST',
-        url: '/api/user/facebook_login',
-        data: data
-    })
+function userFbAuthHandle(data) {
+    return new Promise(function (resolve, reject) {
+        axios({
+            method: 'POST',
+            url: '/api/user/facebook_login',
+            data: data
+        }).then(function (result) {
+
+        });
+    });
 }

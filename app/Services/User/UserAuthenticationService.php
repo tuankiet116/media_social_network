@@ -4,9 +4,9 @@ namespace App\Services\User;
 
 use App\Models\User;
 use App\Models\FacebookUser;
-use Illuminate\Support\Facades\Auth;
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Laravel\Sanctum\Sanctum;
 
 class UserAuthenticationService
 {
@@ -30,8 +30,29 @@ class UserAuthenticationService
 
     public function createUser($data, $accountType = null)
     {
-        if ($accountType == FB) {
-
+        try {
+            DB::beginTransaction();
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => $accountType == FB ? $data['accessToken'] : $data['password'],
+                'is_has_page' => NO_PAGE
+            ]);
+            if ($accountType == FB && $user) {
+                FacebookUser::create([
+                    'access_token' => $data['accessToken'],
+                    'fb_user_id' => $data['userID'],
+                    'expires_in' => $data['expiresIn'],
+                    'data_access_expiration_time' => $data['data_access_expiration_time'],
+                    'user_id' => $user->id
+                ]);
+            }
+            DB::commit();
+            return $user;
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage());
+            throw new Exception();
         }
     }
 
@@ -47,14 +68,19 @@ class UserAuthenticationService
 
     public function facebookLogin($request)
     {
-        $data = $request->all();
-        $user = FacebookUser::with('user')->where([
-            'fb_user_id' => $data['userID']
-        ])->get();
-        if ($user) {
-            dd('No USer');
-        } else {
-            $this->createUser($data, FB);
+        try {
+            $data = $request->all();
+            $user = FacebookUser::with('user')->where(['fb_user_id' => $data['userID']])->first()->user;
+            if (!$user) {
+                $user = $this->createUser($data, FB);
+            }
+            auth('web')->login($user, true);
+            $plainToken = $user->createToken("API TOKEN");
+            return $plainToken;
+        } catch (Exception $e) {
+            auth()->logout();
+            Log::error($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 }

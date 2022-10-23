@@ -9,7 +9,7 @@ trait ApiResponse {
         ], 403);
     }
 
-    protected function responseSuccess($data, $code = 200) {
-        return response()->json($data);
+    protected function responseData($data, $code = 200) {
+        return response()->json($data, $code);
     }
 }
