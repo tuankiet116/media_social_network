@@ -47,11 +47,11 @@ class UserController extends Controller
     public function getUserInformation()
     {
         $data = auth()->user();
-        return $this->responseSuccess($data);
+        return $this->responseData($data, 200);
     }
 
     public function logout() {
         $this->UserAuthService->logout();
-        return $this->responseSuccess([true]);
+        return $this->responseData([true], 200);
     }
 }

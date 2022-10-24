@@ -16,7 +16,7 @@ class UserLoginRequest extends FormRequest
         return [
             'password' => 'required|min:8',
             'email' => 'required|email',
-            'remember_me' => 'nullable|in:' . REMEMBERME
+            'remember_me' => 'nullable|in:' . REMEMBER_ME
         ];
     }
 

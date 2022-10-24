@@ -2410,7 +2410,11 @@ function userFbAuthHandle(data) {
       method: 'POST',
       url: '/api/user/facebook_login',
       data: data
-    }).then(function (result) {});
+    }).then(function (result) {
+      if (result.data.code == 200) {
+        location.href = '/';
+      }
+    });
   });
 }
 })();

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableRooms extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateTableRooms extends Migration
      */
     public function up()
     {
-        Schema::create('table_rooms', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->comment('owner room');
-            $table->timestamp('expired_time');
-            $table->integer('status');
-            $table->text('private_key');
+            $table->bigInteger('user_id', false, true);
+            $table->bigInteger('film_id', false, true);
+            $table->bigInteger('belong_id', false, true);
+            $table->string('content');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateTableRooms extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_rooms');
+        Schema::dropIfExists('comments');
     }
 }

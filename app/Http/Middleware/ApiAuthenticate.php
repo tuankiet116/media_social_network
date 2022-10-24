@@ -16,8 +16,7 @@ class ApiAuthenticate
         if (Auth::guard('web')->check()) {
             return $next($request);
         }
-        dd(Auth::guard('web')->check());
-        auth()->logout();
+        auth('web')->logout();
         return $this->responseJsonForbidden();
     }
 }
