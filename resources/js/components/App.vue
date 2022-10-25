@@ -5,6 +5,7 @@
 
 <script>
     import MenuComponent from './ChildComponents/MenuComponent.vue';
+    import Echo from 'laravel-echo';
 
     export default {
         data() {
@@ -24,6 +25,10 @@
             await this.$store.commit('getUserInformation');
         },
         mounted() {
+            Echo.channel('trades')
+            .listen('NewTrade', (e) => {
+                console.log(e.trade);
+            })
         }
     }
 </script>

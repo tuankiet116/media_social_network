@@ -70,7 +70,9 @@ class UserAuthenticationService
     {
         try {
             $data = $request->all();
-            $user = FacebookUser::with('user')->where(['fb_user_id' => $data['userID']])->first()->user;
+            $fbUser = FacebookUser::with('user')->where(['fb_user_id' => $data['userID']])->first();
+            if ($fbUser) $user = $fbUser->user;
+            else $user = null;
             if (!$user) {
                 $user = $this->createUser($data, FB);
             }
