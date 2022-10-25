@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/info', function(){ phpinfo(); });
 Route::middleware('guest:web')->name('user.')->group(function() {
     Route::get('/login', 'UserController@login')->name('get_login');
     Route::post('/login', 'UserController@attempLogin')->name('post_login');

@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('post.list', function() {
+Broadcast::channel('post.list', function($id) {
     return true;
 });

@@ -25,9 +25,9 @@
             await this.$store.commit('getUserInformation');
         },
         mounted() {
-            Echo.channel('trades')
-            .listen('NewTrade', (e) => {
-                console.log(e.trade);
+            window.Echo.channel('post.list')
+            .listen('EventListPost', (e) => {
+                console.log(e);
             })
         }
     }
