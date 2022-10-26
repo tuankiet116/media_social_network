@@ -49,18 +49,21 @@
             <div class="navbar-end" v-if="user==null">
                 <div class="navbar-item">
                     <div class="buttons">
-                        <a class="button is-primary" href="/login">
+                        <a class="button is-primary" href="/user/login">
                             <strong>{{ $t('login') }}</strong>
                         </a>
-                        <a class="button is-light" href="/register">
+                        <a class="button is-light" href="/user/register">
                             {{ $t('signup') }}
                         </a>
                     </div>
                 </div>
             </div>
             <div class="navbar-end" v-else>
+                <router-link class="navbar-item" :to="{name: 'create_post'}">
+                    <i class="fa-regular fa-square-plus"></i>
+                    <span>&nbsp;{{ $t('menu.create_post') }}</span>
+                </router-link>
                 <div class="navbar-item has-dropdown is-hoverable">
-
                     <a class="navbar-link">
                         <strong>{{ user.name }}</strong>
                         <span>

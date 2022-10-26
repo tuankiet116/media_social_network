@@ -4,5 +4,12 @@
     "logout": "Đăng xuất",
     "profile": "Trang Cá Nhân",
     "login": "Đăng Nhập",
-    "signup": "Đăng Ký"
+    "signup": "Đăng Ký",
+    "menu": {
+        "create_post": "Đăng bài"
+    },
+    "create_post": {
+        "title": "Tạo bài viết đóng góp cộng đồng?",
+        "post_title": "Tiêu đề bài viết"
+    }
 }

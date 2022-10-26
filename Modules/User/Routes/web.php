@@ -11,7 +11,7 @@
 |
 */
 Route::get('/info', function(){ phpinfo(); });
-Route::middleware('guest:web')->name('user.')->group(function() {
+Route::middleware('guest:web')->name('user.')->prefix('user')->group(function() {
     Route::get('/login', 'UserController@login')->name('get_login');
     Route::post('/login', 'UserController@attempLogin')->name('post_login');
 
@@ -22,4 +22,6 @@ Route::middleware('guest:web')->name('user.')->group(function() {
     Route::post('/register', 'UserController@register')->name('post_register');
 });
 
-Route::view('/', 'user::home')->name('home');
+Route::get('/{vue_capture?}', function() {
+    return view('user::home');
+})->where('vue_capture',  '^(?!api)(?!user).*$')->name('home');

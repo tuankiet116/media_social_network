@@ -14,7 +14,8 @@ class EventListPost implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $id;
+    /**
+     * C    public $id;
     /**
      * Create a new event instance.
      *

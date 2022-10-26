@@ -15,6 +15,7 @@ import vi from './lang/vi.json';
 import routes from './routes.js';
 import stores from './store/stores';
 import Echo from "laravel-echo";
+import CKEditor from "@ckeditor/ckeditor5-vue";
 window.Pusher = require('pusher-js');
 window.Echo = new Echo({
     broadcaster: 'pusher',
@@ -35,6 +36,7 @@ const i18n = createI18n({
 });
 
 const router = createRouter({
+    base: '/',
     history: createWebHistory(),
     routes
 });
@@ -42,6 +44,7 @@ const router = createRouter({
 const store = createStore(stores);
 
 const app = createApp(AppComponent);
+app.use(CKEditor);
 app.use(i18n);
 app.use(store);
 app.use(router);

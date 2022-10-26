@@ -4,5 +4,12 @@
     "logout": "Logout",
     "profile": "Your Profile",
     "login": "Login",
-    "signup": "Signup"
+    "signup": "Signup",
+    "menu": {
+        "create_post": "Create Post"
+    },
+    "create_post": {
+        "title": "Hi, What would you like to post?",
+        "post_title": "Title Post"
+    }
 }

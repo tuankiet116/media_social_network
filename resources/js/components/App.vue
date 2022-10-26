@@ -1,5 +1,6 @@
 <template>
     <MenuComponent :user="user"></MenuComponent>
+    <router-view></router-view>
 </template>
 
 
