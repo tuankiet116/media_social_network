@@ -10,6 +10,11 @@
     },
     "create_post": {
         "title": "Hi, What would you like to post?",
-        "post_title": "Title Post"
+        "post_title": "Title Post",
+        "post_desc": "Your Post",
+        "post_video": "Upload Your Video",
+        "cancel_video": "Cancel Video Upload",
+        "create": "Post",
+        "cancel": "Cancel"
     }
 }

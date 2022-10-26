@@ -19,7 +19,7 @@
 
 <body>
   <div class="background-container">
-    <img src="./images/moon2.png" alt="">
+    <img src="../images/moon2.png" alt="">
     <div class="stars"></div>
     <div class="twinkling"></div>
     <div class="clouds"></div>

@@ -9,7 +9,12 @@
         "create_post": "Đăng bài"
     },
     "create_post": {
-        "title": "Tạo bài viết đóng góp cộng đồng?",
-        "post_title": "Tiêu đề bài viết"
+        "title": "Bạn muốn chia sẻ điều gì?",
+        "post_title": "Tiêu đề bài viết",
+        "post_desc": "Bài viết của bạn",
+        "post_video": "Tải lên Video",
+        "cancel_video": "Hủy Video Tải Lên",
+        "create": "Đăng",
+        "cancel": "Thoát"
     }
 }

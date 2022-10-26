@@ -22,4 +22,6 @@ mix.sass('resources/sass/bulma.scss', 'public/css');
 mix.js('Modules/User/Resources/assets/js/app.js', 'js/userLogin.js')
     .css('Modules/User/Resources/assets/css/app.css', 'css/userLogin.css');
 
+mix.css('resources/css/common_vue.css', 'css/common.css');
+
 mix.copy('resources/images', 'public/images');
