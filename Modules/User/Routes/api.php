@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth.api')->group(function() {
     Route::get('/user', 'UserController@getUserInformation'); 
     Route::post('/logout', 'UserController@logout');
+    Route::post('ckfinder/upload', 'CKFinderController@upload');
 });
 
 Route::post('/user/facebook_login', 'FacebookController@fbLogin');

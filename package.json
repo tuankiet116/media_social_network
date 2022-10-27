@@ -27,6 +27,7 @@
     },
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^35.2.1",
+        "@ckeditor/ckeditor5-editor-classic": "^35.2.1",
         "@ckeditor/ckeditor5-vue": "^4.0.1",
         "bulma": "^0.9.4",
         "vue-axios": "^3.4.1",
