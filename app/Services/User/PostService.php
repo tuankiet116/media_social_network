@@ -4,6 +4,8 @@ namespace App\Services\User;
 
 use App\Models\Post;
 use App\Services\Inf\StorageService;
+use App\Services\Inf\VideoStream;
+use Illuminate\Support\Facades\Storage;
 
 class PostService
 {
@@ -53,5 +55,12 @@ class PostService
         }
         $newOffset = $data[0]['id'];
         return array('data' => $data, 'offset' => $newOffset);
+    }
+
+    public function stream(String $fileName)
+    {
+        $video_path = Storage::url('public/video'.$fileName);
+        $tmp = new VideoStream($video_path);
+        $tmp->start();
     }
 }

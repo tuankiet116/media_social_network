@@ -1,12 +1,15 @@
 <template>
-    <div class="box">
-        <video v-if="userPost.src" :src="userPost.src"></video>
+    <div class="box has-text-centered">
+        
+        <video v-if="userPost.src" :key="video" width="450" controls>
+            <source :src="userPost.src" type="video/mp4">
+        </video>
     </div>
 </template>
 <script>
 import CommentComponent from '../Children/CommentComponent.vue';
 export default {
-    components: {CommentComponent},
+    components: { CommentComponent },
     props: ['post'],
     data() {
         return {
@@ -16,7 +19,7 @@ export default {
 }
 </script>
 <style scoped>
-    .box {
-        margin: 5rem 30rem;
-    }
+.box {
+    margin: 5rem 30rem;
+}
 </style>

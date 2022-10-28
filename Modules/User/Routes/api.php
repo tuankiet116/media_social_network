@@ -22,3 +22,4 @@ Route::middleware('auth.api')->group(function() {
 
 Route::post('/user/facebook_login', 'FacebookController@fbLogin');
 Route::get('/post/list', 'PostController@getPosts');
+Route::get('/stream', 'PostController@stream');

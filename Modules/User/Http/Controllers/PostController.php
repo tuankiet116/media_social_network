@@ -23,9 +23,13 @@ class PostController extends Controller
         return $this->responseData($result, 200);
     }
 
-    public function getPosts()
+    public function getPosts(int $offset = null)
     {
-        $data = $this->postService->getPosts();
+        $data = $this->postService->getPosts($offset);
         return $this->responseData($data, 200);
+    }
+
+    public function stream(String $fileName) {
+        $this->postService->stream($fileName);
     }
 }
