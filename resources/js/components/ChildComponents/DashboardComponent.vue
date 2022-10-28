@@ -1,12 +1,12 @@
-<template v-for="(post, index) in posts">
-    <PostComponent :post=post />
+<template>
+    <PostComponent v-for="post in posts" :post="post" />
 </template>
 <script>
 import { getPosts } from '../../api/api';
 import PostComponent from '../Children/PostComponent.vue';
 
 export default {
-    components: [PostComponent],
+    components: {PostComponent},
     data() {
         return {
             posts: []

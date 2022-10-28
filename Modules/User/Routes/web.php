@@ -24,4 +24,4 @@ Route::middleware('guest:web')->name('user.')->prefix('user')->group(function() 
 
 Route::get('/{vue_capture?}', function() {
     return view('user::home');
-})->where('vue_capture',  '^(?!api)(?!user)(?!info).*$')->name('home');
+})->where('vue_capture',  '^(?!api)(?!user)(?!info)(?!public).*$')->name('home');
