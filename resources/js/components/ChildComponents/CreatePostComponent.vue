@@ -1,5 +1,5 @@
 <template>
-    <div class="box">
+    <div class="box container">
         <h1 class="is-size-3 has-text-left">{{ $t('create_post.title') }}</h1>
         <div class="field">
             <label class="label">{{ $t('create_post.post_title') }}</label>
@@ -16,7 +16,8 @@
             <label class="label">{{ $t('create_post.post_video') }}</label>
             <div class="file is-large is-boxed" v-show="post.file == ''">
                 <label class="file-label">
-                    <input class="file-input" type="file" accept="video/*" @change="handleFileUpload($event)">
+                    <input class="file-input" ref="video" type="file" accept="video/*"
+                        @change="handleFileUpload($event)">
                     <span class="file-cta">
                         <span class="file-icon">
                             <i class="fas fa-upload"></i>
@@ -35,7 +36,7 @@
                 </div>
             </div>
             <div class="buttons is-right mt-5">
-                <button class="button is-primary">{{ $t('create_post.create') }}</button>
+                <button class="button is-primary" @click="handleUploadPost()">{{ $t('create_post.create') }}</button>
                 <button class="button is-light">{{ $t('create_post.cancel') }}</button>
             </div>
         </div>
@@ -43,17 +44,38 @@
 </template>
 <script>
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { createPost } from '../../api/api';
+import { useToast } from "vue-toastification";
 export default {
     data() {
         return {
             editor: ClassicEditor,
             editorConfig: {
                 ckfinder: {
-                    uploadUrl: '/api/ckfinder/upload?_token='+document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    uploadUrl: '/api/ckfinder/upload?_token=' + document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                     options: {
                         resourceType: 'Images',
-                        connectorPath: 'api/ckfinder/connector',
                     }
+                },
+                image: {
+                    resizeUnit: 'px',
+                    resizeOptions: [
+                        {
+                            name: 'resizeImage:original',
+                            label: 'Original',
+                            value: null
+                        },
+                        {
+                            name: 'resizeImage:100',
+                            label: '100px',
+                            value: '100'
+                        },
+                        {
+                            name: 'resizeImage:200',
+                            label: '200px',
+                            value: '200'
+                        }
+                    ]
                 }
             },
             post: {
@@ -61,6 +83,11 @@ export default {
                 description: "",
                 file: ""
             }
+        }
+    },
+    created() {
+        if (!sessionStorage.getItem("user")) {
+            this.$router.push({ name: 'home' });
         }
     },
     methods: {
@@ -79,16 +106,34 @@ export default {
         },
         handleCancelVideo(event) {
             this.post.file = '';
+            this.$refs.video.value = null;
         },
-        handleUploadPost() {
+        async handleUploadPost() {
+            let form = new FormData();
+            var _this = this;
+            form.append('title', this.post.title);
+            form.append('description', this.post.description);
+            form.append('video', this.post.file);
+            form.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
 
+            await createPost(form, {
+                header: { "Contect-type": "multipart/form-data" },
+                onUploadProgress: progressEvent => {
+                    _this.$store.state.postUploadProgress = Math.round(progressEvent.loaded / progressEvent.total);
+                }
+            }).then(result => {
+                useToast().success(_this.$t('create_post.success'));
+                this.$router.push({name: 'home'});
+            }).catch(err => {
+                console.log(err);
+            });
         }
     }
 }
 </script>
 <style scoped>
-.box {
-    margin: 4rem;
+.container {
+    margin: 4rem 30rem;
     background-color: whitesmoke;
 }
 

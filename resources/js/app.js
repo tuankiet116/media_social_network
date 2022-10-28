@@ -7,18 +7,21 @@ import en from './lang/en.json';
 import vi from './lang/vi.json';
 import routes from './routes.js';
 import stores from './store/stores';
-import Echo from "laravel-echo";
 import CKEditor from "@ckeditor/ckeditor5-vue";
-window.Pusher = require('pusher-js');
-window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: process.env.MIX_PUSHER_APP_KEY,
-    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    wsHost: window.location.hostname,
-    wsPort: 6001,
-    forceTLS: false,
-    disableStats: true,
-});
+import Toast,{ POSITION } from "vue-toastification";
+import Echo from "laravel-echo";
+import "vue-toastification/dist/index.css";
+
+// window.Pusher = require('pusher-js');
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: process.env.MIX_PUSHER_APP_KEY,
+//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+//     wsHost: window.location.hostname,
+//     wsPort: 6001,
+//     forceTLS: false,
+//     disableStats: true,
+// });
 
 const i18n = createI18n({
     locale: 'vi',
@@ -41,5 +44,8 @@ app.use(CKEditor);
 app.use(i18n);
 app.use(store);
 app.use(router);
+app.use(Toast, {
+    position: POSITION.TOP_RIGHT
+});
 
 app.mount('#app');

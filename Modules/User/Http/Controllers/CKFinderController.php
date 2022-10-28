@@ -3,12 +3,14 @@
 namespace Modules\User\Http\Controllers;
 
 use App\Services\User\PostService;
-use Illuminate\Contracts\Support\Renderable;
+use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class CKFinderController extends Controller
 {
+    use ApiResponse;
     private $postService;
 
     public function __construct(PostService $postService)
@@ -23,12 +25,8 @@ class CKFinderController extends Controller
         $dataResponse = [
             'fileName' => $result,
             'uploaded' => 1,
-            'url' => route('get_file', $result)
+            'url' => Storage::url($result)
         ];
         return $this->responseData($dataResponse, 200);
-    }
-
-    public function getImage($fileName) {
-        
     }
 }

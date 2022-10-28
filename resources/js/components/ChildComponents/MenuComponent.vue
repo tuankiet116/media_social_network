@@ -93,6 +93,7 @@ export default {
     },
     methods: {
         logout() {
+            sessionStorage.removeItem("user");
             this.$store.commit('logoutUser');
         }
     }

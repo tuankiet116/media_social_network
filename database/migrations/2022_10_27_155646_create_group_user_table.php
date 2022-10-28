@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCommentsTable extends Migration
+class CreateGroupUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('group_user', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('group_id', false, true);
             $table->bigInteger('user_id', false, true);
-            $table->bigInteger('post_id', false, true);
-            $table->bigInteger('belong_id', false, true);
-            $table->string('content');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('group_user');
     }
 }

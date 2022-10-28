@@ -15,6 +15,7 @@
         "post_video": "Tải lên Video",
         "cancel_video": "Hủy Video Tải Lên",
         "create": "Đăng",
-        "cancel": "Thoát"
+        "cancel": "Thoát",
+        "success": "Bài viết của bạn đã tải lên thành công"
     }
 }

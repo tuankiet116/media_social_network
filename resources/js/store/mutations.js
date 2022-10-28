@@ -1,15 +1,15 @@
-import * as UserAPI from "../api/userApi"
+import * as API from "../api/api"
 
 export default {
     getUserInformation(state) {
-        UserAPI.detectUser().then(result => {
+        API.detectUser().then(result => {
             state.user = result.data;
         }).catch(err => {
             state.user = null;
         });
     },
     logoutUser(state) {
-        UserAPI.logoutUser().then(result => {
+        API.logoutUser().then(result => {
             state.user = null;
         }).catch(err => {
             console.log(err);

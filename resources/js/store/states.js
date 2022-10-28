@@ -1,3 +1,5 @@
 export default {
-    user: null
+    user: null,
+    postUploadProgress: null,
+    offset: null
 }

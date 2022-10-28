@@ -16,8 +16,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call([
             AdminSeeder::class,
-            UserSeeder::class,
-            FilmSeeder::class,
+            UserSeeder::class
         ]);
     }
 }

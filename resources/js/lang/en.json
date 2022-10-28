@@ -15,6 +15,7 @@
         "post_video": "Upload Your Video",
         "cancel_video": "Cancel Video Upload",
         "create": "Post",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "success": "Your Post Created Successfully"
     }
 }
