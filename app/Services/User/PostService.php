@@ -17,8 +17,8 @@ class PostService
     }
     public function uploadImageCkEditor($file)
     {
-        $result = $this->storageService->saveToLocalStorage('public/ckfinder', $file);
-        return $result;
+        $result = $this->storageService->saveToLocalStorage('ckfinder', $file, false);
+        return route('ckfinder.get_image', ['fileName' => $result]);
     }
 
     public function uploadPost($request)
@@ -42,8 +42,8 @@ class PostService
 
     public function videoUpload($file)
     {
-        $result = $this->storageService->saveToLocalStorage('public/videos', $file);
-        return $result;
+        $fileName = $this->storageService->saveToLocalStorage('videos', $file, false);
+        return $fileName;
     }
 
     public function getPosts($offset = null)
@@ -59,8 +59,12 @@ class PostService
 
     public function stream(String $fileName)
     {
-        $video_path = Storage::url('public/video'.$fileName);
+        $video_path = Storage::path('videos/'.$fileName);
         $tmp = new VideoStream($video_path);
         $tmp->start();
+    }
+
+    public function getImageCKFinder(String $fileName) {
+        return $this->storageService->getImage('ckfinder/'.$fileName);
     }
 }

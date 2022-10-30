@@ -6,10 +6,14 @@ use Illuminate\Support\Facades\Storage;
 
 class StorageService
 {
-    public function saveToLocalStorage($path, $file, $name = null)
+    public function saveToLocalStorage($path, $file, $returnPath = true, $name = null)
     {
         $name = $name ?? auth()->user()->id . time() . '.' . $file->getClientOriginalExtension();
         $result = Storage::putFileAs($path, $file, $name);
-        return $result;
+        return $returnPath ? $result : $name;
+    }
+
+    public function getImage($path) {
+        return Storage::get($path);
     }
 }

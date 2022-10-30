@@ -2,7 +2,7 @@
     <div class="box has-text-centered">
         
         <video v-if="userPost.src" :key="video" width="450" controls>
-            <source :src="userPost.src" type="video/mp4">
+            <source :src="'/api/post/stream/' + userPost.src" type="video/mp4">
         </video>
     </div>
 </template>

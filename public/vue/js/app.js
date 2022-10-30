@@ -23690,7 +23690,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     width: "450",
     controls: ""
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("source", {
-    src: $data.userPost.src,
+    src: '/api/post/stream/' + $data.userPost.src,
     type: "video/mp4"
   }, null, 8 /* PROPS */, _hoisted_2)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }

@@ -16,10 +16,11 @@ use Illuminate\Http\Request;
 Route::middleware('auth.api')->group(function() {
     Route::get('/user', 'UserController@getUserInformation'); 
     Route::post('/logout', 'UserController@logout');
-    Route::post('/ckfinder/upload', 'CKFinderController@upload');
+    Route::post('/ckfinder/upload', 'CKFinderController@uploadImage');
+    Route::get('/ckfinder/get-image/{fileName}', 'CKFinderController@getImage')->name('ckfinder.get_image');
     Route::post('/post/create', 'PostController@create');
 });
 
 Route::post('/user/facebook_login', 'FacebookController@fbLogin');
 Route::get('/post/list', 'PostController@getPosts');
-Route::get('/stream', 'PostController@stream');
+Route::get('/post/stream/{fileName}', 'PostController@stream');

@@ -6,7 +6,6 @@ use App\Services\User\PostService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Storage;
 
 class CKFinderController extends Controller
 {
@@ -18,15 +17,20 @@ class CKFinderController extends Controller
         $this->postService = $postService;
     }
 
-    public function upload(Request $request)
+    public function uploadImage(Request $request)
     {
         $file = $request->file('upload');
         $result = $this->postService->uploadImageCkEditor($file);
         $dataResponse = [
             'fileName' => $result,
             'uploaded' => 1,
-            'url' => Storage::url($result)
+            'url' => $result
         ];
         return $this->responseData($dataResponse, 200);
+    }
+
+    public function getImage(String $fileName)
+    {
+        return $this->postService->getImageCKFinder($fileName);
     }
 }
