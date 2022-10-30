@@ -8,8 +8,9 @@
 
         <div class="field">
             <label class="label">{{ $t('create_post.post_desc') }}</label>
-            <ckeditor ref="editor" class="input is-primary" :editor="editor" v-model="post.description"
-                :config="editorConfig"></ckeditor>
+            <!-- <ckeditor ref="editor" class="input is-primary" :editor="editor" v-model="post.description"
+                :config="editorConfig"></ckeditor> -->
+                <CKEditorComponent/>
         </div>
 
         <div class="field">
@@ -43,13 +44,15 @@
     </div>
 </template>
 <script>
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { createPost } from '../../api/api';
 import { useToast } from "vue-toastification";
+import CKEditorComponent from '../Children/CKEditorComponent.vue';
 export default {
+    components: {CKEditorComponent},
     data() {
         return {
-            editor: ClassicEditor,
+            // editor: ClassicEditor,
             editorConfig: {
                 ckfinder: {
                     uploadUrl: '/api/ckfinder/upload?_token=' + document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
