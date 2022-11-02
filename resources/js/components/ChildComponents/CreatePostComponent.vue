@@ -90,8 +90,6 @@ export default {
             this.$router.push({ name: 'home' });
         }
     },
-    mounted() {
-    },
     methods: {
         previewVideo() {
             let video = document.getElementById('video-preview');
@@ -121,7 +119,8 @@ export default {
             await createPost(form, {
                 header: { "Contect-type": "multipart/form-data" },
                 onUploadProgress: progressEvent => {
-                    _this.$store.state.postUploadProgress = Math.round(progressEvent.loaded / progressEvent.total);
+                    let uploadProgress = Math.round(progressEvent.loaded * 100 / progressEvent.total);
+                    _this.$store.commit('updateProgressUpload', uploadProgress);
                 }
             }).then(result => {
                 useToast().success(_this.$t('create_post.success'));

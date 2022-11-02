@@ -14,5 +14,8 @@ export default {
         }).catch(err => {
             console.log(err);
         });
+    },
+    updateProgressUpload(state, payload) {
+        state.updateProgressUpload = payload;
     }
 }
