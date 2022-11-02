@@ -46,6 +46,7 @@
 import { createPost } from '../../api/api';
 import { useToast } from "vue-toastification";
 import ClassicEditor from '../../../Libraries/CKEditor5/build/ckeditor';
+import ProgressBarComponent from '../Common/ProgressBarComponent.vue';
 export default {
     data() {
         return {
@@ -119,12 +120,12 @@ export default {
             await createPost(form, {
                 header: { "Contect-type": "multipart/form-data" },
                 onUploadProgress: progressEvent => {
-                    let uploadProgress = Math.round(progressEvent.loaded * 100 / progressEvent.total);
-                    _this.$store.commit('updateProgressUpload', uploadProgress);
+                    let progress = Math.round(progressEvent.loaded * 100 / progressEvent.total);
+                    _this.$store.dispatch('uploadProgressBar', progress);
                 }
             }).then(result => {
                 useToast().success(_this.$t('create_post.success'));
-                this.$router.push({name: 'home'});
+                this.$router.push({ name: 'home' });
             }).catch(err => {
                 console.log(err);
             });

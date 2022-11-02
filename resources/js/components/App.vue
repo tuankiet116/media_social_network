@@ -1,8 +1,5 @@
 <template>
     <MenuComponent :user="user"></MenuComponent>
-    <div class="box">
-        <progress class="progress is-small is-info" :value="progressUpload" max="100">60%</progress>
-    </div>
     <router-view></router-view>
 </template>
 
@@ -14,9 +11,7 @@ import DashboardComponent from './ChildComponents/DashboardComponent.vue';
 
 export default {
     data() {
-        return {
-
-        };
+        return {};
     },
     components: {
         MenuComponent,
@@ -25,9 +20,6 @@ export default {
     computed: {
         user() {
             return this.$store.state.user;
-        },
-        progressUpload() {
-            return this.$store.state.progressUpload;
         }
     },
     beforeCreate() {
