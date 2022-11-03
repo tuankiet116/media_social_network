@@ -1,6 +1,6 @@
 <template>
     <div class="box container">
-        <h1 class="is-size-3 has-text-left">{{ $t('create_post.title') }}</h1>
+        <h1 class="is-size-3 has-text-left create_post_title">{{ $t('create_post.title') }}</h1>
         <div class="field">
             <label class="label">{{ $t('create_post.post_title') }}</label>
             <input class="input is-primary" v-model="post.title" type="text" />
@@ -117,12 +117,10 @@ export default {
             this.$refs.video.value = null;
         },
         validateData() {
-            if (!this.post.title) {
-                this.errors.title = this.$t("create_post.validate_title");
-            }
-            if (!this.post.description) {
-                this.errors.description = this.$t("create_post.validate_description");
-            }
+            if (!this.post.title) this.errors.title = this.$t("create_post.validate_title");
+            else this.errors.title = "";
+            if (!this.post.description) this.errors.description = this.$t("create_post.validate_description");
+            else this.errors.description = "";
         },
         async handleUploadPost() {
             let form = new FormData();
@@ -163,10 +161,20 @@ export default {
     max-width: none !important;
 }
 
-@media screen and (max-width: 1600px) {
+@media screen and (max-width: 1200px) {
     .container {
-        margin: 2rem 10rem;
-        background-color: whitesmoke;
+        margin: 2rem 2rem;
+    }
+}
+
+@media screen and (max-width: 415px) {
+    .container {
+        margin: 0;
+        padding: 30px 10px;
+    }
+
+    .create_post_title {
+        font-size: 20px !important;
     }
 }
 

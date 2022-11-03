@@ -23212,12 +23212,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.$refs.video.value = null;
     },
     validateData: function validateData() {
-      if (!this.post.title) {
-        this.errors.title = this.$t("create_post.validate_title");
-      }
-      if (!this.post.description) {
-        this.errors.description = this.$t("create_post.validate_description");
-      }
+      if (!this.post.title) this.errors.title = this.$t("create_post.validate_title");else this.errors.title = "";
+      if (!this.post.description) this.errors.description = this.$t("create_post.validate_description");else this.errors.description = "";
     },
     handleUploadPost: function handleUploadPost() {
       var _this2 = this;
@@ -23439,7 +23435,7 @@ var _hoisted_1 = {
   "class": "box container"
 };
 var _hoisted_2 = {
-  "class": "is-size-3 has-text-left"
+  "class": "is-size-3 has-text-left create_post_title"
 };
 var _hoisted_3 = {
   "class": "field"
@@ -24115,7 +24111,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.container[data-v-f66eabae] {\n    margin: 4rem 10rem;\n    background-color: whitesmoke;\n    max-width: none !important;\n}\n@media screen and (max-width: 1600px) {\n.container[data-v-f66eabae] {\n        margin: 2rem 10rem;\n        background-color: whitesmoke;\n}\n}\n.file-label[data-v-f66eabae] {\n    width: 100%;\n    text-align: center;\n}\n.video-preview-box[data-v-f66eabae] {\n    max-height: 500px;\n}\nvideo[data-v-f66eabae] {\n    max-width: 100%;\n    max-height: 300px;\n    width: auto;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.container[data-v-f66eabae] {\n    margin: 4rem 10rem;\n    background-color: whitesmoke;\n    max-width: none !important;\n}\n@media screen and (max-width: 1200px) {\n.container[data-v-f66eabae] {\n        margin: 2rem 2rem;\n}\n}\n@media screen and (max-width: 415px) {\n.container[data-v-f66eabae] {\n        margin: 0;\n        padding: 30px 10px;\n}\n.create_post_title[data-v-f66eabae] {\n        font-size: 20px !important;\n}\n}\n.file-label[data-v-f66eabae] {\n    width: 100%;\n    text-align: center;\n}\n.video-preview-box[data-v-f66eabae] {\n    max-height: 500px;\n}\nvideo[data-v-f66eabae] {\n    max-width: 100%;\n    max-height: 300px;\n    width: auto;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
