@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ env('APP_NAME') }}</title>
     <link href="{{ asset('/css/common.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/bulma.css') }}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/62474f8a4e.js" crossorigin="anonymous"></script>
 </head>
 <body>

@@ -136,7 +136,7 @@ export default {
             if (!this.errors.title && !this.errors.description) {
                 let messageSuccess = this.$t('create_post.success');
                 let messageFailed = this.$t('create_post.failed');
-    
+
                 await createPost(form, {
                     header: { "Contect-type": "multipart/form-data" },
                     onUploadProgress: progressEvent => {
@@ -158,8 +158,16 @@ export default {
 </script>
 <style scoped>
 .container {
-    margin: 4rem 30rem;
+    margin: 4rem 10rem;
     background-color: whitesmoke;
+    max-width: none !important;
+}
+
+@media screen and (max-width: 1600px) {
+    .container {
+        margin: 2rem 10rem;
+        background-color: whitesmoke;
+    }
 }
 
 .file-label {

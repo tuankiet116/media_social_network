@@ -24115,7 +24115,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.container[data-v-f66eabae] {\n    margin: 4rem 30rem;\n    background-color: whitesmoke;\n}\n.file-label[data-v-f66eabae] {\n    width: 100%;\n    text-align: center;\n}\n.video-preview-box[data-v-f66eabae] {\n    max-height: 500px;\n}\nvideo[data-v-f66eabae] {\n    max-width: 100%;\n    max-height: 300px;\n    width: auto;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.container[data-v-f66eabae] {\n    margin: 4rem 10rem;\n    background-color: whitesmoke;\n    max-width: none !important;\n}\n@media screen and (max-width: 1600px) {\n.container[data-v-f66eabae] {\n        margin: 2rem 10rem;\n        background-color: whitesmoke;\n}\n}\n.file-label[data-v-f66eabae] {\n    width: 100%;\n    text-align: center;\n}\n.video-preview-box[data-v-f66eabae] {\n    max-height: 500px;\n}\nvideo[data-v-f66eabae] {\n    max-width: 100%;\n    max-height: 300px;\n    width: auto;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

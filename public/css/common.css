@@ -4961,3 +4961,7 @@ body.has-spaced-navbar-fixed-bottom {
     --columnGap: 2rem;
   }
 }
+
+.ck-editor__editable {
+  height: 300px;
+}
