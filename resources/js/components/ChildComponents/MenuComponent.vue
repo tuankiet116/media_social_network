@@ -4,13 +4,6 @@
             <router-link class="navbar-item" :to="{ name: 'home'}">
                 <img src="/images/default/brand.png">
             </router-link>
-
-
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menus">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
         </div>
 
         <div id="navbar-menus" class="navbar-menu">

@@ -1,6 +1,6 @@
 <template>
     <MenuComponent :user="user"></MenuComponent>
-    <router-view></router-view>
+    <router-view :key="$route.fullPath"></router-view>
     <ProgressBarComponent v-if="getPostProgressUpload" :percent-value="getPostProgressUpload" class="progress-bar" />
 </template>
 

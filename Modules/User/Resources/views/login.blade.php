@@ -12,8 +12,7 @@
   </a>
   <div class="container_fluid align-items-center row">
     <div class="row justify-content-center main">
-      <div class="col-xs-8 col-lg-4">
-        <form id="form" class="p-4" action="{{ route('user.post_login') }}" method="POST">
+        <form id="form" class="p-4 col-xs-8 col-lg-4" action="{{ route('user.post_login') }}" method="POST">
           @csrf
           @error('login_error')
             <div class="alert alert-danger">{{ $message }}</div>
@@ -49,7 +48,6 @@
             </div>
           </div>
         </form>
-      </div>
     </div>
   </div>
 @endsection

@@ -1,12 +1,14 @@
 <template>
-    <div class="box">
+    <div class="box column is-three-quarters-mobile is-two-thirds-tablet is-one-desktop is-one-third-widescreen is-half-fullhd">
         <div class="user-info">
 
         </div>
         <div class="post-desc" v-html="post.post_description"></div>
-        <video class="has-text-centered" v-if="userPost.src" width="450" controls>
-            <source :src="'/api/post/stream/' + userPost.src" type="video/mp4">
-        </video>
+        <div class="has-text-centered">
+            <video v-if="userPost.src" width="450" controls>
+                <source :src="'/api/post/stream/' + userPost.src" type="video/mp4">
+            </video>
+        </div>
     </div>
 </template>
 <script>
@@ -23,6 +25,6 @@ export default {
 </script>
 <style scoped>
 .box {
-    margin: 5rem 30rem;
+    margin: 2% auto 0 auto;
 }
 </style>
