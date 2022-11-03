@@ -16,6 +16,9 @@
         "cancel_video": "Cancel Video Upload",
         "create": "Post",
         "cancel": "Cancel",
-        "success": "Your Post Created Successfully"
+        "success": "Your Post Created Successfully",
+        "failed": "Failed upload your post",
+        "validate_title": "Title must be filled",
+        "validate_description": "Your post could not empty"
     }
 }

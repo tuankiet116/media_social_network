@@ -1,6 +1,7 @@
 <template>
     <MenuComponent :user="user"></MenuComponent>
     <router-view></router-view>
+    <ProgressBarComponent v-if="getPostProgressUpload" :percent-value="getPostProgressUpload" class="progress-bar" />
 </template>
 
 
@@ -8,6 +9,8 @@
 import { detectUser } from '../api/api';
 import MenuComponent from './ChildComponents/MenuComponent.vue';
 import DashboardComponent from './ChildComponents/DashboardComponent.vue';
+import ProgressBarComponent from './Common/ProgressBarComponent.vue';
+import { mapGetters } from 'vuex';
 
 export default {
     data() {
@@ -15,12 +18,16 @@ export default {
     },
     components: {
         MenuComponent,
-        DashboardComponent
+        DashboardComponent,
+        ProgressBarComponent
     },
     computed: {
         user() {
             return this.$store.state.user;
-        }
+        },
+        ...mapGetters([
+            'getPostProgressUpload'
+        ])
     },
     beforeCreate() {
         detectUser().then(result => {
@@ -38,3 +45,23 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    .progress-bar {
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: showon 1s;
+        bottom: 10px;
+    }
+
+    @keyframes showon {
+    from {
+        bottom: 0;
+    }
+
+    to {
+        bottom: 10px;
+    }
+}
+</style>

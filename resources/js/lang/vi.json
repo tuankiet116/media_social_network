@@ -16,6 +16,9 @@
         "cancel_video": "Hủy Video Tải Lên",
         "create": "Đăng",
         "cancel": "Thoát",
-        "success": "Bài viết của bạn đã tải lên thành công"
+        "success": "Bài viết của bạn đã tải lên thành công",
+        "failed": "Lỗi không thể tải lên",
+        "validate_title": "Không thể bỏ trống tiêu đề",
+        "validate_description": "Bài viết không được trống"
     }
 }

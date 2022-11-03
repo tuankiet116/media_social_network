@@ -1,7 +1,10 @@
 <template>
-    <div class="box has-text-centered">
-        
-        <video v-if="userPost.src" width="450" controls>
+    <div class="box">
+        <div class="user-info">
+
+        </div>
+        <div class="post-desc" v-html="post.post_description"></div>
+        <video class="has-text-centered" v-if="userPost.src" width="450" controls>
             <source :src="'/api/post/stream/' + userPost.src" type="video/mp4">
         </video>
     </div>

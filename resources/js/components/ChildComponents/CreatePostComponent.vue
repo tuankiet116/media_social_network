@@ -4,12 +4,14 @@
         <div class="field">
             <label class="label">{{ $t('create_post.post_title') }}</label>
             <input class="input is-primary" v-model="post.title" type="text" />
+            <p v-if="errors.title" class="help is-danger">{{ errors.title }}</p>
         </div>
 
         <div class="field">
             <label class="label">{{ $t('create_post.post_desc') }}</label>
             <ckeditor ref="editor" class="input is-primary" :editor="editor" v-model="post.description"
                 :config="editorConfig"></ckeditor>
+            <p v-if="errors.description" class="help is-danger">{{ errors.description }}</p>
         </div>
 
         <div class="field">
@@ -46,7 +48,7 @@
 import { createPost } from '../../api/api';
 import { useToast } from "vue-toastification";
 import ClassicEditor from '../../../Libraries/CKEditor5/build/ckeditor';
-import ProgressBarComponent from '../Common/ProgressBarComponent.vue';
+import { title } from 'process';
 export default {
     data() {
         return {
@@ -83,10 +85,15 @@ export default {
                 title: "",
                 description: "",
                 file: ""
+            },
+            errors: {
+                title: "",
+                description: "",
+                file: ""
             }
         }
     },
-    created() {
+    beforeCreate() {
         if (!sessionStorage.getItem("user")) {
             this.$router.push({ name: 'home' });
         }
@@ -109,6 +116,14 @@ export default {
             this.post.file = '';
             this.$refs.video.value = null;
         },
+        validateData() {
+            if (!this.post.title) {
+                this.errors.title = this.$t("create_post.validate_title");
+            }
+            if (!this.post.description) {
+                this.errors.description = this.$t("create_post.validate_description");
+            }
+        },
         async handleUploadPost() {
             let form = new FormData();
             var _this = this;
@@ -117,18 +132,26 @@ export default {
             form.append('video', this.post.file);
             form.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
 
-            await createPost(form, {
-                header: { "Contect-type": "multipart/form-data" },
-                onUploadProgress: progressEvent => {
-                    let progress = Math.round(progressEvent.loaded * 100 / progressEvent.total);
-                    _this.$store.dispatch('uploadProgressBar', progress);
-                }
-            }).then(result => {
-                useToast().success(_this.$t('create_post.success'));
-                this.$router.push({ name: 'home' });
-            }).catch(err => {
-                console.log(err);
-            });
+            this.validateData();
+            if (!this.errors.title && !this.errors.description) {
+                let messageSuccess = this.$t('create_post.success');
+                let messageFailed = this.$t('create_post.failed');
+    
+                await createPost(form, {
+                    header: { "Contect-type": "multipart/form-data" },
+                    onUploadProgress: progressEvent => {
+                        let progress = Math.round(progressEvent.loaded * 100 / progressEvent.total);
+                        _this.$store.state.postUploadProgress = progress;
+                        this.$router.push({ name: 'home' });
+                    }
+                }).then(result => {
+                    useToast().success(messageSuccess);
+                }).catch(err => {
+                    useToast().error(messageFailed);
+                }).finally(() => {
+                    _this.$store.state.postUploadProgress = 0;
+                });
+            }
         }
     }
 }
