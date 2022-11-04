@@ -1,5 +1,7 @@
 <template>
-    <PostComponent v-for="post in posts" :post="post" />
+    <div class="post">
+        <PostComponent v-for="post in posts" :post="post" />
+    </div>
 </template>
 <script>
 import { getPosts } from '../../api/api';
@@ -29,5 +31,7 @@ export default {
 }
 </script>
 <style scoped>
-
+.post>.box:nth-child(1) {
+    margin-top: 15vh !important;
+}
 </style>
