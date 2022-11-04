@@ -31,7 +31,21 @@ export default {
 }
 </script>
 <style scoped>
-.post>.box:nth-child(1) {
-    margin-top: 15vh !important;
+@media screen and (min-width: 769px) {
+    .post>.box:nth-child(1) {
+        margin-top: 5% !important;
+    }
+}
+
+@media screen and (min-device-width: 481px) and (max-device-width: 768px) { 
+    .post>.box:nth-child(1) {
+        margin-top: 10% !important;
+    }
+}
+
+@media only screen and (max-device-width: 480px) {
+    .post>.box:nth-child(1) {
+        margin-top: calc(100%*0.2) !important;
+    }
 }
 </style>

@@ -156,20 +156,20 @@ export default {
 </script>
 <style scoped>
 .container {
-    margin: 4rem 10rem;
+    margin: 10rem 20rem;
     background-color: whitesmoke;
     max-width: none !important;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (min-device-width: 481px) and (max-device-width: 768px)  {
     .container {
-        margin: 2rem 2rem;
+        margin: 5rem 2rem !important;
     }
 }
 
-@media screen and (max-width: 415px) {
+@media screen and (max-width: 480px) {
     .container {
-        margin: 0;
+        margin: 4rem 0 4rem 0!important;
         padding: 30px 10px;
     }
 

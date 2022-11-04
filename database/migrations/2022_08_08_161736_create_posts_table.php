@@ -17,6 +17,7 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->bigInteger('user_id', false, true);
             $table->bigInteger('group_id', false, true);
+            $table->string('title');
             $table->string('src');
             $table->string('thumbnail_src');
             $table->text('post_description');

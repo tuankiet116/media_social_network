@@ -53,8 +53,10 @@ class PostService
         } else {
             $data = Post::with('user')->orderBy('created_at', 'DESC')->limit(LIMIT)->offset($offset)->get()->toArray();
         }
-        $newOffset = $data[0]['id'];
-        return array('data' => $data, 'offset' => $newOffset);
+        if ($data) {
+            $newOffset = $data[0]['id'];
+        }
+        return array('data' => $data, 'offset' => $newOffset ?? null);
     }
 
     public function stream(String $fileName)

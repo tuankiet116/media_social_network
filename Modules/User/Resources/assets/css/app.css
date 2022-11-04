@@ -129,7 +129,7 @@
 @media screen and (max-width: 768px) {
     body {
         background-color: #FFFFFF;
-        background-image: linear-gradient(180deg, #FFFFFF 0%, #6284FF 50%, #FF0000 100%);
+        background-image: linear-gradient(180deg, #6284FF, #FF0000);
     }
 
     .background-container {

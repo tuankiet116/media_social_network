@@ -39,7 +39,7 @@
 
         <div id="navbar-menus-user" class="navbar-menu" v-else :class="{ 'is-active': showNav }">
             <div class="navbar-end">
-                <router-link class="navbar-item" :to="{ name: 'create_post' }">
+                <router-link class="navbar-item is-hidden-mobile" :to="{ name: 'create_post' }">
                     <i class="fa-regular fa-square-plus"></i>
                     <span>&nbsp;{{ $t('menu.create_post') }}</span>
                 </router-link>
@@ -92,8 +92,17 @@ export default {
 
 <style scoped>
 .navbar {
-    background-color: rgba(24, 68, 151, 0.437);
+    background-color: #4158D0;
+    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
     padding: 0 10px;
+}
+
+.navbar-start>a {
+    color: white;
+}
+
+.navbar-start>a:hover{
+    color: black;
 }
 
 .navbar img {
@@ -107,7 +116,7 @@ export default {
     align-items: center;
 }
 
-@media screen and (max-width: 430px) {
+@media screen and (max-width: 768px) {
     .navbar {
         padding: 0 !important;
     }
@@ -128,14 +137,9 @@ export default {
         align-items: center;
     }
 
-    .items-button{
-        margin-left: 23vh !important;
-    }
-}
-
-@media screen and (max-width: 768px) and (min-width: 430px) {
-    .items-button{
-        margin-left: 40vh !important;
+    .items-button {
+        position: fixed;
+        right: 0;
     }
 }
 </style>
