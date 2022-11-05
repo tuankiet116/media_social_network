@@ -16,6 +16,10 @@
                 <source :src="'/api/post/stream/' + userPost.src" type="video/mp4">
             </video>
         </div>
+        <div class="reactions">
+            
+        </div>
+        <hr>
     </div>
 </template>
 <script>

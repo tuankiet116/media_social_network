@@ -2,7 +2,7 @@ import CreatePostComponent from './components/ChildComponents/CreatePostComponen
 import DashboardComponent from './components/ChildComponents/DashboardComponent';
 
 const routes = [
-    { path: '/', component: DashboardComponent, name: 'home' },
+    { path: '/', component: DashboardComponent, name: 'home' , reload: true},
     { path: '/create-post', component: CreatePostComponent, name: 'create_post' },
 ];
 

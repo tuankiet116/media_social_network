@@ -101,7 +101,7 @@ export default {
     color: white;
 }
 
-.navbar-start>a:hover{
+.navbar-start>a:hover, a:focus{
     color: black;
 }
 

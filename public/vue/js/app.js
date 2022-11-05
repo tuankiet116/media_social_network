@@ -23797,6 +23797,15 @@ var _hoisted_9 = {
   controls: ""
 };
 var _hoisted_10 = ["src"];
+var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "reactions"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", null, null, -1 /* HOISTED */);
+});
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.post.user.name), 1 /* TEXT */)]), _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.post.title), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "post-desc",
@@ -23804,7 +23813,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 8 /* PROPS */, _hoisted_7), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [$data.userPost.src ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("video", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("source", {
     src: '/api/post/stream/' + $data.userPost.src,
     type: "video/mp4"
-  }, null, 8 /* PROPS */, _hoisted_10)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]);
+  }, null, 8 /* PROPS */, _hoisted_10)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), _hoisted_11, _hoisted_12]);
 }
 
 /***/ }),
@@ -23986,7 +23995,8 @@ __webpack_require__.r(__webpack_exports__);
 var routes = [{
   path: '/',
   component: _components_ChildComponents_DashboardComponent__WEBPACK_IMPORTED_MODULE_1__["default"],
-  name: 'home'
+  name: 'home',
+  reload: true
 }, {
   path: '/create-post',
   component: _components_ChildComponents_CreatePostComponent__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -24225,7 +24235,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.navbar[data-v-1c2c3966] {\n    background-color: #4158D0;\n    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);\n    padding: 0 10px;\n}\n.navbar-start>a[data-v-1c2c3966] {\n    color: white;\n}\n.navbar-start>a[data-v-1c2c3966]:hover{\n    color: black;\n}\n.navbar img[data-v-1c2c3966] {\n    max-height: -moz-fit-content;\n    max-height: fit-content;\n    width: 60px;\n    height: 60px;\n}\n.navbar-link[data-v-1c2c3966] {\n    display: flex;\n    align-items: center;\n}\n@media screen and (max-width: 768px) {\n.navbar[data-v-1c2c3966] {\n        padding: 0 !important;\n}\n.navbar img[data-v-1c2c3966] {\n        max-height: -moz-fit-content;\n        max-height: fit-content;\n        width: 20px;\n        height: 20px;\n}\n.buttons>.button[data-v-1c2c3966] {\n        width: 65px !important;\n        font-size: 10px;\n}\n.buttons-auth[data-v-1c2c3966] {\n        display: flex;\n        align-items: center;\n}\n.items-button[data-v-1c2c3966] {\n        position: fixed;\n        right: 0;\n}\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.navbar[data-v-1c2c3966] {\n    background-color: #4158D0;\n    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);\n    padding: 0 10px;\n}\n.navbar-start>a[data-v-1c2c3966] {\n    color: white;\n}\n.navbar-start>a[data-v-1c2c3966]:hover, a[data-v-1c2c3966]:focus{\n    color: black;\n}\n.navbar img[data-v-1c2c3966] {\n    max-height: -moz-fit-content;\n    max-height: fit-content;\n    width: 60px;\n    height: 60px;\n}\n.navbar-link[data-v-1c2c3966] {\n    display: flex;\n    align-items: center;\n}\n@media screen and (max-width: 768px) {\n.navbar[data-v-1c2c3966] {\n        padding: 0 !important;\n}\n.navbar img[data-v-1c2c3966] {\n        max-height: -moz-fit-content;\n        max-height: fit-content;\n        width: 20px;\n        height: 20px;\n}\n.buttons>.button[data-v-1c2c3966] {\n        width: 65px !important;\n        font-size: 10px;\n}\n.buttons-auth[data-v-1c2c3966] {\n        display: flex;\n        align-items: center;\n}\n.items-button[data-v-1c2c3966] {\n        position: fixed;\n        right: 0;\n}\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
