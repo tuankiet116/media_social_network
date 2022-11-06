@@ -15,7 +15,10 @@ export default {
         PostComponent,
         LoadingComponent
     },
+<<<<<<< HEAD
     mixins: [authMixin],
+=======
+>>>>>>> 95fe777 (loading component)
     data() {
         return {
             loading: true,
