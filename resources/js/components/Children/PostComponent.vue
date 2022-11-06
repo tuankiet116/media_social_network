@@ -1,5 +1,8 @@
 <template>
-    <div class="box column is-two-thirds-tablet is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5">
+    <div ref="post"
+        class="box column is-two-thirds-tablet is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5">
+
+        <canvas ref="canvas"></canvas>
         <div class="user-info">
             <figure class="image is-32x32">
                 <img class="is-rounded" src="/images/default/avatar_default.png">
@@ -16,16 +19,18 @@
                 <source :src="'/api/post/stream/' + userPost.src" type="video/mp4">
             </video>
         </div>
-        <div class="reactions">
-            
-        </div>
         <hr>
+        <ReactionComponent/>
     </div>
 </template>
 <script>
 import CommentComponent from '../Children/CommentComponent.vue';
+import ReactionComponent from './ReactionComponent.vue';
 export default {
-    components: { CommentComponent },
+    components: {
+        CommentComponent,
+        ReactionComponent
+    },
     props: ['post'],
     data() {
         return {
@@ -38,6 +43,7 @@ export default {
 .box {
     margin: 3% auto 0 auto;
     max-width: 600px;
+    position: relative;
 }
 
 .user-info {
@@ -46,14 +52,15 @@ export default {
     width: fit-content;
 }
 
-.user-info>strong{
+.user-info>strong {
     margin-left: 1rem;
 }
-.user-info img{
+
+.user-info img {
     background-color: blueviolet;
 }
 
-.post-desc{
+.post-desc {
     margin-bottom: 1rem;
 }
 
@@ -65,10 +72,31 @@ hr {
     margin: 1rem 0;
 }
 
+.reactions {
+    display: flex;
+    align-content: center;
+}
+
 @media screen and (max-width: 480px) {
     .box {
-        margin-left: 15px;
-        margin-right: 15px;
+        margin-left: 0;
+        margin-right: 0;
     }
+}
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 </style>
