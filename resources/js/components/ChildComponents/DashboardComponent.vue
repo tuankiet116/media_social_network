@@ -1,4 +1,5 @@
 <template>
+    <LoadingComponent v-if="loading"/>
     <div class="post">
         <PostComponent v-for="post in posts" :post="post" />
     </div>
@@ -6,16 +7,22 @@
 <script>
 import { getPosts } from '../../api/api';
 import PostComponent from '../Children/PostComponent.vue';
+import LoadingComponent from '../Common/LoadingComponent.vue';
 
 export default {
-    components: {PostComponent},
+    components: {
+        PostComponent,
+        LoadingComponent
+    },
     data() {
         return {
+            loading: true,
             posts: []
         }
     },
     mounted() {
         this.fetchPost();
+        this.loading = false;
     },
     methods: {
         fetchPost() {
@@ -33,11 +40,11 @@ export default {
 <style scoped>
 @media screen and (min-width: 769px) {
     .post>.box:nth-child(1) {
-        margin-top: 5% !important;
+        margin-top: 10% !important;
     }
 }
 
-@media screen and (min-device-width: 481px) and (max-device-width: 768px) { 
+@media screen and (min-device-width: 481px) and (max-device-width: 768px) {
     .post>.box:nth-child(1) {
         margin-top: 10% !important;
     }
@@ -46,6 +53,10 @@ export default {
 @media only screen and (max-device-width: 480px) {
     .post>.box:nth-child(1) {
         margin-top: calc(100%*0.2) !important;
+    }
+
+    .post {
+        width: fit-content;
     }
 }
 </style>

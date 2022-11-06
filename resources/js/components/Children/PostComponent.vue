@@ -79,8 +79,8 @@ hr {
 
 @media screen and (max-width: 480px) {
     .box {
-        margin-left: 15px;
-        margin-right: 15px;
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 
