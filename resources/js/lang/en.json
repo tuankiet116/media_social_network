@@ -20,5 +20,9 @@
         "failed": "Failed upload your post",
         "validate_title": "Title must be filled",
         "validate_description": "Your post could not empty"
+    },
+    "post": {
+        "auth_react": "You need to login before comment and reactions",
+        "love": "Like"
     }
 }

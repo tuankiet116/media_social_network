@@ -20,5 +20,9 @@
         "failed": "Lỗi không thể tải lên",
         "validate_title": "Không thể bỏ trống tiêu đề",
         "validate_description": "Bài viết không được trống"
+    },
+    "post": {
+        "auth_react": "Bạn cần đăng nhập để bình luận và thả cảm xúc",
+        "love": "Yêu thích"
     }
 }
