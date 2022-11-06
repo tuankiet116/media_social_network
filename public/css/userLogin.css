@@ -67,7 +67,11 @@
 }
 
 .container_fluid {
-    height: 90vh;
+    height: 100vh;
+}
+
+.fb_iframe_widget_fluid {
+    display: inline-block !important;
 }
 
 @media screen and (min-width:600px) {
@@ -98,6 +102,38 @@
 
     .brand-title h3{
         color: steelblue !important;
+    }
+}
+
+@media screen and (max-width: 415px) {
+    .separator {
+        padding-bottom: 10px;
+    }
+
+    #fb-login-button {
+        margin-left: -10px;
+    }
+}
+
+@media screen and (max-width: 376px) {
+    .fb_iframe_widget_fluid {
+        padding: 0 !important;
+        margin-left: -6px !important;
+    }
+
+    #fb-login-button {
+        margin-left: -6px;
+    }
+}
+
+@media screen and (max-width: 321px) {
+    .fb-login-button span {
+        padding: 0 !important; 
+    }
+
+    #fb-login-button {
+        padding: 0 !important;
+        margin-left: -6px;
     }
 }
 
