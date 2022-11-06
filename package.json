@@ -26,6 +26,7 @@
         "vue-template-compiler": "^2.7.11"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-vue": "^4.0.1",
         "bulma": "^0.9.4",
         "css-loader": "^5.2.7",
         "js-cookie": "^3.0.1",

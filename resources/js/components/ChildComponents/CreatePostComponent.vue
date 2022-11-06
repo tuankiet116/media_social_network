@@ -1,45 +1,47 @@
 <template>
-    <div class="box container">
-        <h1 class="is-size-3 has-text-left create_post_title">{{ $t('create_post.title') }}</h1>
-        <div class="field">
-            <label class="label">{{ $t('create_post.post_title') }}</label>
-            <input class="input is-primary" v-model="post.title" type="text" />
-            <p v-if="errors.title" class="help is-danger">{{ errors.title }}</p>
-        </div>
-
-        <div class="field">
-            <label class="label">{{ $t('create_post.post_desc') }}</label>
-            <ckeditor ref="editor" class="input is-primary" :editor="editor" v-model="post.description"
-                :config="editorConfig"></ckeditor>
-            <p v-if="errors.description" class="help is-danger">{{ errors.description }}</p>
-        </div>
-
-        <div class="field">
-            <label class="label">{{ $t('create_post.post_video') }}</label>
-            <div class="file is-large is-boxed" v-show="post.file == ''">
-                <label class="file-label">
-                    <input class="file-input" ref="video" type="file" accept="video/*"
-                        @change="handleFileUpload($event)">
-                    <span class="file-cta">
-                        <span class="file-icon">
-                            <i class="fas fa-upload"></i>
-                        </span>
-                        <span class="file-label">
-                            Upload Video
-                        </span>
-                    </span>
-                </label>
+    <div class="bg-color">
+        <div class="box container post-add">
+            <h1 class="is-size-3 has-text-left create_post_title">{{ $t('create_post.title') }}</h1>
+            <div class="field">
+                <label class="label">{{ $t('create_post.post_title') }}</label>
+                <input class="input is-primary" v-model="post.title" type="text" />
+                <p v-if="errors.title" class="help is-danger">{{ errors.title }}</p>
             </div>
-            <div class="box video-preview-box has-text-centered" v-show="post.file != ''">
-                <video id="video-preview" controls />
-                <div class="has-text-right">
-                    <button class="button is-info" @click="handleCancelVideo($event)">{{ $t('create_post.cancel_video')
-                    }}</button>
+
+            <div class="field">
+                <label class="label">{{ $t('create_post.post_desc') }}</label>
+                <ckeditor ref="editor" class="input is-primary" :editor="editor" v-model="post.description"
+                    :config="editorConfig"></ckeditor>
+                <p v-if="errors.description" class="help is-danger">{{ errors.description }}</p>
+            </div>
+
+            <div class="field">
+                <label class="label">{{ $t('create_post.post_video') }}</label>
+                <div class="file is-large is-boxed" v-show="post.file == ''">
+                    <label class="file-label">
+                        <input class="file-input" ref="video" type="file" accept="video/*"
+                            @change="handleFileUpload($event)">
+                        <span class="file-cta">
+                            <span class="file-icon">
+                                <i class="fas fa-upload"></i>
+                            </span>
+                            <span class="file-label">
+                                Upload Video
+                            </span>
+                        </span>
+                    </label>
                 </div>
-            </div>
-            <div class="buttons is-right mt-5">
-                <button class="button is-primary" @click="handleUploadPost()">{{ $t('create_post.create') }}</button>
-                <button class="button is-light">{{ $t('create_post.cancel') }}</button>
+                <div class="box video-preview-box has-text-centered" v-show="post.file != ''">
+                    <video id="video-preview" controls />
+                    <div class="has-text-right">
+                        <button class="button is-info" @click="handleCancelVideo($event)">{{ $t('create_post.cancel_video')
+                        }}</button>
+                    </div>
+                </div>
+                <div class="buttons is-right mt-5">
+                    <button class="button is-primary" @click="handleUploadPost()">{{ $t('create_post.create') }}</button>
+                    <button class="button is-light">{{ $t('create_post.cancel') }}</button>
+                </div>
             </div>
         </div>
     </div>
