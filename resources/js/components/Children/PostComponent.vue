@@ -198,6 +198,15 @@ export default {
     margin: 0 !important;
 }
 
+.split-reaction-post {
+    margin: 0 !important;
+}
+
+.post-info {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
 .reactions {
     display: flex;
     align-content: center;
