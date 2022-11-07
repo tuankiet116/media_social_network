@@ -1,6 +1,6 @@
 <template>
-    <MenuComponent :user="user"></MenuComponent>
-    <router-view :key="$route.fullPath"></router-view>
+    <MenuComponent @increaseKey="handleKeyComponent($event)" :user="user"></MenuComponent>
+    <router-view :key="key"></router-view>
     <ProgressBarComponent v-if="getPostProgressUpload" :percent-value="getPostProgressUpload" class="progress-bar" />
 </template>
 
@@ -14,7 +14,9 @@ import { mapGetters } from 'vuex';
 
 export default {
     data() {
-        return {};
+        return {
+            key: 0
+        };
     },
     components: {
         MenuComponent,
@@ -42,6 +44,11 @@ export default {
         // .listen('EventListPost', (e) => {
         //     console.log(e);
         // })
+    },
+    methods: {
+        handleKeyComponent(keyComponent) {
+            this.key = keyComponent;
+        }
     }
 }
 </script>

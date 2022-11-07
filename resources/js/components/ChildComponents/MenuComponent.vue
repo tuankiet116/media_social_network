@@ -2,7 +2,7 @@
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation"
         :style="!user ? 'display:flex' : ''">
         <div class="navbar-brand">
-            <router-link class="navbar-item" :to="{ name: 'home' }">
+            <router-link @click="increaseKey" class="navbar-item" :to="{ name: 'home' }">
                 <img src="/images/default/brand.png">
             </router-link>
             <a v-if="user !== null" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
@@ -15,7 +15,7 @@
 
         <div id="navbar-menus" class="navbar-menu is-hidden-mobile">
             <div class="navbar-start">
-                <router-link class="navbar-item" :to="{ name: 'home' }">
+                <router-link  @click="increaseKey" class="navbar-item" :to="{ name: 'home' }">
                     {{ $t('homepage') }}
                 </router-link>
 
@@ -66,11 +66,14 @@
 </template>
 
 <script>
+import { emit } from 'process';
+
 export default {
     props: ['user'],
     data() {
         return {
-            showNav: false
+            showNav: false,
+            keyComponent: 0
         };
     },
     methods: {
@@ -85,6 +88,10 @@ export default {
             } else {
                 document.getElementsByClassName('user-nav')[0].classList.add('is-active');
             }
+        },
+        increaseKey() {
+            this.keyComponent++;
+            this.$emit('increaseKey', this.keyComponent);
         }
     }
 }
