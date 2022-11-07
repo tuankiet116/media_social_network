@@ -32,4 +32,9 @@ class PostController extends Controller
     public function stream(String $fileName) {
         $this->postService->stream($fileName);
     }
+
+    public function reaction(Request $request) {
+        $data = $request->all();
+        $this->postService->reactToPost($data);
+    }
 }

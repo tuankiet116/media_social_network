@@ -1,49 +1,31 @@
 <template>
-    <MenuComponent @increaseKey="handleKeyComponent($event)" :user="user"></MenuComponent>
+    <MenuComponent @increaseKey="handleKeyComponent($event)" :user="getUser"></MenuComponent>
     <router-view :key="key"></router-view>
     <ProgressBarComponent v-if="getPostProgressUpload" :percent-value="getPostProgressUpload" class="progress-bar" />
 </template>
 
 
 <script>
-import { detectUser } from '../api/api';
 import MenuComponent from './ChildComponents/MenuComponent.vue';
-import DashboardComponent from './ChildComponents/DashboardComponent.vue';
 import ProgressBarComponent from './Common/ProgressBarComponent.vue';
 import { mapGetters } from 'vuex';
 
 export default {
     data() {
         return {
-            key: 0
+            key: 0,
+            user: null
         };
     },
     components: {
         MenuComponent,
-        DashboardComponent,
         ProgressBarComponent
     },
     computed: {
-        user() {
-            return this.$store.state.user;
-        },
         ...mapGetters([
-            'getPostProgressUpload'
+            'getPostProgressUpload',
+            'getUser'
         ])
-    },
-    beforeCreate() {
-        detectUser().then(result => {
-            sessionStorage.setItem("user", JSON.stringify(result.data));
-        }).catch(err => {
-            sessionStorage.removeItem("user");
-        });
-        this.$store.commit('getUserInformation');
-    },
-    mounted() {
-        // window.Echo.channel('post.list')
-        // .listen('EventListPost', (e) => {
-        //     console.log(e);
-        // })
     },
     methods: {
         handleKeyComponent(keyComponent) {

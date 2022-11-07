@@ -18,7 +18,24 @@ class Post extends Model
         'post_description'
     ];
 
+    protected $appends = ['isLiked'];
+
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function reactionUser() {
+        return $this->belongsToMany(User::class, PostUser::class, 'post_id', 'user_id');
+    }
+
+    public function getIsLikedAttribute() {
+        $userLogin = auth()->id();
+        if ($userLogin) {
+            $result = PostUser::where(['post_id' => $this->id, 'user_id' => $userLogin])->first();
+            if ($result) {
+                return true;
+            }
+        }
+        return false;
     }
 }

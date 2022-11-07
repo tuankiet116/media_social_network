@@ -6,6 +6,7 @@
 </template>
 <script>
 import { getPosts } from '../../api/api';
+import authMixin from '../../mixins';
 import PostComponent from '../Children/PostComponent.vue';
 import LoadingComponent from '../Common/LoadingComponent.vue';
 
@@ -14,6 +15,7 @@ export default {
         PostComponent,
         LoadingComponent
     },
+    mixins: [authMixin],
     data() {
         return {
             loading: true,
