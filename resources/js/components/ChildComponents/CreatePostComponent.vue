@@ -43,6 +43,7 @@
                     <button class="button is-light">{{ $t('create_post.cancel') }}</button>
                 </div>
             </div>
+            {{ user }}
         </div>
     </div>
 </template>
@@ -50,8 +51,9 @@
 import { createPost } from '../../api/api';
 import { useToast } from "vue-toastification";
 import ClassicEditor from '../../../Libraries/CKEditor5/build/ckeditor';
-import { title } from 'process';
+import authMixin from '../../mixins';
 export default {
+    mixins: [authMixin],
     data() {
         return {
             editor: ClassicEditor,
@@ -95,9 +97,13 @@ export default {
             }
         }
     },
-    beforeCreate() {
-        if (!sessionStorage.getItem("user")) {
-            this.$router.push({ name: 'home' });
+    computed: {
+        user() {
+            let user = this.$store.getters.getUser;
+            if (user == null) {
+                this.$router.push({name: 'home'});
+            }
+            return user;
         }
     },
     methods: {

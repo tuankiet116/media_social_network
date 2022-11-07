@@ -22,7 +22,7 @@
         "validate_description": "Bài viết không được trống"
     },
     "post": {
-        "auth_react": "Bạn cần đăng nhập để bình luận và thả cảm xúc",
+        "auth_react": "Bạn cần đăng nhập để bình luận và tương tác.",
         "love": "Yêu thích"
     }
 }

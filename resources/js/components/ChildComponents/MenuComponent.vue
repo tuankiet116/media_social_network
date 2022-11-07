@@ -39,7 +39,7 @@
 
         <div id="navbar-menus-user" class="navbar-menu" v-else :class="{ 'is-active': showNav }">
             <div class="navbar-end">
-                <router-link class="navbar-item is-hidden-mobile" :to="{ name: 'create_post' }">
+                <router-link @click="increaseKey" class="navbar-item is-hidden-mobile" :to="{ name: 'create_post' }">
                     <i class="fa-regular fa-square-plus"></i>
                     <span>&nbsp;{{ $t('menu.create_post') }}</span>
                 </router-link>
@@ -66,8 +66,6 @@
 </template>
 
 <script>
-import { emit } from 'process';
-
 export default {
     props: ['user'],
     data() {

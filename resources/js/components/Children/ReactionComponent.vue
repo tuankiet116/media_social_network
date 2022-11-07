@@ -1,5 +1,5 @@
 <template>
-    <div class="reactions columns">
+    <div class="reactions columns" v-if="user">
         <div class="column">
             <button ref="button" class="button btn" @click="likeHandle">
                 <span v-if="like">🎉</span>
@@ -13,35 +13,47 @@
                 <span>Comment</span>
             </button>
         </div>
-        <div class="column flex">
+        <div class="column">
             <button class="btn button">
                 <i class="fa-solid fa-share"></i>
                 <span>Share</span>
             </button>
         </div>
     </div>
+    <div class="columns" v-else>
+        <div class="column no-reactions">
+            <span>{{ $t('post.auth_react') }} &nbsp; &nbsp;</span>
+            <a href='/user/login' class='button is-small is-info'>Đăng Nhập</a>
+        </div>
+    </div>
 </template>
 <script>
 import confetti from 'canvas-confetti';
+import { mapGetters } from 'vuex';
+import { reactPostAPI } from '../../api/api';
+
 export default {
-    props: ['canvas'],
+    props: ['post'],
     data() {
         return {
-            like: false
+            like: this.post.isLiked
         };
     },
-    mounted() {
+    computed: {
+        ...mapGetters({ user: 'getUser' })
     },
     methods: {
         async likeHandle() {
             if (this.like) {
                 this.like = !this.like;
+                this.reactPost();
             } else {
                 let canvas = this.$refs.button.closest('.box').childNodes[0];
                 canvas.style = "display: block";
                 this.$refs.button.classList.add('liked');
                 setTimeout(async () => {
                     this.like = !this.like;
+                    this.reactPost();
                     this.$refs.button.classList.remove('liked');
                     if (this.like) {
                         canvas.confetti = canvas.confetti || confetti.create(canvas, { resize: true });
@@ -53,22 +65,33 @@ export default {
                     canvas.style = "display: none";
                 }, 500);
             }
+        },
+        reactPost() {
+            let data = {
+                postId: this.post.id,
+                like: this.like
+            }
+            reactPostAPI(data).then(function (result) {
+
+            }).catch(function (err) {
+
+            });
         }
     }
 }
 </script>
 
 <style scoped>
-.button:hover {
+.reactions.button:hover {
     background-color: gainsboro;
 }
 
-.button:focus,
-.button:focus-within {
+.reactions .button:focus,
+.reactions .button:focus-within {
     box-shadow: none;
 }
 
-.button {
+.reactions .button {
     background-color: #ffffff;
     color: black;
     border: 0;
@@ -79,11 +102,11 @@ export default {
     width: 100%;
 }
 
-.button:active {
+.reactions .button:active {
     transform: scale(1.01);
 }
 
-.buttons-contain {
+.reactions .buttons-contain {
     position: relative;
 }
 
