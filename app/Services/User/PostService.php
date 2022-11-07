@@ -3,6 +3,7 @@
 namespace App\Services\User;
 
 use App\Models\Post;
+use App\Models\PostUser;
 use App\Services\Inf\StorageService;
 use App\Services\Inf\VideoStream;
 use Illuminate\Support\Facades\Storage;
@@ -48,11 +49,14 @@ class PostService
 
     public function getPosts($offset = null)
     {
-        if (!$offset) {
-            $data = Post::with('user')->orderBy('created_at', 'DESC')->limit(LIMIT)->get()->toArray();
-        } else {
-            $data = Post::with('user')->orderBy('created_at', 'DESC')->limit(LIMIT)->offset($offset)->get()->toArray();
+        $postQuery = Post::with(['user:id,name'])
+            ->withCount('reactionUser')
+            ->orderBy('created_at', 'DESC')
+            ->limit(LIMIT);
+        if ($offset) {
+            $postQuery = $postQuery->offset($offset);
         }
+        $data = $postQuery->get()->toArray();
         if ($data) {
             $newOffset = $data[0]['id'];
         }
@@ -61,12 +65,32 @@ class PostService
 
     public function stream(String $fileName)
     {
-        $video_path = Storage::path('videos/'.$fileName);
+        $video_path = Storage::path('videos/' . $fileName);
         $tmp = new VideoStream($video_path);
         $tmp->start();
     }
 
-    public function getImageCKFinder(String $fileName) {
-        return $this->storageService->getImage('ckfinder/'.$fileName);
+    public function getImageCKFinder(String $fileName)
+    {
+        return $this->storageService->getImage('ckfinder/' . $fileName);
+    }
+
+    public function reactToPost($data)
+    {
+        $userId = auth()->id();
+        if ($data['like'] == true) {
+            $reaction = PostUser::firstOrCreate([
+                'user_id' => $userId,
+                'post_id' => $data['postId']
+            ]);
+            return $reaction;
+        } else {
+            $reaction = PostUser::where([
+                'user_id' => $userId,
+                'post_id' => $data['postId']
+            ])->first();
+            $result = $reaction->delete();
+            return $result;
+        }
     }
 }

@@ -18,7 +18,11 @@ Route::middleware('auth.api')->group(function() {
     Route::post('/logout', 'UserController@logout');
     Route::post('/ckfinder/upload', 'CKFinderController@uploadImage');
     Route::get('/ckfinder/get-image/{fileName}', 'CKFinderController@getImage')->name('ckfinder.get_image');
-    Route::post('/post/create', 'PostController@create');
+});
+
+Route::middleware('auth.api')->prefix('post')->name('post.')->group(function() {
+    Route::post('/create', 'PostController@create')->name('create');
+    Route::post('/reaction', 'PostController@reaction')->name('reaction');
 });
 
 Route::post('/user/facebook_login', 'FacebookController@fbLogin');

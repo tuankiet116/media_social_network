@@ -19,11 +19,29 @@
                 <source :src="'/api/post/stream/' + userPost.src" type="video/mp4">
             </video>
         </div>
-        <hr>
-        <ReactionComponent/>
+        <div class="columns post-info">
+            <div class="column post-info">
+                <span class="ml-5 has-text-success-dark">
+                    {{ post.reaction_user_count }} 🎉
+                </span>
+            </div>
+            <div class="column post-info has-text-centered">
+                <span>
+                    {{ post.reaction_user_count }} comments
+                </span>
+            </div>
+            <div class="column post-info">
+                <span class="mr-5 is-pulled-right">
+                    {{ post.reaction_user_count }} share
+                </span>
+            </div>
+        </div>
+        <hr class="split-reaction-post">
+        <ReactionComponent :post="userPost" />
     </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import CommentComponent from '../Children/CommentComponent.vue';
 import ReactionComponent from './ReactionComponent.vue';
 export default {
@@ -36,6 +54,9 @@ export default {
         return {
             userPost: this.post
         };
+    },
+    computed: {
+        ...mapGetters({ user: 'getUser' })
     }
 }
 </script>
@@ -72,6 +93,15 @@ hr {
     margin: 1rem 0;
 }
 
+.split-reaction-post {
+    margin: 0 !important;
+}
+
+.post-info {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
 .reactions {
     display: flex;
     align-content: center;
@@ -98,5 +128,6 @@ canvas {
     left: 0;
     width: 100%;
     height: 100%;
+    display: none;
 }
 </style>
