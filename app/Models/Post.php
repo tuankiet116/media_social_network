@@ -28,6 +28,10 @@ class Post extends Model
         return $this->belongsToMany(User::class, PostUser::class, 'post_id', 'user_id');
     }
 
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
+
     public function getIsLikedAttribute() {
         $userLogin = auth()->id();
         if ($userLogin) {

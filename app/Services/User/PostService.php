@@ -49,7 +49,9 @@ class PostService
 
     public function getPosts($offset = null)
     {
-        $postQuery = Post::with(['user:id,name,image'])
+        $postQuery = Post::with(['user:id,name,image', 'comments' => function($query) {
+            return $query->orderBy('created_at', 'DESC')->limit(LIMIT_COMMENT_OVERVIEW)->with('users');
+        }], 'comments.users')
             ->withCount('reactionUser')
             ->orderBy('created_at', 'DESC')
             ->limit(LIMIT);

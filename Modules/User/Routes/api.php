@@ -26,6 +26,10 @@ Route::middleware('auth.api')->prefix('post')->name('post.')->group(function() {
     Route::get('/get/{id}', 'PostController@getPost')->name('get');
 });
 
+Route::middleware('auth.api')->prefix('comment')->name('comment.')->group(function() {
+    Route::post('/create', 'CommentController@create')->name('create');
+});
+
 Route::post('/user/facebook_login', 'FacebookController@fbLogin');
 Route::get('/post/list', 'PostController@getPosts');
 Route::get('/post/stream/{fileName}', 'PostController@stream');
