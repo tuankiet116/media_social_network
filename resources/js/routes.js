@@ -1,5 +1,5 @@
-import CreatePostComponent from './components/ChildComponents/CreatePostComponent';
-import DashboardComponent from './components/ChildComponents/DashboardComponent';
+import CreatePostComponent from './components/CreatePostComponent';
+import DashboardComponent from './components/DashboardComponent';
 
 const routes = [
     { path: '/', component: DashboardComponent, name: 'home' , reload: true},

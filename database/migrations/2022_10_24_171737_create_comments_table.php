@@ -17,7 +17,7 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->bigInteger('user_id', false, true);
             $table->bigInteger('post_id', false, true);
-            $table->bigInteger('belong_id', false, true);
+            $table->bigInteger('belong_id', false, true)->nullable();
             $table->string('content');
             $table->timestamps();
         });

@@ -6,7 +6,7 @@
 
 
 <script>
-import MenuComponent from './ChildComponents/MenuComponent.vue';
+import MenuComponent from './MenuComponent.vue';
 import ProgressBarComponent from './Common/ProgressBarComponent.vue';
 import { mapGetters } from 'vuex';
 
