@@ -9,7 +9,6 @@
 
 <script>
 import CommentComponent from './Common/CommentComponent.vue';
-
 export default {
     components: {
         CommentComponent
