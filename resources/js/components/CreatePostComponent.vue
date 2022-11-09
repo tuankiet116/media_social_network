@@ -46,10 +46,10 @@
     </div>
 </template>
 <script>
-import { createPost } from '../../api/api';
+import { createPost } from '../api/api';
 import { useToast } from "vue-toastification";
-import ClassicEditor from '../../../Libraries/CKEditor5/build/ckeditor';
-import authMixin from '../../mixins';
+import ClassicEditor from '../../Libraries/CKEditor5/build/ckeditor';
+import authMixin from '../mixins';
 export default {
     mixins: [authMixin],
     data() {

@@ -8,7 +8,7 @@
             </button>
         </div>
         <div class="column">
-            <button class="btn button" @click="$emit('displayComment')">
+            <button class="btn button" @click="$emit('loadListComment')">
                 <i class="fa-regular fa-message"></i>
                 <span>Comment</span>
             </button>
@@ -30,7 +30,7 @@
 <script>
 import confetti from 'canvas-confetti';
 import { mapGetters } from 'vuex';
-import { reactPostAPI } from '../../api/api';
+import { reactPostAPI } from '../../../api/api';
 
 export default {
     props: ['post'],
@@ -48,7 +48,7 @@ export default {
                 this.like = !this.like;
                 this.reactPost();
             } else {
-                let canvas = this.$refs.button.closest('.box').childNodes[0];
+                let canvas = this.$refs.button.closest('.post').childNodes[0];
                 canvas.style = "display: block";
                 this.$refs.button.classList.add('liked');
                 setTimeout(async () => {
