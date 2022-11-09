@@ -37,4 +37,9 @@ class PostController extends Controller
         $data = $request->all();
         $this->postService->reactToPost($data);
     }
+
+    public function getPost(int $id) {
+        $data = $this->postService->getPost($id);
+        return $this->responseData($data, 200);
+    }
 }
