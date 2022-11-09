@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
                 'name' => 'Do Tuan Kiet',
                 'email' => 'test@gmail.com',
                 'password' => bcrypt('tuankiet123'),
+                'image' => 'images/default/avatar_default.png',
                 'is_has_page' => 0
             ]
         );
