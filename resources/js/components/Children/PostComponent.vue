@@ -5,13 +5,13 @@
         <canvas ref="canvas"></canvas>
         <div class="user-info">
             <figure class="image is-32x32">
-                <img class="is-rounded" src="/images/default/avatar_default.png">
+                <img class="is-rounded" :src="userPost.user.image">
             </figure>
-            <strong>{{ post.user.name }}</strong>
+            <strong>{{ userPost.user.name }}</strong>
         </div>
         <hr>
         <div class="title">
-            <span class="is-size-4">{{ post.title }}</span>
+            <span class="is-size-4">{{ userPost.title }}</span>
         </div>
         <div class="post-desc" v-html="post.post_description"></div>
         <div class="has-text-centered">
@@ -22,26 +22,28 @@
         <div class="columns post-info">
             <div class="column post-info">
                 <span class="ml-5 has-text-success-dark">
-                    {{ post.reaction_user_count }} 🎉
+                    {{ userPost.reaction_user_count }} 🎉
                 </span>
             </div>
             <div class="column post-info has-text-centered">
                 <span>
-                    {{ post.reaction_user_count }} comments
+                    {{ userPost.reaction_user_count }} comments
                 </span>
             </div>
             <div class="column post-info">
                 <span class="mr-5 is-pulled-right">
-                    {{ post.reaction_user_count }} share
+                    {{ userPost.reaction_user_count }} share
                 </span>
             </div>
         </div>
         <hr class="split-reaction-post">
-        <ReactionComponent :post="userPost" />
+        <ReactionComponent @postRefresh="fetchPost" @displayComment="handleDisplayComment" :post="userPost" />
+        <CommentComponent v-if="displayComment"/>
     </div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import { getPost } from '../../api/api';
 import CommentComponent from '../Children/CommentComponent.vue';
 import ReactionComponent from './ReactionComponent.vue';
 export default {
@@ -52,11 +54,23 @@ export default {
     props: ['post'],
     data() {
         return {
-            userPost: this.post
+            userPost: this.post,
+            displayComment: false
         };
     },
     computed: {
         ...mapGetters({ user: 'getUser' })
+    },
+    methods: {
+        fetchPost() {
+            let _this = this;
+            getPost(this.userPost.id).then((result) => {
+                _this.userPost = result.data;
+            });
+        },
+        handleDisplayComment() {
+            this.displayComment = !this.displayComment;
+        }
     }
 }
 </script>

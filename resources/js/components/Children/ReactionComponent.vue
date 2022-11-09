@@ -8,7 +8,7 @@
             </button>
         </div>
         <div class="column">
-            <button class="btn button">
+            <button class="btn button" @click="$emit('displayComment')">
                 <i class="fa-regular fa-message"></i>
                 <span>Comment</span>
             </button>
@@ -71,11 +71,10 @@ export default {
                 postId: this.post.id,
                 like: this.like
             }
+            let _this = this;
             reactPostAPI(data).then(function (result) {
-
-            }).catch(function (err) {
-
-            });
+                _this.$emit('postRefresh');
+            }).catch(function (err) {});
         }
     }
 }

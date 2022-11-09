@@ -47,7 +47,7 @@
                     <a class="navbar-link">
                         <strong>{{ user.name }}</strong>
                         <span>
-                            <img class="is-rounded" src="/images/default/avatar_default.png">
+                            <img class="is-rounded" :src="user.image">
                         </span>
                     </a>
                     <div class="navbar-dropdown">

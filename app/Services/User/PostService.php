@@ -49,7 +49,7 @@ class PostService
 
     public function getPosts($offset = null)
     {
-        $postQuery = Post::with(['user:id,name'])
+        $postQuery = Post::with(['user:id,name,image'])
             ->withCount('reactionUser')
             ->orderBy('created_at', 'DESC')
             ->limit(LIMIT);
@@ -92,5 +92,12 @@ class PostService
             $result = $reaction->delete();
             return $result;
         }
+    }
+
+    public function getPost(int $id) {
+        $post = Post::with(['user:id,name,image'])
+            ->withCount('reactionUser')
+            ->first($id);
+        return $post;
     }
 }
