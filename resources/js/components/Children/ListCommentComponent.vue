@@ -1,14 +1,18 @@
 <template>
     <div class="container">
         <CommentComponent v-for="comment in post.comments" :comment="comment" />
-        <div class="wrapper">
-            <button class="button is-small is-info is-rounded">Show More</button>
+        <div v-if="!isLoadMore" class="wrapper" ref="wrapper">
+            <button class="button is-small is-info is-rounded" @click="loadComments">Show More</button>
+        </div>
+        <div v-if="post.comments.length">
+            <button class="button is-small is-info is-rounded" @click="loadComments">Show More</button>
         </div>
     </div>
 </template>
 
 <script>
 import CommentComponent from './Common/CommentComponent.vue';
+
 export default {
     components: {
         CommentComponent
@@ -16,7 +20,9 @@ export default {
     props: ['post'],
     data() {
         return {
-            isShowDetail: false
+            isLoadMore: false,
+            comments: this.post.comments,
+            offset: 0
         }
     },
     computed: {
@@ -25,8 +31,11 @@ export default {
         }
     },
     methods: {
+        loadComments() {
+            this.$emit('loadListComment', this.offset);
+            this.isLoadMore = true;
+        }
     }
-
 }
 </script>
 <style scoped>

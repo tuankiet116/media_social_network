@@ -8,7 +8,7 @@
             </button>
         </div>
         <div class="column">
-            <button class="btn button" @click="$emit('loadListComment')">
+            <button class="btn button" @click="$emit('focusComment')">
                 <i class="fa-regular fa-message"></i>
                 <span>Comment</span>
             </button>

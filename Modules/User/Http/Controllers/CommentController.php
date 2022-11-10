@@ -4,7 +4,6 @@ namespace Modules\User\Http\Controllers;
 
 use App\Services\User\CommentService;
 use App\Traits\ApiResponse;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -29,7 +28,8 @@ class CommentController extends Controller
         }
     }
 
-    public function getComments(int $postID) {
-        
+    public function getComments(int $postID, int $offset = 0) {
+        $data = $this->commentService->getComments($postID, $offset);
+        return $this->responseData($data, 200);
     }
 }
