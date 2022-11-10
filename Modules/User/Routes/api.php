@@ -23,6 +23,7 @@ Route::middleware('auth.api')->group(function() {
 Route::middleware('auth.api')->prefix('post')->name('post.')->group(function() {
     Route::post('/create', 'PostController@create')->name('create');
     Route::post('/reaction', 'PostController@reaction')->name('reaction');
+    Route::post('/reaction/count', 'PostUserController@getNumberLikePost')->name('reaction.count');
     Route::get('/get/{id}', 'PostController@getPost')->name('get');
 });
 
