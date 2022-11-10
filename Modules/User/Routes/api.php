@@ -28,6 +28,7 @@ Route::middleware('auth.api')->prefix('post')->name('post.')->group(function() {
 
 Route::middleware('auth.api')->prefix('comment')->name('comment.')->group(function() {
     Route::post('/create', 'CommentController@create')->name('create');
+    Route::get('/list/{postId}/{offset?}', 'CommentController@getComments')->name('list');
 });
 
 Route::post('/user/facebook_login', 'FacebookController@fbLogin');
