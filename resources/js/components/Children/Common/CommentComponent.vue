@@ -11,7 +11,7 @@
             </div>
             <nav v-if="user" class="level is-mobile">
                 <div class="level-left">
-                    <a class="level-item" @click="handleDisplaySubComment">
+                    <a class="level-item" @click="handleDisplayReply">
                         <span class="icon is-small"><i class="fas fa-reply"></i></span>
                     </a>
                     <a class="level-item">
@@ -19,7 +19,7 @@
                     </a>
                 </div>
             </nav>
-            <article v-if="displaySubComment && user" class="media sub-comment">
+            <article v-if="displayReply && user" class="media sub-comment">
                 <figure class="media-left">
                     <p class="image is-32x32">
                         <img class="is-rounded" :src="user.image">
@@ -49,7 +49,7 @@ export default {
     props: ['comment'],
     data() {
         return {
-            displaySubComment: false,
+            displayReply: false,
             isShowDetail: false
         }
     },
@@ -59,8 +59,9 @@ export default {
         }
     },
     methods: {
-        handleDisplaySubComment() {
-            this.displaySubComment = !this.displaySubComment;
+        handleDisplayReply() {
+            this.displayReply = !this.displayReply;
+            this.$emit('displayReply');
         }
     }
 

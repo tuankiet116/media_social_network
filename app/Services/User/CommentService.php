@@ -32,13 +32,13 @@ class CommentService
     {
         $comments = Comment::with('users')
             ->where('post_id', $postId)
-            ->orderBy('created_at', 'DESC')
-            ->limit(LIMIT);
+            ->orderBy('created_at', 'DESC');
         if ($offset) {
             $comments = $comments->offset($offset);
         }
-        $comments = $comments->get();
-        $newOffset = $comments[0]['id'];
+        $comments = $comments->limit(LIMIT)->get();
+        $lengthComment = $comments->count();
+        $newOffset = $offset + $lengthComment;
         return [
             'comments' => $comments,
             'offset' => $newOffset

@@ -26,7 +26,7 @@
                 </div>
                 <div class="column post-info has-text-centered">
                     <span>
-                        {{ userPost.reaction_user_count }} comments
+                        {{ userPost.comments_count }} comments
                     </span>
                 </div>
                 <div class="column post-info">
@@ -61,7 +61,8 @@
             </div>
         </article>
         <ListCommentComponent ref="listComment" @loadListComment="handleLoadListComment($event)"
-            v-if="userPost.comments.length" :post="userPost" />
+            @hiddenCommentInput="focusComment=false"
+            v-if="comments.length" :comments="comments" />
         <hr />
     </div>
 </template>
@@ -79,6 +80,7 @@ export default {
     data() {
         return {
             userPost: this.post,
+            comments: this.post.comments,
             focusComment: false,
             commentContent: "",
         };
@@ -106,7 +108,7 @@ export default {
             }
 
             createComment(data).then(function (result) {
-                _this.userPost.comments.unshift(result.data);
+                _this.comments.unshift(result.data);
                 _this.focusComment = false;
                 _this.commentContent = "";
             }).catch(function (error) {
@@ -115,15 +117,19 @@ export default {
         },
         handleLoadListComment(offset) {
             let _this = this;
+            this.focusComment = true;
             getListCommentAPI(this.post.id, offset).then(function (result) {
                 _this.isLoadMore = true;
-                if (result.data.comments.length < _this.userPost.comments.length) {
-                    _this.userPost.comments.push(result.data.comments);
+                if (result.data.comments.length == 0) {
+                    _this.$refs.listComment.isLoadMore = false;
                 } else {
-                    _this.userPost.comments = result.data.comments;
+                    _this.comments.push(...result.data.comments);
                     _this.$refs.listComment.offset = result.data.offset;
                 }
             }).catch(function (error) {
+                if (!_this.user) {
+                    window.location.href = '/user/login';
+                }
             });
         }
     }

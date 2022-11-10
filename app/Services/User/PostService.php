@@ -47,22 +47,22 @@ class PostService
         return $fileName;
     }
 
-    public function getPosts($offset = null)
+    public function getPosts($offset = 0)
     {
         $postQuery = Post::with(['user:id,name,image', 'comments' => function($query) {
             return $query->orderBy('created_at', 'DESC')->limit(LIMIT_COMMENT_OVERVIEW)->with('users');
         }], 'comments.users')
-            ->withCount('reactionUser')
+            ->withCount('reactionUser', 'comments')
             ->orderBy('created_at', 'DESC')
             ->limit(LIMIT);
         if ($offset) {
             $postQuery = $postQuery->offset($offset);
         }
-        $data = $postQuery->get()->toArray();
-        if ($data) {
-            $newOffset = $data[0]['id'];
+        $posts = $postQuery->get();
+        if ($posts) {
+            $newOffset = $posts->count() + $offset;
         }
-        return array('data' => $data, 'offset' => $newOffset ?? null);
+        return array('data' => $posts, 'offset' => $newOffset ?? null);
     }
 
     public function stream(String $fileName)
