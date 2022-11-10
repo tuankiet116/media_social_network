@@ -12,3 +12,4 @@ export const reactPostAPI = function (data) {
 }
 
 export const createComment = (data) => axios.post('api/comment/create', data);
+export const getListCommentAPI = (postID, offset) => axios.get(`api/comment/list/${postID}/${offset}`);

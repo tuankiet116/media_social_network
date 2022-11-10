@@ -36,7 +36,7 @@
                 </div>
             </div>
             <hr class="split-reaction-post">
-            <ReactionComponent @postRefresh="fetchPost" @loadListComment="loadListComment" :post="userPost" />
+            <ReactionComponent @postRefresh="fetchPost" @focusComment="handleFocusComment" :post="userPost" />
         </div>
         <article v-if="focusComment && user" class="media">
             <figure class="media-left">
@@ -60,13 +60,14 @@
                 </nav>
             </div>
         </article>
-        <ListCommentComponent v-if="userPost.comments.length" :post="userPost" />
-        <hr/>
+        <ListCommentComponent ref="listComment" @loadListComment="handleLoadListComment($event)"
+            v-if="userPost.comments.length" :post="userPost" />
+        <hr />
     </div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { getPost, createComment } from '../../api/api';
+import { getPost, createComment, getListCommentAPI } from '../../api/api';
 import ListCommentComponent from './ListCommentComponent.vue';
 import ReactionComponent from './Common/ReactionComponent.vue';
 export default {
@@ -92,8 +93,9 @@ export default {
                 _this.userPost = result.data;
             });
         },
-        loadListComment() {
+        handleFocusComment() {
             this.focusComment = !this.focusComment;
+            this.$refs.listComment.loadComments();
         },
         handleCommentToPost() {
             let _this = this;
@@ -103,11 +105,25 @@ export default {
                 parent_id: null
             }
 
-            createComment(data).then(function(result) {
+            createComment(data).then(function (result) {
                 _this.userPost.comments.unshift(result.data);
                 _this.focusComment = false;
-            }).catch(function(error) {
+                _this.commentContent = "";
+            }).catch(function (error) {
                 console.log(error);
+            });
+        },
+        handleLoadListComment(offset) {
+            let _this = this;
+            getListCommentAPI(this.post.id, offset).then(function (result) {
+                _this.isLoadMore = true;
+                if (result.data.comments.length < _this.userPost.comments.length) {
+                    _this.userPost.comments.push(result.data.comments);
+                } else {
+                    _this.userPost.comments = result.data.comments;
+                    _this.$refs.listComment.offset = result.data.offset;
+                }
+            }).catch(function (error) {
             });
         }
     }
