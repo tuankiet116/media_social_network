@@ -1,12 +1,9 @@
 <template>
     <div class="container">
-        <CommentComponent v-for="comment in post.comments" :comment="comment" />
-        <div v-if="!isLoadMore" class="wrapper" ref="wrapper">
-            <button class="button is-small is-info is-rounded" @click="loadComments">Show More</button>
+        <CommentComponent ref="comment" @displayReply="hiddenReply(index)" v-for="(comment, index) in comments" :comment="comment" />
+        <div v-if="isLoadMoreWrapper" class="wrapper" ref="wrapper">
         </div>
-        <div v-if="post.comments.length">
-            <button class="button is-small is-info is-rounded" @click="loadComments">Show More</button>
-        </div>
+        <button v-if="isLoadMore" class="button is-small is-info is-rounded" @click="loadComments">Show More</button>
     </div>
 </template>
 
@@ -17,11 +14,11 @@ export default {
     components: {
         CommentComponent
     },
-    props: ['post'],
+    props: ['comments'],
     data() {
         return {
-            isLoadMore: false,
-            comments: this.post.comments,
+            isLoadMoreWrapper: true,
+            isLoadMore: true,
             offset: 0
         }
     },
@@ -33,7 +30,14 @@ export default {
     methods: {
         loadComments() {
             this.$emit('loadListComment', this.offset);
-            this.isLoadMore = true;
+            this.isLoadMoreWrapper = false;
+        },
+        hiddenReply(indexComponentException) {
+            this.$refs.comment.forEach(function(component, index) {
+                if (index !== indexComponentException) {
+                    component.displayReply = false;
+                }
+            });
         }
     }
 }
@@ -56,7 +60,7 @@ button {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: -1rem;
+    bottom: -0.8rem;
     margin-left: auto;
     margin-right: auto;
     width: 100px;
