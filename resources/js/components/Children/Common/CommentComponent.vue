@@ -34,13 +34,21 @@
                     <nav class="level">
                         <div class="level-left">
                             <div class="level-item">
-                                <a class="button is-info">Submit</a>
+                                <a class="button is-info is-small">Submit</a>
                             </div>
+                            <div class="level-item">
+                                <a @click="displayReply = false" class="button is-light is-small">Cancel</a>
+                            </div>
+                        </div>
+                        <div class="level-left">
                         </div>
                     </nav>
                 </div>
             </article>
         </div>
+        <figure class="media-right">
+            <button class="delete" aria-label="delete"></button>
+        </figure>
     </article>
 </template>
 
@@ -67,3 +75,14 @@ export default {
 
 }
 </script>
+
+<style scoped>
+textarea {
+    height: 4em;
+    min-height: 4em !important;
+}
+
+.media {
+    margin-right: 1rem;
+}
+</style>
