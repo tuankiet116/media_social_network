@@ -38,6 +38,7 @@ export default {
 }
 </script>
 <style scoped>
+
 @media screen and (min-width: 769px) {
     .post>.box:nth-child(1) {
         margin-top: 10% !important;

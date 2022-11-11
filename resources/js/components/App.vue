@@ -1,4 +1,5 @@
 <template>
+    <div class="home"></div>
     <MenuComponent @increaseKey="handleKeyComponent($event)" :user="user"></MenuComponent>
     <router-view :key="key"></router-view>
     <ProgressBarComponent v-if="getPostProgressUpload" :percent-value="getPostProgressUpload" class="progress-bar" />
@@ -54,6 +55,13 @@ export default {
 </script>
 
 <style scoped>
+    .home {
+        background-color: rgb(245, 245, 245) !important;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+    }
     .progress-bar {
         position: fixed;
         left: 50%;
