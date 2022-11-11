@@ -1,10 +1,5 @@
 <template>
-<<<<<<< HEAD
     <MenuComponent @increaseKey="handleKeyComponent($event)" :user="getUser"></MenuComponent>
-=======
-    <div class="home"></div>
-    <MenuComponent @increaseKey="handleKeyComponent($event)" :user="user"></MenuComponent>
->>>>>>> c745c9a (fix ui for dashboard and post)
     <router-view :key="key"></router-view>
     <ProgressBarComponent v-if="getPostProgressUpload" :percent-value="getPostProgressUpload" class="progress-bar" />
 </template>
