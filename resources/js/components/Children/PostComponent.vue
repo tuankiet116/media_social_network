@@ -40,7 +40,7 @@
         </div>
         <article v-if="focusComment && user" class="media">
             <figure class="media-left">
-                <p class="image is-64x64">
+                <p class="image is-32x32">
                     <img class="is-rounded" :src="user.image">
                 </p>
             </figure>
@@ -54,7 +54,10 @@
                 <nav class="level">
                     <div class="level-left">
                         <div class="level-item">
-                            <a @click="handleCommentToPost" class="button is-info">Submit</a>
+                            <a @click="handleCommentToPost" class="button is-small is-info">Submit</a>
+                        </div>
+                        <div class="level-item">
+                            <a @click="focusComment=false" class="button is-small is-light">Cancel</a>
                         </div>
                     </div>
                 </nav>
@@ -101,6 +104,7 @@ export default {
         },
         handleCommentToPost() {
             let _this = this;
+            if (this.commentContent == "") return;
             let data = {
                 content: this.commentContent,
                 post_id: this.userPost.id,
@@ -212,5 +216,14 @@ canvas {
     width: 100%;
     height: 100%;
     display: none;
+}
+
+textarea {
+    height: 4em;
+    min-height: 4em !important;
+}
+
+.media{
+    margin-right: 2rem;
 }
 </style>
