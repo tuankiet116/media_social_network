@@ -5,7 +5,7 @@
     src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v15.0&appId=520447719756704&autoLogAppEvents=1"
     nonce="Sr2unXDw"></script>
   <a href="{{ route('home') }}" class="row brand align-items-center" style="z-index: 1000; color: white">
-    <img src="/images/default/brand.png">
+    <img class="brand-image" src="/images/default/brand.png">
     <div class="brand-title" style="width: 100px">
       <h3>{{ config('app.name') }}</h3>
     </div>

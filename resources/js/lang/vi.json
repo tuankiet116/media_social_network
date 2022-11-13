@@ -24,5 +24,14 @@
     "post": {
         "auth_react": "Bạn cần đăng nhập để bình luận và tương tác.",
         "love": "Yêu thích"
+    },
+    "times_ago": {
+        "recently": " Vừa xong",
+        "second": " Giây trước",
+        "minute": " Phút trước",
+        "hour": " Giờ trước",
+        "date": " Ngày trước",
+        "month": " Tháng trước",
+        "year": " Năm trước"
     }
 }

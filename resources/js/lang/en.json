@@ -24,5 +24,14 @@
     "post": {
         "auth_react": "You need to login before comment and reactions",
         "love": "Like"
+    },
+    "times_ago": {
+        "recently": " Recently",
+        "second": " Seconds Ago",
+        "minute": " Minutes Ago",
+        "hour": " Hours Ago",
+        "date": " Days Ago",
+        "month": " Months Ago",
+        "year": " Years Ago"
     }
 }

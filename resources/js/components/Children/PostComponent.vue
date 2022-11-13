@@ -1,5 +1,5 @@
 <template>
-    <div class="box column is-two-thirds-tablet is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5">
+    <div class="box post-box column is-two-thirds-tablet is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5">
         <div ref="post" class="post">
             <canvas ref="canvas"></canvas>
             <div class="user-info">
@@ -44,23 +44,25 @@
                     <img class="is-rounded" :src="user.image">
                 </p>
             </figure>
-            <div class="media-content">
-                <div class="field">
-                    <p class="control">
-                        <textarea v-model="commentContent" class="textarea" placeholder="Add a comment..." autofocus>
-                        </textarea>
-                    </p>
-                </div>
-                <nav class="level">
-                    <div class="level-left">
-                        <div class="level-item">
-                            <a @click="handleCommentToPost" class="button is-small is-info">Submit</a>
-                        </div>
-                        <div class="level-item">
-                            <a @click="focusComment=false" class="button is-small is-light">Cancel</a>
-                        </div>
+            <div class="box comment-box">
+                <div class="media-content">
+                    <div class="field">
+                        <p class="control">
+                            <textarea v-model="commentContent" class="textarea" placeholder="Add a comment..." autofocus>
+                            </textarea>
+                        </p>
                     </div>
-                </nav>
+                    <nav class="level">
+                        <div class="level-left">
+                            <div class="level-item">
+                                <a @click="handleCommentToPost" class="button is-small is-info">Submit</a>
+                            </div>
+                            <div class="level-item">
+                                <a @click="focusComment=false" class="button is-small is-light">Cancel</a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
             </div>
         </article>
         <ListCommentComponent ref="listComment" @loadListComment="handleLoadListComment($event)"
@@ -115,6 +117,7 @@ export default {
                 _this.comments.unshift(result.data);
                 _this.focusComment = false;
                 _this.commentContent = "";
+                _this.userPost.comments_count++;
             }).catch(function (error) {
                 console.log(error);
             });
@@ -126,6 +129,9 @@ export default {
                 _this.isLoadMore = true;
                 if (result.data.comments.length == 0) {
                     _this.$refs.listComment.isLoadMore = false;
+                } else if (result.data.comments.length > _this.comments.length) {
+                    _this.comments = result.data.comments;
+                    _this.$refs.listComment.offset = result.data.offset;
                 } else {
                     _this.comments.push(...result.data.comments);
                     _this.$refs.listComment.offset = result.data.offset;
@@ -140,10 +146,14 @@ export default {
 }
 </script>
 <style scoped>
-.box {
-    margin: 3% auto 0 auto;
+.post-box {
+    margin: 2% auto 3% auto;
     max-width: 600px;
     padding: 0;
+}
+
+.comment-box {
+    width: 100%;
 }
 
 .post {
@@ -204,7 +214,7 @@ export default {
 }
 
 @media screen and (max-width: 480px) {
-    .box {
+    .post-box {
         margin-left: 0;
         margin-right: 0;
     }
@@ -233,6 +243,6 @@ textarea {
 }
 
 .media{
-    margin-right: 2rem;
+    margin-right: 1rem;
 }
 </style>
