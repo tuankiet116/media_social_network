@@ -25,6 +25,9 @@
         "auth_react": "You need to login before comment and reactions",
         "love": "Like"
     },
+    "comment": {
+        "confirm_delete": "Do you want to delete your comment?"
+    },
     "times_ago": {
         "recently": " Recently",
         "second": " Seconds Ago",

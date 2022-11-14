@@ -8,7 +8,7 @@ import vi from './lang/vi.json';
 import routes from './routes.js';
 import stores from './store/stores';
 import CKEditor from "@ckeditor/ckeditor5-vue";
-import Toast,{ POSITION } from "vue-toastification";
+import Toast, { POSITION } from "vue-toastification";
 import Echo from "laravel-echo";
 import "vue-toastification/dist/index.css";
 
@@ -46,6 +46,22 @@ app.use(store);
 app.use(router);
 app.use(Toast, {
     position: POSITION.TOP_RIGHT
+});
+
+app.directive('outsider', {
+    mounted: (el, binding) => {
+        el.clickOutsideEvent = event => {
+            // here I check that click was outside the el and his children
+            if (!(el == event.target || el.contains(event.target))) {
+                // and if it did, call method provided in attribute value
+                binding.value();
+            }
+        };
+        document.addEventListener("click", el.clickOutsideEvent);
+    },
+    unmounted: el => {
+        document.removeEventListener("click", el.clickOutsideEvent);
+    },
 });
 
 app.mount('#app');

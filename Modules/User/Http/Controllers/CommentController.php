@@ -32,4 +32,9 @@ class CommentController extends Controller
         $data = $this->commentService->getComments($postID, $offset);
         return $this->responseData($data, 200);
     }
+
+    public function deleteComment(int $commentId) {
+        $result = $this->commentService->deleteComment($commentId);
+        return $this->responseData($result, 200);
+    }
 }

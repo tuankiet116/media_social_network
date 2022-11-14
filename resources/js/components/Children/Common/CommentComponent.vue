@@ -8,14 +8,39 @@
         <div class="media comment-box">
             <div class="media-content">
                 <div class="content">
-                    <p>
-                        <strong>{{ comment.users.name }}</strong> <small>{{ createTime }}</small>
-                        <br>
+                    <p class="contain-infor">
+                        <span>
+                            <strong>{{ comment.users.name }}</strong>&nbsp;&nbsp;
+                            <small>{{ createTime }}</small>&nbsp;
+                            <i class="fa-regular fa-clock"></i>
+                        </span>
+                    <figure v-outsider="handleUnDisplayHelper" class="media-right dots-container is-rounded">
+                        <button class="button is-rounded is-small" @click="this.displayHelper = !this.displayHelper;">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </button>
+                        <div href="#" class="arrow-box box" v-show="displayHelper">
+                            <a v-if="user.id == comment.user_id" class="navbar-item" @click="handleDeleteComment">
+                                <span>Delete</span>
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                            <hr />
+                            <a class="navbar-item">
+                                <span>Report</span>
+                                <i class="fa-solid fa-flag"></i>
+                            </a>
+                            <hr />
+                            <a class="navbar-item" @click="displayHelper = false">
+                                <span>Close</span>
+                                <i class="fa-solid fa-xmark"></i>
+                            </a>
+                        </div>
+                    </figure>
                     </p>
                     <div class="content box is-rounded">
                         {{ comment.content }}
                     </div>
                 </div>
+
                 <nav v-if="user" class="level is-mobile">
                     <div class="level-left">
                         <a class="level-item">
@@ -46,7 +71,8 @@
                                     <a class="button is-info is-rounded is-small">Submit</a>
                                 </div>
                                 <div class="level-item">
-                                    <a @click="displayReply = false" class="button is-light is-small is-rounded">Cancel</a>
+                                    <a @click="displayReply = false"
+                                        class="button is-light is-small is-rounded">Cancel</a>
                                 </div>
                             </div>
                             <div class="level-left">
@@ -55,31 +81,24 @@
                     </div>
                 </article>
             </div>
-
-            <figure class="media-right dots-container is-rounded">
-                <button class="button is-rounded">
-                    <i class="fa-solid fa-ellipsis"></i>
-                </button>
-            </figure>
-            <div href="#" class="arrow-box box"> 
-                <a class="navbar-item">
-                    <span>Delete</span>
-                </a>
-            </div>
         </div>
     </article>
+    <ConfirmBoxComponent :message="'asdfsaf'"/>
 </template>
 
 <script>
 import { calculateTime } from '../../../helpers/common';
+import ConfirmBoxComponent from '../../Common/ConfirmBoxComponent.vue';
 
 export default {
-    props: ['comment'],
+    props: ["comment"],
+    components: { ConfirmBoxComponent },
     data() {
         return {
             displayReply: false,
-            isShowDetail: false
-        }
+            isShowDetail: false,
+            displayHelper: false
+        };
     },
     computed: {
         user() {
@@ -92,10 +111,14 @@ export default {
     methods: {
         handleDisplayReply() {
             this.displayReply = !this.displayReply;
-            this.$emit('displayReply');
+            this.$emit("displayReply");
+        },
+        handleUnDisplayHelper() {
+            this.displayHelper = false;
+        },
+        handleDeleteComment() {
         }
-    }
-
+    },
 }
 </script>
 
@@ -115,21 +138,30 @@ textarea {
 .comment-box {
     width: 100%;
     position: relative;
+    margin: 0 !important;
 }
 
-.arrow-box{
-  position: absolute;
-  width:220px;
-  background: #19B3E6;
-  line-height: 40px;
-  margin-bottom:30px; 
-  text-align:center;
-  color:black;
-  right: 2rem;
-  padding: 0;
+.arrow-box {
+    position: absolute;
+    width: 220px;
+    background: #19B3E6;
+    line-height: 40px;
+    margin-bottom: 30px;
+    text-align: center;
+    right: 2rem;
+    padding: 0;
+    top: 0.5rem;
 }
 
-.arrow-box:before{
+.arrow-box a {
+    color: white;
+}
+
+.arrow-box a:hover {
+    color: black;
+}
+
+.arrow-box:before {
     content: "";
     position: absolute;
     right: -7px;
@@ -139,6 +171,21 @@ textarea {
     border-left: 10px solid #19B3E6;
 }
 
+.arrow-box i {
+    margin-left: auto;
+}
+
+hr {
+    padding: 0;
+    margin: 0;
+}
+
+.contain-infor {
+    display: flex;
+    align-items: center;
+}
+
 .dots-container {
+    margin: 0 0 0 auto !important;
 }
 </style>

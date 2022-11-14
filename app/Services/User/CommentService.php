@@ -44,4 +44,11 @@ class CommentService
             'offset' => $newOffset
         ];
     }
+
+    public function deleteComment(int $commentId) {
+        $userId = auth()->id();
+        $comment = Comment::where(['id' => $commentId, 'user_id' => $userId])->get();
+        $result = $comment->delete();
+        return $result;
+    }
 }

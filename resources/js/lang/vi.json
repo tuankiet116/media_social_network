@@ -25,6 +25,9 @@
         "auth_react": "Bạn cần đăng nhập để bình luận và tương tác.",
         "love": "Yêu thích"
     },
+    "comment": {
+        "confirm_delete": "Bạn có muốn xóa bình luận của mình?"
+    },
     "times_ago": {
         "recently": " Vừa xong",
         "second": " Giây trước",
