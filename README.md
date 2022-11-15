@@ -1,6 +1,6 @@
 <p align="center">
     <image src="./public/favicon.ico" width="100px"></image>
-    <h2 style="color: #92A8D1; font-size:20px; font-family: `Niconne`, cursive" align="center">Movies Sharing Social Network</h2>
+    <h2 style="color: #92A8D1; font-size:20px; font-family: `Niconne`, cursive" align="center">Media Social Network</h2>
 </p>
 <div>
 <h4 style="color: #92A8D1">
