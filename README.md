@@ -22,5 +22,10 @@
 <li>composer install</li>
 <li>npm install</li>
 <li>Config your env and APP_URL in env that need to be the same with URL in Facebook Developer Console</li>
+<li>Run php artisan serve</li>
+<li>Run php artisan migrate</li>
+<li>Run php artisan db:seed</li>
+<li>npm install</li>
+<li>npm run watch</li>
 </ul>
 </div>
