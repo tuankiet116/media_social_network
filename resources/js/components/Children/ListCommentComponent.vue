@@ -1,9 +1,11 @@
 <template>
     <div class="container">
-        <CommentComponent ref="comment" @displayReply="hiddenReply(index)" v-for="(comment, index) in comments" :comment="comment" />
+        <CommentComponent ref="comment" v-for="(comment, index) in comments" :comment="comment"
+            @deleteComment="$emit('deleteComment', $event)" @displayReply="hiddenReply(index)" />
         <div v-if="isLoadMoreWrapper" class="wrapper" ref="wrapper">
         </div>
-        <button v-if="isLoadMore" class="button is-small is-info is-rounded" @click="loadComments">Show More</button>
+        <button v-if="isLoadMore && comments.length" class="button is-small is-info is-rounded"
+            @click="loadComments">Show More</button>
     </div>
 </template>
 
@@ -33,7 +35,7 @@ export default {
             this.isLoadMoreWrapper = false;
         },
         hiddenReply(indexComponentException) {
-            this.$refs.comment.forEach(function(component, index) {
+            this.$refs.comment.forEach(function (component, index) {
                 if (index !== indexComponentException) {
                     component.displayReply = false;
                 }

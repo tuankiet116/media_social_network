@@ -6,7 +6,35 @@
                 <figure class="image is-32x32">
                     <img class="is-rounded" :src="userPost.user.image">
                 </figure>
-                <strong>{{ userPost.user.name }}</strong>
+                <div class="post_user">
+                    <p><strong>{{ userPost.user.name }}</strong></p>
+                    <p>
+                        <i class="fa-regular fa-clock"></i>&nbsp;
+                        <small>{{ timeCreated }}</small>
+
+                    </p>
+                </div>
+                <figure v-outsider="handleUnDisplayHelper" class="dots-container is-rounded">
+                    <button class="button is-rounded is-small" @click="this.displayHelper = !this.displayHelper;">
+                        <i class="fa-solid fa-ellipsis"></i>
+                    </button>
+                    <div href="#" class="arrow-box box" v-show="displayHelper">
+                        <a v-if="user && user.id == userPost.user_id" class="navbar-item" @click="handleDeleteComment">
+                            <span>Delete</span>
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                        <hr />
+                        <a class="navbar-item">
+                            <span>Report</span>
+                            <i class="fa-solid fa-flag"></i>
+                        </a>
+                        <hr />
+                        <a class="navbar-item" @click="displayHelper = false">
+                            <span>Close</span>
+                            <i class="fa-solid fa-xmark"></i>
+                        </a>
+                    </div>
+                </figure>
             </div>
             <hr class="split-post-user">
             <div class="title">
@@ -48,7 +76,8 @@
                 <div class="media-content">
                     <div class="field">
                         <p class="control">
-                            <textarea v-model="commentContent" class="textarea" placeholder="Add a comment..." autofocus>
+                            <textarea v-model="commentContent" class="textarea" placeholder="Add a comment..."
+                                autofocus>
                             </textarea>
                         </p>
                     </div>
@@ -58,7 +87,7 @@
                                 <a @click="handleCommentToPost" class="button is-small is-info">Submit</a>
                             </div>
                             <div class="level-item">
-                                <a @click="focusComment=false" class="button is-small is-light">Cancel</a>
+                                <a @click="focusComment = false" class="button is-small is-light">Cancel</a>
                             </div>
                         </div>
                     </nav>
@@ -66,20 +95,26 @@
             </div>
         </article>
         <ListCommentComponent ref="listComment" @loadListComment="handleLoadListComment($event)"
-            @hiddenCommentInput="focusComment=false"
-            v-if="comments.length" :comments="comments" />
+            @hiddenCommentInput="focusComment = false" @deleteComment="showConfirmDeleteComment($event)"
+            :comments="comments" />
         <hr />
     </div>
+    <ConfirmDeleteComponent v-if="isShowConfirmComment" :message="$t('comment.confirm_delete')"
+        @confirm="handleDeleteComment" @cancel="hideConfirmDeleteComment" />
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { getPost, createComment, getListCommentAPI } from '../../api/api';
+import { getPost, createComment, getListCommentAPI, deleteCommentAPI } from '../../api/api';
 import ListCommentComponent from './ListCommentComponent.vue';
 import ReactionComponent from './Common/ReactionComponent.vue';
+import ConfirmDeleteComponent from './Common/ConfirmDeleteComponent.vue';
+import { calculateTime } from '../../helpers/common';
+
 export default {
     components: {
         ListCommentComponent,
-        ReactionComponent
+        ReactionComponent,
+        ConfirmDeleteComponent
     },
     props: ['post'],
     data() {
@@ -88,10 +123,16 @@ export default {
             comments: this.post.comments,
             focusComment: false,
             commentContent: "",
+            isShowConfirmComment: false,
+            idCommentDelete: null,
+            displayHelper: false
         };
     },
     computed: {
-        ...mapGetters({ user: 'getUser' })
+        ...mapGetters({ user: 'getUser' }),
+        timeCreated() {
+            return calculateTime(this.userPost.created_at, this)
+        }
     },
     methods: {
         fetchPost() {
@@ -99,6 +140,9 @@ export default {
             getPost(this.userPost.id).then((result) => {
                 _this.userPost = result.data;
             });
+        },
+        handleUnDisplayHelper() {
+            this.displayHelper = false;
         },
         handleFocusComment() {
             this.focusComment = !this.focusComment;
@@ -129,7 +173,7 @@ export default {
                 _this.isLoadMore = true;
                 if (result.data.comments.length == 0) {
                     _this.$refs.listComment.isLoadMore = false;
-                } else if (result.data.comments.length > _this.comments.length) {
+                } else if (result.data.comments.length >= _this.comments.length) {
                     _this.comments = result.data.comments;
                     _this.$refs.listComment.offset = result.data.offset;
                 } else {
@@ -141,15 +185,39 @@ export default {
                     window.location.href = '/user/login';
                 }
             });
+        },
+        handleDeleteComment() {
+            let _this = this;
+            deleteCommentAPI(this.idCommentDelete).then(result => {
+                if (result.data == true) {
+                    let indexComment = _this.comments.findIndex(cm => cm.id == _this.idCommentDelete);
+                    _this.comments.splice(indexComment, 1);
+                    _this.userPost.comments_count--;
+                    _this.idCommentDelete = null;
+                    _this.isShowConfirmComment = false;
+                }
+            })
+        },
+        showConfirmDeleteComment(idCommentDelete) {
+            this.isShowConfirmComment = true;
+            this.idCommentDelete = idCommentDelete;
+        },
+        hideConfirmDeleteComment() {
+            this.isShowConfirmComment = false;
+            this.idCommentDelete = null;
         }
     }
 }
 </script>
 <style scoped>
 .post-box {
-    margin: 2% auto 3% auto;
+    margin: auto;
     max-width: 600px;
     padding: 0;
+}
+
+.post_user {
+    margin: 0.2rem;
 }
 
 .comment-box {
@@ -208,9 +276,9 @@ export default {
     margin: 0 !important;
 }
 
-.reactions {
-    display: flex;
-    align-content: center;
+.dots-container {
+    position: absolute;
+    right: 0.2rem;
 }
 
 @media screen and (max-width: 480px) {
@@ -218,14 +286,6 @@ export default {
         margin-left: 0;
         margin-right: 0;
     }
-}
-
-.overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
 }
 
 canvas {
@@ -242,7 +302,46 @@ textarea {
     min-height: 4em !important;
 }
 
-.media{
+.media {
     margin-right: 1rem;
+}
+
+.arrow-box {
+    position: absolute;
+    width: 220px;
+    background: #19B3E6;
+    line-height: 40px;
+    margin-bottom: 30px;
+    text-align: center;
+    right: 2rem;
+    padding: 0;
+    top: 0.5rem;
+    z-index: 1000;
+}
+
+.arrow-box a {
+    color: white;
+}
+
+.arrow-box a:hover {
+    color: black;
+}
+
+.arrow-box:before {
+    content: "";
+    position: absolute;
+    right: -7px;
+    top: 7px;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #19B3E6;
+}
+
+.arrow-box i {
+    margin-left: auto;
+}
+
+.arrow-box hr {
+    margin: 0 !important;
 }
 </style>

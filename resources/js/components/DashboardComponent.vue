@@ -1,6 +1,6 @@
 <template>
     <LoadingComponent v-if="loading"/>
-    <div class="post">
+    <div class="post" ref="post">
         <PostComponent v-for="post in posts" :post="post" />
     </div>
 </template>
@@ -25,6 +25,9 @@ export default {
     mounted() {
         this.fetchPost();
         this.loading = false;
+        let height = document.getElementById('navbar').offsetHeight;
+        this.$refs.post.style.marginTop = height + 'px';
+
     },
     methods: {
         fetchPost() {

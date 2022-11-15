@@ -19,7 +19,8 @@
                             <i class="fa-solid fa-ellipsis"></i>
                         </button>
                         <div href="#" class="arrow-box box" v-show="displayHelper">
-                            <a v-if="user.id == comment.user_id" class="navbar-item" @click="handleDeleteComment">
+                            <a v-if="user && user.id == comment.user_id" class="navbar-item"
+                                @click="handleDeleteComment">
                                 <span>Delete</span>
                                 <i class="fa-solid fa-trash"></i>
                             </a>
@@ -83,16 +84,14 @@
             </div>
         </div>
     </article>
-    <ConfirmBoxComponent :message="'asdfsaf'"/>
 </template>
 
 <script>
 import { calculateTime } from '../../../helpers/common';
-import ConfirmBoxComponent from '../../Common/ConfirmBoxComponent.vue';
 
 export default {
     props: ["comment"],
-    components: { ConfirmBoxComponent },
+    emits: ['displayReply', 'deleteComment'],
     data() {
         return {
             displayReply: false,
@@ -117,6 +116,7 @@ export default {
             this.displayHelper = false;
         },
         handleDeleteComment() {
+            this.$emit('deleteComment', this.comment.id);
         }
     },
 }

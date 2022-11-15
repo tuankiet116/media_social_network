@@ -47,7 +47,7 @@ class CommentService
 
     public function deleteComment(int $commentId) {
         $userId = auth()->id();
-        $comment = Comment::where(['id' => $commentId, 'user_id' => $userId])->get();
+        $comment = Comment::where(['id' => $commentId, 'user_id' => $userId])->first();
         $result = $comment->delete();
         return $result;
     }

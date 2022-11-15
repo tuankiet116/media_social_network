@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation"
+    <nav id="navbar" class="navbar is-fixed-top" role="navigation" aria-label="main navigation"
         :style="!user ? 'display:flex' : ''">
         <div class="navbar-brand">
             <router-link @click="increaseKey" class="navbar-item" :to="{ name: 'home' }">

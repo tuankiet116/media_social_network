@@ -9,6 +9,7 @@ import routes from './routes.js';
 import stores from './store/stores';
 import CKEditor from "@ckeditor/ckeditor5-vue";
 import Toast, { POSITION } from "vue-toastification";
+import mitt from 'mitt';
 import Echo from "laravel-echo";
 import "vue-toastification/dist/index.css";
 
@@ -38,6 +39,7 @@ const router = createRouter({
 });
 
 const store = createStore(stores);
+const emitter = mitt();
 
 const app = createApp(AppComponent);
 app.use(CKEditor);
@@ -47,7 +49,7 @@ app.use(router);
 app.use(Toast, {
     position: POSITION.TOP_RIGHT
 });
-
+app.config.globalProperties.emitter = emitter;
 app.directive('outsider', {
     mounted: (el, binding) => {
         el.clickOutsideEvent = event => {

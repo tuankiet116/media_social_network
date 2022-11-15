@@ -26,7 +26,8 @@
         "love": "Like"
     },
     "comment": {
-        "confirm_delete": "Do you want to delete your comment?"
+        "confirm_delete": "Do you want to delete your comment?",
+        "delete_success": "Your comment has deleted."
     },
     "times_ago": {
         "recently": " Recently",

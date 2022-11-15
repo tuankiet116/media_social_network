@@ -26,7 +26,8 @@
         "love": "Yêu thích"
     },
     "comment": {
-        "confirm_delete": "Bạn có muốn xóa bình luận của mình?"
+        "confirm_delete": "Bạn có muốn xóa bình luận của mình?",
+        "delete_success": "Bình luận đã được xóa."
     },
     "times_ago": {
         "recently": " Vừa xong",
