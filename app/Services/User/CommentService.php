@@ -31,6 +31,7 @@ class CommentService
     public function getComments(int $postId, int $offset)
     {
         $comments = Comment::with('users')
+            ->withCount('likes')
             ->where('post_id', $postId)
             ->orderBy('created_at', 'DESC');
         if ($offset) {

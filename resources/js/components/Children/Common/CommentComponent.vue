@@ -46,7 +46,8 @@
                     <div class="level-left">
                         <a class="level-item">
                             <span class="icon is-small">
-                                <i class="fa-regular fa-thumbs-up"></i>
+                                <i v-if="!liked" class="fa-regular fa-thumbs-up"></i>
+                                <i v-else class="fa-solid fa-thumbs-up liked"></i>
                             </span>
                         </a>
                         <a class="level-item" @click="handleDisplayReply">
@@ -96,7 +97,8 @@ export default {
         return {
             displayReply: false,
             isShowDetail: false,
-            displayHelper: false
+            displayHelper: false,
+            isLiked: false
         };
     },
     computed: {
@@ -187,5 +189,9 @@ hr {
 
 .dots-container {
     margin: 0 0 0 auto !important;
+}
+
+.liked  {
+    color: blue;
 }
 </style>
