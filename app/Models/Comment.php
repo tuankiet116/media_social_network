@@ -18,11 +18,24 @@ class Comment extends Model
         'updated_at'
     ];
 
+    protected $appends = ['isLiked'];
+
     public function users() {
         return $this->belongsTo(User::class, 'user_id');
     }
 
     public function likes() {
         return $this->belongsToMany(User::class);
+    }
+
+    public function getIsLikedAttribute() {
+        $userLogin = auth()->id();
+        if ($userLogin) {
+            $result = CommentUser::where(['comment_id' => $this->id, 'user_id' => $userLogin])->first();
+            if ($result) {
+                return true;
+            }
+        }
+        return false;
     }
 }

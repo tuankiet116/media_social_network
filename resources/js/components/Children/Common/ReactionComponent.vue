@@ -5,12 +5,16 @@
                 <span v-if="like">🎉</span>
                 <i v-else class="fa-regular fa-thumbs-up"></i>
                 <span>Like</span>
+                |
+                <span>{{ post.reaction_user_count }}</span>
             </button>
         </div>
         <div class="column">
             <button class="btn button" @click="$emit('focusComment')">
                 <i class="fa-regular fa-message"></i>
                 <span>Comment</span>
+                |
+                <span>{{ post.comments_count }}</span>
             </button>
         </div>
         <div class="column">
@@ -34,6 +38,7 @@ import { reactPostAPI } from '../../../api/api';
 
 export default {
     props: ['post'],
+    emits: ['postRefresh', 'focusComment'],
     data() {
         return {
             like: this.post.isLiked

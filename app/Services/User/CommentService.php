@@ -3,6 +3,7 @@
 namespace App\Services\User;
 
 use App\Models\Comment;
+use App\Models\CommentUser;
 
 class CommentService
 {
@@ -30,7 +31,7 @@ class CommentService
 
     public function getComments(int $postId, int $offset)
     {
-        $comments = Comment::with('users')
+        $comments = Comment::with('users:id,name,image')
             ->withCount('likes')
             ->where('post_id', $postId)
             ->orderBy('created_at', 'DESC');
@@ -46,10 +47,28 @@ class CommentService
         ];
     }
 
-    public function deleteComment(int $commentId) {
+    public function deleteComment(int $commentId)
+    {
         $userId = auth()->id();
         $comment = Comment::where(['id' => $commentId, 'user_id' => $userId])->first();
         $result = $comment->delete();
         return $result;
+    }
+
+    public function likeComment($res)
+    {
+        $userId = auth()->id();
+        $data = array(
+            'user_id' => $userId,
+            'comment_id' => $res['comment_id']
+        );
+        $liked = CommentUser::where($data)->first();
+        if (!$liked && $res['like'] == true) {
+            CommentUser::create($data);
+        } else {
+            $liked->delete();
+        }
+        $numberLikes = CommentUser::where('comment_id', $res['comment_id'])->count();
+        return $numberLikes;
     }
 }

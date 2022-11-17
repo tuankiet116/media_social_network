@@ -6,7 +6,8 @@
     "login": "Login",
     "signup": "Signup",
     "menu": {
-        "create_post": "Create Post"
+        "create_post": "Create Post",
+        "notification": "Notification"
     },
     "create_post": {
         "title": "Hi, What would you like to post?",

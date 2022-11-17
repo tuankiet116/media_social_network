@@ -6,7 +6,8 @@
     "login": "Đăng Nhập",
     "signup": "Đăng Ký",
     "menu": {
-        "create_post": "Đăng bài"
+        "create_post": "Đăng bài",
+        "notification": "Thông báo"
     },
     "create_post": {
         "title": "Bạn muốn chia sẻ điều gì?",

@@ -25,12 +25,14 @@ Route::middleware('auth.api')->prefix('post')->name('post.')->group(function() {
     Route::post('/reaction', 'PostController@reaction')->name('reaction');
     Route::post('/reaction/count', 'PostUserController@getNumberLikePost')->name('reaction.count');
     Route::get('/get/{id}', 'PostController@getPost')->name('get');
+    Route::delete('/delete', 'PostController@delete')->name('delete');
 });
 
 Route::middleware('auth.api')->prefix('comment')->name('comment.')->group(function() {
     Route::post('/create', 'CommentController@create')->name('create');
     Route::get('/list/{postId}/{offset?}', 'CommentController@getComments')->name('list');
     Route::delete('/delete/{commentId}', 'CommentController@deleteComment')->name('delete');
+    Route::post('/like', 'CommentController@likeComment')->name('like_comment');
 });
 
 Route::post('/user/facebook_login', 'FacebookController@fbLogin');

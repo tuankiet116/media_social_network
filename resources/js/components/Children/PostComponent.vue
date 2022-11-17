@@ -46,23 +46,6 @@
                     <source :src="'/api/post/stream/' + userPost.src" type="video/mp4">
                 </video>
             </div>
-            <div class="columns post-info">
-                <div class="column post-info">
-                    <span class="ml-5 has-text-success-dark">
-                        {{ userPost.reaction_user_count }} 🎉
-                    </span>
-                </div>
-                <div class="column post-info has-text-centered">
-                    <span>
-                        {{ userPost.comments_count }} comments
-                    </span>
-                </div>
-                <div class="column post-info">
-                    <span class="mr-5 is-pulled-right">
-                        {{ userPost.reaction_user_count }} share
-                    </span>
-                </div>
-            </div>
             <hr class="split-reaction-post">
             <ReactionComponent @postRefresh="fetchPost" @focusComment="handleFocusComment" :post="userPost" />
         </div>

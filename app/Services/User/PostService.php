@@ -98,8 +98,9 @@ class PostService
 
     public function getPost(int $id) {
         $post = Post::with(['user:id,name,image'])
-            ->withCount('reactionUser')
-            ->first($id);
+            ->withCount('reactionUser', 'comments')
+            ->where('id', $id)
+            ->first();
         return $post;
     }
 }

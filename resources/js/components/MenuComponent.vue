@@ -18,10 +18,6 @@
                 <router-link  @click="increaseKey" class="navbar-item" :to="{ name: 'home' }">
                     {{ $t('homepage') }}
                 </router-link>
-
-                <a class="navbar-item">
-                    {{ $t('film_feed') }}
-                </a>
             </div>
         </div>
         <div class="navbar-end buttons-auth is-pulled-right" v-if="user == null">
@@ -43,6 +39,10 @@
                     <i class="fa-regular fa-square-plus"></i>
                     <span>&nbsp;{{ $t('menu.create_post') }}</span>
                 </router-link>
+                <a class="navbar-item is-hidden-mobile">
+                    <i class="fa-solid fa-bell"></i>
+                    <span>&nbsp;{{ $t('menu.notification') }}</span>
+                </a>
                 <div class="navbar-item has-dropdown is-hoverable user-nav" @click="showMenu">
                     <a class="navbar-link">
                         <strong>{{ user.name }}</strong>

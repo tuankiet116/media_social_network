@@ -42,4 +42,8 @@ class PostController extends Controller
         $data = $this->postService->getPost($id);
         return $this->responseData($data, 200);
     }
+
+    public function delete(Request $request) {
+        
+    }
 }

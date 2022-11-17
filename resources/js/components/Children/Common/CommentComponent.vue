@@ -44,13 +44,15 @@
 
                 <nav v-if="user" class="level is-mobile">
                     <div class="level-left">
-                        <a class="level-item">
+                        <a class="level-item button is-small" @click="handleLikeComment" >
+                            <span>{{ comment.likes_count }}</span>
                             <span class="icon is-small">
-                                <i v-if="!liked" class="fa-regular fa-thumbs-up"></i>
+                                <i v-if="!isLiked" class="fa-regular fa-thumbs-up"></i>
                                 <i v-else class="fa-solid fa-thumbs-up liked"></i>
                             </span>
                         </a>
-                        <a class="level-item" @click="handleDisplayReply">
+                        <a class="level-item button is-small" @click="handleDisplayReply">
+                            <span>6</span>
                             <span class="icon is-small"><i class="fas fa-reply"></i></span>
                         </a>
                     </div>
@@ -88,6 +90,7 @@
 </template>
 
 <script>
+import { likeCommentAPI } from '../../../api/api';
 import { calculateTime } from '../../../helpers/common';
 
 export default {
@@ -98,7 +101,7 @@ export default {
             displayReply: false,
             isShowDetail: false,
             displayHelper: false,
-            isLiked: false
+            isLiked: this.comment.isLiked
         };
     },
     computed: {
@@ -119,6 +122,19 @@ export default {
         },
         handleDeleteComment() {
             this.$emit('deleteComment', this.comment.id);
+        },
+        handleLikeComment() {
+            let data = {
+                comment_id: this.comment.id,
+                like: !this.isLiked
+            }
+            this.comment.likes_count++;
+            this.isLiked = !this.isLiked;
+            likeCommentAPI(data).then(result => {
+                this.comment.likes_count = result.data.likes_number;
+            }).catch((err) => {
+                console.log(err);
+            });
         }
     },
 }
