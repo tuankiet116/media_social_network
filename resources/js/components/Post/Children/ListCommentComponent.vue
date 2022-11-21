@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import CommentComponent from './Common/CommentComponent.vue';
+import CommentComponent from './CommentComponent.vue';
 
 export default {
     components: {

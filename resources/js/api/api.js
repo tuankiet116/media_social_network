@@ -1,17 +1,22 @@
 import axios from "axios";
+const host = window.location.origin;
+const api = axios.create({
+    baseURL: host,
+});
 
-export const detectUser = () => axios.get(`api/user`);
-export const logoutUser = () => axios.post('api/logout');
+export const detectUser = () => api.get(`api/user`);
+export const logoutUser = () => api.post('api/logout');
+
 export const createPost = function (data, config) {
-    return axios.post('api/post/create', data, config)
+    return api.post('api/post/create', data, config)
 };
-export const getPosts = (data) => axios.get('api/post/list', data);
-export const getPost = (postID) => axios.get(`api/post/get/${postID}`);
-export const reactPostAPI = function (data) {
-    return axios.post('api/post/reaction', data);
-}
+export const getPosts = (data) => api.get('api/post/list', data);
+export const getPost = (postID) => api.get(`api/post/get/${postID}`);
+export const deletePost = (postID) => api.delete(`api/post/delete/${postID}`);
+export const reactPostAPI = (data) => api.post('api/post/reaction', data);
+export const updatePost = (data) => api.put('api/post/update', data);
 
-export const createComment = (data) => axios.post('api/comment/create', data);
-export const getListCommentAPI = (postID, offset) => axios.get(`api/comment/list/${postID}/${offset}`);
-export const deleteCommentAPI = (commentId) => axios.delete(`api/comment/delete/${commentId}`);
-export const likeCommentAPI = (data) => axios.post('api/comment/like', data);
+export const createComment = (data) => api.post('api/comment/create', data);
+export const getListCommentAPI = (postID, offset) => api.get(`api/comment/list/${postID}/${offset}`);
+export const deleteCommentAPI = (commentId) => api.delete(`api/comment/delete/${commentId}`);
+export const likeCommentAPI = (data) => api.post('api/comment/like', data);

@@ -29,21 +29,33 @@ class PostController extends Controller
         return $this->responseData($data, 200);
     }
 
-    public function stream(String $fileName) {
+    public function stream(String $fileName)
+    {
         $this->postService->stream($fileName);
     }
 
-    public function reaction(Request $request) {
+    public function reaction(Request $request)
+    {
         $data = $request->all();
-        $this->postService->reactToPost($data);
+        $amountReaction = $this->postService->reactToPost($data);
+        return $this->responseData(array('amount_reaction' => $amountReaction), 200);
     }
 
-    public function getPost(int $id) {
+    public function getPost(int $id)
+    {
         $data = $this->postService->getPost($id);
         return $this->responseData($data, 200);
     }
 
-    public function delete(Request $request) {
-        
+    public function delete(int $postId)
+    {
+        $result = $this->postService->deletePost($postId);
+        return $this->responseData($result, 200);
+    }
+
+    public function update(Request $request) {
+        $data = $request->all();
+        $result = $this->postService->update($data);
+        return $this->responseData($result, 200);
     }
 }

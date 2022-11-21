@@ -49,7 +49,7 @@ class PostService
 
     public function getPosts($offset = 0)
     {
-        $postQuery = Post::with(['user:id,name,image', 'comments' => function($query) {
+        $postQuery = Post::with(['user:id,name,image', 'comments' => function ($query) {
             return $query->orderBy('created_at', 'DESC')->limit(LIMIT_COMMENT_OVERVIEW)->with('users');
         }], 'comments.users')
             ->withCount('reactionUser', 'comments')
@@ -77,30 +77,52 @@ class PostService
         return $this->storageService->getImage('ckfinder/' . $fileName);
     }
 
-    public function reactToPost($data)
+    public function reactToPost($req)
     {
         $userId = auth()->id();
-        if ($data['like'] == true) {
-            $reaction = PostUser::firstOrCreate([
-                'user_id' => $userId,
-                'post_id' => $data['postId']
-            ]);
-            return $reaction;
+        $data = [
+            'user_id' => $userId,
+            'post_id' => $req['postId']
+        ];
+        $liked = PostUser::where($data)->first();
+        if ($liked && $req['like'] == false) {
+            PostUser::where($data)->delete();
         } else {
-            $reaction = PostUser::where([
-                'user_id' => $userId,
-                'post_id' => $data['postId']
-            ])->first();
-            $result = $reaction->delete();
-            return $result;
+            PostUser::create($data);
         }
+        $amountReaction = PostUser::where('post_id', $req['postId'])->count();
+        return $amountReaction;
     }
 
-    public function getPost(int $id) {
+    public function getPost(int $id)
+    {
         $post = Post::with(['user:id,name,image'])
             ->withCount('reactionUser', 'comments')
             ->where('id', $id)
             ->first();
         return $post;
+    }
+
+    public function deletePost(int $id)
+    {
+        $userId = auth()->id();
+        $result = Post::where(['id' => $id, 'user_id' => $userId])->delete();
+        return $result;
+    }
+
+    public function update($data) {
+        $userId = auth()->id();
+        $post = Post::where([
+            'id' => $data['id'],
+            'user_id' => $userId
+        ])->first();
+        $result = false;
+        if ($post) {
+            $result = $post->update(array(
+                'title' => $data['title'],
+                'post_description' => $data['post_description']
+            ));
+        }
+        return $result;
     }
 }

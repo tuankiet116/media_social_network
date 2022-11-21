@@ -25,9 +25,9 @@
                                 <i class="fa-solid fa-trash"></i>
                             </a>
                             <hr />
-                            <a class="navbar-item">
-                                <span>Report</span>
-                                <i class="fa-solid fa-flag"></i>
+                            <a v-if="user && user.id == comment.user_id" class="navbar-item">
+                                <span>Edit</span>
+                                <i class="fas fa-edit"></i>
                             </a>
                             <hr />
                             <a class="navbar-item" @click="displayHelper = false">
@@ -100,8 +100,7 @@ export default {
         return {
             displayReply: false,
             isShowDetail: false,
-            displayHelper: false,
-            isLiked: this.comment.isLiked
+            displayHelper: false
         };
     },
     computed: {
@@ -110,6 +109,9 @@ export default {
         },
         createTime() {
             return calculateTime(this.comment.created_at, this);
+        },
+        isLiked() { 
+            return this.comment.isLiked 
         }
     },
     methods: {
@@ -129,7 +131,7 @@ export default {
                 like: !this.isLiked
             }
             this.comment.likes_count++;
-            this.isLiked = !this.isLiked;
+            this.comment.isLiked = !this.comment.isLiked;
             likeCommentAPI(data).then(result => {
                 this.comment.likes_count = result.data.likes_number;
             }).catch((err) => {

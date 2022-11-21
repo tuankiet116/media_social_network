@@ -41,15 +41,14 @@
                 <button class="button is-primary" @click="handleUploadPost()">{{ $t('create_post.create') }}</button>
                 <button class="button is-light">{{ $t('create_post.cancel') }}</button>
             </div>
-            {{ user }}
         </div>
     </div>
 </template>
 <script>
-import { createPost } from '../api/api';
+import { createPost } from '../../api/api';
 import { useToast } from "vue-toastification";
-import ClassicEditor from '../../Libraries/CKEditor5/build/ckeditor';
-import authMixin from '../mixins';
+import ClassicEditor from '../../../Libraries/CKEditor5/build/ckeditor';
+import authMixin from '../../mixins';
 export default {
     mixins: [authMixin],
     data() {

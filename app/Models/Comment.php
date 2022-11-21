@@ -18,7 +18,7 @@ class Comment extends Model
         'updated_at'
     ];
 
-    protected $appends = ['isLiked'];
+    protected $appends = ['isLiked', 'amountReply'];
 
     public function users() {
         return $this->belongsTo(User::class, 'user_id');
@@ -37,5 +37,9 @@ class Comment extends Model
             }
         }
         return false;
+    }
+
+    public function getAmountReplyAttribute() {
+        return $this->where('belong_id', $this->id)->count();
     }
 }

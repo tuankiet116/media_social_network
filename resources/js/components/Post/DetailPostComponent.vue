@@ -1,13 +1,14 @@
 <template>
-    <div class="box post-box column is-two-thirds-tablet is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5">
+    <div v-if="post"
+        class="box post-box column is-two-thirds-tablet is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5">
         <div ref="post" class="post">
             <canvas ref="canvas"></canvas>
             <div class="user-info">
                 <figure class="image is-32x32">
-                    <img class="is-rounded" :src="userPost.user.image">
+                    <img class="is-rounded" :src="post.user.image">
                 </figure>
                 <div class="post_user">
-                    <p><strong>{{ userPost.user.name }}</strong></p>
+                    <p><strong>{{ post.user.name }}</strong></p>
                     <p>
                         <i class="fa-regular fa-clock"></i>&nbsp;
                         <small>{{ timeCreated }}</small>
@@ -19,14 +20,15 @@
                         <i class="fa-solid fa-ellipsis"></i>
                     </button>
                     <div href="#" class="arrow-box box" v-show="displayHelper">
-                        <a v-if="user && user.id == userPost.user_id" class="navbar-item" @click="handleDeleteComment">
+                        <a v-if="user && user.id == post.user_id" class="navbar-item" @click="isShowConfirmPost = true">
                             <span>Delete</span>
                             <i class="fa-solid fa-trash"></i>
                         </a>
                         <hr />
-                        <a class="navbar-item">
-                            <span>Report</span>
-                            <i class="fa-solid fa-flag"></i>
+                        <a v-if="user && user.id == post.user_id"
+                            @click="$router.push({ name: 'edit_post', params: { id: post.id } })" class="navbar-item">
+                            <span>Edit</span>
+                            <i class="fas fa-edit"></i>
                         </a>
                         <hr />
                         <a class="navbar-item" @click="displayHelper = false">
@@ -38,16 +40,16 @@
             </div>
             <hr class="split-post-user">
             <div class="title">
-                <strong>{{ userPost.title }}</strong>
+                <strong>{{ post.title }}</strong>
             </div>
             <div class="post-desc" v-html="post.post_description"></div>
             <div class="has-text-centered">
-                <video v-if="userPost.src" width="600" controls>
-                    <source :src="'/api/post/stream/' + userPost.src" type="video/mp4">
+                <video v-if="post.src" width="600" controls>
+                    <source :src="'/api/post/stream/' + post.src" type="video/mp4">
                 </video>
             </div>
             <hr class="split-reaction-post">
-            <ReactionComponent @postRefresh="fetchPost" @focusComment="handleFocusComment" :post="userPost" />
+            <ReactionComponent @focusComment="handleFocusComment" :post="post" />
         </div>
         <article v-if="focusComment && user" class="media">
             <figure class="media-left">
@@ -82,46 +84,63 @@
             :comments="comments" />
         <hr />
     </div>
+    <div v-else>
+        <NotFoundComponent />
+    </div>
     <ConfirmDeleteComponent v-if="isShowConfirmComment" :message="$t('comment.confirm_delete')"
         @confirm="handleDeleteComment" @cancel="hideConfirmDeleteComment" />
+    <ConfirmDeleteComponent v-if="isShowConfirmPost" :message="$t('post.confirm_delete')" @confirm="handleDeletePost"
+        @cancel="isShowConfirmPost = false" />
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { getPost, createComment, getListCommentAPI, deleteCommentAPI } from '../../api/api';
-import ListCommentComponent from './ListCommentComponent.vue';
-import ReactionComponent from './Common/ReactionComponent.vue';
-import ConfirmDeleteComponent from './Common/ConfirmDeleteComponent.vue';
+import { createComment, getListCommentAPI, deleteCommentAPI, deletePost, getPost } from '../../api/api';
+import ListCommentComponent from './Children/ListCommentComponent.vue';
+import ReactionComponent from './Children/ReactionComponent.vue';
+import ConfirmDeleteComponent from '../Common/ConfirmDeleteComponent.vue';
 import { calculateTime } from '../../helpers/common';
+import NotFoundComponent from '../Common/NotFoundComponent.vue';
+import authMixin from '../../mixins';
 
 export default {
     components: {
         ListCommentComponent,
         ReactionComponent,
-        ConfirmDeleteComponent
+        ConfirmDeleteComponent,
+        NotFoundComponent
     },
-    props: ['post'],
+    mixins: [authMixin],
+    emits: ['postDeleted'],
     data() {
         return {
-            userPost: this.post,
-            comments: this.post.comments,
+            comments: [],
             focusComment: false,
             commentContent: "",
             isShowConfirmComment: false,
             idCommentDelete: null,
-            displayHelper: false
+            displayHelper: false,
+            isShowConfirmPost: false,
+            post: null,
+            id: this.$route.params.id
         };
     },
     computed: {
         ...mapGetters({ user: 'getUser' }),
         timeCreated() {
-            return calculateTime(this.userPost.created_at, this)
+            return calculateTime(this.post.created_at, this)
         }
+    },
+    mounted() {
+        this.fetchPost();
     },
     methods: {
         fetchPost() {
             let _this = this;
-            getPost(this.userPost.id).then((result) => {
-                _this.userPost = result.data;
+            getPost(this.id).then(result => {
+                _this.post = result.data;
+                handleLoadListComment(0);
+            }).catch(error => {
+
             });
         },
         handleUnDisplayHelper() {
@@ -136,7 +155,7 @@ export default {
             if (this.commentContent == "") return;
             let data = {
                 content: this.commentContent,
-                post_id: this.userPost.id,
+                post_id: this.post.id,
                 parent_id: null
             }
 
@@ -144,7 +163,7 @@ export default {
                 _this.comments.unshift(result.data);
                 _this.focusComment = false;
                 _this.commentContent = "";
-                _this.userPost.comments_count++;
+                _this.post.comments_count++;
             }).catch(function (error) {
                 console.log(error);
             });
@@ -175,7 +194,7 @@ export default {
                 if (result.data == true) {
                     let indexComment = _this.comments.findIndex(cm => cm.id == _this.idCommentDelete);
                     _this.comments.splice(indexComment, 1);
-                    _this.userPost.comments_count--;
+                    _this.post.comments_count--;
                     _this.idCommentDelete = null;
                     _this.isShowConfirmComment = false;
                 }
@@ -188,6 +207,15 @@ export default {
         hideConfirmDeleteComment() {
             this.isShowConfirmComment = false;
             this.idCommentDelete = null;
+        },
+        async handleDeletePost() {
+            let _this = this;
+            await deletePost(this.post.id).then(result => {
+                _this.$emit('postDeleted', this.post.id);
+            }).catch(error => {
+                console.log(error);
+            });
+            this.isShowConfirmPost = false;
         }
     }
 }
@@ -299,7 +327,6 @@ textarea {
     right: 2rem;
     padding: 0;
     top: 0.5rem;
-    z-index: 1000;
 }
 
 .arrow-box a {

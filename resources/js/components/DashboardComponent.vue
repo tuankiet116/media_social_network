@@ -1,14 +1,26 @@
 <template>
-    <LoadingComponent v-if="loading"/>
-    <div class="post" ref="post">
-        <PostComponent v-for="post in posts" :post="post" />
+    <LoadingComponent v-if="loading" />
+    <div id="create-post" class="post">
+        <div v-if="user" class="box post-box column is-two-thirds-tablet is-one-desktop 
+        is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center">
+            <img class="image is-32x32 mr-2" :src="user?.image" />
+            <input @click="$router.push({ name: 'create_post' })" class="input" placeholder="Create Post">
+        </div>
+        <div v-else @click="redirectLogin" class="box post-box column is-two-thirds-tablet is-one-desktop 
+        is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center">
+            <input class="input" placeholder="Create Post">
+        </div>
+    </div>
+    <div class="post">
+        <PostComponent @post-deleted="handleRemovePost" v-for="post in posts" :post="post" />
     </div>
 </template>
 <script>
 import { getPosts } from '../api/api';
 import authMixin from '../mixins';
-import PostComponent from './Children/PostComponent.vue';
+import PostComponent from './Post/Children/PostComponent.vue';
 import LoadingComponent from './Common/LoadingComponent.vue';
+import { mapGetters } from 'vuex';
 
 export default {
     components: {
@@ -22,12 +34,18 @@ export default {
             posts: []
         }
     },
+    computed: {
+        ...mapGetters({ user: 'getUser' }),
+    },
     mounted() {
         this.fetchPost();
         this.loading = false;
         let height = document.getElementById('navbar').offsetHeight;
-        this.$refs.post.style.marginTop = height + 'px';
-
+        let createPostEl = document.getElementById('create-post');
+        if (createPostEl) {
+            createPostEl.style.marginTop = Number(height) + Number(height / 2) + 'px';
+            createPostEl.style.marginBottom = Number(height / 2) + 'px';
+        }
     },
     methods: {
         fetchPost() {
@@ -38,30 +56,27 @@ export default {
             }).catch(err => {
                 console.log(err);
             });
+        },
+        handleRemovePost(postID) {
+            let postIndex = this.posts.findIndex(p => {
+                return p.id == postID;
+            });
+            this.posts.splice(postIndex, 1);
+        },
+        redirectLogin() {
+            window.location.replace('user/login');
         }
     }
 }
 </script>
 <style scoped>
-@media screen and (min-width: 769px) {
-    .post>.box:nth-child(1) {
-        margin-top: 10% !important;
-    }
+#create-post .box {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 600px;
 }
 
-@media screen and (min-device-width: 481px) and (max-device-width: 768px) {
-    .post>.box:nth-child(1) {
-        margin-top: 10% !important;
-    }
-}
-
-@media only screen and (max-device-width: 480px) {
-    .post>.box:nth-child(1) {
-        margin-top: calc(100%*0.2) !important;
-    }
-
-    .post {
-        width: fit-content;
-    }
+#create-post .box textarea {
+    height: 50px;
 }
 </style>

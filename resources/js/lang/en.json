@@ -22,9 +22,21 @@
         "validate_title": "Title must be filled",
         "validate_description": "Your post could not empty"
     },
+    "edit_post": {
+        "title": "Edit Your Post",
+        "post_title": "Post Title",
+        "post_desc": "Your Post",
+        "edit": "Edit",
+        "cancel": "Cancel",
+        "success": "Your Post Edited Successfully",
+        "failed": "Failed edit your post",
+        "validate_title": "Title must be filled",
+        "validate_description": "Your post could not empty"
+    },
     "post": {
         "auth_react": "You need to login before comment and reactions",
-        "love": "Like"
+        "love": "Like",
+        "confirm_delete": "Do you want to delete your post?"
     },
     "comment": {
         "confirm_delete": "Do you want to delete your comment?",

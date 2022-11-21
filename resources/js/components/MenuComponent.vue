@@ -39,10 +39,13 @@
                     <i class="fa-regular fa-square-plus"></i>
                     <span>&nbsp;{{ $t('menu.create_post') }}</span>
                 </router-link>
-                <a class="navbar-item is-hidden-mobile">
-                    <i class="fa-solid fa-bell"></i>
-                    <span>&nbsp;{{ $t('menu.notification') }}</span>
-                </a>
+                <div class="navbar-item is-hidden-mobile has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        <i class="fa-solid fa-bell"></i>
+                        <span>&nbsp;{{ $t('menu.notification') }}</span>
+                    </a>
+                    <NotificationComponent/>
+                </div>
                 <div class="navbar-item has-dropdown is-hoverable user-nav" @click="showMenu">
                     <a class="navbar-link">
                         <strong>{{ user.name }}</strong>
@@ -66,8 +69,10 @@
 </template>
 
 <script>
+import NotificationComponent from './Common/NotificationComponent.vue';
+
 export default {
-    props: ['user'],
+    props: ["user"],
     data() {
         return {
             showNav: false,
@@ -77,21 +82,23 @@ export default {
     methods: {
         logout() {
             sessionStorage.removeItem("user");
-            this.$store.commit('logoutUser');
+            this.$store.commit("logoutUser");
         },
         showMenu(e) {
-            let classActive = document.getElementsByClassName('user-nav')[0].className.split(' ').find((c) => c == 'is-active');
+            let classActive = document.getElementsByClassName("user-nav")[0].className.split(" ").find((c) => c == "is-active");
             if (classActive) {
-                document.getElementsByClassName('user-nav')[0].classList.remove('is-active');
-            } else {
-                document.getElementsByClassName('user-nav')[0].classList.add('is-active');
+                document.getElementsByClassName("user-nav")[0].classList.remove("is-active");
+            }
+            else {
+                document.getElementsByClassName("user-nav")[0].classList.add("is-active");
             }
         },
         increaseKey() {
             this.keyComponent++;
-            this.$emit('increaseKey', this.keyComponent);
+            this.$emit("increaseKey", this.keyComponent);
         }
-    }
+    },
+    components: { NotificationComponent }
 }
 </script>
 

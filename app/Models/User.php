@@ -46,4 +46,12 @@ class User extends Authenticatable
     protected function setPasswordAttribute($value) {
         $this->attributes['password'] = bcrypt($value);
     }
+
+
+    public function getImageAttribute() {
+        if ($this->attributes['image']) {
+            return request()->getSchemeAndHttpHost().'/'.$this->attributes['image'];
+        }
+        return '';
+    }
 }

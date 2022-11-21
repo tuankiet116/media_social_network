@@ -22,9 +22,21 @@
         "validate_title": "Không thể bỏ trống tiêu đề",
         "validate_description": "Bài viết không được trống"
     },
+    "edit_post": {
+        "title": "Chỉnh sửa bài viết của bạn",
+        "post_title": "Tiêu đề",
+        "post_desc": "Bài viết",
+        "edit": "Sửa",
+        "cancel": "Thoát",
+        "success": "Bài viết được chỉnh sửa thành công",
+        "failed": "Lỗi sửa bài viết",
+        "validate_title": "Không thể bỏ trống tiêu đề",
+        "validate_description": "Bài viết không được trống"
+    },
     "post": {
         "auth_react": "Bạn cần đăng nhập để bình luận và tương tác.",
-        "love": "Yêu thích"
+        "love": "Yêu thích",
+        "confirm_delete": "Bạn có chắc chắn muốn xóa bài viết này không?"
     },
     "comment": {
         "confirm_delete": "Bạn có muốn xóa bình luận của mình?",

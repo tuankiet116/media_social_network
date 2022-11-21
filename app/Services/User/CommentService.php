@@ -7,6 +7,15 @@ use App\Models\CommentUser;
 
 class CommentService
 {
+    public function getCommentOfUser(int $id)
+    {
+        $userID = auth()->id();
+        return Comment::where([
+            'id' => $id,
+            'user_id' => $userID
+        ])->first();
+    }
+
     public function createComment($data)
     {
         $parentId = $data['parent_id'];
@@ -19,13 +28,7 @@ class CommentService
             $data_create = $data_create + array('parent_id' => $parentId);
         }
         $result = Comment::create($data_create);
-        $comment = $this->getComment($result->id);
-        return $comment;
-    }
-
-    public function getComment(int $id)
-    {
-        $comment = Comment::with('users')->find($id);
+        $comment = Comment::with('users')->find($result->id);
         return $comment;
     }
 
@@ -49,8 +52,7 @@ class CommentService
 
     public function deleteComment(int $commentId)
     {
-        $userId = auth()->id();
-        $comment = Comment::where(['id' => $commentId, 'user_id' => $userId])->first();
+        $comment = $this->getCommentOfUser($commentId);
         $result = $comment->delete();
         return $result;
     }
@@ -70,5 +72,42 @@ class CommentService
         }
         $numberLikes = CommentUser::where('comment_id', $res['comment_id'])->count();
         return $numberLikes;
+    }
+
+    public function replyComment($req)
+    {
+        $data = array(
+            'content' => $req['content'],
+            'belong_id' => $req['belong_id'],
+            'user_id' => $req['user_id'],
+            'post_id' => $req['post_id']
+        );
+        $comment = Comment::create($data);
+        return $comment;
+    }
+
+    public function getReplyComments(int $commentId, int $offset = 0)
+    {
+        $replies = Comment::where('belong_id', $commentId)->orderBy('created_at')
+            ->limit(LIMIT_COMMENT)->offset($offset)->get();
+        $ammountReplies = count($replies);
+        $newOffset = $offset + $ammountReplies;
+        if ($ammountReplies < LIMIT_COMMENT) {
+            $newOffset = 0;
+        }
+        return array('replies' => $replies, 'offset' => $newOffset);
+    }
+
+    public function updateComment($req)
+    {
+        $comment = $this->getCommentOfUser($req['comment_id']);
+        if ($comment) {
+            $comment->fill([
+                'content' => $req['content']
+            ]);
+            $comment->save();
+            return true;
+        }
+        return false;
     }
 }

@@ -38,7 +38,7 @@ import { reactPostAPI } from '../../../api/api';
 
 export default {
     props: ['post'],
-    emits: ['postRefresh', 'focusComment'],
+    emits: ['focusComment'],
     data() {
         return {
             like: this.post.isLiked
@@ -77,9 +77,11 @@ export default {
                 like: this.like
             }
             let _this = this;
+            if (this.like) this.post.reaction_user_count++;
+            else this.post.reaction_user_count--;
             reactPostAPI(data).then(function (result) {
-                _this.$emit('postRefresh');
-            }).catch(function (err) {});
+                _this.post.reaction_user_count = result.data.amount_reaction;
+            }).catch(function (err) { });
         }
     }
 }
