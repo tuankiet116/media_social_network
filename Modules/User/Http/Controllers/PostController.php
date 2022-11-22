@@ -44,7 +44,10 @@ class PostController extends Controller
     public function getPost(int $id)
     {
         $data = $this->postService->getPost($id);
-        return $this->responseData($data, 200);
+        if ($data) {
+            return $this->responseData($data, 200);
+        }
+        return $this->responseData($data, 404);
     }
 
     public function delete(int $postId)

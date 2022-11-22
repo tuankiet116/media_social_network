@@ -68,6 +68,7 @@ class CommentController extends Controller
 
     public function update(Request $request) {
         $data = $request->all();
-        $result = $this->updateComment('');
+        $result = $this->commentService->updateComment($data);
+        return $this->responseData($result, 200);
     }
 }

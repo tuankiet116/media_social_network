@@ -1,7 +1,8 @@
 <template>
     <div class="container">
         <CommentComponent ref="comment" v-for="(comment, index) in comments" :comment="comment"
-            @deleteComment="$emit('deleteComment', $event)" @displayReply="hiddenReply(index)" />
+            @deleteComment="$emit('deleteComment', $event)" @displayReply="hiddenReply(index)"
+            @isEditting="$emit('isEditting')" />
         <div v-if="isLoadMoreWrapper" class="wrapper" ref="wrapper">
         </div>
         <button v-if="isLoadMore && comments.length" class="button is-small is-info is-rounded"

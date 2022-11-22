@@ -15,7 +15,7 @@ export default {
         return {};
     },
     mounted() {
-        Echo.channel('post.list', (result) => {
+        Echo.channel('user_notification', 'NotificationEvent', (result) => {
             debugger
         })
     }

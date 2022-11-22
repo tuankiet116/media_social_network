@@ -36,7 +36,7 @@ Route::middleware('auth.api')->prefix('comment')->name('comment.')->group(functi
     Route::post('/like', 'CommentController@likeComment')->name('like_comment');
     Route::post('/reply', 'CommentController@reply')->name('reply');
     Route::get('/list/reply', 'CommentController@getReplies')->name('get_replies');
-    Route::put('/edit', 'CommentController@update')->name('update');
+    Route::put('/update', 'CommentController@update')->name('update');
 });
 
 Route::post('/user/facebook_login', 'FacebookController@fbLogin');

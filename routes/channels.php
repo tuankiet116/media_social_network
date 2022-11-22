@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('post.list', function($id) {
+Broadcast::channel('user_notification', function($id) {
     return true;
 });

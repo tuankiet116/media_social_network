@@ -1,10 +1,6 @@
 <template>
     <MenuComponent @increaseKey="handleKeyComponent($event)" :user="getUser"></MenuComponent>
-    <router-view :key="key" v-slot="{ Component }">
-        <KeepAlive include="DashboardComponent">
-            <component :is="Component"/>
-        </KeepAlive>
-    </router-view>
+    <router-view :key="key"></router-view>
     <ProgressBarComponent v-if="getPostProgressUpload" :percent-value="getPostProgressUpload" class="progress-bar" />
 </template>
 
@@ -12,7 +8,6 @@
 <script>
 import MenuComponent from './MenuComponent.vue';
 import ProgressBarComponent from './Common/ProgressBarComponent.vue';
-import DashboardComponent from './DashboardComponent.vue';
 import { mapGetters } from 'vuex';
 
 export default {

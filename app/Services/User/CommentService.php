@@ -100,7 +100,7 @@ class CommentService
 
     public function updateComment($req)
     {
-        $comment = $this->getCommentOfUser($req['comment_id']);
+        $comment = $this->getCommentOfUser($req['id']);
         if ($comment) {
             $comment->fill([
                 'content' => $req['content']

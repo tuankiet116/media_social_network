@@ -20,3 +20,4 @@ export const createComment = (data) => api.post('api/comment/create', data);
 export const getListCommentAPI = (postID, offset) => api.get(`api/comment/list/${postID}/${offset}`);
 export const deleteCommentAPI = (commentId) => api.delete(`api/comment/delete/${commentId}`);
 export const likeCommentAPI = (data) => api.post('api/comment/like', data);
+export const updateCommentAPI = (data) => api.put('api/comment/update', data);

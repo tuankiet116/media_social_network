@@ -1,11 +1,34 @@
 <template>
     <article class="media">
-        <figure class="media-left">
+        <figure class="media-left ml-2">
             <p class="image is-32x32">
                 <img class="is-rounded" :src="comment.users.image">
             </p>
         </figure>
-        <div class="media comment-box">
+        <article v-if="isEditting && user" class="media comment-box">
+            <div class="box comment-box">
+                <div class="media-content">
+                    <div class="field">
+                        <p class="control">
+                            <textarea v-model="content" class="textarea" placeholder="Add a comment..."
+                                autofocus>
+                            </textarea>
+                        </p>
+                    </div>
+                    <nav class="level">
+                        <div class="level-left">
+                            <div class="level-item">
+                                <a @click="handleEdit" class="button is-small is-info">Edit</a>
+                            </div>
+                            <div class="level-item">
+                                <a @click="hideEdit" class="button is-small is-light">Cancel</a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </article>
+        <div class="media comment-box" v-else>
             <div class="media-content">
                 <div class="content">
                     <p class="contain-infor">
@@ -25,7 +48,7 @@
                                 <i class="fa-solid fa-trash"></i>
                             </a>
                             <hr />
-                            <a v-if="user && user.id == comment.user_id" class="navbar-item">
+                            <a v-if="user && user.id == comment.user_id" class="navbar-item" @click="showEdit">
                                 <span>Edit</span>
                                 <i class="fas fa-edit"></i>
                             </a>
@@ -44,7 +67,7 @@
 
                 <nav v-if="user" class="level is-mobile">
                     <div class="level-left">
-                        <a class="level-item button is-small" @click="handleLikeComment" >
+                        <a class="level-item button is-small" @click="handleLikeComment">
                             <span>{{ comment.likes_count }}</span>
                             <span class="icon is-small">
                                 <i v-if="!isLiked" class="fa-regular fa-thumbs-up"></i>
@@ -52,13 +75,13 @@
                             </span>
                         </a>
                         <a class="level-item button is-small" @click="handleDisplayReply">
-                            <span>6</span>
+                            <span>{{ comment.amountReply }}</span>
                             <span class="icon is-small"><i class="fas fa-reply"></i></span>
                         </a>
                     </div>
                 </nav>
                 <article v-if="displayReply && user" class="media sub-comment">
-                    <figure class="media-left">
+                    <figure class="media-left ml-2">
                         <p class="image is-32x32">
                             <img class="is-rounded" :src="user.image">
                         </p>
@@ -66,13 +89,13 @@
                     <div class="media-content">
                         <div class="field">
                             <p class="control">
-                                <textarea class="textarea" ref="comment_reply" autofocus></textarea>
+                                <textarea class="textarea" v-model="contentReply" ref="comment_reply" autofocus></textarea>
                             </p>
                         </div>
                         <nav class="level">
                             <div class="level-left">
                                 <div class="level-item">
-                                    <a class="button is-info is-rounded is-small">Submit</a>
+                                    <a class="button is-info is-rounded is-small" @click="handleReply">Submit</a>
                                 </div>
                                 <div class="level-item">
                                     <a @click="displayReply = false"
@@ -90,17 +113,20 @@
 </template>
 
 <script>
-import { likeCommentAPI } from '../../../api/api';
+import { likeCommentAPI, updateCommentAPI } from '../../../api/api';
 import { calculateTime } from '../../../helpers/common';
 
 export default {
     props: ["comment"],
-    emits: ['displayReply', 'deleteComment'],
+    emits: ['displayReply', 'deleteComment', 'isEditting'],
     data() {
         return {
             displayReply: false,
             isShowDetail: false,
-            displayHelper: false
+            displayHelper: false,
+            isEditting: false,
+            content: this.comment.content,
+            contentReply: "",
         };
     },
     computed: {
@@ -110,8 +136,8 @@ export default {
         createTime() {
             return calculateTime(this.comment.created_at, this);
         },
-        isLiked() { 
-            return this.comment.isLiked 
+        isLiked() {
+            return this.comment.isLiked
         }
     },
     methods: {
@@ -137,6 +163,33 @@ export default {
             }).catch((err) => {
                 console.log(err);
             });
+        },
+        showEdit() {
+            this.isEditting = true;
+            this.$emit('isEditting');
+        },
+        hideEdit() {
+            this.isEditting = false;
+            this.displayHelper = false;
+            this.content = this.comment.content;
+        },
+        handleEdit() {
+            let data = {
+                id: this.comment.id,
+                content: this.content,
+            }
+            let _this = this;
+            updateCommentAPI(data).then(result => {
+                if (result.data == true) {
+                    _this.comment.content = _this.content
+                    _this.hideEdit();
+                }
+            });
+        },
+        handleReply() {
+            let data = {
+                
+            }
         }
     },
 }
@@ -209,7 +262,7 @@ hr {
     margin: 0 0 0 auto !important;
 }
 
-.liked  {
+.liked {
     color: blue;
 }
 </style>

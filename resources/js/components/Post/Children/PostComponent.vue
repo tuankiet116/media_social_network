@@ -1,6 +1,6 @@
 <template>
     <div class="box post-box column is-two-thirds-tablet is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5">
-        <div ref="post" class="post" @click="$router.push({ name: 'post_detail', params: { id: post.id } })">
+        <div ref="post" class="post">
             <canvas ref="canvas"></canvas>
             <div class="user-info">
                 <figure class="image is-32x32">
@@ -11,7 +11,6 @@
                     <p>
                         <i class="fa-regular fa-clock"></i>&nbsp;
                         <small>{{ timeCreated }}</small>
-
                     </p>
                 </div>
                 <figure v-outsider="handleUnDisplayHelper" class="dots-container is-rounded">
@@ -50,47 +49,17 @@
             <hr class="split-reaction-post">
             <ReactionComponent @focusComment="handleFocusComment" :post="post" />
         </div>
-        <article v-if="focusComment && user" class="media">
-            <figure class="media-left">
-                <p class="image is-32x32">
-                    <img class="is-rounded" :src="user.image">
-                </p>
-            </figure>
-            <div class="box comment-box">
-                <div class="media-content">
-                    <div class="field">
-                        <p class="control">
-                            <textarea v-model="commentContent" class="textarea" placeholder="Add a comment..."
-                                autofocus>
-                            </textarea>
-                        </p>
-                    </div>
-                    <nav class="level">
-                        <div class="level-left">
-                            <div class="level-item">
-                                <a @click="handleCommentToPost" class="button is-small is-info">Submit</a>
-                            </div>
-                            <div class="level-item">
-                                <a @click="focusComment = false" class="button is-small is-light">Cancel</a>
-                            </div>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </article>
-        <ListCommentComponent ref="listComment" @loadListComment="handleLoadListComment($event)"
+        <ListCommentComponent ref="listComment" @loadListComment="redirect($event)"
             @hiddenCommentInput="focusComment = false" @deleteComment="showConfirmDeleteComment($event)"
             :comments="comments" />
         <hr />
     </div>
-    <ConfirmDeleteComponent v-if="isShowConfirmComment" :message="$t('comment.confirm_delete')"
-        @confirm="handleDeleteComment" @cancel="hideConfirmDeleteComment" />
     <ConfirmDeleteComponent v-if="isShowConfirmPost" :message="$t('post.confirm_delete')" @confirm="handleDeletePost"
         @cancel="isShowConfirmPost = false" />
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { createComment, getListCommentAPI, deleteCommentAPI, deletePost } from '../../../api/api';
+import { deletePost } from '../../../api/api';
 import ListCommentComponent from './ListCommentComponent.vue';
 import ReactionComponent from './ReactionComponent.vue';
 import ConfirmDeleteComponent from '../../Common/ConfirmDeleteComponent.vue';
@@ -125,59 +94,8 @@ export default {
         handleUnDisplayHelper() {
             this.displayHelper = false;
         },
-        handleFocusComment() {
-            this.focusComment = !this.focusComment;
-            this.$refs.listComment.loadComments();
-        },
-        handleCommentToPost() {
-            let _this = this;
-            if (this.commentContent == "") return;
-            let data = {
-                content: this.commentContent,
-                post_id: this.post.id,
-                parent_id: null
-            }
-
-            createComment(data).then(function (result) {
-                _this.comments.unshift(result.data);
-                _this.focusComment = false;
-                _this.commentContent = "";
-                _this.post.comments_count++;
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        handleLoadListComment(offset) {
-            let _this = this;
-            this.focusComment = true;
-            getListCommentAPI(this.post.id, offset).then(function (result) {
-                _this.isLoadMore = true;
-                if (result.data.comments.length == 0) {
-                    _this.$refs.listComment.isLoadMore = false;
-                } else if (result.data.comments.length >= _this.comments.length) {
-                    _this.comments = result.data.comments;
-                    _this.$refs.listComment.offset = result.data.offset;
-                } else {
-                    _this.comments.push(...result.data.comments);
-                    _this.$refs.listComment.offset = result.data.offset;
-                }
-            }).catch(function (error) {
-                if (!_this.user) {
-                    window.location.href = '/user/login';
-                }
-            });
-        },
-        handleDeleteComment() {
-            let _this = this;
-            deleteCommentAPI(this.idCommentDelete).then(result => {
-                if (result.data == true) {
-                    let indexComment = _this.comments.findIndex(cm => cm.id == _this.idCommentDelete);
-                    _this.comments.splice(indexComment, 1);
-                    _this.post.comments_count--;
-                    _this.idCommentDelete = null;
-                    _this.isShowConfirmComment = false;
-                }
-            })
+        redirect(offset) {
+            this.$router.push({ name: 'post_detail', params: { id: this.post.id } })
         },
         showConfirmDeleteComment(idCommentDelete) {
             this.isShowConfirmComment = true;
@@ -306,7 +224,7 @@ textarea {
     text-align: center;
     right: 2rem;
     padding: 0;
-    top: 0.5rem;
+    top: 0;
 }
 
 .arrow-box a {
