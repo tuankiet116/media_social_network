@@ -14,8 +14,7 @@ class EventListPost implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    /**
-     * C    public $id;
+    public $id;
     /**
      * Create a new event instance.
      *
@@ -33,6 +32,6 @@ class EventListPost implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('post.list');
+        return new Channel('user_notification');
     }
 }

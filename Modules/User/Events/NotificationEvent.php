@@ -3,16 +3,17 @@
 namespace Modules\User\Events;
 
 use App\Models\UserNotification;
-use BeyondCode\LaravelWebSockets\WebSockets\Channels\PrivateChannel;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class NotificationEvent implements ShouldBroadcast, ShouldQueue
+class NotificationEvent implements ShouldBroadcast
 {
-    use SerializesModels;
+    use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    private $notification;
+    public $notification;
     /**
      * Create a new event instance.
      *
@@ -30,8 +31,10 @@ class NotificationEvent implements ShouldBroadcast, ShouldQueue
      */
     public function broadcastOn()
     {
-        return [
-            new PrivateChannel('user_notification')
-        ];
+        return new PrivateChannel('user_notification');
+    }
+
+    public function broadcastWith() {
+        return $this->notification->toArray();
     }
 }

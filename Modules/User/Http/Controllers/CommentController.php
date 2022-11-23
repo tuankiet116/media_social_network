@@ -22,7 +22,6 @@ class CommentController extends Controller
     {
         $data = $request->all();
         $result = $this->commentService->createComment($data);
-
         if ($result) {
             return $this->responseData($result, 200);
         }

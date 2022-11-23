@@ -15,7 +15,7 @@ export default {
         return {};
     },
     mounted() {
-        Echo.channel('user_notification', 'NotificationEvent', (result) => {
+        Echo.private('user_notification').listen('Modules\\User\\Events\\NotificationEvent', (result) => {
             debugger
         })
     }

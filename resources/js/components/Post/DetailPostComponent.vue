@@ -202,9 +202,6 @@ export default {
                     _this.$refs.listComment.offset = result.data.offset;
                 }
             }).catch(function (error) {
-                if (!_this.user) {
-                    window.location.href = '/user/login';
-                }
             });
         },
         handleDeleteComment() {

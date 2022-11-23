@@ -6,3 +6,7 @@ if (!defined('HAVE_PAGE')) define('HAVE_PAGE', 1);
 if (!defined('LIMIT')) define('LIMIT', 10);
 if (!defined('LIMIT_COMMENT_OVERVIEW')) define('LIMIT_COMMENT_OVERVIEW', 2);
 if (!defined('LIMIT_COMMENT')) define('LIMIT_COMMENT', 10);
+
+if (!defined('NOTIFICATION_COMMENT_POST')) define('NOTIFICATION_COMMENT_POST', 'notification_comment_post');
+if (!defined('NOTIFICATION_REACT_POST')) define('NOTIFICATION_REACT_POST', 'notification_react_post');
+if (!defined('NOTIFICATION_REPLY_COMMENT')) define('NOTIFICATION_REPLY_COMMENT', 'notification_reply_comment');

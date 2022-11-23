@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('user_notification', function($id) {
+Broadcast::channel('user_notification', function($user) {
     return true;
-});
+}, ['guards' => ['web']]);

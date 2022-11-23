@@ -24,7 +24,6 @@ Route::middleware('auth.api')->prefix('post')->name('post.')->group(function() {
     Route::post('/create', 'PostController@create')->name('create');
     Route::post('/reaction', 'PostController@reaction')->name('reaction');
     Route::post('/reaction/count', 'PostUserController@getNumberLikePost')->name('reaction.count');
-    Route::get('/get/{id}', 'PostController@getPost')->name('get');
     Route::delete('/delete/{postId}', 'PostController@delete')->name('delete');
     Route::put('/update', 'PostController@update')->name('update');
 });
@@ -42,3 +41,10 @@ Route::middleware('auth.api')->prefix('comment')->name('comment.')->group(functi
 Route::post('/user/facebook_login', 'FacebookController@fbLogin');
 Route::get('/post/list', 'PostController@getPosts');
 Route::get('/post/stream/{fileName}', 'PostController@stream');
+Route::get('/post/get/{id}', 'PostController@getPost')->name('get_post');
+Route::post('/broadcast/auth', function() {
+    if (auth()->check()) {
+        return true;
+    }
+    return false;
+});

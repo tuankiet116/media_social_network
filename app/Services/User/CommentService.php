@@ -4,6 +4,9 @@ namespace App\Services\User;
 
 use App\Models\Comment;
 use App\Models\CommentUser;
+use App\Models\Post;
+use App\Models\UserNotification;
+use Modules\User\Events\NotificationEvent;
 
 class CommentService
 {
@@ -29,6 +32,16 @@ class CommentService
         }
         $result = Comment::create($data_create);
         $comment = Comment::with('users')->find($result->id);
+        $userId = auth()->id();
+        $post = Post::where('id', $data['post_id'])->first();
+        $notification = UserNotification::create([
+            'user_id' => $post->user_id,
+            'user_sender_id' => $userId,
+            'group_sender_id' => null,
+            'type' => NOTIFICATION_COMMENT_POST
+        ]);
+        event(new NotificationEvent($notification));
+
         return $comment;
     }
 

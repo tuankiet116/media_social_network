@@ -13,7 +13,6 @@ class UserNotification extends Model
         'user_id',
         'user_sender_id',
         'group_sender_id',
-        'content',
-        'link_url'
+        'type'
     ];
 }

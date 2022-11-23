@@ -47,7 +47,7 @@
                 </video>
             </div>
             <hr class="split-reaction-post">
-            <ReactionComponent @focusComment="handleFocusComment" :post="post" />
+            <ReactionComponent @focusComment="redirect" :post="post" />
         </div>
         <ListCommentComponent ref="listComment" @loadListComment="redirect($event)"
             @hiddenCommentInput="focusComment = false" @deleteComment="showConfirmDeleteComment($event)"
