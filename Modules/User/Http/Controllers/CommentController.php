@@ -57,10 +57,8 @@ class CommentController extends Controller
         return $this->responseData($comment, 200);
     }
 
-    public function getReplies(Request $request)
+    public function getReplies(int $commentId, int $offset)
     {
-        $commentId = $request->get('comment_id');
-        $offset = $request->get('offset');
         $result = $this->commentService->getReplyComments($commentId, $offset);
         return $this->responseData($result, 200);
     }

@@ -1,23 +1,23 @@
 <template>
     <div class="container">
-        <CommentComponent ref="comment" v-for="(comment, index) in comments" :comment="comment"
-            @deleteComment="$emit('deleteComment', $event)" @displayReply="hiddenReply(index)"
+        <ReplyComponent ref="comment" v-for="(comment, index) in comments" :comment="comment"
+            @deleteReply="$emit('deleteReply', $event)" @displayReply="hiddenReply(index)"
             @isEditting="$emit('isEditting')" />
     </div>
     <div class="load-more">
-        <a v-if="isLoadMore && comments.length" @click="loadComments">Load More</a>
+        <a v-if="isLoadMore && comments.length" @click="loadReplies">Load More</a>
     </div>
 </template>
 
 <script>
-import CommentComponent from './CommentComponent.vue';
+import ReplyComponent from './ReplyComponent.vue';
 
 export default {
     components: {
-        CommentComponent
+        ReplyComponent
     },
     props: ['comments'],
-    emits: ['isEditting', 'deleteComment', 'loadListComment'],
+    emits: ['isEditting', 'deleteReply', 'loadReplies'],
     data() {
         return {
             isLoadMore: true,
@@ -30,8 +30,8 @@ export default {
         }
     },
     methods: {
-        loadComments() {
-            this.$emit('loadListComment', this.offset);
+        loadReplies() {
+            this.$emit('loadReplies', this.offset);
         },
         hiddenReply(indexComponentException) {
             this.$refs.comment.forEach(function (component, index) {
@@ -49,9 +49,9 @@ export default {
 }
 
 .load-more {
-    text-align: right;
     margin-right: 1rem;
     margin-top: 1rem;
+    text-align: right;
 }
 
 .load-more a {

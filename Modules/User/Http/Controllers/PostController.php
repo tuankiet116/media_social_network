@@ -23,9 +23,9 @@ class PostController extends Controller
         return $this->responseData($result, 200);
     }
 
-    public function getPosts(int $offset = null)
+    public function getPosts(int $offset = null, int $userId = null)
     {
-        $data = $this->postService->getPosts($offset);
+        $data = $this->postService->getPosts($offset, $userId);
         return $this->responseData($data, 200);
     }
 

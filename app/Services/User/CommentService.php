@@ -49,7 +49,10 @@ class CommentService
     {
         $comments = Comment::with('users:id,name,image')
             ->withCount('likes')
-            ->where('post_id', $postId)
+            ->where([
+                'post_id' => $postId,
+                'belong_id' => null
+            ])
             ->orderBy('created_at', 'DESC');
         if ($offset) {
             $comments = $comments->offset($offset);
@@ -89,25 +92,24 @@ class CommentService
 
     public function replyComment($req)
     {
+        $userID = auth()->id();
         $data = array(
             'content' => $req['content'],
             'belong_id' => $req['belong_id'],
-            'user_id' => $req['user_id'],
+            'user_id' => $userID,
             'post_id' => $req['post_id']
         );
         $comment = Comment::create($data);
-        return $comment;
+        return Comment::with('users')->where('id', $comment->id)->first();
     }
 
     public function getReplyComments(int $commentId, int $offset = 0)
     {
-        $replies = Comment::where('belong_id', $commentId)->orderBy('created_at')
+        $replies = Comment::with('users:id,name,image')
+            ->withCount('likes')->where('belong_id', $commentId)->orderBy('created_at')
             ->limit(LIMIT_COMMENT)->offset($offset)->get();
         $ammountReplies = count($replies);
         $newOffset = $offset + $ammountReplies;
-        if ($ammountReplies < LIMIT_COMMENT) {
-            $newOffset = 0;
-        }
         return array('replies' => $replies, 'offset' => $newOffset);
     }
 

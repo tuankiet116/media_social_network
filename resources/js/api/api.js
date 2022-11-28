@@ -5,6 +5,8 @@ const api = axios.create({
 });
 
 export const detectUser = () => api.get(`api/user`);
+export const getProfile = () => api.get(`api/profile/me`);
+export const getUserProfile = (id) => api.get(`api/profile/${id}`);
 export const logoutUser = () => api.post('api/logout');
 
 export const createPost = function (data, config) {
@@ -21,3 +23,5 @@ export const getListCommentAPI = (postID, offset) => api.get(`api/comment/list/$
 export const deleteCommentAPI = (commentId) => api.delete(`api/comment/delete/${commentId}`);
 export const likeCommentAPI = (data) => api.post('api/comment/like', data);
 export const updateCommentAPI = (data) => api.put('api/comment/update', data);
+export const replyCommentAPI = (data) => api.post('api/comment/reply', data);
+export const getRepliesCommentsAPI = (commentId, offset) => api.get(`api/comment/list/${commentId}/reply/${offset}`);

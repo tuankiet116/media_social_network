@@ -17,6 +17,8 @@ class CreateGroupsTable extends Migration
             $table->id();
             $table->string('group_name');
             $table->bigInteger('user_id', false, true);
+            $table->string('image');
+            $table->string('banner')->nullable();
             $table->timestamps();
         });
     }

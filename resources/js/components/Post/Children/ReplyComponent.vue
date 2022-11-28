@@ -42,7 +42,7 @@
                         </button>
                         <div href="#" class="arrow-box box" v-show="displayHelper">
                             <a v-if="user && user.id == comment.user_id" class="navbar-item"
-                                @click="handleDeleteComment">
+                                @click="handleDeleteReply">
                                 <span>Delete</span>
                                 <i class="fa-solid fa-trash"></i>
                             </a>
@@ -79,57 +79,23 @@
                         </a>
                     </div>
                 </nav>
-                <ListRepliesComponent ref="listReplies" @deleteReply="handleDeleteReply($event)"
-                @loadReplies="loadReplies($event)" v-if="displayReply" :comments="replies" />
-                <article v-if="displayReply && user" class="media sub-comment">
-                    <figure class="media-left">
-                        <p class="image is-32x32">
-                            <img class="is-rounded" :src="user.image">
-                        </p>
-                    </figure>
-                    <div class="media-content">
-                        <div class="field">
-                            <p class="control">
-                                <textarea class="textarea" v-model="contentReply" ref="comment_reply"
-                                    autofocus></textarea>
-                            </p>
-                        </div>
-                        <nav class="level">
-                            <div class="level-left">
-                                <div class="level-item">
-                                    <a class="button is-info is-rounded is-small" @click="handleReply">Submit</a>
-                                </div>
-                                <div class="level-item">
-                                    <a @click="displayReply = false"
-                                        class="button is-light is-small is-rounded">Cancel</a>
-                                </div>
-                            </div>
-                            <div class="level-left">
-                            </div>
-                        </nav>
-                    </div>
-                </article>
             </div>
         </div>
     </article>
 </template>
 
 <script>
-import { deleteCommentAPI, getRepliesCommentsAPI, likeCommentAPI, replyCommentAPI, updateCommentAPI } from '../../../api/api';
+import { getRepliesCommentsAPI, likeCommentAPI, replyCommentAPI, updateCommentAPI } from '../../../api/api';
 import { calculateTime } from '../../../helpers/common';
-import ListRepliesComponent from './ListRepliesComponent.vue';
 
 export default {
     props: ["comment"],
-    emits: ["displayReply", "deleteComment", "isEditting"],
+    emits: ['displayReply', 'deleteReply', 'isEditting'],
     data() {
         return {
-            displayReply: false,
-            displayHelper: false,
             isEditting: false,
-            content: this.comment.content,
-            contentReply: "",
-            replies: []
+            displayHelper: false,
+            content: this.comment.content
         };
     },
     computed: {
@@ -140,28 +106,24 @@ export default {
             return calculateTime(this.comment.created_at, this);
         },
         isLiked() {
-            return this.comment.isLiked;
+            return this.comment.isLiked
         }
     },
     methods: {
         handleDisplayReply() {
-            this.displayReply = !this.displayReply;
             this.$emit("displayReply");
-            this.replies = [];
-            this.loadReplies();
         },
         handleUnDisplayHelper() {
             this.displayHelper = false;
         },
-        handleDeleteComment() {
-            this.displayHelper = false;
-            this.$emit("deleteComment", this.comment.id);
+        handleDeleteReply() {
+            this.$emit('deleteReply', this.comment.id);
         },
         handleLikeComment() {
             let data = {
                 comment_id: this.comment.id,
                 like: !this.isLiked
-            };
+            }
             this.comment.likes_count++;
             this.comment.isLiked = !this.comment.isLiked;
             likeCommentAPI(data).then(result => {
@@ -172,7 +134,7 @@ export default {
         },
         showEdit() {
             this.isEditting = true;
-            this.$emit("isEditting");
+            this.$emit('isEditting');
         },
         hideEdit() {
             this.isEditting = false;
@@ -183,59 +145,37 @@ export default {
             let data = {
                 id: this.comment.id,
                 content: this.content,
-            };
+            }
             let _this = this;
             updateCommentAPI(data).then(result => {
                 if (result.data == true) {
-                    _this.comment.content = _this.content;
+                    _this.comment.content = _this.content
                     _this.hideEdit();
                 }
             });
         },
         handleReply() {
-            if (this.contentReply) {
-                let data = {
-                    content: this.contentReply,
-                    belong_id: this.comment.id,
-                    post_id: this.comment.post_id
-                };
-                replyCommentAPI(data).then(result => {
-                    this.replies.push(result.data);
-                    this.contentReply = "";
-                    this.comment.amountReply ++;
-                }).catch(err => {
-                    console.log(err);
-                });
+            let data = {
+                content: this.contentReply,
+                belong_id: this.comment.id,
+                post_id: this.comment.post_id
             }
+            replyCommentAPI(data).then(result => {
+                debugger
+            }).catch(err => {
+                console.log(err);
+            });
         },
-        loadReplies(offset = 0) {
+        loadReplies() {
             let _this = this;
-            getRepliesCommentsAPI(this.comment.id, offset).then(result => {
-                let replies = result.data.replies;
-                if (replies.length == 0) {
-                    _this.$refs.listReplies.isLoadMore = false;
-                } else if (replies.length > _this.replies.length) {
-                    _this.replies = replies;
-                    _this.$refs.listReplies.offset = result.data.offset;
-                } else {
-                    _this.replies.push(...replies);
-                    _this.$refs.listReplies.offset = result.data.offset;
-                }
+            getRepliesCommentsAPI(this.comment.id, this.offsetReply).then(result => {
+                _this.replies = result.data.replies;
+                _this.offsetReply = result.data.offset;
             }).catch(error => {
                 console.log(error);
             });
-        },
-        handleDeleteReply(idReply) {
-            deleteCommentAPI(idReply).then(result => {
-                let indexComment = this.replies.findIndex(cm => cm.id == idReply);
-                this.replies.splice(indexComment, 1);
-                this.comment.amountReply--;
-            }).catch(err => {
-                console.log(err);
-            })
         }
     },
-    components: { ListRepliesComponent }
 }
 </script>
 
@@ -249,11 +189,6 @@ textarea {
     width: 100%;
     position: relative;
     margin: 0 !important;
-    padding-top: 0.2rem;
-    border: none;
-}
-
-.media {
     border: none;
 }
 

@@ -20,6 +20,11 @@ Route::middleware('auth.api')->group(function() {
     Route::post('/ckfinder/upload', 'CKFinderController@uploadImage');
 });
 
+Route::middleware('auth.api')->prefix('profile')->name('profile.')->group(function() {
+    Route::get('/me', 'UserInformationController@getProfile');
+    Route::get('/{id}', 'UserInformationController@getUserProfile');
+});
+
 Route::middleware('auth.api')->prefix('post')->name('post.')->group(function() {
     Route::post('/create', 'PostController@create')->name('create');
     Route::post('/reaction', 'PostController@reaction')->name('reaction');
@@ -34,17 +39,11 @@ Route::middleware('auth.api')->prefix('comment')->name('comment.')->group(functi
     Route::delete('/delete/{commentId}', 'CommentController@deleteComment')->name('delete');
     Route::post('/like', 'CommentController@likeComment')->name('like_comment');
     Route::post('/reply', 'CommentController@reply')->name('reply');
-    Route::get('/list/reply', 'CommentController@getReplies')->name('get_replies');
+    Route::get('/list/{commentId}/reply/{offset?}', 'CommentController@getReplies')->name('get_replies');
     Route::put('/update', 'CommentController@update')->name('update');
 });
 
 Route::post('/user/facebook_login', 'FacebookController@fbLogin');
-Route::get('/post/list', 'PostController@getPosts');
+Route::get('/post/list/{offset?}/{userId?}', 'PostController@getPosts');
 Route::get('/post/stream/{fileName}', 'PostController@stream');
 Route::get('/post/get/{id}', 'PostController@getPost')->name('get_post');
-Route::post('/broadcast/auth', function() {
-    if (auth()->check()) {
-        return true;
-    }
-    return false;
-});

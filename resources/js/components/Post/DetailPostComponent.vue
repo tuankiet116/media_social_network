@@ -55,7 +55,7 @@
                 <ReactionComponent @focusComment="handleFocusComment" :post="post" />
             </div>
             <article v-if="focusComment && user" class="media">
-                <figure class="media-left ml-2">
+                <figure class="media-left">
                     <p class="image is-32x32">
                         <img class="is-rounded" :src="user.image">
                     </p>
@@ -84,8 +84,7 @@
             </article>
             <ListCommentComponent ref="listComment" 
                 @loadListComment="handleLoadListComment($event)"
-                @hiddenCommentInput="focusComment = false" 
-                @deleteComment="showConfirmDeleteComment($event)"
+                @deleteComment="handleDeleteComment($event)"
                 @isEditting="focusComment = false"
                 :comments="comments" />
             <hr />
@@ -93,8 +92,6 @@
         <div v-else>
             <NotFoundComponent />
         </div>
-        <ConfirmDeleteComponent v-if="isShowConfirmComment" :message="$t('comment.confirm_delete')"
-            @confirm="handleDeleteComment" @cancel="hideConfirmDeleteComment" />
         <ConfirmDeleteComponent v-if="isShowConfirmPost" :message="$t('post.confirm_delete')"
             @confirm="handleDeletePost" @cancel="isShowConfirmPost = false" />
     </div>
@@ -123,8 +120,6 @@ export default {
             comments: [],
             focusComment: false,
             commentContent: "",
-            isShowConfirmComment: false,
-            idCommentDelete: null,
             displayHelper: false,
             isShowConfirmPost: false,
             post: null,
@@ -190,39 +185,29 @@ export default {
         handleLoadListComment(offset) {
             let _this = this;
             this.focusComment = true;
-            this.$refs.listComment.isLoadMoreWrapper = false;
-            getListCommentAPI(this.$route.params.id, offset).then(function (result) {
-                if (result.data.comments.length == 0) {
-                    _this.$refs.listComment.isLoadMore = false;
-                } else if (result.data.comments.length >= _this.comments.length) {
-                    _this.comments = result.data.comments;
-                    _this.$refs.listComment.offset = result.data.offset;
-                } else {
-                    _this.comments.push(...result.data.comments);
-                    _this.$refs.listComment.offset = result.data.offset;
-                }
-            }).catch(function (error) {
-            });
+            if (this.$route.params.id) {
+                getListCommentAPI(this.$route.params.id, offset).then(function (result) {
+                    if (result.data.comments.length == 0) {
+                        _this.$refs.listComment.isLoadMore = false;
+                    } else if (result.data.comments.length > _this.comments.length) {
+                        _this.comments = result.data.comments;
+                        _this.$refs.listComment.offset = result.data.offset;
+                    } else {
+                        _this.comments.push(...result.data.comments);
+                        _this.$refs.listComment.offset = result.data.offset;
+                    }
+                }).catch(function (error) {
+                });
+            }
         },
-        handleDeleteComment() {
-            let _this = this;
-            deleteCommentAPI(this.idCommentDelete).then(result => {
+        handleDeleteComment(idCommentDelete) {
+            deleteCommentAPI(idCommentDelete).then(result => {
                 if (result.data == true) {
-                    let indexComment = _this.comments.findIndex(cm => cm.id == _this.idCommentDelete);
-                    _this.comments.splice(indexComment, 1);
-                    _this.post.comments_count--;
-                    _this.idCommentDelete = null;
-                    _this.isShowConfirmComment = false;
+                    let indexComment = this.comments.findIndex(cm => cm.id == idCommentDelete);
+                    this.comments.splice(indexComment, 1);
+                    this.post.comments_count--;
                 }
             })
-        },
-        showConfirmDeleteComment(idCommentDelete) {
-            this.isShowConfirmComment = true;
-            this.idCommentDelete = idCommentDelete;
-        },
-        hideConfirmDeleteComment() {
-            this.isShowConfirmComment = false;
-            this.idCommentDelete = null;
         },
         async handleDeletePost() {
             let _this = this;
@@ -241,7 +226,6 @@ export default {
 .post-box {
     margin: auto;
     max-width: 600px;
-    padding: 0;
 }
 
 .post_user {
@@ -290,17 +274,7 @@ export default {
     margin: 0 !important;
 }
 
-.post-info {
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
 .split-reaction-post {
-    margin: 0 !important;
-}
-
-.post-info {
-    padding: 0 !important;
     margin: 0 !important;
 }
 
@@ -328,10 +302,6 @@ canvas {
 textarea {
     height: 4em;
     min-height: 4em !important;
-}
-
-.media {
-    margin-right: 1rem;
 }
 
 .arrow-box {

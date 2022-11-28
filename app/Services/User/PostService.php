@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\PostUser;
 use App\Services\Inf\StorageService;
 use App\Services\Inf\VideoStream;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class PostService
@@ -47,18 +48,23 @@ class PostService
         return $fileName;
     }
 
-    public function getPosts($offset = 0)
+    public function getPosts($offset = 0, int $userId = null)
     {
-        $postQuery = Post::with(['user:id,name,image', 'comments' => function ($query) {
-            return $query->orderBy('created_at', 'DESC')->limit(LIMIT_COMMENT_OVERVIEW)->with('users');
-        }], 'comments.users')
-            ->withCount('reactionUser', 'comments')
-            ->orderBy('created_at', 'DESC')
-            ->limit(LIMIT);
+        $postQuery = Post::with(['user:id,name,image', 'comments', 'comments.users'])->withCount('reactionUser', 'comments')
+        ->orderBy('created_at', 'DESC')
+        ->limit(LIMIT);
+        if ($userId) {
+            $postQuery->where('user_id', $userId);
+        }
         if ($offset) {
             $postQuery = $postQuery->offset($offset);
         }
         $posts = $postQuery->get();
+        $posts->each(function($post) {
+            $post->load(['comments' => function($q) {
+                return $q->orderBy('created_at', 'DESC')->limit(LIMIT_COMMENT_OVERVIEW)->with('users');
+            }]);
+        });
         if ($posts) {
             $newOffset = $posts->count() + $offset;
         }

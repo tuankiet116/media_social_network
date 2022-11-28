@@ -50,8 +50,7 @@
             <ReactionComponent @focusComment="redirect" :post="post" />
         </div>
         <ListCommentComponent ref="listComment" @loadListComment="redirect($event)"
-            @hiddenCommentInput="focusComment = false" @deleteComment="showConfirmDeleteComment($event)"
-            :comments="comments" />
+            @deleteComment="showConfirmDeleteComment($event)" :comments="comments" />
         <hr />
     </div>
     <ConfirmDeleteComponent v-if="isShowConfirmPost" :message="$t('post.confirm_delete')" @confirm="handleDeletePost"
@@ -77,7 +76,6 @@ export default {
         return {
             comments: this.post.comments,
             focusComment: false,
-            commentContent: "",
             isShowConfirmComment: false,
             idCommentDelete: null,
             displayHelper: false,
@@ -118,18 +116,23 @@ export default {
 }
 </script>
 <style scoped>
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
 .post-box {
     margin: auto;
     max-width: 600px;
-    padding: 0;
+    margin-bottom: 2rem;
 }
 
 .post_user {
     margin: 0.2rem;
-}
-
-.comment-box {
-    width: 100%;
 }
 
 .post {
@@ -171,17 +174,7 @@ export default {
     margin: 0 !important;
 }
 
-.post-info {
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
 .split-reaction-post {
-    margin: 0 !important;
-}
-
-.post-info {
-    padding: 0 !important;
     margin: 0 !important;
 }
 
@@ -195,24 +188,6 @@ export default {
         margin-left: 0;
         margin-right: 0;
     }
-}
-
-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: none;
-}
-
-textarea {
-    height: 4em;
-    min-height: 4em !important;
-}
-
-.media {
-    margin-right: 1rem;
 }
 
 .arrow-box {

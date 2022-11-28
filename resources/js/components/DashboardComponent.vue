@@ -1,18 +1,20 @@
 <template>
-    <LoadingComponent v-if="loading" />
-    <div id="create-post" class="post">
-        <div v-if="user" class="box post-box column is-two-thirds-tablet is-one-desktop 
-        is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center">
-            <img class="image is-32x32 mr-2" :src="user?.image" />
-            <input @click="$router.push({ name: 'create_post' })" class="input" placeholder="Create Post">
+    <div id="post-container">
+        <LoadingComponent v-if="loading" />
+        <div id="create-post" class="post">
+            <div v-if="user" class="box post-box column is-two-thirds-tablet is-one-desktop 
+            is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center">
+                <img class="image is-32x32 mr-2" :src="user?.image" />
+                <input @click="$router.push({ name: 'create_post' })" class="input" placeholder="Create Post">
+            </div>
+            <div v-else @click="redirectLogin" class="box post-box column is-two-thirds-tablet is-one-desktop 
+            is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center">
+                <input class="input" placeholder="Create Post">
+            </div>
         </div>
-        <div v-else @click="redirectLogin" class="box post-box column is-two-thirds-tablet is-one-desktop 
-        is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center">
-            <input class="input" placeholder="Create Post">
+        <div class="post">
+            <PostComponent @post-deleted="handleRemovePost" v-for="post in posts" :post="post" />
         </div>
-    </div>
-    <div class="post">
-        <PostComponent @post-deleted="handleRemovePost" v-for="post in posts" :post="post" />
     </div>
 </template>
 <script>
@@ -46,6 +48,7 @@ export default {
             createPostEl.style.marginTop = Number(height) + Number(height / 2) + 'px';
             createPostEl.style.marginBottom = Number(height / 2) + 'px';
         }
+        document.addEventListener('scroll', this.handleLoadPost);
     },
     methods: {
         fetchPost() {
@@ -57,6 +60,13 @@ export default {
                 console.log(err);
             });
         },
+        handleLoadPost(e) {
+            var currentScrollPosition = e.srcElement.scrollTop;
+            if (currentScrollPosition > this.scrollPosition) {
+                console.log("Scrolling down");
+            }
+            this.scrollPosition = currentScrollPosition;
+        },
         handleRemovePost(postID) {
             let postIndex = this.posts.findIndex(p => {
                 return p.id == postID;
@@ -66,7 +76,12 @@ export default {
         redirectLogin() {
             window.location.replace('user/login');
         }
-    }
+    },
+    beforeDestroy() {
+        debugger
+        document.removeEventListener("scroll", this.handleLoadPost);
+        console.log('destroyed');
+    },
 }
 </script>
 <style scoped>
