@@ -56,16 +56,16 @@ export default {
             let _this = this;
             getPosts({ offset: offset }).then((result) => {
                 _this.posts = result.data.data;
+                this.$store.state.offset = result.data.offset;
             }).catch(err => {
                 console.log(err);
             });
         },
         handleLoadPost(e) {
-            var currentScrollPosition = e.srcElement.scrollTop;
-            if (currentScrollPosition > this.scrollPosition) {
-                console.log("Scrolling down");
+            let currentScrollPosition = document.documentElement.scrollTop;
+            if (currentScrollPosition >= (document.documentElement.scrollHeight - 1000)) {
+                this.fetchPost();
             }
-            this.scrollPosition = currentScrollPosition;
         },
         handleRemovePost(postID) {
             let postIndex = this.posts.findIndex(p => {
@@ -77,10 +77,8 @@ export default {
             window.location.replace('user/login');
         }
     },
-    beforeDestroy() {
-        debugger
+    beforeUnmount() {
         document.removeEventListener("scroll", this.handleLoadPost);
-        console.log('destroyed');
     },
 }
 </script>
