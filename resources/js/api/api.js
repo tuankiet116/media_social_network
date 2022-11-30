@@ -12,7 +12,8 @@ export const logoutUser = () => api.post('api/logout');
 export const createPost = function (data, config) {
     return api.post('api/post/create', data, config)
 };
-export const getPosts = (data) => api.get('api/post/list', data);
+export const getPosts = (offset) => api.get(`api/post/list/${offset}`);
+export const getPostsByUser = (offset, userId) => api.get(`api/post/list/${offset}/${userId}`);
 export const getPost = (postID) => api.get(`api/post/get/${postID}`);
 export const deletePost = (postID) => api.delete(`api/post/delete/${postID}`);
 export const reactPostAPI = (data) => api.post('api/post/reaction', data);

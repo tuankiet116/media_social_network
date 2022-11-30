@@ -33,7 +33,10 @@ export default {
     data() {
         return {
             loading: true,
-            posts: []
+            isLoadMore: false,
+            outOfPost: false,
+            offset: 0,
+            posts: [],
         }
     },
     computed: {
@@ -52,18 +55,20 @@ export default {
     },
     methods: {
         fetchPost() {
-            let offset = this.$store.state.offset;
             let _this = this;
-            getPosts({ offset: offset }).then((result) => {
-                _this.posts = result.data.data;
-                this.$store.state.offset = result.data.offset;
+            getPosts(this.offset).then((result) => {
+                _this.posts.push(...result.data.data);
+                if (result.data.data.length == 0) this.outOfPost = true;
+                this.offset = result.data.offset;
+                this.isLoadMore = true;
             }).catch(err => {
                 console.log(err);
             });
         },
         handleLoadPost(e) {
-            let currentScrollPosition = document.documentElement.scrollTop;
-            if (currentScrollPosition >= (document.documentElement.scrollHeight - 1000)) {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100 
+                && this.isLoadMore && !this.outOfPost) {
+                this.isLoadMore = false;
                 this.fetchPost();
             }
         },
