@@ -19,8 +19,10 @@ mix.js('resources/js/bootstrap.js', 'public/js')
 
 mix.sass('resources/sass/bulma.scss', 'public/css');
 
-mix.js('Modules/User/Resources/assets/js/app.js', 'js/userLogin.js')
-    .css('Modules/User/Resources/assets/css/app.css', 'css/userLogin.css');
+mix.js('Modules/User/Resources/assets/js/app.js', 'js/userMain.js')
+    .css('Modules/User/Resources/assets/css/app.css', 'css/userMain.css');
+
+mix.js('Modules/User/Resources/assets/js/particles.js', 'js/particles.js');
 
 mix.sass('resources/css/common_vue.scss', 'css/common.css');
 

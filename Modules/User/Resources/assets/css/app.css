@@ -1,235 +1,66 @@
-@keyframes move-background {
-    from {
-        -webkit-transform: translate3d(0px, 0px, 0px);
-    }
-
-    to {
-        -webkit-transform: translate3d(1000px, 0px, 0px);
-    }
+.interactive-bg {
+  height: 100vh;
+  background-color: #41a1dd;
+  -webkit-box-shadow: inset 24px 4px 64px -24px rgba(71, 71, 71, 1);
+  -moz-box-shadow: inset 24px 4px 64px -24px rgba(71, 71, 71, 1);
+  box-shadow: inset 24px 4px 64px -24px rgba(71, 71, 71, 1);
+  padding: 0px;
+  background-image: url('../images/common/background.png');
 }
 
-@-webkit-keyframes move-background {
-    from {
-        -webkit-transform: translate3d(0px, 0px, 0px);
-    }
-
-    to {
-        -webkit-transform: translate3d(1000px, 0px, 0px);
-    }
+@media (max-width: 769px) {
+  .interactive-bg {
+    display: none
+  }
 }
 
-@-moz-keyframes move-background {
-    from {
-        -webkit-transform: translate3d(0px, 0px, 0px);
-    }
-
-    to {
-        -webkit-transform: translate3d(1000px, 0px, 0px);
-    }
+.input {
+  border-radius: 50px;
 }
 
-@-webkit-keyframes move-background {
-    from {
-        -webkit-transform: translate3d(0px, 0px, 0px);
-    }
-
-    to {
-        -webkit-transform: translate3d(1000px, 0px, 0px);
-    }
+.button {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  min-width: 150px;
 }
 
-.background-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-}
-
-.stars {
-    background: black url(/images/default/stars.png) repeat;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: block;
-    z-index: 0;
-}
-
-.twinkling {
-    width: 10000px;
-    height: 100%;
-    background: transparent url("/images/default/twinkling.png") repeat;
-    background-size: 1000px 1000px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 2;
-
-    -moz-animation: move-background 70s linear infinite;
-    -ms-animation: move-background 70s linear infinite;
-    -o-animation: move-background 70s linear infinite;
-    -webkit-animation: move-background 70s linear infinite;
-    animation: move-background 70s linear infinite;
+.login-logo {
+  margin: 0 auto;
+  margin-bottom: 50px;
+  max-height: 100px;
 
 }
 
-.clouds {
-    width: 10000px;
-    height: 100%;
-    background: transparent url("/images/default/clouds_repeat.png") repeat;
-    background-size: 1000px 1000px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 3;
-
-    -moz-animation: move-background 150s linear infinite;
-    -ms-animation: move-background 150s linear infinite;
-    -o-animation: move-background 150s linear infinite;
-    -webkit-animation: move-background 150s linear infinite;
-    animation: move-background 150s linear infinite;
+.columns {
+  margin: 0px;
 }
-
-.background-container img {
-    height: 70vh;
-    width: 70vh;
-    position: absolute;
-    z-index: 3;
-    right: 20px;
+.title-form {
+  margin-bottom: 1rem;
 }
-
-.main {
-    z-index: 1000;
+.title-form h1 {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.5em;
+  padding-bottom: 15px;
+  position: relative;
 }
-
-.container_fluid {
-    height: 90vh;
+.title-form h1:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 5px;
+  width: 55px;
+  background-color: #111;
 }
-
-@media screen and (min-width:600px) {
-    .brand img {
-        width: 90px;
-        height: 90px;
-        position: relative;
-    }
-}
-
-@media screen and (min-width: 100px) and (max-width: 600px) {
-    .brand img {
-        width: 50px;
-        height: 50px;
-        position: relative;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    body {
-        background-color: #FFFFFF;
-        background-image: linear-gradient(180deg, #6284FF, #FF0000);
-    }
-
-    .background-container {
-        display: none;
-    }
-
-    .brand-title h3{
-        color: steelblue !important;
-    }
-}
-
-.brand-title h3 {
-    overflow: hidden;
-    /* Ensures the content is not revealed until the animation */
-    border-right: .15em solid orange;
-    /* The typwriter cursor */
-    white-space: nowrap;
-
-    /* Gives that scrolling effect as the typing happens */
-    letter-spacing: .15em;
-    /* Adjust as needed */
-    animation:
-        typing 3s steps(22), blink .5s step-end infinite alternate;
-    color: white;
-    z-index: 1000;
-    width: fit-content;
-    position: relative;
-    height: fit-content;
-    color: white;
-}
-
-/* The typing effect */
-@keyframes typing {
-    from {
-        width: 0
-    }
-
-    to {
-        width: 100%;
-    }
-}
-
-/* The typewriter cursor effect */
-@keyframes blink {
-
-    from,
-    to {
-        border-color: transparent
-    }
-
-    50% {
-        border-color: orange;
-    }
-}
-
-#form {
-    background-color: white;
-    padding: 10px;
-    border-radius: 15px 15px 15px 15px / 15px 15px 15px 15px;
-    background: rgba(15, 45, 83, 0.8);
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    color: aliceblue;
-}
-
-input.form-control:focus {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    border: none;
-}
-
-input.form-control:focus-visible {
-    outline: 0;
-    border: none;
-}
-
-button:focus {
-    border: none;
-    box-shadow: none !important;
-}
-
-label {
-    font-size: 18px;
-}
-
-h1 {
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.row {
-    width: 100%;
-}
-
-a {
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.brand-image {
-    background-color: #19B3E6;
-    padding: 5px;
-    border-radius: 90%;
-    margin-left: 10px;
-    margin-top: 10px;
+.title-form h1:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+  height: 1px;
+  width: 95%;
+  max-width: 255px;
+  background-color: #333;
 }
