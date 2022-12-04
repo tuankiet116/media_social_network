@@ -20,6 +20,8 @@ Route::middleware('guest:web')->name('user.')->prefix('user')->group(function() 
 
     Route::get('/register', 'UserController@showFormRegister')->name('get_register');
     Route::post('/register', 'UserController@register')->name('post_register');
+
+    Route::get('/setting_account', 'UserController@showSettingAccount')->name('get_setting');
 });
 
 Route::get('/{vue_capture?}', function() {

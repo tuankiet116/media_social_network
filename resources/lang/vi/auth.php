@@ -4,8 +4,9 @@ return [
         'email' => 'Email',
         'password' => 'Mật khẩu',
         'remember_me' => 'Nhớ lần đăng nhập tới',
-        'reenter_password' => 'Nhập lại mật khẩu',
-        'otp_mail' => 'Nhập mã OTP được gửi đến Email của bạn'
+        'reenter_password' => 'Mật khẩu xác nhận',
+        'otp_mail' => 'Nhập mã OTP được gửi đến Email của bạn',
+        'name' => 'Họ và tên'
     ],
     'login' => [
         'form_title' => 'Đăng nhập',
@@ -17,8 +18,16 @@ return [
     'register' => [
         'form_title' => 'Tạo Tài Khoản',
         'register' => 'Đăng Ký',
-        'error_login' => 'Xảy ra lỗi trong quá trình tạo tài khoản, bạn vui lòng kiểm tra lại thông tin',
         'or_register_with' => 'Hoặc đăng ký bằng',
         'if_have_account' => 'Nếu bạn đã có tài khoản hãy đăng nhập <a href=":link">tại đây</a>',
+        'error_register' => 'Hệ thông lỗi, không thể đăng ký tài khoản',
+        'email_duplicate' => 'Email đã được sử dụng để đăng ký tài khoản, vui lòng kiểm tra lại'
+    ],
+    'setting_account' => [
+        'title' => 'Cài đặt tài khoản',
+        'step_1' => 'Bước 1',
+        'step_1_desc' => 'Ảnh đại diện và hình nền',
+        'step_2' => 'Bước 2',
+        'step_2_desc' => 'Điền thông tin cơ bản',
     ]
 ];

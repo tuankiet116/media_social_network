@@ -21,7 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'is_has_page'
+        'is_has_page',
+        'token'
     ];
 
     /**

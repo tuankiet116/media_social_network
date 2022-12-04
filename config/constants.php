@@ -10,3 +10,7 @@ if (!defined('LIMIT_COMMENT')) define('LIMIT_COMMENT', 10);
 if (!defined('NOTIFICATION_COMMENT_POST')) define('NOTIFICATION_COMMENT_POST', 'notification_comment_post');
 if (!defined('NOTIFICATION_REACT_POST')) define('NOTIFICATION_REACT_POST', 'notification_react_post');
 if (!defined('NOTIFICATION_REPLY_COMMENT')) define('NOTIFICATION_REPLY_COMMENT', 'notification_reply_comment');
+
+if (!defined('ACCOUNT_ACTIVE')) define('ACCOUNT_ACTIVE', 1);
+if (!defined('ACCOUNT_UNACTIVE')) define('ACCOUNT_UNACTIVE', 0);
+if (!defined('LIMIT_REGISTER_QUERY')) define('LIMIT_REGISTER_QUERY', 3);

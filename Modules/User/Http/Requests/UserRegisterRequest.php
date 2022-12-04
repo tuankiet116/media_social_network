@@ -4,7 +4,7 @@ namespace Modules\User\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserLoginRequest extends FormRequest
+class UserRegisterRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,9 +14,10 @@ class UserLoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'password' => 'required|min:8',
+            'name' => 'required|min:3',
             'email' => 'required|email',
-            'remember_me' => 'nullable|in:' . REMEMBER_ME
+            'password' => 'required|min: 8',
+            'password_cf' => 'required|same:password'
         ];
     }
 
@@ -30,19 +31,13 @@ class UserLoginRequest extends FormRequest
         return true;
     }
 
-    public function messages()
-    {
-        return [
-            
-        ];
-    }
-
     public function attributes()
     {
         return [
             'email' => __('auth.common.email'),
             'password' => __('auth.common.password'),
-            'remember_me' => __('auth.common.remember_me')
+            'password_cf' => __('auth.common.reenter_password'),
+            'name' => __('auth.common.name')
         ];
     }
 }

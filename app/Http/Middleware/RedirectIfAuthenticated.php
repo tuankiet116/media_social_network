@@ -21,8 +21,13 @@ class RedirectIfAuthenticated
     {
         $guards = empty($guards) ? [null] : $guards;
         foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+            $user = Auth::guard($guard)->user();
+            if (Auth::guard($guard)->check() ) {
+                if ($user->active == ACCOUNT_ACTIVE) {
+                    return redirect(RouteServiceProvider::HOME);
+                } else if ($request->route()->getName() !== "user.get_setting"){
+                    return redirect()->route('user.get_setting');
+                }
             }
         }
 

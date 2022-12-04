@@ -6,6 +6,8 @@ use App\Services\User\UserAuthenticationService;
 use App\Traits\ApiResponse;
 use Illuminate\Routing\Controller;
 use Modules\User\Http\Requests\UserLoginRequest;
+use Modules\User\Http\Requests\UserRegisterRequest;
+use Exception;
 
 class UserController extends Controller
 {
@@ -26,19 +28,27 @@ class UserController extends Controller
     {
         $token = $this->UserAuthService->login($request->validated());
         if ($token === false) {
-            // dd(app()->getLocale());
             return redirect()->back()->withErrors(['login_error' => __('auth.login.error_login')]);
         }
         return redirect()->route('home');
     }
 
-    public function showFormRegister() {
+    public function showFormRegister()
+    {
         return view('user::register');
     }
 
-    public function register()
+    public function register(UserRegisterRequest $request)
     {
-        
+        $data = $request->validated();
+        try {
+            $result = $this->UserAuthService->register($data);
+            if ($result) {
+                return redirect()->back()->with('registered', true);
+            }
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors(['register_error' => $e->getMessage()])->withInput();
+        }
     }
 
     public function forgotPassword()
@@ -47,12 +57,20 @@ class UserController extends Controller
 
     public function getUserInformation()
     {
-        $data = auth()->user();
-        return $this->responseData($data, 200);
+        $user = $this->UserAuthService->checkUserAccount();
+        if ($user) {
+            return $this->responseData($user, 200);
+        }
+        return $this->responseData(null, 403);
     }
 
-    public function logout() {
+    public function logout()
+    {
         $this->UserAuthService->logout();
         return $this->responseData([true], 200);
+    }
+
+    public function showSettingAccount() {
+        return view('user::accountSetting');
     }
 }

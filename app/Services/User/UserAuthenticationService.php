@@ -4,9 +4,10 @@ namespace App\Services\User;
 
 use App\Models\User;
 use App\Models\FacebookUser;
-use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Exception;
 
 class UserAuthenticationService
 {
@@ -28,15 +29,17 @@ class UserAuthenticationService
         }
     }
 
-    public function createUser($data, $accountType = null)
+    public function createUser($data, $accountType = null, $step = 0)
     {
         try {
             DB::beginTransaction();
+            $token = base64_encode((string) Str::uuid());
             $user = User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'password' => $accountType == FB ? $data['accessToken'] : $data['password'],
-                'is_has_page' => NO_PAGE
+                'is_has_page' => NO_PAGE,
+                'token' => $token
             ]);
             if ($accountType == FB && $user) {
                 FacebookUser::create([
@@ -52,7 +55,10 @@ class UserAuthenticationService
         } catch (Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            throw new Exception();
+            if ($this->step = LIMIT_REGISTER_QUERY) {
+                throw new Exception(__('auth.register.error_register'));
+            }
+            $this->createUser($data, $accountType, $step += 1);
         }
     }
 
@@ -84,5 +90,28 @@ class UserAuthenticationService
             Log::error($e->getMessage());
             throw new Exception($e->getMessage());
         }
+    }
+
+
+    public function register($data)
+    {
+        try {
+            $user = User::where('email', $data['email'])->first();
+            if ($user) throw new Exception(__('auth.register.email_duplicate'));
+            $user = $this->createUser($data);
+            auth('web')->login($user, true);
+            return true;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    public function checkUserAccount()
+    {
+        $user = auth()->user();
+        if ($user->is_active == ACCOUNT_ACTIVE) {
+            return $user;
+        }
+        return null;
     }
 }

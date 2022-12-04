@@ -26,7 +26,10 @@
           <form action="{{ route('user.post_login') }}" method="POST">
             @csrf
             @error('login_error')
-              <div class="alert alert-danger">{{ $message }}</div>
+              <div class="notification is-danger">
+                <button type="button" class="delete-notification"></button>
+                {{ $message }}
+              </div>
             @enderror
             <div class="field">
               <label for="email" class="form-label">{{ __('auth.common.email') }}:</label>
@@ -36,6 +39,9 @@
                   <i class="fa fa-user"></i>
                 </span>
               </div>
+              @error('email')
+                <p class="help is-danger">{{ $message }}</p>
+              @enderror
             </div>
 
             <div class="field">
@@ -46,6 +52,9 @@
                   <i class="fa fa-key"></i>
                 </span>
               </div>
+              @error('password')
+                <p class="help is-danger">{{ $message }}</p>
+              @enderror
             </div>
             <div class="field">
               <label for="remember_me">{{ __('auth.common.remember_me') }}</label>
@@ -58,7 +67,7 @@
           </form>
 
           <div class="has-text-centered">
-            {!! __('auth.login.if_dont_have_account', ['link' => route('user.get_register')]) !!} 
+            {!! __('auth.login.if_dont_have_account', ['link' => route('user.get_register')]) !!}
           </div>
           <hr>
           <div class="has-text-centered">
@@ -75,6 +84,12 @@
       <div id="particles-js" class="interactive-bg column is-8">
       </div>
     </div>
-
   </body>
+@endsection
+@section('js')
+<script>
+  $(document).on('click', '.delete_notification', function() {
+    $(this).parent('.notification').remove()
+  });
+</script>
 @endsection

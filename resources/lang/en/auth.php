@@ -17,8 +17,16 @@ return [
     'register' => [
         'form_title' => 'Create a new account',
         'register' => 'Register',
-        'error_login' => 'An error has occurred, please check your information',
         'or_register_with' => 'Or register with',
         'if_have_account' => 'If you have account please <a href=":link">login here</a>',
+        'error_register' => 'Could not register your account, try again latter',
+        'email_duplicate' => 'This Email has been used.'
+    ],
+    'setting_account' => [
+        'title' => 'Account Setting',
+        'step_1' => 'Step 1',
+        'step_1_desc' => 'Avatar and cover photo',
+        'step_2' => 'Step 2',
+        'step_2_desc' => 'Basic Information',
     ]
 ];
