@@ -1,0 +1,104 @@
+.progress {
+    border-radius: 0 !important;
+    height: 0.5rem;
+}
+
+.container {
+    margin: auto;
+    margin-top: 3rem
+}
+
+input[type='file'] {
+    display: none;
+}
+
+.avatar-image {
+    cursor: pointer;
+}
+
+.avatar-image img {
+    width: 128px !important;
+    height: 128px !important;
+}
+
+.button.is-rounded {
+    padding-bottom: calc(0.5em - 1px);
+    padding-left: calc(0.75em - 1px);
+    padding-right: calc(0.75em - 1px);
+    padding-top: calc(0.5em - 1px);
+}
+
+.button-avatar-image {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.banner-image,
+.banner-image img {
+    height: 20rem !important;
+    width: 40rem !important;
+}
+
+.is-active-step {
+    display: block !important;
+}
+
+@media only screen and (max-width: 540px) {
+
+    .banner-image,
+    .banner-image img {
+        height: 7rem !important;
+        width: 14rem !important;
+    }
+
+    .container-header,
+    .step_section {
+        padding: 1rem
+    }
+}
+
+@media only screen and (max-width: 320px) {
+
+    .banner-image,
+    .banner-image img {
+        height: 5rem !important;
+        width: 10rem !important;
+    }
+}
+
+.button-banner-image {
+    position: absolute;
+    bottom: -1rem;
+    right: -1rem;
+}
+
+section {
+    padding-bottom: 4rem;
+    display: none !important;
+}
+
+a.is-1-desktop {
+    margin-right: 1rem;
+}
+
+.animate__backInLeft {
+    animation-duration: 0.5s;
+}
+
+.animate__backOutLeft {
+    animation-duration: 0.5s;
+}
+
+.animate__backInRight {
+    animation-duration: 0.5s;
+}
+
+.animate__backOutRight {
+    animation-duration: 0.5s;
+}
+
+.step_btn {
+    display: flex;
+    align-items: center;
+}

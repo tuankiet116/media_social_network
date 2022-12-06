@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Modules\User\Http\Requests\UserLoginRequest;
 use Modules\User\Http\Requests\UserRegisterRequest;
 use Exception;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -71,6 +72,13 @@ class UserController extends Controller
     }
 
     public function showSettingAccount() {
-        return view('user::accountSetting');
+        $files = collect(Storage::allFiles('public/avatars'))->map(function($file) {
+            return Storage::url($file);
+        });
+        $avatarImages = array(
+            'title' => 'Avatars',
+            'files' => $files
+        );
+        return view('user::accountSetting')->with(['avatarImages' => $avatarImages]);
     }
 }

@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="{{ asset('css/userMain.css') }}">
   <script src="https://kit.fontawesome.com/62474f8a4e.js" crossorigin="anonymous"></script>
   <script src="{{ asset('js/particles.js') }}"></script>
-  <script src="{{ asset('js/userMain.js') }}"></script>
+  <script src="{{ asset('js/userAuth.js') }}"></script>
   @yield('js')
   @yield('css')
 </head>

@@ -26,6 +26,8 @@
 <li>Run php artisan migrate</li>
 <li>Run php artisan db:seed</li>
 <li>Run php artisan websockets:serve</li>
+<li>Run php artisan queue:listen</li>
+<li>Run php artisan storage:link</li>
 <li>npm run watch</li>
 </ul>
 </div>
