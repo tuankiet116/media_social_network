@@ -4,6 +4,7 @@ namespace App\Services\User;
 
 use App\Models\User;
 use App\Models\FacebookUser;
+use App\Models\UserInformation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -113,5 +114,22 @@ class UserAuthenticationService
             return $user;
         }
         return null;
+    }
+
+    public function settingUpAccount($data) {
+        $userId = auth()->id();
+        $dataCreate = [
+            'user_id' => $userId
+        ];
+
+        $dataUniversity = $this->createSchoolData($data, 'university');
+
+        $result = UserInformation::create($data);
+    }
+
+    private function createSchoolData ($data, $typeSchool) {
+        if ($data[$typeSchool] == null) {
+            return "[]";
+        }
     }
 }

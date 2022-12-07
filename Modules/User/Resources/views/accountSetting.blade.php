@@ -34,6 +34,7 @@
       </div>
     </div>
     <form method="POST" enctype="multipart/form-data">
+      @csrf
       <section class="step_1 box is-active-step animate__backInLeft">
         <div class="columns is-mobile m-0 field">
           <label class="column-2 label">Ảnh đại diện: </label>
@@ -46,13 +47,17 @@
             </figure>
           </div>
           <input class="file input-avatar-image" name="avatar_image" type="file">
+          <input id="avatar_image_choose" name="avatar_image_choose" type="hidden">
         </div>
         <p class="content mt-2">Or you can choosed one of those image for your avatar: </p>
         <div class="select-default-avatar is-flex is-justify-content-center">
-          @foreach ($avatarImages["files"] as $avatar)
-          <figure class="image is-128x128 m-3">
-            <img class="is-rounded" style="background-color: #bfd5d6" src="{{ $avatar }}">
-          </figure>
+          @foreach ($avatarImages['files'] as $avatar)
+            <figure class="image is-128x128 m-3 image-choosing">
+              <div class="image-tick">
+                <img class="is-rounded" style="background-color: #bfd5d6" src="{{ asset('images/default/stick_image.png') }}">
+              </div>
+              <img class="is-rounded" style="background-color: #bfd5d6" src="{{ $avatar }}">
+            </figure>
           @endforeach
         </div>
 
@@ -60,7 +65,7 @@
           <label class="column-2 label">Ảnh bìa: </label>
           <div class="column">
             <figure class="banner-image image ml-3">
-              <img src="https://bulma.io/images/placeholders/128x128.png">
+              <img src="{{ asset('images/default/866-1000x520.jpg') }}">
               <a class="button is-rounded is-info button-banner-image">
                 <i class="fa-solid fa-camera"></i>
               </a>

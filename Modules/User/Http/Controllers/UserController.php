@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Modules\User\Http\Requests\UserLoginRequest;
 use Modules\User\Http\Requests\UserRegisterRequest;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -80,5 +81,9 @@ class UserController extends Controller
             'files' => $files
         );
         return view('user::accountSetting')->with(['avatarImages' => $avatarImages]);
+    }
+
+    public function settingAccount(Request $request) {
+        dd($request->all());
     }
 }

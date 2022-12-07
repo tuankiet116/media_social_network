@@ -102,3 +102,21 @@ a.is-1-desktop {
     display: flex;
     align-items: center;
 }
+
+.image-choosing {
+    cursor: pointer;
+    position: relative;
+}
+
+.image-tick {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: -1rem;
+    right: -1rem;
+    display: none;
+}
+
+.image-choosed .image-tick {
+    display: block !important;
+}

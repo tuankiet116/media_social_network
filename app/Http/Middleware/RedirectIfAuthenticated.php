@@ -25,12 +25,12 @@ class RedirectIfAuthenticated
             if (Auth::guard($guard)->check() ) {
                 if ($user->active == ACCOUNT_ACTIVE) {
                     return redirect(RouteServiceProvider::HOME);
-                } else if ($request->route()->getName() !== "user.get_setting"){
+                } else if ($request->route()->getName() !== "user.get_setting" && $request->route()->getName() !== "user.post_setting"){
                     return redirect()->route('user.get_setting');
                 }
             }
         }
-
+        
         return $next($request);
     }
 }
