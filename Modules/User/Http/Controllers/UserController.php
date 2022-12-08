@@ -73,7 +73,7 @@ class UserController extends Controller
     }
 
     public function showSettingAccount() {
-        $files = collect(Storage::allFiles('public/avatars'))->map(function($file) {
+        $files = collect(Storage::allFiles('public/defaults'))->map(function($file) {
             return Storage::url($file);
         });
         $avatarImages = array(
@@ -84,6 +84,13 @@ class UserController extends Controller
     }
 
     public function settingAccount(Request $request) {
-        dd($request->all());
+        try {
+            $files = $request->allFiles();
+            $data = $request->all();
+            $this->UserAuthService->settingUpAccount($data, $files);
+            return redirect()->route('home');
+        } catch(Exception $e) {
+            return redirect()->back()->withInput();
+        }
     }
 }

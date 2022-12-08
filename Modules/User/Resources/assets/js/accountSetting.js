@@ -120,6 +120,7 @@ $(document).ready(function () {
             $('.input-avatar-image').val('');
         } else {
             $(this).removeClass('image-choosed');
+            $('.avatar-image img').attr('src', 'https://bulma.io/images/placeholders/128x128.png');
             $('#avatar_image_choose').val("");
         }
     });

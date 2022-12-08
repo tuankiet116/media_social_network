@@ -5,13 +5,23 @@ namespace App\Services\User;
 use App\Models\User;
 use App\Models\FacebookUser;
 use App\Models\UserInformation;
+use App\Models\UserSchool;
+use App\Services\Inf\StorageService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Exception;
 
 class UserAuthenticationService
 {
+    private $storageService;
+
+    public function __construct(StorageService $storageService)
+    {
+        $this->storageService = $storageService;
+    }
+
     public function login($data)
     {
         $credentials = array(
@@ -116,20 +126,59 @@ class UserAuthenticationService
         return null;
     }
 
-    public function settingUpAccount($data) {
+    public function settingUpAccount($data, $files)
+    {
         $userId = auth()->id();
-        $dataCreate = [
-            'user_id' => $userId
-        ];
+        try {
+            DB::beginTransaction();
+            UserInformation::create([
+                'user_id' => $userId,
+                'living_place' => $data['living_place'],
+                'working_place' => $data['working_place'],
+                'gender' => $data['gender']
+            ]);
 
-        $dataUniversity = $this->createSchoolData($data, 'university');
+            if ($data['highschool_name']) {
+                UserSchool::create([
+                    'school_name' => $data['highschool_name'],
+                    'start_year' => $data['highschool_start'],
+                    'end_year' => $data['highschool_gradueted'],
+                    'school_type' => SCHOOLE_HIGHSCHOOL
+                ]);
+            }
 
-        $result = UserInformation::create($data);
-    }
+            if ($data['university_name']) {
+                UserSchool::create([
+                    'school_name' => $data['university_name'],
+                    'start_year' => $data['university_start'],
+                    'end_year' => $data['university_gradueted'],
+                    'schoole_type' => SCHOOLE_UNIVERSITY
+                ]);
+            }
+            $user = User::where('id', $userId)->first();
 
-    private function createSchoolData ($data, $typeSchool) {
-        if ($data[$typeSchool] == null) {
-            return "[]";
+            if ($data['avatar_image_choose']) {
+                $fileName = $this->storageService->copyImagePublicStorage('/user/avatar/', $data['avatar_image_choose']);
+                $user->image = $fileName;
+            } else if ($files['input_image_avatar']) {
+                dd('handle');
+                $user->image = '';
+            }
+
+            if (isset($files['banner_image'])) {
+                $fileName = $this->storageService->saveToLocalStorage('/user/background/', $data['banner_image']);
+                $user->banner = $fileName;
+            } else {
+                $fileName = $userId . time();
+                Storage::copy('/public/defaults/banner/background.png', '/user/background/' . $fileName);
+                $user->banner = $fileName;
+            }
+
+            throw new Exception('not done');
+            DB::commit();
+        } catch (Exception $e) {
+            dd($e);
+            throw new Exception($e);
         }
     }
 }

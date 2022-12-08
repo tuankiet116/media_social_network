@@ -13,7 +13,17 @@ class StorageService
         return $returnPath ? $result : $name;
     }
 
-    public function getImage($path) {
+    public function getImage($path)
+    {
         return Storage::get($path);
+    }
+
+    public function copyImagePublicStorage($toFolder, $storageUrl)
+    {
+        $userId = auth()->id();
+        $urlDefault = explode('/storage', $storageUrl);
+        $fileName = $userId . '_' . time() . '.png';
+        Storage::copy('/public' . end($urlDefault), $toFolder . $fileName);
+        return $fileName;
     }
 }

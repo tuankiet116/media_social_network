@@ -54,7 +54,7 @@
           @foreach ($avatarImages['files'] as $avatar)
             <figure class="image is-128x128 m-3 image-choosing">
               <div class="image-tick">
-                <img class="is-rounded" style="background-color: #bfd5d6" src="{{ asset('images/default/stick_image.png') }}">
+                <img class="is-rounded" style="background-color: #bfd5d6" src="{{ asset('images/default/tick_image.png') }}">
               </div>
               <img class="is-rounded" style="background-color: #bfd5d6" src="{{ $avatar }}">
             </figure>
@@ -90,11 +90,20 @@
             </span>
           </div>
         </div>
+        <div class="field">
+          <label class="label">Where do you work?</label>
+          <div class="control has-icons-left has-icons-right">
+            <input class="input is-success" type="text" name="working_place" value="">
+            <span class="icon is-small is-left">
+              <i class="fa-solid fa-house"></i>
+            </span>
+          </div>
+        </div>
         <div class="columns">
           <div class="field column">
             <label class="label">What's your high school?</label>
             <div class="control has-icons-left has-icons-right">
-              <input class="input is-success" type="text" name="hight_school_name" value="">
+              <input class="input is-success" type="text" name="highschool_name" value="">
               <span class="icon is-small is-left">
                 <i class="fa-solid fa-school"></i>
               </span>
@@ -123,7 +132,7 @@
           <div class="field column">
             <label class="label">What's your university?</label>
             <div class="control has-icons-left has-icons-right">
-              <input class="input is-success" type="text" value="">
+              <input class="input is-success" name="university_name" type="text" value="">
               <span class="icon is-small is-left">
                 <i class="fa-solid fa-school"></i>
               </span>

@@ -9,7 +9,7 @@
   <title>{{ $title }}</title>
   <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  <link rel="stylesheet" href="{{ asset('css/userMain.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/userAuth.css') }}">
   <script src="https://kit.fontawesome.com/62474f8a4e.js" crossorigin="anonymous"></script>
   <script src="{{ asset('js/particles.js') }}"></script>
   <script src="{{ asset('js/userAuth.js') }}"></script>

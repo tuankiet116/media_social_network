@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserInformation extends Model
+class UserSchool extends Model
 {
     use HasFactory;
 
     public $fillable = [
         'user_id',
-        'highschool',
-        'university',
-        'working_place',
-        'living_place',
-        'gender'
+        'school_name',
+        'start_year',
+        'end_year',
+        'school_type'
     ];
 }
