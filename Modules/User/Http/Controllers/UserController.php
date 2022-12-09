@@ -73,7 +73,7 @@ class UserController extends Controller
     }
 
     public function showSettingAccount() {
-        $files = collect(Storage::allFiles('public/defaults'))->map(function($file) {
+        $files = collect(Storage::allFiles('public/defaults/avatars'))->map(function($file) {
             return Storage::url($file);
         });
         $avatarImages = array(

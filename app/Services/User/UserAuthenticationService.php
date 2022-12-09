@@ -160,21 +160,20 @@ class UserAuthenticationService
             if ($data['avatar_image_choose']) {
                 $fileName = $this->storageService->copyImagePublicStorage('/user/avatar/', $data['avatar_image_choose']);
                 $user->image = $fileName;
-            } else if ($files['input_image_avatar']) {
-                dd('handle');
-                $user->image = '';
+            } else if (isset($files['avatar_image'])) {
+                $avatarImage = $files['avatar_image'];
+                $fileName = $this->storageService->saveToLocalStorage('/user/background/', $avatarImage, false);
+                $user->image = $fileName;
             }
 
             if (isset($files['banner_image'])) {
-                $fileName = $this->storageService->saveToLocalStorage('/user/background/', $data['banner_image']);
+                $fileName = $this->storageService->saveToLocalStorage('/user/background/', $files['banner_image']);
                 $user->banner = $fileName;
             } else {
                 $fileName = $userId . time();
-                Storage::copy('/public/defaults/banner/background.png', '/user/background/' . $fileName);
+                Storage::copy('/public/defaults/background/background.png', '/user/background/' . $fileName . '.png');
                 $user->banner = $fileName;
             }
-
-            throw new Exception('not done');
             DB::commit();
         } catch (Exception $e) {
             dd($e);

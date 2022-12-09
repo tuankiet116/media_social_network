@@ -19,6 +19,7 @@ class CreateUserNotificationsTable extends Migration
             $table->bigInteger('user_sender_id', false, true)->nullable();
             $table->bigInteger('group_sender_id', false, true)->nullable();
             $table->string('type');
+            $table->boolean('read');
             $table->timestamps();
         });
     }
