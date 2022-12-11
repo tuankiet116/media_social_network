@@ -22,15 +22,20 @@ class RedirectIfAuthenticated
         $guards = empty($guards) ? [null] : $guards;
         foreach ($guards as $guard) {
             $user = Auth::guard($guard)->user();
-            if (Auth::guard($guard)->check() ) {
-                if ($user->active == ACCOUNT_ACTIVE) {
-                    return redirect(RouteServiceProvider::HOME);
-                } else if ($request->route()->getName() !== "user.get_setting" && $request->route()->getName() !== "user.post_setting"){
-                    return redirect()->route('user.get_setting');
+            if (Auth::guard($guard)->check()) {
+                if ($user->is_active == ACCOUNT_ACTIVE) {
+                    if ($request->route()->getName()) {
+                        return redirect(RouteServiceProvider::HOME);
+                    }
+                } else if (
+                    $request->route()->getName() !== "user.get_setting"
+                    && $request->route()->getName() !== "user.post_setting"
+                ) {
+                    return redirect()->route('user.get_setting', ['tokenRegister' => $user->token]);
                 }
             }
         }
-        
+
         return $next($request);
     }
 }

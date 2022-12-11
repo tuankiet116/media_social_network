@@ -62,7 +62,7 @@
                         </span>
                     </a>
                     <div class="navbar-dropdown">
-                        <router-link @click="increaseKey" class="navbar-item" :to="'profile'">
+                        <router-link @click="increaseKey" class="navbar-item" :to="{ path: '/profile' }">
                             {{ $t('profile') }}
                         </router-link>
                         <hr class="navbar-divider">

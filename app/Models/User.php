@@ -51,8 +51,23 @@ class User extends Authenticatable
 
     public function getImageAttribute() {
         if ($this->attributes['image']) {
-            return request()->getSchemeAndHttpHost().'/'.$this->attributes['image'];
+            return route('cdn.user_avatar', ['fileName' => $this->attributes['image']]);
         }
         return '';
+    }
+
+    public function getBannerAttribute() {
+        if ($this->attributes['banner']) {
+            return route('cdn.user_background', ['fileName' => $this->attributes['banner']]);
+        }
+        return '';
+    }
+
+    public function userSchool() {
+        return $this->hasMany(UserSchool::class);
+    }
+
+    public function userInformation() {
+        return $this->hasOne(UserInformation::class);
     }
 }

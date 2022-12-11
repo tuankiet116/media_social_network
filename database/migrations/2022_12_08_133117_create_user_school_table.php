@@ -13,7 +13,7 @@ class CreateUserSchoolTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_school', function (Blueprint $table) {
+        Schema::create('user_schools', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id', false, true);
             $table->string('school_name');

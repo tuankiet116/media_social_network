@@ -6,7 +6,6 @@ use App\Models\Post;
 use App\Models\PostUser;
 use App\Services\Inf\StorageService;
 use App\Services\Inf\VideoStream;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class PostService
@@ -50,9 +49,10 @@ class PostService
 
     public function getPosts($offset = 0, int $userId = null)
     {
-        $postQuery = Post::with(['user:id,name,image', 'comments', 'comments.users'])->withCount('reactionUser', 'comments')
-        ->orderBy('created_at', 'DESC')
-        ->limit(LIMIT);
+        $postQuery = Post::with(['user:id,name,image'])
+            ->withCount('reactionUser', 'comments')
+            ->orderBy('created_at', 'DESC')
+            ->limit(LIMIT);
         if ($userId) {
             $postQuery->where('user_id', $userId);
         }
@@ -60,11 +60,13 @@ class PostService
             $postQuery = $postQuery->offset($offset);
         }
         $posts = $postQuery->get();
-        $posts->each(function($post) {
-            $post->load(['comments' => function($q) {
-                return $q->orderBy('created_at', 'DESC')->limit(LIMIT_COMMENT_OVERVIEW)->with('users');
+
+        $posts->each(function ($post) {
+            $post->load(['comments' => function ($q) {
+                return $q->where('belong_id', null)->orderBy('created_at', 'DESC')->limit(LIMIT_COMMENT_OVERVIEW)->with('users');
             }]);
         });
+
         if ($posts) {
             $newOffset = $posts->count() + $offset;
         }
@@ -116,7 +118,8 @@ class PostService
         return $result;
     }
 
-    public function update($data) {
+    public function update($data)
+    {
         $userId = auth()->id();
         $post = Post::where([
             'id' => $data['id'],

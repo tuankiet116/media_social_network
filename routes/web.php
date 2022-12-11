@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FileCdnController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::controller(FileCdnController::class)->prefix('/cdn')->name('cdn.')->group(function() {
+    Route::get('/user/avatar/{fileName}', 'getUserAvatar')->name('user_avatar');
+    Route::get('/user/background/{fileName}', 'getUserBackground')->name('user_background');
+});

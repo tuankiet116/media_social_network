@@ -5,8 +5,29 @@
 @section('content')
 
   <body>
-    @if (auth()->check())
-    
+    @if (Session::has('registed'))
+      <div class="container is-align-items-center mt-2">
+        <div class="has-text-centered">
+          <a href="{{ route('home') }}" class="align-items-center is-flex" style="color: white">
+            <img style="width: 50px" src="/images/default/brand.png">
+            <div class="brand-title is-flex is-align-items-center ml-3" 
+                  style="font-size: 1rem; color: blueviolet; font-family: monospace;">
+              <h5>{{ config('app.name') }}</h5>
+            </div>
+          </a>
+        </div>
+        <div class="box content" style="background: cornsilk; margin-top: 10rem">
+          <h2>Registered Successfully</h2>
+          <p class="is-flex is-align-items-center">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+              <circle class="path circle" fill="none" stroke="#73AF55" stroke-width="10" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"/>
+              <polyline class="path check" fill="none" stroke="#73AF55" stroke-width="10" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 "/>
+            </svg>
+            A verify link has been sent to your E-mail. Please open and verify your E-mail address. 
+            You could close this window now.
+          </p>
+        </div>
+      </div>
     @else
       <div id="fb-root"></div>
       <script async defer crossorigin="anonymous"

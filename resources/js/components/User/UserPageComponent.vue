@@ -1,6 +1,6 @@
 <template>
     <div id="profile" class="profile">
-        <div class="profile-banner">
+        <div class="profile-banner" :style="{ 'background-image': 'url(' + user.banner + ')'}">
         </div>
         <div class="profile-picture level is-mobile">
             <div v-if="!auth" class="level-item is-justify-content-right">
@@ -8,7 +8,7 @@
                     <span><i class="fa-solid fa-message"></i> Chat</span>
                 </a>
             </div>
-            <div class="level-item middle-item" :class="{'pl-5': auth}">
+            <div class="level-item middle-item" :class="{ 'pl-5': auth }">
                 <div>
                     <figure class="image is-128x128">
                         <img class="is-rounded" :src="user.image">
@@ -75,7 +75,7 @@ export default {
     computed: {
         auth() {
             let user = this.$store.getters.getUser;
-            if (user) {
+            if (user?.id == this.user?.id) {
                 return true;
             }
             return false;
@@ -83,7 +83,7 @@ export default {
     },
     methods: {
         getUserInformation() {
-            let guestID = this.$forceUpdate.params?.id;
+            let guestID = this.$route.params?.id;
             if (guestID) {
                 getUserProfile(guestID).then(result => {
                     this.user = result.data;
@@ -103,7 +103,8 @@ export default {
 </script>
 <style scoped>
 .profile-banner {
-    background-image: url('https://picsum.photos/seed/picsum/1000/520');
+    background-size: cover;
+    background-repeat: no-repeat;
     max-width: 1000px;
     height: 400px;
 }

@@ -9,8 +9,9 @@ async function checkUserId(to, from, next) {
     let user = await detectUser().then(result => result.data).catch(error => {});
     if (parseInt(to.params.id) || user) {
         next();
+    } else {
+        window.location.href = '/user/login';
     }
-    window.location.href = '/user/login';
 }
 
 async function checkAuth() {

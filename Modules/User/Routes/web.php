@@ -21,9 +21,9 @@ Route::middleware('guest:web')->name('user.')->prefix('user')->group(function() 
     Route::get('/register', 'UserController@showFormRegister')->name('get_register');
     Route::post('/register', 'UserController@register')->name('post_register');
 
-    Route::get('/setting_account', 'UserController@showSettingAccount')->middleware('auth.api')->name('get_setting');
-    Route::post('/setting_account', 'UserController@settingAccount')->name('post_setting');
+    Route::post('/setting_account', 'UserController@settingRegister')->name('post_setting');
 });
+Route::get('user/setting_account/{tokenRegister?}', 'UserController@showSettingRegister')->name('user.get_setting');
 
 Route::get('/{vue_capture?}', function() {
     return view('user::home');

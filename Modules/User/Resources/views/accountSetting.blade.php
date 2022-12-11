@@ -33,7 +33,7 @@
         <p>{{ __('auth.setting_account.step_2_desc') }}</p>
       </div>
     </div>
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" action="{{ route('user.post_setting') }}">
       @csrf
       <section class="step_1 box is-active-step animate__backInLeft">
         <div class="columns is-mobile m-0 field">

@@ -30,7 +30,7 @@
         <div class="media comment-box" v-else>
             <div class="media-content">
                 <div class="content">
-                    <p class="contain-infor">
+                    <div class="contain-infor">
                         <span>
                             <strong>{{ comment.users.name }}</strong>&nbsp;&nbsp;
                             <small>{{ createTime }}</small>&nbsp;
@@ -58,7 +58,7 @@
                             </a>
                         </div>
                     </figure>
-                    </p>
+                </div>
                     <div class="content box is-rounded">
                         {{ comment.content }}
                     </div>
@@ -80,7 +80,7 @@
                     </div>
                 </nav>
                 <ListRepliesComponent ref="listReplies" @deleteReply="handleDeleteReply($event)"
-                @loadReplies="loadReplies($event)" v-if="displayReply" :comments="replies" />
+                    @loadReplies="loadReplies($event)" v-if="displayReply" :comments="replies" />
                 <article v-if="displayReply && user" class="media sub-comment">
                     <figure class="media-left">
                         <p class="image is-32x32">
@@ -202,7 +202,7 @@ export default {
                 replyCommentAPI(data).then(result => {
                     this.replies.push(result.data);
                     this.contentReply = "";
-                    this.comment.amountReply ++;
+                    this.comment.amountReply++;
                 }).catch(err => {
                     console.log(err);
                 });

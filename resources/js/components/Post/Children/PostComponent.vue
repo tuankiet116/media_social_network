@@ -3,11 +3,25 @@
         <div ref="post" class="post">
             <canvas ref="canvas"></canvas>
             <div class="user-info">
-                <figure class="image is-32x32">
-                    <img class="is-rounded" :src="post.user.image">
+                <figure class="image user_image is-32x32" @mouseover="handleShowUserCard">
+                    <router-link :to="{ path: '/profile/' + post.user.id }">
+                        <img class="is-rounded" :src="post.user.image">
+                    </router-link>
+                    <div class="user-card">
+                        <KeepAlive>
+                            <UserInforCard v-if="displayUserInformation" :user="post.user" />
+                        </KeepAlive>
+                    </div>
                 </figure>
                 <div class="post_user">
-                    <p><strong>{{ post.user.name }}</strong></p>
+                    <div class="user_name" @mouseover="handleShowUserCard">
+                        <strong>{{ post.user.name }}</strong>
+                        <div class="user-card">
+                            <KeepAlive>
+                                <UserInforCard v-if="displayUserInformation" :user="post.user" />
+                            </KeepAlive>
+                        </div>
+                    </div>
                     <p>
                         <i class="fa-regular fa-clock"></i>&nbsp;
                         <small>{{ timeCreated }}</small>
@@ -35,6 +49,9 @@
                         </a>
                     </div>
                 </figure>
+                <div>
+                    <!-- <UserInforCard/> -->
+                </div>
             </div>
             <hr class="split-post-user">
             <div class="title">
@@ -63,12 +80,14 @@ import ListCommentComponent from './ListCommentComponent.vue';
 import ReactionComponent from './ReactionComponent.vue';
 import ConfirmDeleteComponent from '../../Common/ConfirmDeleteComponent.vue';
 import { calculateTime } from '../../../helpers/common';
+import UserInforCard from './UserInforCard.vue';
 
 export default {
     components: {
         ListCommentComponent,
         ReactionComponent,
-        ConfirmDeleteComponent
+        ConfirmDeleteComponent,
+        UserInforCard
     },
     props: ['post'],
     emits: ['postDeleted'],
@@ -79,7 +98,8 @@ export default {
             isShowConfirmComment: false,
             idCommentDelete: null,
             displayHelper: false,
-            isShowConfirmPost: false
+            isShowConfirmPost: false,
+            displayUserInformation: false
         };
     },
     computed: {
@@ -111,6 +131,9 @@ export default {
                 console.log(error);
             });
             this.isShowConfirmPost = false;
+        },
+        handleShowUserCard() {
+            this.displayUserInformation = true;
         }
     }
 }
@@ -142,7 +165,6 @@ canvas {
 
 .user-info {
     display: flex;
-    align-items: center;
     width: fit-content;
     padding: 0.5rem 0.5rem 0 0.5rem;
 }
@@ -226,5 +248,26 @@ canvas {
 
 .arrow-box hr {
     margin: 0 !important;
+}
+
+
+.user-card {
+    position: absolute;
+    z-index: 10;
+    width: 300px;
+    display: none;
+    top: 3rem;
+}
+
+.user_name:hover .user-card {
+    display: block;
+    transform: translate(0, -20px);
+    transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+}
+
+.user_image:hover .user-card {
+    display: block;
+    transform: translate(0, -20px);
+    transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
 }
 </style>

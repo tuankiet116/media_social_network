@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Exception;
+use Illuminate\Support\Facades\Mail;
+use Modules\User\Emails\EmailRegister;
 
 class UserAuthenticationService
 {
@@ -26,7 +28,8 @@ class UserAuthenticationService
     {
         $credentials = array(
             'email' => $data['email'],
-            'password' => $data['password']
+            'password' => $data['password'],
+            'is_active' => ACCOUNT_ACTIVE
         );
         $remember = isset($data['remember_me']) ? true : false;
         $result = auth('web')->attempt($credentials, $remember);
@@ -110,7 +113,7 @@ class UserAuthenticationService
             $user = User::where('email', $data['email'])->first();
             if ($user) throw new Exception(__('auth.register.email_duplicate'));
             $user = $this->createUser($data);
-            auth('web')->login($user, true);
+            Mail::to($user->email)->queue(new EmailRegister($user));
             return true;
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
@@ -126,7 +129,24 @@ class UserAuthenticationService
         return null;
     }
 
-    public function settingUpAccount($data, $files)
+    public function getSettingRegister($tokenRegister)
+    {
+        $user = User::where([
+            'token' => $tokenRegister,
+            'is_active' => ACCOUNT_UNACTIVE
+        ])->first();
+        if ($user) {
+            auth()->login($user);
+            $files = collect(Storage::allFiles('public/defaults/avatars'))->map(function ($file) {
+                return Storage::url($file);
+            });
+            return $files;
+        } else {
+            throw new Exception('NO USER FOUND');
+        }
+    }
+
+    public function settingUpRegister($data, $files)
     {
         $userId = auth()->id();
         try {
@@ -143,7 +163,8 @@ class UserAuthenticationService
                     'school_name' => $data['highschool_name'],
                     'start_year' => $data['highschool_start'],
                     'end_year' => $data['highschool_gradueted'],
-                    'school_type' => SCHOOLE_HIGHSCHOOL
+                    'school_type' => SCHOOLE_HIGHSCHOOL,
+                    'user_id' => $userId
                 ]);
             }
 
@@ -152,7 +173,8 @@ class UserAuthenticationService
                     'school_name' => $data['university_name'],
                     'start_year' => $data['university_start'],
                     'end_year' => $data['university_gradueted'],
-                    'schoole_type' => SCHOOLE_UNIVERSITY
+                    'schoole_type' => SCHOOLE_UNIVERSITY,
+                    'user_id' => $userId
                 ]);
             }
             $user = User::where('id', $userId)->first();
@@ -167,13 +189,17 @@ class UserAuthenticationService
             }
 
             if (isset($files['banner_image'])) {
-                $fileName = $this->storageService->saveToLocalStorage('/user/background/', $files['banner_image']);
+                $fileName = $this->storageService->saveToLocalStorage('/user/background/', $files['banner_image'], false);
                 $user->banner = $fileName;
             } else {
-                $fileName = $userId . time();
+                $fileName = $userId . time() . '.png';
                 Storage::copy('/public/defaults/background/background.png', '/user/background/' . $fileName . '.png');
                 $user->banner = $fileName;
             }
+
+            $user->is_active = ACCOUNT_ACTIVE;
+            $user->token = null;
+            $user->save();
             DB::commit();
         } catch (Exception $e) {
             dd($e);

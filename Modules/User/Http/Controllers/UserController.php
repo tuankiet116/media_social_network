@@ -9,7 +9,6 @@ use Modules\User\Http\Requests\UserLoginRequest;
 use Modules\User\Http\Requests\UserRegisterRequest;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -46,7 +45,7 @@ class UserController extends Controller
         try {
             $result = $this->UserAuthService->register($data);
             if ($result) {
-                return redirect()->back()->with('registered', true);
+                return redirect()->back()->with('registed', true);
             }
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['register_error' => $e->getMessage()])->withInput();
@@ -72,22 +71,25 @@ class UserController extends Controller
         return $this->responseData([true], 200);
     }
 
-    public function showSettingAccount() {
-        $files = collect(Storage::allFiles('public/defaults/avatars'))->map(function($file) {
-            return Storage::url($file);
-        });
-        $avatarImages = array(
-            'title' => 'Avatars',
-            'files' => $files
-        );
-        return view('user::accountSetting')->with(['avatarImages' => $avatarImages]);
+    public function showSettingRegister($tokenRegister = null) {
+        try {
+            if ($tokenRegister == null) throw new Exception('NO TOKEN');
+            $files = $this->UserAuthService->getSettingRegister($tokenRegister);
+            $avatarImages = array(
+                'title' => 'Avatars',
+                'files' => $files
+            );
+            return view('user::accountSetting')->with(['avatarImages' => $avatarImages]);
+        } catch(Exception $e) {
+            abort(404);
+        }
     }
 
-    public function settingAccount(Request $request) {
+    public function settingRegister(Request $request) {
         try {
             $files = $request->allFiles();
             $data = $request->all();
-            $this->UserAuthService->settingUpAccount($data, $files);
+            $this->UserAuthService->settingUpRegister($data, $files);
             return redirect()->route('home');
         } catch(Exception $e) {
             return redirect()->back()->withInput();

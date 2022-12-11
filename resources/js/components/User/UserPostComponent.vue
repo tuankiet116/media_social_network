@@ -1,18 +1,33 @@
 <template>
     <div class="columns">
-        <div class="column">
+        <div class="column cl-infor">
             <div class="box content">
                 <h4>Giới Thiệu</h4>
-                <blockquote>
-                    <p>Đang sống ở Hà Nội</p>
-                    <p>Đã học THPT Lê Quý Đôn-Đống Đa</p>
-                    <p>Gõ Phím Tại Pirago</p>
-                    <p>Đã Tốt Nghiệp Trường Đời</p>
+                <blockquote v-if="user.user_information && user.user_school.length">
+                    <p v-if="user.user_information?.living_place">
+                        Đang sống ở {{ user.user_information.living_place }}
+                    </p>
+                    <p v-for="user_school in user.user_school">
+                        <span v-if="user_school.end_year < new Date().getFullYear()">
+                            Đã tốt nghiệp {{ user_school.school_name }}
+                        </span>
+                        <span v-else>
+                            Đang học {{ user_school.school_name }}
+                        </span>
+                    </p>
+                </blockquote>
+                <blockquote v-else>
+                    <p>No Information</p>
                 </blockquote>
             </div>
         </div>
-        <div class="column is-three-fifths-desktop">
-            <PostComponent @post-deleted="handleRemovePost" v-for="post in posts" :post="post"/>
+        <div v-if="posts.length" class="column is-three-fifths-desktop">
+            <PostComponent @post-deleted="handleRemovePost" v-for="post in posts" :post="post" />
+        </div>
+        <div v-else class="column is-three-fifths-desktop has-text-centered">
+            <div class="box">
+                No Post Yet
+            </div>
         </div>
     </div>
 </template>
@@ -42,13 +57,13 @@ export default {
         this.fetchPost(this.user);
     },
     watch: {
-        user(value){
+        user(value) {
             this.fetchPost(value);
         }
     },
     methods: {
         fetchPost(currentUser = null) {
-            let userId = currentUser?.id ?? this.$route.params.id ;
+            let userId = currentUser?.id ?? this.$route.params.id;
             if (userId) {
                 getPostsByUser(this.offset, userId).then(result => {
                     if (result.data.data.length == 0) {
@@ -68,7 +83,7 @@ export default {
             this.posts.splice(postIndex, 1);
         },
         handleLoadPost(e) {
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100 
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100
                 && this.isLoadMore && !this.outOfPost) {
                 this.isLoadMore = false;
                 this.fetchPost(this.user);
@@ -83,5 +98,9 @@ export default {
 <style scoped>
 /deep/ .post-box {
     width: 100%;
+}
+
+.cl-infor {
+    position: sticky;
 }
 </style>
