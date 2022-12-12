@@ -29,6 +29,7 @@ class UserService
 
     public function followUser($userIdFollow)
     {
+        
     }
 
     public function getAvatar($fileName)

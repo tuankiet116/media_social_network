@@ -15,8 +15,6 @@
                     </figure>
                     <div class="mt-2 has-text-centered">
                         <span>{{ user.name }}</span>
-                        <br>
-                        <small>(Jack Daniel)</small>
                     </div>
                 </div>
             </div>
@@ -24,17 +22,17 @@
                 <a v-if="!auth" class="button is-rounded">
                     <span><i class="fa-solid fa-plus"></i> Follow</span>
                 </a>
-                <a v-else class="button is-rounded">
-                    <span><i class="fa-solid fa-pen"></i> Edit</span>
-                </a>
+                <router-link v-else class="button is-rounded" :to="{name: 'edit_profile'}">
+                    Edit
+                </router-link>
             </div>
             <br>
         </div>
         <div class="profile-menu level is-mobile box">
             <div class="level-item is-justify-content-center is-align-items-center">
-                <a class="heading">
+                <router-link class="heading" :to="{name: 'list_post'}">
                     <span><i class="fa-solid fa-message"></i> Bài viết</span>
-                </a>
+                </router-link>
             </div>
             <div class="level-item is-justify-content-center is-align-items-center">
                 <a class="heading">

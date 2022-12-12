@@ -1,9 +1,14 @@
 <template>
     <article class="media">
         <figure class="media-left">
-            <p class="image is-32x32">
-                <img class="is-rounded" :src="comment.users.image">
-            </p>
+            <div class="image is-32x32 user_image">
+                <router-link :to="{ path: '/profile/' + comment.users.id }">
+                    <img class="is-rounded" :src="comment.users.image">
+                </router-link>
+                <div class="user-card">
+                    <UserInforCard :user="comment.users" />
+                </div>
+            </div>
         </figure>
         <article v-if="isEditting && user" class="media comment-box">
             <div class="box comment-box">
@@ -30,35 +35,43 @@
         <div class="media comment-box" v-else>
             <div class="media-content">
                 <div class="content">
-                    <p class="contain-infor">
+                    <div class="contain-infor">
+                        <div class="user_name">
+                            <router-link :to="{ path: '/profile/' + comment.users.id }">
+                                <strong>{{ comment.users.name }}</strong>&nbsp;&nbsp;
+                            </router-link>
+                            <div class="user-card">
+                                <UserInforCard :user="comment.users" />
+                            </div>
+                        </div>
                         <span>
-                            <strong>{{ comment.users.name }}</strong>&nbsp;&nbsp;
                             <small>{{ createTime }}</small>&nbsp;
                             <i class="fa-regular fa-clock"></i>
                         </span>
-                    <figure v-outsider="handleUnDisplayHelper" class="media-right dots-container is-rounded">
-                        <button class="button is-rounded is-small" @click="this.displayHelper = !this.displayHelper;">
-                            <i class="fa-solid fa-ellipsis"></i>
-                        </button>
-                        <div href="#" class="arrow-box box" v-show="displayHelper">
-                            <a v-if="user && user.id == comment.user_id" class="navbar-item"
-                                @click="handleDeleteReply">
-                                <span>Delete</span>
-                                <i class="fa-solid fa-trash"></i>
-                            </a>
-                            <hr />
-                            <a v-if="user && user.id == comment.user_id" class="navbar-item" @click="showEdit">
-                                <span>Edit</span>
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <hr />
-                            <a class="navbar-item" @click="displayHelper = false">
-                                <span>Close</span>
-                                <i class="fa-solid fa-xmark"></i>
-                            </a>
-                        </div>
-                    </figure>
-                    </p>
+                        <figure v-outsider="handleUnDisplayHelper" class="media-right dots-container is-rounded">
+                            <button class="button is-rounded is-small"
+                                @click="this.displayHelper = !this.displayHelper;">
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button>
+                            <div href="#" class="arrow-box box" v-show="displayHelper">
+                                <a v-if="user && user.id == comment.user_id" class="navbar-item"
+                                    @click="handleDeleteReply">
+                                    <span>Delete</span>
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                                <hr />
+                                <a v-if="user && user.id == comment.user_id" class="navbar-item" @click="showEdit">
+                                    <span>Edit</span>
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <hr />
+                                <a class="navbar-item" @click="displayHelper = false">
+                                    <span>Close</span>
+                                    <i class="fa-solid fa-xmark"></i>
+                                </a>
+                            </div>
+                        </figure>
+                    </div>
                     <div class="content box is-rounded">
                         {{ comment.content }}
                     </div>
@@ -87,10 +100,12 @@
 <script>
 import { getRepliesCommentsAPI, likeCommentAPI, replyCommentAPI, updateCommentAPI } from '../../../api/api';
 import { calculateTime } from '../../../helpers/common';
+import UserInforCard from '../../Common/UserInforCard.vue';
 
 export default {
     props: ["comment"],
     emits: ['displayReply', 'deleteReply', 'isEditting'],
+    components: { UserInforCard },
     data() {
         return {
             isEditting: false,
@@ -242,5 +257,30 @@ hr {
 
 .liked {
     color: blue;
+}
+
+.user-card {
+    position: absolute;
+    z-index: 10;
+    width: 300px;
+    display: none;
+    top: 3rem;
+}
+
+.user_name:hover .user-card {
+    display: block;
+    transform: translate(0, -20px);
+    transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+}
+
+.user_image:hover .user-card {
+    display: block;
+    transform: translate(0, -20px);
+    transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+}
+
+strong {
+    color: black;
+    cursor: pointer;
 }
 </style>

@@ -115,7 +115,7 @@ import ConfirmDeleteComponent from '../Common/ConfirmDeleteComponent.vue';
 import { calculateTime } from '../../helpers/common';
 import NotFoundComponent from '../Common/NotFoundComponent.vue';
 import authMixin from '../../mixins';
-import UserInforCard from './Children/UserInforCard.vue';
+import UserInforCard from '../Common/UserInforCard.vue';
 
 export default {
     components: {

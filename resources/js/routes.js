@@ -10,7 +10,7 @@ const routes = [
     { path: '/post/create', component: CreatePostComponent, name: 'create_post' },
     { path: '/post/edit/:id', component: EditPostComponent, name: 'edit_post' },
     { path: '/post/:id', component: DetailPostComponent, name: 'post_detail' },
-    { path: '/profile/:id?', children: userRouters, component: UserPageComponent, name: 'user_profile' }
+    { path: '/profile', children: userRouters, component: UserPageComponent, name: 'user_profile' }
 ];
 
 export default routes

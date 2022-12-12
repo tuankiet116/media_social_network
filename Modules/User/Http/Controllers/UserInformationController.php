@@ -27,4 +27,16 @@ class UserInformationController extends Controller
         $data = $this->userService->getUserProfile($userID);
         return $this->responseData($data, 200);
     }
+
+    public function followUser($userId) {
+        
+    }
+
+    public function getFollowers() {
+
+    }
+
+    public function getFollowed() {
+
+    }
 }

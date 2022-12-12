@@ -63,7 +63,7 @@ class PostService
 
         $posts->each(function ($post) {
             $post->load(['comments' => function ($q) {
-                return $q->where('belong_id', null)->orderBy('created_at', 'DESC')->limit(LIMIT_COMMENT_OVERVIEW)->with('users');
+                return $q->withCount('likes')->where('belong_id', null)->orderBy('created_at', 'DESC')->limit(LIMIT_COMMENT_OVERVIEW)->with('users');
             }]);
         });
 

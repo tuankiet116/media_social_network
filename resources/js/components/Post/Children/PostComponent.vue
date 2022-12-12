@@ -15,7 +15,9 @@
                 </figure>
                 <div class="post_user">
                     <div class="user_name" @mouseover="handleShowUserCard">
-                        <strong>{{ post.user.name }}</strong>
+                        <router-link :to="{ path: '/profile/' + post.user.id }">
+                            <strong>{{ post.user.name }}</strong>
+                        </router-link>
                         <div class="user-card">
                             <KeepAlive>
                                 <UserInforCard v-if="displayUserInformation" :user="post.user" />
@@ -49,9 +51,6 @@
                         </a>
                     </div>
                 </figure>
-                <div>
-                    <!-- <UserInforCard/> -->
-                </div>
             </div>
             <hr class="split-post-user">
             <div class="title">
@@ -80,7 +79,7 @@ import ListCommentComponent from './ListCommentComponent.vue';
 import ReactionComponent from './ReactionComponent.vue';
 import ConfirmDeleteComponent from '../../Common/ConfirmDeleteComponent.vue';
 import { calculateTime } from '../../../helpers/common';
-import UserInforCard from './UserInforCard.vue';
+import UserInforCard from '../../Common/UserInforCard.vue';
 
 export default {
     components: {
@@ -171,10 +170,6 @@ canvas {
 
 .user-info>strong {
     margin-left: 1rem;
-}
-
-.user-info img {
-    background-color: blueviolet;
 }
 
 .post-desc {
