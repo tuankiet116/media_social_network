@@ -22,7 +22,7 @@
                 <a v-if="!auth" class="button is-rounded">
                     <span><i class="fa-solid fa-plus"></i> Follow</span>
                 </a>
-                <router-link v-else class="button is-rounded" :to="{name: 'edit_profile'}">
+                <router-link v-else class="button is-rounded" :to="{name: 'edit_profile_basic'}">
                     Edit
                 </router-link>
             </div>
