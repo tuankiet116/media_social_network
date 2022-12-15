@@ -54,7 +54,7 @@
                     </a>
                     <NotificationComponent />
                 </div>
-                <div class="navbar-item has-dropdown is-hoverable user-nav" @click="showMenu">
+                <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
                         <strong>{{ user.name }}</strong>
                         <span>
@@ -91,15 +91,6 @@ export default {
         logout() {
             sessionStorage.removeItem("user");
             this.$store.commit("logoutUser");
-        },
-        showMenu(e) {
-            let classActive = document.getElementsByClassName("user-nav")[0].className.split(" ").find((c) => c == "is-active");
-            if (classActive) {
-                document.getElementsByClassName("user-nav")[0].classList.remove("is-active");
-            }
-            else {
-                document.getElementsByClassName("user-nav")[0].classList.add("is-active");
-            }
         },
         increaseKey() {
             this.keyComponent++;

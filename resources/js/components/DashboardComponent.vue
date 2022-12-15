@@ -1,19 +1,24 @@
 <template>
-    <div id="post-container">
-        <LoadingComponent v-if="loading" />
-        <div id="create-post" class="post">
-            <div v-if="user" class="box post-box column is-two-thirds-tablet is-one-desktop 
-            is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center">
-                <img class="image is-32x32 mr-2" :src="user?.image" />
-                <input @click="$router.push({ name: 'create_post' })" class="input" placeholder="Create Post">
+    <div id="post-container" class="columns">
+        <div class="column is-7">
+            <LoadingComponent v-if="loading" />
+            <div id="create-post" class="post">
+                <div v-if="user" class="box post-box column is-two-thirds-tablet is-one-desktop 
+                is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center">
+                    <img class="image is-32x32 mr-2" :src="user?.image" />
+                    <input @click="$router.push({ name: 'create_post' })" class="input" placeholder="Create Post">
+                </div>
+                <div v-else @click="redirectLogin" class="box post-box column is-two-thirds-tablet is-one-desktop 
+                is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center">
+                    <input class="input" placeholder="Create Post">
+                </div>
             </div>
-            <div v-else @click="redirectLogin" class="box post-box column is-two-thirds-tablet is-one-desktop 
-            is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center">
-                <input class="input" placeholder="Create Post">
+            <div class="post">
+                <PostComponent @post-deleted="handleRemovePost" v-for="post in posts" :post="post" />
             </div>
         </div>
-        <div class="post">
-            <PostComponent @post-deleted="handleRemovePost" v-for="post in posts" :post="post" />
+        <div class="column">
+            <CardGroupInfo />
         </div>
     </div>
 </template>
@@ -23,11 +28,13 @@ import authMixin from '../mixins';
 import PostComponent from './Post/Children/PostComponent.vue';
 import LoadingComponent from './Common/LoadingComponent.vue';
 import { mapGetters } from 'vuex';
+import CardGroupInfo from './Group/CardGroupInfo.vue';
 
 export default {
     components: {
         PostComponent,
-        LoadingComponent
+        LoadingComponent,
+        CardGroupInfo
     },
     mixins: [authMixin],
     data() {
@@ -46,10 +53,10 @@ export default {
         this.fetchPost();
         this.loading = false;
         let height = document.getElementById('navbar').offsetHeight;
-        let createPostEl = document.getElementById('create-post');
-        if (createPostEl) {
-            createPostEl.style.marginTop = Number(height) + Number(height / 2) + 'px';
-            createPostEl.style.marginBottom = Number(height / 2) + 'px';
+        let postContainer = document.getElementById('post-container');
+        if (postContainer) {
+            postContainer.style.marginTop = Number(height) + Number(height / 2) + 'px';
+            postContainer.style.marginBottom = Number(height / 2) + 'px';
         }
         document.addEventListener('scroll', this.handleLoadPost);
     },
@@ -66,7 +73,7 @@ export default {
             });
         },
         handleLoadPost(e) {
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100 
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100
                 && this.isLoadMore && !this.outOfPost) {
                 this.isLoadMore = false;
                 this.fetchPost();
@@ -92,9 +99,14 @@ export default {
     margin-left: auto;
     margin-right: auto;
     max-width: 600px;
+    margin-bottom: 2rem;
 }
 
 #create-post .box textarea {
     height: 50px;
+}
+
+/deep/ .post-box {
+    margin-right: 1rem !important;
 }
 </style>
