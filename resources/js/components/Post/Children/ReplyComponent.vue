@@ -98,7 +98,7 @@
 </template>
 
 <script>
-import { getRepliesCommentsAPI, likeCommentAPI, replyCommentAPI, updateCommentAPI } from '../../../api/api';
+import { getRepliesCommentsAPI, likeCommentAPI, replyCommentAPI, updateCommentAPI } from '../../../api/post';
 import { calculateTime } from '../../../helpers/common';
 import UserInforCard from '../../Common/UserInforCard.vue';
 

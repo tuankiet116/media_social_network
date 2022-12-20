@@ -32,7 +32,7 @@
     </div>
 </template>
 <script>
-import { getPostsByUser } from '../../api/api';
+import { getPostsByUser } from '../../api/post';
 import PostComponent from '../Post/Children/PostComponent.vue';
 export default {
     data() {

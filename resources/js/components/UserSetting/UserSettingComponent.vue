@@ -49,7 +49,7 @@
     </div>
 </template>
 <script>
-import { getProfile } from '../../api/api';
+import { getProfile } from '../../api/user';
 import authMixin from '../../mixins';
 export default {
     data() {
@@ -59,12 +59,6 @@ export default {
     },
     mixins: [authMixin],
     mounted() {
-        let height = document.getElementById('navbar').offsetHeight;
-        let setting = document.getElementById('setting');
-        if (setting) {
-            setting.style.marginTop = Number(height) + height / 2 + 'px';
-            setting.style.marginBottom = Number(height / 2) + 'px';
-        }
         this.getUserInformation();
     },
     methods: {

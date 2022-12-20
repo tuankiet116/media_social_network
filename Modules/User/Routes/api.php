@@ -43,6 +43,12 @@ Route::middleware('auth.api')->prefix('comment')->name('comment.')->group(functi
     Route::put('/update', 'CommentController@update')->name('update');
 });
 
+Route::middleware('auth.api')->prefix('community')->name('community.')->group(function() {
+    Route::post('/create', 'CommunityController@createCommunity')->name('create');
+    Route::post('/update', 'CommunityController@update')->middleware('can:update,group')->name('update');
+});
+
+Route::get('/:id', 'CommunityController@getCommunity');
 Route::post('/user/facebook_login', 'FacebookController@fbLogin');
 Route::get('/post/list/{offset?}/{userId?}', 'PostController@getPosts');
 Route::get('/post/stream/{fileName}', 'PostController@stream');

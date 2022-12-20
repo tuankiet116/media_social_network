@@ -2,6 +2,7 @@
 
 namespace App\Services\User;
 
+use App\Models\Group;
 use App\Models\User;
 use App\Services\Inf\StorageService;
 
@@ -40,5 +41,14 @@ class UserService
     public function getBackground($fileName)
     {
         return $this->storageService->getImage('/user/background/' . $fileName);
+    }
+
+    public function getFollower() {
+        
+    }
+
+    public function getGroupsByMe() {
+        $userId = auth()->id();
+        return Group::where('user_id', $userId)->get();
     }
 }

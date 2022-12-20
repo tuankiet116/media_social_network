@@ -128,7 +128,7 @@
 </template>
 
 <script>
-import { deleteCommentAPI, getRepliesCommentsAPI, likeCommentAPI, replyCommentAPI, updateCommentAPI } from '../../../api/api';
+import { deleteCommentAPI, getRepliesCommentsAPI, likeCommentAPI, replyCommentAPI, updateCommentAPI } from '../../../api/post';
 import { calculateTime } from '../../../helpers/common';
 import ListRepliesComponent from './ListRepliesComponent.vue';
 import UserInforCard from '../../Common/UserInforCard.vue';

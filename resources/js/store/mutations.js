@@ -1,4 +1,4 @@
-import * as API from "../api/api"
+import * as API from "../api/auth"
 
 export default {
     getUserInformation(state, payload) {

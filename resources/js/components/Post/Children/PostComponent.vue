@@ -74,7 +74,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { deletePost } from '../../../api/api';
+import { deletePost } from '../../../api/post';
 import ListCommentComponent from './ListCommentComponent.vue';
 import ReactionComponent from './ReactionComponent.vue';
 import ConfirmDeleteComponent from '../../Common/ConfirmDeleteComponent.vue';

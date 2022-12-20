@@ -1,13 +1,4 @@
-import axios from "axios";
-const host = window.location.origin;
-const api = axios.create({
-    baseURL: host,
-});
-
-export const detectUser = () => api.get(`api/user`);
-export const getProfile = () => api.get(`api/profile/me`);
-export const getUserProfile = (id) => api.get(`api/profile/${id}`);
-export const logoutUser = () => api.post('api/logout');
+import api from './baseAPI';
 
 export const createPost = function (data, config) {
     return api.post('api/post/create', data, config)

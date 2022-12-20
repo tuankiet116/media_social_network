@@ -23,7 +23,7 @@
     </div>
 </template>
 <script>
-import { updatePost, getPost } from '../../api/api';
+import { updatePost, getPost } from '../../api/post';
 import { useToast } from "vue-toastification";
 import ClassicEditor from '../../../Libraries/CKEditor5/build/ckeditor';
 import authMixin from '../../mixins';

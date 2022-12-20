@@ -27,4 +27,12 @@ Route::get('user/setting_account/{tokenRegister?}', 'UserController@showSettingR
 
 Route::get('/{vue_capture?}', function() {
     return view('user::home');
-})->where('vue_capture',  '^(?!api)(?!user)(?!info)(?!public).*$')->name('home');
+})->name('home');
+
+Route::get('{any}', function () {
+    return view('user::home');
+})->where('any', '.*');
+
+// Route::get('/{vue_capture?}', function() {
+//     return view('user::home');
+// })->where('vue_capture',  '^(?!api)(?!user)(?!info)(?!public).*$')->name('home');

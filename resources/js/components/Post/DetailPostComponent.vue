@@ -108,7 +108,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { createComment, getListCommentAPI, deleteCommentAPI, deletePost, getPost } from '../../api/api';
+import { createComment, getListCommentAPI, deleteCommentAPI, deletePost, getPost } from '../../api/post';
 import ListCommentComponent from './Children/ListCommentComponent.vue';
 import ReactionComponent from './Children/ReactionComponent.vue';
 import ConfirmDeleteComponent from '../Common/ConfirmDeleteComponent.vue';
@@ -147,12 +147,6 @@ export default {
         }
     },
     mounted() {
-        let height = document.getElementById('navbar').offsetHeight;
-        let postEl = document.getElementById('post');
-        if (postEl) {
-            postEl.style.marginTop = Number(height) + Number(height / 2) + 'px';
-            postEl.style.marginBottom = Number(height / 2) + 'px';
-        }
         this.fetchPost();
     },
     methods: {

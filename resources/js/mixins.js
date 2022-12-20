@@ -1,4 +1,4 @@
-import { detectUser } from "./api/api";
+import { detectUser } from "./api/auth";
 const authMixin = {
     beforeCreate() {
         detectUser().then(result => {

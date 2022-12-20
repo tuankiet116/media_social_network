@@ -98,7 +98,7 @@ export default {
     background-size: cover;
     background-repeat: no-repeat;
     max-width: 1000px;
-    height: 400px;
+    height: 200px;
 }
 
 .profile-picture {

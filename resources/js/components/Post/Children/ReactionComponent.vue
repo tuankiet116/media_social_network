@@ -34,7 +34,7 @@
 <script>
 import confetti from 'canvas-confetti';
 import { mapGetters } from 'vuex';
-import { reactPostAPI } from '../../../api/api';
+import { reactPostAPI } from '../../../api/post';
 
 export default {
     props: ['post'],

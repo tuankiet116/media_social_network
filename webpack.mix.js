@@ -30,3 +30,5 @@ mix.js('Modules/User/Resources/assets/js/accountSetting.js', 'js/accountSetting.
 mix.sass('resources/css/common_vue.scss', 'css/common.css');
 
 mix.copy('resources/images', 'public/images');
+
+mix.copy('resources/images/defaults', 'storage/app/public/defaults');

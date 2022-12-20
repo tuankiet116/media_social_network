@@ -3,7 +3,7 @@ import SettingAvatar from './SettingAvatar.vue';
 import SettingBackground from './SettingBackground.vue';
 import SettingPassword from './SettingPassword.vue';
 
-import { detectUser } from '../../api/api';
+import { detectUser } from '../../api/auth';
 
 const userSetting = [
     { path: 'basic', component: SettingInformation, name: "edit_profile_basic", beforeEnter: checkAuth },

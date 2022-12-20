@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { getUserProfile } from '../../api/api';
+import { getUserProfile } from '../../api/user';
 
 export default {
     data() {

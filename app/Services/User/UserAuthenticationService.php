@@ -193,7 +193,7 @@ class UserAuthenticationService
                 $user->banner = $fileName;
             } else {
                 $fileName = $userId . time() . '.png';
-                Storage::copy('/public/defaults/background/background.png', '/user/background/' . $fileName . '.png');
+                Storage::copy('/public/defaults/background/background.png', '/user/background/' . $fileName);
                 $user->banner = $fileName;
             }
 
