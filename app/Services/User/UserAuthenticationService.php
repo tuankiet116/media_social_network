@@ -124,7 +124,9 @@ class UserAuthenticationService
     {
         $user = auth()->user();
         if ($user->is_active == ACCOUNT_ACTIVE) {
-            return $user;
+            return User::with(['groups' => function($q) {
+                return $q->limit(3);
+            }])->where('id', auth()->id())->first();
         }
         return null;
     }

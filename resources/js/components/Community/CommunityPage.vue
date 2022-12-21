@@ -62,7 +62,7 @@ export default {
         };
     },
     mounted() {
-        this.getUserInformation();
+        this.getCommunityInformation();
     },
     computed: {
         auth() {
@@ -74,21 +74,13 @@ export default {
         }
     },
     methods: {
-        getUserInformation() {
+        getCommunityInformation() {
             let guestID = this.$route.params?.id;
-            if (guestID) {
-                getUserProfile(guestID).then(result => {
-                    this.user = result.data;
-                }).catch(error => {
-                    console.log(error)
-                })
-            } else {
-                getProfile().then(result => {
-                    this.user = result.data;
-                }).catch(error => {
-                    console.log(error)
-                })
-            }
+            getProfile().then(result => {
+                this.user = result.data;
+            }).catch(error => {
+                console.log(error)
+            });
         }
     }
 }

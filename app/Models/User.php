@@ -70,4 +70,8 @@ class User extends Authenticatable
     public function userInformation() {
         return $this->hasOne(UserInformation::class);
     }
+
+    public function groups() {
+        return $this->hasMany(Group::class);
+    }
 }

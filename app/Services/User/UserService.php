@@ -18,7 +18,7 @@ class UserService
     public function getProfile()
     {
         $userId = auth()->id();
-        $information = User::with(['userSchool', 'userInformation'])->where('id', $userId)->first();
+        $information = User::with(['userSchool', 'userInformation', 'groups'])->where('id', $userId)->first();
         return $information;
     }
 

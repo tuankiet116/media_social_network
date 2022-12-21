@@ -3,12 +3,12 @@
         <div class="profile-banner" :style="{ 'background-image': 'url(' + user.banner + ')'}">
         </div>
         <div class="profile-picture level is-mobile">
-            <div v-if="!auth" class="level-item is-justify-content-right">
+            <div v-if="!isMe && auth" class="level-item is-justify-content-right">
                 <a class="button is-rounded">
                     <span><i class="fa-solid fa-message"></i> Chat</span>
                 </a>
             </div>
-            <div class="level-item middle-item" :class="{ 'pl-5': auth }">
+            <div class="level-item middle-item" :class="{ 'pl-5': isMe }">
                 <div>
                     <figure class="image is-128x128">
                         <img class="is-rounded" :src="user.image">
@@ -18,8 +18,8 @@
                     </div>
                 </div>
             </div>
-            <div class="level-item is-justify-content-left">
-                <a v-if="!auth" class="button is-rounded">
+            <div v-if="auth" class="level-item is-justify-content-left">
+                <a v-if="!isMe && auth" class="button is-rounded">
                     <span><i class="fa-solid fa-plus"></i> Follow</span>
                 </a>
                 <router-link v-else class="button is-rounded" :to="{name: 'edit_profile_basic'}">
@@ -65,9 +65,9 @@ export default {
         this.getUserInformation();
     },
     computed: {
-        auth() {
+        isMe() {
             let user = this.$store.getters.getUser;
-            if (user?.id == this.user?.id) {
+            if (user !== null && user?.id == this.user?.id) {
                 return true;
             }
             return false;

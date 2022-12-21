@@ -58,4 +58,12 @@ class CommunityService
     public function getGroupMember() {
 
     }
+
+    public function getAvatar($fileName) {
+        return $this->storageService->getImage('/community/avatar/' . $fileName); 
+    }
+
+    public function getBackground($fileName) {
+        return $this->storageService->getImage('/community/background/' . $fileName); 
+    }
 }

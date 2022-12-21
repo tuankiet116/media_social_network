@@ -54,6 +54,23 @@
                     </a>
                     <NotificationComponent />
                 </div>
+                <div v-if="user.groups.length" class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                       Your Community
+                    </a>
+                    <div class="navbar-dropdown">
+                        <router-link v-for="gr of user.groups" @click="increaseKey" class="navbar-item" :to="{ path: `/community/${gr.id}` }">
+                            <figure class="is-64x64 image">
+                                <img class="is-rounded" :src="gr.image"/>
+                            </figure>
+                            <p class="m-2">{{ gr.group_name }}</p>
+                        </router-link>
+                        <hr class="navbar-divider">
+                        <router-link @click="increaseKey" class="navbar-item" :to="{ path: '/profile' }">
+                            See All Community
+                        </router-link>
+                    </div>
+                </div>
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
                         <strong>{{ user.name }}</strong>

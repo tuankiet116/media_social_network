@@ -22,7 +22,6 @@ Route::middleware('auth.api')->group(function() {
 
 Route::middleware('auth.api')->prefix('profile')->name('profile.')->group(function() {
     Route::get('/me', 'UserInformationController@getProfile');
-    Route::get('/{id}', 'UserInformationController@getUserProfile');
 });
 
 Route::middleware('auth.api')->prefix('post')->name('post.')->group(function() {
@@ -49,7 +48,11 @@ Route::middleware('auth.api')->prefix('community')->name('community.')->group(fu
 });
 
 Route::get('/:id', 'CommunityController@getCommunity');
+
 Route::post('/user/facebook_login', 'FacebookController@fbLogin');
+
 Route::get('/post/list/{offset?}/{userId?}', 'PostController@getPosts');
 Route::get('/post/stream/{fileName}', 'PostController@stream');
 Route::get('/post/get/{id}', 'PostController@getPost')->name('get_post');
+
+Route::get('/profile/{id}', 'UserInformationController@getUserProfile');

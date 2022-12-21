@@ -17,4 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::controller(FileCdnController::class)->prefix('/cdn')->name('cdn.')->group(function() {
     Route::get('/user/avatar/{fileName}', 'getUserAvatar')->name('user_avatar');
     Route::get('/user/background/{fileName}', 'getUserBackground')->name('user_background');
+
+    Route::get('/community/avatar/{fileName}', 'getCommunityAvatar')->name('community_avatar');
+    Route::get('/community/background/{fileName}', 'getCommunityBackground')->name('community_background');
 });

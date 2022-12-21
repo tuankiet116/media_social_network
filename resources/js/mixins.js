@@ -8,6 +8,12 @@ const authMixin = {
             sessionStorage.removeItem("user");
             this.$store.commit('getUserInformation', null);
         });
+    },
+    computed: {
+        auth() {
+            let currentUser = this.$store.state.user;
+            return currentUser == null ? false : true;
+        }
     }
 }
 
