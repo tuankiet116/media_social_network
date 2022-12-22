@@ -38,7 +38,8 @@ class CommentService
             'user_id' => $post->user_id,
             'user_sender_id' => $userId,
             'group_sender_id' => null,
-            'type' => NOTIFICATION_COMMENT_POST
+            'read' => NOTIFICATION_UNREAD,
+            'type' => NOTIFICATION_USER_COMMENT_POST
         ]);
         event(new NotificationEvent($notification));
 

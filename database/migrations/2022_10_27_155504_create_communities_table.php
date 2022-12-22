@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGroupsTable extends Migration
+class CreateCommunitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('groups', function (Blueprint $table) {
+        Schema::create('communities', function (Blueprint $table) {
             $table->id();
-            $table->string('group_name');
+            $table->string('community_name');
             $table->bigInteger('user_id', false, true);
             $table->string('image');
-            $table->string('banner')->nullable();
+            $table->string('background')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('groups');
+        Schema::dropIfExists('communities');
     }
 }

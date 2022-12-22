@@ -2,8 +2,8 @@
 
 namespace App\Services\User;
 
-use App\Models\Group;
-use App\Models\GroupUser;
+use App\Models\Community;
+use App\Models\CommunityUser;
 use App\Services\Inf\StorageService;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,19 +23,19 @@ class CommunityService
         $bannerImage = Storage::copy('/public/defaults/community/background.png', '/community/background/' . $fileName);
         $image = Storage::copy('/public/defaults/community/community_avatar.png', '/community/avatar/' . $fileName);
         $data = [
-            'group_name' => $communityName,
+            'community_name' => $communityName,
             'user_id' => $userId,
-            'banner' => $fileName,
+            'background' => $fileName,
             'image' => $fileName
         ];
 
-        $group = Group::create($data);
+        $group = Community::create($data);
         return $group;
     }
 
     public function joinGroup(int $groupId) {
         $userId = auth()->id();
-        $member = GroupUser::where('user_id', $userId)->first();
+        $member = CommunityUser::where('user_id', $userId)->first();
         if($member && $member->banned == 1) {
             
         }
@@ -43,7 +43,7 @@ class CommunityService
 
     public function getGroupByOwner() {
         $userId = auth()->id();
-        $groups = Group::where('user_id', $userId)->get();
+        $groups = Community::where('user_id', $userId)->get();
         return $groups;
     }
 

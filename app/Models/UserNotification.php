@@ -13,6 +13,7 @@ class UserNotification extends Model
         'user_id',
         'user_sender_id',
         'group_sender_id',
-        'type'
+        'type',
+        'read'
     ];
 }

@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GroupUser extends Model
+class CommunityUser extends Model
 {
     use HasFactory;
 
     public $fillable = [
-        'group_id',
+        'community_id',
         'user_id'
     ];
 }

@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Group extends Model
+class Community extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'group_name',
+        'community_name',
         'user_id',
         'image',
         'banner'
@@ -23,9 +23,9 @@ class Group extends Model
         return '';
     }
 
-    public function getBannerAttribute() {
-        if ($this->attributes['banner']) {
-            return route('cdn.community_background', ['fileName' => $this->attributes['banner']]);
+    public function getBackgroundAttribute() {
+        if ($this->attributes['background']) {
+            return route('cdn.community_background', ['fileName' => $this->attributes['background']]);
         }
         return '';
     }
