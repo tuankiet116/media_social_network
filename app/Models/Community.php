@@ -13,7 +13,7 @@ class Community extends Model
         'community_name',
         'user_id',
         'image',
-        'banner'
+        'background'
     ];
 
     public function getImageAttribute() {

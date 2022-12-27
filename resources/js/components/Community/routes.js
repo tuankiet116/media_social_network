@@ -1,10 +1,10 @@
 import { detectUser } from '../../api/auth';
-// import communitySettingRouters from './CommunitySetting/routes';
-import CommunityPage from './CommunityPage.vue';
+import communitySettingRouters from './CommunitySetting/routes';
+import CommunityPost from './CommunityPost.vue';
 
 const groupRouters = [
-    { path: ':id', component: CommunityPage, name: "community_page", beforeEnter: checkAuth },
-    // { path: '/:id/setting', component: CommunityPage, children: communitySettingRouters, beforeEnter: checkAuth }
+    { path: ':id', component: CommunityPost, name: "community_page" },
+    { path: '/:id/setting', component: CommunityPost, children: communitySettingRouters, beforeEnter: checkAuth }
 ];
 
 async function checkAuth(to, from, next) {

@@ -66,7 +66,7 @@
             <ReactionComponent @focusComment="redirect" :post="post" />
         </div>
         <ListCommentComponent ref="listComment" @loadListComment="redirect($event)"
-            @deleteComment="showConfirmDeleteComment($event)" :comments="comments" />
+            @deleteComment="handleDeleteComment($event)" :comments="comments" />
         <hr />
     </div>
     <ConfirmDeleteComponent v-if="isShowConfirmPost" :message="$t('post.confirm_delete')" @confirm="handleDeletePost"
@@ -74,7 +74,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { deletePost } from '../../../api/post';
+import { deletePost, deleteCommentAPI } from '../../../api/post';
 import ListCommentComponent from './ListCommentComponent.vue';
 import ReactionComponent from './ReactionComponent.vue';
 import ConfirmDeleteComponent from '../../Common/ConfirmDeleteComponent.vue';
@@ -94,7 +94,6 @@ export default {
         return {
             comments: this.post.comments,
             focusComment: false,
-            isShowConfirmComment: false,
             idCommentDelete: null,
             displayHelper: false,
             isShowConfirmPost: false,
@@ -114,13 +113,14 @@ export default {
         redirect(offset) {
             this.$router.push({ name: 'post_detail', params: { id: this.post.id } })
         },
-        showConfirmDeleteComment(idCommentDelete) {
-            this.isShowConfirmComment = true;
-            this.idCommentDelete = idCommentDelete;
-        },
-        hideConfirmDeleteComment() {
-            this.isShowConfirmComment = false;
-            this.idCommentDelete = null;
+        handleDeleteComment(idCommentDelete) {
+            deleteCommentAPI(idCommentDelete).then(result => {
+                if (result.data == true) {
+                    let indexComment = this.comments.findIndex(cm => cm.id == idCommentDelete);
+                    this.comments.splice(indexComment, 1);
+                    this.post.comments_count--;
+                }
+            })
         },
         async handleDeletePost() {
             let _this = this;

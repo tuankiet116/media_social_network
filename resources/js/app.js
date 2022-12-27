@@ -12,6 +12,7 @@ import Toast, { POSITION } from "vue-toastification";
 import mitt from 'mitt';
 import Echo from "laravel-echo";
 import "vue-toastification/dist/index.css";
+import VueSelect from 'vue-select';
 
 window.Pusher = require('pusher-js');
 window.Echo = new Echo({
@@ -49,6 +50,7 @@ app.use(router);
 app.use(Toast, {
     position: POSITION.TOP_RIGHT
 });
+app.component('vue-select', VueSelect);
 app.config.globalProperties.emitter = emitter;
 app.directive('outsider', {
     mounted: (el, binding) => {

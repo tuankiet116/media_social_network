@@ -1,3 +1,5 @@
-export default communitySettingRouters = [
+const communitySettingRouters = [
 
 ];
+
+export default communitySettingRouters;

@@ -42,7 +42,7 @@ import authMixin from '../mixins'
 import PostComponent from './Post/Children/PostComponent.vue'
 import LoadingComponent from './Common/LoadingComponent.vue'
 import { mapGetters } from 'vuex'
-import CardGroupInfo from './Community/CardGroupInfo.vue'
+import CardGroupInfo from './Community/CommunityCardComponent.vue'
 
 export default {
   components: {

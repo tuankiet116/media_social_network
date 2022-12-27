@@ -54,7 +54,7 @@
           @foreach ($avatarImages['files'] as $avatar)
             <figure class="image is-128x128 m-3 image-choosing">
               <div class="image-tick">
-                <img class="is-rounded" style="background-color: #bfd5d6" src="{{ asset('images/default/tick_image.png') }}">
+                <img class="is-rounded" style="background-color: #bfd5d6" src="{{ asset('images/defaults/tick_image.png') }}">
               </div>
               <img class="is-rounded" style="background-color: #bfd5d6" src="{{ $avatar }}">
             </figure>
@@ -65,7 +65,7 @@
           <label class="column-2 label">Ảnh bìa: </label>
           <div class="column">
             <figure class="banner-image image ml-3">
-              <img src="{{ asset('images/default/866-1000x520.jpg') }}">
+              <img src="{{ asset('images/defaults/background/background.png') }}">
               <a class="button is-rounded is-info button-banner-image">
                 <i class="fa-solid fa-camera"></i>
               </a>

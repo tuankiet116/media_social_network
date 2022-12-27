@@ -63,7 +63,7 @@
                             <figure class="is-64x64 image">
                                 <img class="is-rounded" :src="gr.image"/>
                             </figure>
-                            <p class="m-2">{{ gr.group_name }}</p>
+                            <p class="m-2">{{ gr.community_name }}</p>
                         </router-link>
                         <hr class="navbar-divider">
                         <router-link @click="increaseKey" class="navbar-item" :to="{ path: '/profile' }">

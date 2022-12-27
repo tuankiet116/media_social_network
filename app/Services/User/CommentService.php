@@ -70,6 +70,7 @@ class CommentService
     public function deleteComment(int $commentId)
     {
         $comment = $this->getCommentOfUser($commentId);
+        Comment::where('belong_id', $commentId)->delete();
         $result = $comment->delete();
         return $result;
     }

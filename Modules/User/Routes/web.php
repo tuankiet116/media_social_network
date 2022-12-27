@@ -15,8 +15,8 @@ Route::middleware('guest:web')->name('user.')->prefix('user')->group(function() 
     Route::get('/login', 'UserController@login')->name('get_login');
     Route::post('/login', 'UserController@attempLogin')->name('post_login');
 
-    Route::get('/forgot', 'UserContrller@forgotPassword')->name('get_forgot_password');
-    Route::post('/forgot', 'UserContrller@forgotPassword')->name('post_forgot_password');
+    Route::get('/forgot', 'UserController@forgotPassword')->name('get_forgot_password');
+    Route::post('/forgot', 'UserController@forgotPassword')->name('post_forgot_password');
 
     Route::get('/register', 'UserController@showFormRegister')->name('get_register');
     Route::post('/register', 'UserController@register')->name('post_register');

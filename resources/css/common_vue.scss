@@ -11,6 +11,7 @@ $navbar-breakpoint: $tablet;
 @import "../../node_modules/bulma/sass/layout/hero.sass";
 @import "../../node_modules/bulma/sass/layout/section.sass";
 @import "../../node_modules/bulma/sass/grid/columns.sass";
+@import 'vue-select/dist/vue-select.css';
 
 .ck-editor__editable {
     height: 300px;

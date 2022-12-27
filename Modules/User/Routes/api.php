@@ -42,9 +42,12 @@ Route::middleware('auth.api')->prefix('comment')->name('comment.')->group(functi
     Route::put('/update', 'CommentController@update')->name('update');
 });
 
-Route::middleware('auth.api')->prefix('community')->name('community.')->group(function() {
-    Route::post('/create', 'CommunityController@createCommunity')->name('create');
-    Route::post('/update', 'CommunityController@update')->middleware('can:update,group')->name('update');
+Route::prefix('community')->name('community.')->group(function() {
+    Route::post('/create', 'CommunityController@createCommunity')->middleware('auth.api')->name('create');
+    Route::post('/update', 'CommunityController@update')->middleware(['auth.api','can:update,group'])->name('update');
+    Route::get('/info/{id}', 'CommunityController@getInfo')->name('info');
+    Route::get('/posts/{id}/{offset?}', 'CommunityController@getPosts')->name('posts');
+    Route::get('/list', 'CommunityController@getListCommunity')->name('list');
 });
 
 Route::get('/:id', 'CommunityController@getCommunity');
