@@ -37,7 +37,7 @@ class CommentService
         $notification = UserNotification::create([
             'user_id' => $post->user_id,
             'user_sender_id' => $userId,
-            'group_sender_id' => null,
+            'community_sender_id' => null,
             'read' => NOTIFICATION_UNREAD,
             'type' => NOTIFICATION_USER_COMMENT_POST
         ]);

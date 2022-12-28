@@ -27,7 +27,7 @@ class PostService
         $data = [
             'title' => $request->get('title'),
             'user_id' => auth()->id(),
-            'group_id' => 0,
+            'community_id' => $request->get('community'),
             'post_description' => $request->get('description'),
             'thumbnail_src' => '',
             'src' => ''

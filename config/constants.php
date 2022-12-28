@@ -19,3 +19,7 @@ if (!defined('LIMIT_REGISTER_QUERY')) define('LIMIT_REGISTER_QUERY', 3);
 
 if (!defined('SCHOOLE_HIGHSCHOOL')) define('SCHOOLE_HIGHSCHOOL', 'SCHOOLE_HIGHSCHOOL');
 if (!defined('SCHOOLE_UNIVERSITY')) define('SCHOOLE_UNIVERSITY', 'SCHOOLE_UNIVERSITY');
+
+if (!defined('NO_COMMUNITY')) define('NO_COMMUNITY', 0);
+
+if (!defined('LIMIT_COMMUNITY')) define('LIMIT_COMMUNITY', 10);

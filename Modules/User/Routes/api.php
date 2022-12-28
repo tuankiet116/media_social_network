@@ -47,7 +47,7 @@ Route::prefix('community')->name('community.')->group(function() {
     Route::post('/update', 'CommunityController@update')->middleware(['auth.api','can:update,group'])->name('update');
     Route::get('/info/{id}', 'CommunityController@getInfo')->name('info');
     Route::get('/posts/{id}/{offset?}', 'CommunityController@getPosts')->name('posts');
-    Route::get('/list', 'CommunityController@getListCommunity')->name('list');
+    Route::get('/list', 'CommunityController@getListCommunityJoined')->name('list');
 });
 
 Route::get('/:id', 'CommunityController@getCommunity');

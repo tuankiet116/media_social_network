@@ -31,8 +31,12 @@ class CommunityService
             'image' => $fileName
         ];
 
-        $group = Community::create($data);
-        return $group;
+        $community = Community::create($data);
+        CommunityUser::create([
+            'user_id' => $userId,
+            'community_id' => $community->id
+        ]);
+        return $community;
     }
 
     public function joinGroup(int $groupId)
@@ -81,7 +85,7 @@ class CommunityService
             ->withCount('reactionUser', 'comments')
             ->orderBy('created_at', 'DESC')
             ->limit(LIMIT);
-        $postQuery->where('group_id', $communityId);
+        $postQuery->where('community_id', $communityId);
         if ($offset) {
             $postQuery = $postQuery->offset($offset);
         }
@@ -99,11 +103,12 @@ class CommunityService
         return array('data' => $posts, 'offset' => $newOffset ?? null);
     }
 
-    public function getListByUser($search, $offset = 0)
+    public function getCommunitiesJoinedByUser($search, $offset = 0)
     {
         $userId = auth()->id();
-        Community::where([
-            ['user_id', '=', $userId]
-        ])->limit(10)->get();
+        $communities = CommunityUser::with(['community' => function($q) use($search) {
+            return $q->where( 'community_name', 'LIKE', '%' . $search . '%');
+        }])->where('user_id', $userId)->limit(10)->offset($offset)->get();
+        return $communities;
     }
 }

@@ -45,7 +45,10 @@ class CommunityController extends Controller
         return $this->responseData($result, 200);
     }
 
-    public function getListCommunity(Request $request) {
-        dd($request);
+    public function getListCommunityJoined(Request $request) {
+        $keySearch = $request->get('search');
+        $offset = $request->get('offset');
+        $result = $this->communityService->getCommunitiesJoinedByUser($keySearch, $offset);
+        return $this->responseData($result, 200);
     }
 }

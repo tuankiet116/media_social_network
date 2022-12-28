@@ -17,7 +17,7 @@ class CreateUserNotificationsTable extends Migration
             $table->id();
             $table->bigInteger('user_id', false, true);
             $table->bigInteger('user_sender_id', false, true)->nullable();
-            $table->bigInteger('group_sender_id', false, true)->nullable();
+            $table->bigInteger('community_sender_id', false, true)->nullable();
             $table->string('type');
             $table->boolean('read');
             $table->timestamps();

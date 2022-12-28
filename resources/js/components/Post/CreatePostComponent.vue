@@ -7,12 +7,18 @@
             <vue-select
                 class="search_community"
                 :options="communities"
-                label="title"
+                label="community_name"
                 @search="fetchCommunities"
+                @open="fetchCommunities"
+                v-model="community"
             >
                 <template v-slot:option="option">
-                    <span :class="option.icon"></span>
-                    {{ option.title }}
+                    <div class="is-flex m-0 p-0">
+                        <figure class="image is-32x32 m-0 p-0">
+                            <img class="is-rounded m-0 p-0" :src="option.image"/>
+                        </figure>
+                        <p class="ml-2">{{ option.community_name }}</p>
+                    </div>
                 </template>
             </vue-select>
         </div>
@@ -133,7 +139,8 @@ export default {
                 description: "",
                 file: "",
             },
-            communities: ["aa"],
+            communities: [],
+            community: null
         };
     },
     mounted() {},
@@ -147,14 +154,16 @@ export default {
         },
     },
     methods: {
-        fetchCommunities(search, loading) {
-            loading(true);
+        async fetchCommunities(search, loading) {
+            let _this = this;
+            if (loading) loading(true);
             let data = {
-                search: search,
+                search: search ?? '',
             };
-            getCommunitiesAPI(data).then(function (result) {
-
+            await getCommunitiesAPI(data).then(function (result) {
+                _this.communities = result.data.flatMap(r => r.community??[]);
             });
+            if (loading) loading(false);
         },
         previewVideo() {
             let video = document.getElementById("video-preview");
@@ -195,6 +204,7 @@ export default {
                     .querySelector('meta[name="csrf-token"]')
                     .getAttribute("content")
             );
+            form.append("community", this.community?.id ?? 0);
 
             this.validateData();
             if (!this.errors.title && !this.errors.description) {

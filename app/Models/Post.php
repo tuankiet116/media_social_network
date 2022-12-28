@@ -11,7 +11,7 @@ class Post extends Model
 
     protected $fillable = [
         'user_id',
-        'group_id',
+        'community_id',
         'title',
         'src',
         'thumbnail_src',
@@ -41,5 +41,9 @@ class Post extends Model
             }
         }
         return false;
+    }
+
+    public function community() {
+        return $this->belongsTo(Community::class);
     }
 }
