@@ -31,7 +31,7 @@
       </div>
     </div>
     <div class="column">
-      <CardGroupInfo />
+      <CommunityCardComponent class="card_community" />
     </div>
   </div>
 </template>
@@ -42,13 +42,13 @@ import authMixin from '../mixins'
 import PostComponent from './Post/Children/PostComponent.vue'
 import LoadingComponent from './Common/LoadingComponent.vue'
 import { mapGetters } from 'vuex'
-import CardGroupInfo from './Community/CommunityCardComponent.vue'
+import CommunityCardComponent from './Community/CommunityCardComponent.vue'
 
 export default {
   components: {
     PostComponent,
     LoadingComponent,
-    CardGroupInfo,
+    CommunityCardComponent,
   },
   mixins: [authMixin],
   data() {
@@ -125,6 +125,11 @@ export default {
 
 #post-container {
   margin-top: 2rem;
+}
+
+.card_community {
+  position: sticky;
+  top: 8rem;
 }
 
 /deep/ .post-box {

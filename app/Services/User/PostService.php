@@ -49,7 +49,7 @@ class PostService
 
     public function getPosts($offset = 0, int $userId = null)
     {
-        $postQuery = Post::with(['user:id,name,image'])
+        $postQuery = Post::with(['user:id,name,image', 'community'])
             ->withCount('reactionUser', 'comments')
             ->orderBy('created_at', 'DESC')
             ->limit(LIMIT);
@@ -104,7 +104,7 @@ class PostService
 
     public function getPost(int $id)
     {
-        $post = Post::with(['user:id,name,image'])
+        $post = Post::with(['user:id,name,image', 'community'])
             ->withCount('reactionUser', 'comments')
             ->where('id', $id)
             ->first();

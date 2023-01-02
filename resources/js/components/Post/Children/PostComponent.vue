@@ -2,33 +2,79 @@
     <div class="box post-box column is-two-thirds-tablet is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5">
         <div ref="post" class="post">
             <canvas ref="canvas"></canvas>
+            <div v-if="post.community">
+                <div>
+                    <span></span>
+                </div>
+            </div>
             <div class="user-info">
-                <figure class="image user_image is-32x32" @mouseover="handleShowUserCard">
-                    <router-link :to="{ path: '/profile/' + post.user.id }">
-                        <img class="is-rounded" :src="post.user.image">
-                    </router-link>
-                    <div class="user-card">
-                        <KeepAlive>
-                            <UserInforCard v-if="displayUserInformation" :user="post.user" />
-                        </KeepAlive>
+                <template v-if="post.community">
+                    <figure class="image user_image is-32x32" @mouseover="handleShowUserCard">
+                        <router-link :to="{ path: '/community/' + post.community.id }">
+                            <img class="is-rounded" :src="post.community.image">
+                        </router-link>
+                        <div class="user-card">
+                            <KeepAlive>
+                                <CommunityInfoCard v-if="displayUserInformation" :community="post.community" />
+                            </KeepAlive>
+                        </div>
+                    </figure>
+                    <div class="post_user is-flex">
+                        <div class="user_name" @mouseover="handleShowUserCard">
+                            <router-link :to="{ path: '/community/' + post.community.id }">
+                                <strong>{{ post.community.community_name }}</strong>
+                            </router-link>
+                            <div class="user-card">
+                                <KeepAlive>
+                                    <CommunityInfoCard v-if="displayUserInformation" :community="post.community" />
+                                </KeepAlive>
+                            </div>
+                        </div>
+                        <span class="ml-2"> Đăng bởi </span>
+                        <div class="user_name ml-2" @mouseover="handleShowUserCard">
+                            <router-link :to="{ path: '/profile/' + post.user.id }">
+                                <strong>{{ post.user.name }}</strong>
+                            </router-link>
+                            <div class="user-card">
+                                <KeepAlive>
+                                    <UserInforCard v-if="displayUserInformation" :user="post.user" />
+                                </KeepAlive>
+                            </div>
+                        </div>
+                        <p class="ml-2">
+                            <i class="fa-regular fa-clock"></i>&nbsp;
+                            <small>{{ timeCreated }}</small>
+                        </p>
                     </div>
-                </figure>
-                <div class="post_user">
-                    <div class="user_name" @mouseover="handleShowUserCard">
+                </template>
+                <template v-else>
+                    <figure class="image user_image is-32x32" @mouseover="handleShowUserCard">
                         <router-link :to="{ path: '/profile/' + post.user.id }">
-                            <strong>{{ post.user.name }}</strong>
+                            <img class="is-rounded" :src="post.user.image">
                         </router-link>
                         <div class="user-card">
                             <KeepAlive>
                                 <UserInforCard v-if="displayUserInformation" :user="post.user" />
                             </KeepAlive>
                         </div>
+                    </figure>
+                    <div class="post_user is-flex">
+                        <div class="user_name" @mouseover="handleShowUserCard">
+                            <router-link :to="{ path: '/profile/' + post.user.id }">
+                                <strong>{{ post.user.name }}</strong>
+                            </router-link>
+                            <div class="user-card">
+                                <KeepAlive>
+                                    <UserInforCard v-if="displayUserInformation" :user="post.user" />
+                                </KeepAlive>
+                            </div>
+                        </div>
+                        <p class="ml-2">
+                            <i class="fa-regular fa-clock"></i>&nbsp;
+                            <small>{{ timeCreated }}</small>
+                        </p>
                     </div>
-                    <p>
-                        <i class="fa-regular fa-clock"></i>&nbsp;
-                        <small>{{ timeCreated }}</small>
-                    </p>
-                </div>
+                </template>
                 <figure v-outsider="handleUnDisplayHelper" class="dots-container is-rounded">
                     <button class="button is-rounded is-small" @click="this.displayHelper = !this.displayHelper;">
                         <i class="fa-solid fa-ellipsis"></i>
@@ -80,14 +126,16 @@ import ReactionComponent from './ReactionComponent.vue';
 import ConfirmDeleteComponent from '../../Common/ConfirmDeleteComponent.vue';
 import { calculateTime } from '../../../helpers/common';
 import UserInforCard from '../../Common/UserInforCard.vue';
+import CommunityInfoCard from '../../Common/CommunityInfoCard.vue';
 
 export default {
     components: {
-        ListCommentComponent,
-        ReactionComponent,
-        ConfirmDeleteComponent,
-        UserInforCard
-    },
+    ListCommentComponent,
+    ReactionComponent,
+    ConfirmDeleteComponent,
+    UserInforCard,
+    CommunityInfoCard
+},
     props: ['post'],
     emits: ['postDeleted'],
     data() {

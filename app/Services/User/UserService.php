@@ -4,7 +4,11 @@ namespace App\Services\User;
 
 use App\Models\Community;
 use App\Models\User;
+use App\Models\UserInformation;
+use App\Models\UserSchool;
 use App\Services\Inf\StorageService;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class UserService
 {
@@ -50,5 +54,55 @@ class UserService
     public function getGroupsByMe() {
         $userId = auth()->id();
         return Community::where('user_id', $userId)->get();
+    }
+
+    public function updateProfile($data) {
+        try {
+            $userId = auth()->id();
+            $information = UserInformation::where('user_id', $userId)->first();
+            $information->living_place = $data['living_place'];
+            $information->working_place = $data['working_place'];
+            $information->gender = $data['gender'];
+            $information->save();
+            $schools = UserSchool::where('user_id', $userId)->get();
+            $highschools = $schools->where('school_type', SCHOOLE_HIGHSCHOOL);
+            $universities = $schools->where('school_type', SCHOOLE_UNIVERSITY);
+            $this->createSchoolData(SCHOOLE_HIGHSCHOOL, $highschools, $data['highschool'], $userId);
+            $this->createSchoolData(SCHOOLE_UNIVERSITY, $universities, $data['university'], $userId);
+        } catch (Exception $e) {
+            Log::error($e);
+            throw new Exception($e);
+        }
+    }
+
+    public function createSchoolData($type, $dataExist, $data, $userId) {
+        try {
+            $idExist = $dataExist->pluck('id')->toArray();
+            $idData = collect($data)->pluck('id')->toArray();
+            $idDelete = array_diff($idExist, $idData);
+            if ($idDelete) UserSchool::whereIn('id', $idDelete)->delete();
+            foreach ($data as $d) {
+                if($d['id']) {
+                    $record = UserSchool::where(['id' => $d['id'], 'user_id' => $userId])->first();
+                    if ($record) {
+                        $record->school_name = $d['school_name'];
+                        $record->start_year = $d['start_year'];
+                        $record->end_year = $d['end_year'];
+                        $record->save();
+                    }
+                } else {
+                    $dataCreate = array(
+                        "school_name" => $d['school_name'],
+                        "start_year" => $d['start_year'],
+                        "end_year" => $d['end_year'],
+                        "school_type" => $type,
+                        'user_id' => $userId
+                    );
+                    UserSchool::create($dataCreate);
+                }
+            }
+        } catch(Exception $e) {
+            throw new Exception($e);
+        }
     }
 }

@@ -5,9 +5,12 @@ import DetailPostComponent from './components/Post/DetailPostComponent.vue';
 import UserPageComponent from './components/User/UserPageComponent.vue';
 import UserSettingComponent from './components/UserSetting/UserSettingComponent.vue';
 import CommunityPage from './components/Community/CommunityPage.vue';
+import CommunitySetting from './components/CommunitySetting/CommunitySetting.vue';
+
 import userRouters from './components/User/routes';
 import userSetting from './components/UserSetting/routes';
 import communityRouters from './components/Community/routes';
+import communitySettingRouters from './components/CommunitySetting/routes';
 import { detectUser } from './api/auth';
 
 const routes = [
@@ -17,7 +20,8 @@ const routes = [
     { path: '/post/:id', component: DetailPostComponent, name: 'post_detail' },
     { path: '/profile', children: userRouters, component: UserPageComponent, name: 'user_profile' },
     { path: '/setting', component: UserSettingComponent, children: userSetting, name: 'user_setting', props: true },
-    { path: '/community', component: CommunityPage, children: communityRouters }
+    { path: '/community', component: CommunityPage, children: communityRouters },
+    { path: '/community-setting/:id', component: CommunitySetting, children: communitySettingRouters, name: 'community_setting', beforeEnter: [checkAuth, checkIsMine] }
 ];
 
 async function checkAuth(to, from, next) {
@@ -27,6 +31,10 @@ async function checkAuth(to, from, next) {
     } else {
         window.location.href = '/user/login';
     }
+}
+
+async function checkIsMine(to, from, next) {
+    next();
 }
 
 export default routes

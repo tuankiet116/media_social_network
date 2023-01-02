@@ -36,10 +36,13 @@
                 <router-link
                     v-else
                     class="button btn-setting is-rounded"
-                    :to="{ name: 'edit_profile_basic' }"
+                    :to="{
+                        name: 'community_setting_basic',
+                        params: { id: community.id },
+                    }"
                 >
                     <span>
-                        <i class="fa-solid fa-gear"></i>  Setting Community
+                        <i class="fa-solid fa-gear"></i> Setting Community
                     </span>
                 </router-link>
             </div>

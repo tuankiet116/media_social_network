@@ -1,12 +1,18 @@
 <template>
   <div>
     <div class="box group-container pl-0 pr-0 pt-0">
-      <div class="m-0 background-img"></div>
+      <div class="m-0 background-img" v-if="community" :style="{ 'background-image' : 'url(' + community.background + ')' }"></div>
+      <div class="m-0 background-img" v-else></div>
+
       <figure class="image is-64x64 group-brand">
-        <img class="is-rounded" src="../../../images/defaults/brand.png" />
+        <img v-if="community" class="is-rounded" :src="community.image" />
+        <img v-else class="is-rounded" src="../../../images/defaults/brand.png" />
       </figure>
+
       <div class="content p-2 mt-5">
-        <p>
+        <h2 class="ml-2" v-if="community">{{ community.community_name }}</h2>
+        <p v-if="community">Your frontpage now is in {{ community.community_name }} Community. Welcome you!</p>
+        <p v-else>
           Your personal Reddit frontpage. Come here to check in with your
           favorite communities.
         </p>
@@ -17,13 +23,14 @@
           class="button btn-create is-info m-2 mt-1 js-modal-trigger"
           data-target="modal-create-group"
           @click="isCreateGroup = true"
+          v-if="community == null"
         >
           Create Comunity
         </a>
       </div>
     </div>
     <div
-      v-if="user"
+      v-if="user && community == null"
       id="modal-create-group"
       class="modal"
       :class="{ 'is-active': isCreateGroup }"
@@ -36,7 +43,7 @@
           </div>
           <div class="field">
             <label>Your Community Name:</label>
-            <input class="input" type="text" v-model="groupName" />
+            <input class="input" type="text" v-model="communityName" />
           </div>
           <div class="field is-grouped">
             <div class="control">
@@ -64,11 +71,11 @@
 <script>
 import { createCommunityAPI } from '../../api/community'
 export default {
-  props: ['group'],
+  props: ['community'],
   data() {
     return {
       isCreateGroup: false,
-      groupName: '',
+      communityName: '',
     }
   },
   computed: {
@@ -79,7 +86,7 @@ export default {
   methods: {
     createCommunity() {
       let data = {
-        community_name: this.groupName,
+        community_name: this.communityName,
       }
       createCommunityAPI(data).then((result) => {
         if (result.data) {
@@ -117,7 +124,6 @@ export default {
 }
 
 .group-container {
-  position: fixed;
   width: 20rem;
 }
 

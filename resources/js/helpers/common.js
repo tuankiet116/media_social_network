@@ -3,23 +3,23 @@ export function calculateTime(time, component) {
     let now = new Date();
     let timestamp = now - convertedTime;
     if (timestamp > 1000) {
-
         let seconds = toSeconds(now - convertedTime);
         if (seconds > 60) {
             let minutes = toMinutes(seconds);
             if (minutes > 60) {
                 let hours = toHours(minutes);
                 if (hours > 24) {
-                    let dates = toDates(hours);
-                    if (dates > 30) {
-                        let months = toMonths(dates);
-                        if (months > 12) {
-                            let years = toYears(months);
-                            return Math.round(years) + component.$t('times_ago.year');
-                        }
-                        return Math.round(months) + component.$t('times_ago.month');
-                    }
-                    return Math.round(dates) + component.$t('times_ago.date');
+                    // let dates = toDates(hours);
+                    // if (dates > 30) {
+                    //     let months = toMonths(dates);
+                    //     if (months > 12) {
+                    //         let years = toYears(months);
+                    //         return Math.round(years) + component.$t('times_ago.year');
+                    //     }
+                    //     return Math.round(months) + component.$t('times_ago.month');
+                    // }
+                    // return Math.round(dates) + component.$t('times_ago.date');
+                    return new Date(time).toISOString().split('T')[0];
                 }
                 return Math.round(hours) + component.$t('times_ago.hour');
             }

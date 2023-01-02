@@ -1,6 +1,7 @@
 <template>
-    <div v-if="userInformation == null">
-        Loading...
+    <div v-if="userInformation == null" class="card" style="padding: 20px">
+        <p class="content">Loading...</p>
+        <loading-component :style="'position: initial;'"/>
     </div>
     <div v-else class="card">
         <div class="card-image">
@@ -47,8 +48,10 @@
 
 <script>
 import { getUserProfile } from '../../api/user';
+import LoadingComponent from './LoadingComponent.vue';
 
 export default {
+  components: { LoadingComponent },
     data() {
         return {
             userInformation: null

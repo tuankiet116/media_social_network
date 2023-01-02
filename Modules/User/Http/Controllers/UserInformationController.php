@@ -39,4 +39,9 @@ class UserInformationController extends Controller
     public function getFollowed() {
 
     }
+
+    public function updateInformation(Request $request) {
+        $data = $request->all();
+        $this->userService->updateProfile($data);
+    }
 }

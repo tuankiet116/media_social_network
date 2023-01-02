@@ -22,6 +22,7 @@ Route::middleware('auth.api')->group(function() {
 
 Route::middleware('auth.api')->prefix('profile')->name('profile.')->group(function() {
     Route::get('/me', 'UserInformationController@getProfile');
+    Route::put('/update/info', 'UserInformationController@updateInformation');
 });
 
 Route::middleware('auth.api')->prefix('post')->name('post.')->group(function() {

@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="column">
-            <CommunityCardComponent/>
+            <CommunityCardComponent class="card_community" :community="community"/>
         </div>
     </div>
 </template>
@@ -28,7 +28,7 @@ export default {
             outOfPost: false
         };
     },
-    props: ['group'],
+    props: ['community'],
     components: { PostComponent, CommunityCardComponent },
     mounted() {
         document.addEventListener('scroll', this.handleLoadPost);
@@ -75,5 +75,10 @@ export default {
 
 .cl-infor {
     position: sticky;
+}
+
+.card_community {
+    position: sticky;
+    top: 8rem;
 }
 </style>
