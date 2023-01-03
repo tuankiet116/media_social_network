@@ -3,12 +3,7 @@
         <div class="field">
             <label class="label">Where do you live?</label>
             <div class="control has-icons-left has-icons-right">
-                <input
-                    class="input is-success"
-                    type="text"
-                    name="living_place"
-                    v-model="livingPlace"
-                />
+                <input class="input is-success" type="text" name="living_place" v-model="livingPlace" />
                 <span class="icon is-small is-left">
                     <i class="fa-solid fa-house"></i>
                 </span>
@@ -17,12 +12,7 @@
         <div class="field">
             <label class="label">Where do you work?</label>
             <div class="control has-icons-left has-icons-right">
-                <input
-                    class="input is-success"
-                    type="text"
-                    name="working_place"
-                    v-model="workingPlace"
-                />
+                <input class="input is-success" type="text" name="working_place" v-model="workingPlace" />
                 <span class="icon is-small is-left">
                     <i class="fa-solid fa-house"></i>
                 </span>
@@ -33,12 +23,8 @@
             <div class="field column">
                 <label class="label">School Name:</label>
                 <div class="control has-icons-left has-icons-right">
-                    <input
-                        class="input is-success"
-                        type="text"
-                        name="highschool_name"
-                        v-model="highschool.school_name"
-                    />
+                    <input class="input is-success" type="text" name="highschool_name"
+                        v-model="highschool.school_name" />
                     <span class="icon is-small is-left">
                         <i class="fa-solid fa-school"></i>
                     </span>
@@ -48,11 +34,7 @@
                 <label class="label">Start Year:</label>
                 <div class="control">
                     <div class="select">
-                        <select
-                            class="year-select"
-                            name="highschool_start"
-                            v-model="highschool.start_year"
-                        >
+                        <select class="year-select" name="highschool_start" v-model="highschool.start_year">
                             <option v-for="year in years">{{ year }}</option>
                         </select>
                     </div>
@@ -62,21 +44,14 @@
                 <label class="label">End Year:</label>
                 <div class="control">
                     <div class="select">
-                        <select
-                            class="year-select"
-                            name="highschool_start"
-                            v-model="highschool.end_year"
-                        >
+                        <select class="year-select" name="highschool_start" v-model="highschool.end_year">
                             <option v-for="year in years">{{ year }}</option>
                         </select>
                     </div>
                 </div>
             </div>
             <div class="field column btn-delete-school">
-                <button
-                    @click="deleteHighSchool(index)"
-                    class="button is-danger is-outlined"
-                >
+                <button @click="deleteHighSchool(index)" class="button is-danger is-outlined">
                     <span>Delete</span>
                     <span class="icon is-small">
                         <i class="fas fa-times"></i>
@@ -85,10 +60,7 @@
             </div>
         </div>
         <div>
-            <button
-                @click="addHighSchoolInput"
-                class="button btn-add-school is-link is-light"
-            >
+            <button @click="addHighSchoolInput" class="button btn-add-school is-link is-light">
                 <span>Add More Highschool</span>
                 &nbsp;
                 <span><i class="fa-solid fa-circle-plus"></i></span>
@@ -99,12 +71,8 @@
             <div class="field column">
                 <label class="label">What's your university?</label>
                 <div class="control has-icons-left has-icons-right">
-                    <input
-                        class="input is-success"
-                        name="university_name"
-                        type="text"
-                        v-model="university.school_name"
-                    />
+                    <input class="input is-success" name="university_name" type="text"
+                        v-model="university.school_name" />
                     <span class="icon is-small is-left">
                         <i class="fa-solid fa-school"></i>
                     </span>
@@ -131,10 +99,7 @@
                 </div>
             </div>
             <div class="field column btn-delete-school">
-                <button
-                    @click="deleteUniversity(index)"
-                    class="button is-danger is-outlined"
-                >
+                <button @click="deleteUniversity(index)" class="button is-danger is-outlined">
                     <span>Delete</span>
                     <span class="icon is-small">
                         <i class="fas fa-times"></i>
@@ -143,10 +108,7 @@
             </div>
         </div>
         <div>
-            <button
-                @click="addUniversityInput"
-                class="button btn-add-school is-link is-light"
-            >
+            <button @click="addUniversityInput" class="button btn-add-school is-link is-light">
                 <span>Add More University</span>
                 &nbsp;
                 <span><i class="fa-solid fa-circle-plus"></i></span>
@@ -179,11 +141,15 @@ export default {
     data() {
         return {
             years: [],
-            livingPlace: null,
-            workingPlace: null,
-            highSchool: [],
-            university: [],
-            gender: null
+            livingPlace: this.user?.user_information.living_place ?? null,
+            workingPlace: this.user?.user_information.working_place ?? null,
+            highSchool: this.user?.user_school?.flatMap((r) =>
+                r.school_type == "SCHOOLE_HIGHSCHOOL" ? r : []
+            ) ?? [],
+            university: this.user?.user_school?.flatMap((r) =>
+                r.school_type == "SCHOOLE_UNIVERSITY" ? r : []
+            ) ?? [],
+            gender: this.user?.user_information.gender ?? null
         };
     },
     mounted() {
@@ -191,19 +157,6 @@ export default {
         for (let i = currentYear; i >= 1970; i--) {
             this.years.push(i);
         }
-    },
-    watch: {
-        user(data) {
-            this.livingPlace = data.user_information.living_place;
-            this.workingPlace = data.user_information.working_place;
-            this.gender = data.user_information.gender;
-            this.highSchool = data.user_school?.flatMap((r) =>
-                r.school_type == "SCHOOLE_HIGHSCHOOL" ? r : []
-            );
-            this.university = data.user_school?.flatMap((r) =>
-                r.school_type == "SCHOOLE_UNIVERSITY" ? r : []
-            );
-        },
     },
     methods: {
         addHighSchoolInput() {

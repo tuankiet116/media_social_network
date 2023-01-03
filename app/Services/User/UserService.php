@@ -9,6 +9,7 @@ use App\Models\UserSchool;
 use App\Services\Inf\StorageService;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class UserService
 {
@@ -34,7 +35,6 @@ class UserService
 
     public function followUser($userIdFollow)
     {
-        
     }
 
     public function getAvatar($fileName)
@@ -47,16 +47,18 @@ class UserService
         return $this->storageService->getImage('/user/background/' . $fileName);
     }
 
-    public function getFollower() {
-        
+    public function getFollower()
+    {
     }
 
-    public function getGroupsByMe() {
+    public function getGroupsByMe()
+    {
         $userId = auth()->id();
         return Community::where('user_id', $userId)->get();
     }
 
-    public function updateProfile($data) {
+    public function updateProfile($data)
+    {
         try {
             $userId = auth()->id();
             $information = UserInformation::where('user_id', $userId)->first();
@@ -75,14 +77,15 @@ class UserService
         }
     }
 
-    public function createSchoolData($type, $dataExist, $data, $userId) {
+    public function createSchoolData($type, $dataExist, $data, $userId)
+    {
         try {
             $idExist = $dataExist->pluck('id')->toArray();
             $idData = collect($data)->pluck('id')->toArray();
             $idDelete = array_diff($idExist, $idData);
             if ($idDelete) UserSchool::whereIn('id', $idDelete)->delete();
             foreach ($data as $d) {
-                if($d['id']) {
+                if ($d['id']) {
                     $record = UserSchool::where(['id' => $d['id'], 'user_id' => $userId])->first();
                     if ($record) {
                         $record->school_name = $d['school_name'];
@@ -101,8 +104,24 @@ class UserService
                     UserSchool::create($dataCreate);
                 }
             }
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             throw new Exception($e);
         }
+    }
+
+    public function getListUserImageDefault()
+    {
+        $files = collect(Storage::allFiles('public/defaults/avatars'))->map(function ($file) {
+            return Storage::url($file);
+        });
+        return $files;
+    }
+
+    public function getBackgroundDefault()
+    {
+        $files = collect(Storage::allFiles('public/defaults/background'))->map(function ($file) {
+            return Storage::url($file);
+        });
+        return $files;
     }
 }
