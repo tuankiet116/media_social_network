@@ -4,6 +4,7 @@ namespace Modules\User\Http\Controllers;
 
 use App\Services\User\UserService;
 use App\Traits\ApiResponse;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -21,13 +22,13 @@ class UserInformationController extends Controller
     public function getProfile()
     {
         $data = $this->userService->getProfile();
-        return $this->responseData($data, 200);
+        return $this->responseData($data);
     }
 
     public function getUserProfile(int $userID)
     {
         $data = $this->userService->getUserProfile($userID);
-        return $this->responseData($data, 200);
+        return $this->responseData($data);
     }
 
     public function followUser($userId)
@@ -44,8 +45,14 @@ class UserInformationController extends Controller
 
     public function updateInformation(Request $request)
     {
-        $data = $request->all();
-        $this->userService->updateProfile($data);
+        try {
+            $data = $request->all();
+            $userId = auth()->id();
+            $this->userService->updateProfile($data);
+            return $this->getUserProfile($userId);
+        } catch (Exception $e) {
+            return $this->responseData(array('error' => $e, 500));
+        }
     }
 
     public function getListUserImageDefault()
@@ -58,8 +65,10 @@ class UserInformationController extends Controller
         return $this->userService->getBackgroundDefault();
     }
 
-    public function updateAvatar()
+    public function updateAvatar(Request $request)
     {
+        $myProfile = $this->userService->updateAvatar($request->file('avatar'), $request->get('default'));
+        return $this->responseData($myProfile);
     }
 
     public function updateBackground()

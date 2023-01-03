@@ -25,6 +25,8 @@ Route::middleware('auth.api')->prefix('profile')->name('profile.')->group(functi
     Route::get('/default/avatar', 'UserInformationController@getListUserImageDefault');
     Route::get('/default/background', 'UserInformationController@getBackgroundDefault');
     Route::put('/update/info', 'UserInformationController@updateInformation');
+    Route::post('/update/avatar', 'UserInformationController@updateAvatar');
+    Route::post('/update/background', 'UserInformationController@updateBackground');
 });
 
 Route::middleware('auth.api')->prefix('post')->name('post.')->group(function() {

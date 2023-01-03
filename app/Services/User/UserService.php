@@ -61,11 +61,16 @@ class UserService
     {
         try {
             $userId = auth()->id();
+            $user = User::where('id', $userId)->first();
+            $user->name = $data['name'];
+            $user->save();
+
             $information = UserInformation::where('user_id', $userId)->first();
             $information->living_place = $data['living_place'];
             $information->working_place = $data['working_place'];
             $information->gender = $data['gender'];
             $information->save();
+
             $schools = UserSchool::where('user_id', $userId)->get();
             $highschools = $schools->where('school_type', SCHOOLE_HIGHSCHOOL);
             $universities = $schools->where('school_type', SCHOOLE_UNIVERSITY);
@@ -123,5 +128,20 @@ class UserService
             return Storage::url($file);
         });
         return $files;
+    }
+
+    public function updateAvatar($avatarImage = null, $fileNameDefault = null)
+    {
+        $userId = auth()->id();
+        $user = User::where('id', $userId)->first();
+        if ($avatarImage) {
+            $fileName = $this->storageService->saveToLocalStorage('/user/avatar/', $avatarImage, false);
+            $user->image = $fileName;
+        } else if ($fileNameDefault) {
+            $fileName = $this->storageService->copyImagePublicStorage('/user/avatar/', $fileNameDefault);
+            $user->image = $fileName;
+        }
+        $user->save();
+        return $this->getProfile();
     }
 }

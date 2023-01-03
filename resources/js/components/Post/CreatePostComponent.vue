@@ -65,7 +65,7 @@
                 class="box video-preview-box has-text-centered"
                 v-show="post.file != ''"
             >
-                <video id="video-preview" controls />
+                <video ref="video_preview" id="video-preview" controls />
                 <div class="has-text-right">
                     <button
                         class="button is-info"
@@ -76,7 +76,7 @@
                 </div>
             </div>
             <div class="buttons is-right mt-5">
-                <button class="button is-primary" @click="handleUploadPost()">
+                <button class="button is-primary" :class="{'is-loading': isHandlePreview}" @click="handleUploadPost()">
                     {{ $t("create_post.create") }}
                 </button>
                 <button class="button is-light">
@@ -140,7 +140,8 @@ export default {
                 file: "",
             },
             communities: [],
-            community: null
+            community: null,
+            isHandlePreview: false
         };
     },
     mounted() {},
@@ -165,14 +166,9 @@ export default {
             });
             if (loading) loading(false);
         },
-        previewVideo() {
-            let video = document.getElementById("video-preview");
-            let reader = new FileReader();
-
-            reader.readAsDataURL(this.post.file);
-            reader.addEventListener("load", function () {
-                video.src = reader.result;
-            });
+        async previewVideo() {
+            let video = this.$refs.video_preview;
+            video.src = URL.createObjectURL(this.post.file);
         },
         handleFileUpload(event) {
             this.post.file = event.target.files[0];
@@ -194,17 +190,17 @@ export default {
         },
         async handleUploadPost() {
             let form = new FormData();
-            var _this = this;
+            let _this = this;
             form.append("title", this.post.title);
             form.append("description", this.post.description);
             form.append("video", this.post.file);
+            form.append("community", this.community?.id ?? 0);
             form.append(
                 "_token",
                 document
                     .querySelector('meta[name="csrf-token"]')
                     .getAttribute("content")
             );
-            form.append("community", this.community?.id ?? 0);
 
             this.validateData();
             if (!this.errors.title && !this.errors.description) {

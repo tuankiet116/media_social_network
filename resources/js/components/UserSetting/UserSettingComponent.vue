@@ -43,32 +43,14 @@
                 </aside>
             </div>
             <div class="column">
-                <router-view :user="user"></router-view>
+                <router-view></router-view>
             </div>
         </div>
     </div>
 </template>
 <script>
-import { getProfile } from '../../api/user';
 import authMixin from '../../mixins';
 export default {
-    data() {
-        return {
-            user: null
-        };
-    },
-    mixins: [authMixin],
-    mounted() {
-        this.getUserInformation();
-    },
-    methods: {
-        getUserInformation() {
-            getProfile().then(result => {
-                this.user = result.data;
-            }).catch(error => {
-                console.log(error)
-            })
-        }
-    },
+    mixins: [authMixin]
 }
 </script>

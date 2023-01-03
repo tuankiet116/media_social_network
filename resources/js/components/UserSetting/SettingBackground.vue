@@ -1,26 +1,115 @@
 <template>
-    <div>
-        <figure>
-            <img/>
-        </figure>
+    <div v-if="user">
+        <div class="field">
+            <label class="label">Your Background: </label>
+            <div class="control is-grouped">
+                <figure class="image">
+                    <img class="background" :src="background" />
+                </figure>
+                <input
+                    @change="previewImage"
+                    ref="file_open"
+                    class="is-hidden"
+                    type="file"
+                    accept="image/png, image/jpeg"
+                />
+                <button @click="openFileExplorer" class="button">
+                    Change Background
+                </button>
+            </div>
+        </div>
+        <div class="field is-grouped mt-3 columns is-justify-content-end">
+            <button
+                @click="saveBackground"
+                class="button is-info is-1-desktop is-full-mobile"
+            >
+                Save
+            </button>
+        </div>
+    </div>
+    <div v-else>
+        <LoadingComponent />
     </div>
 </template>
 
 <script>
+import { getProfile, saveBackground } from "../../api/user";
+import LoadingComponent from "../Common/LoadingComponent.vue";
 export default {
+    components: { LoadingComponent },
     data() {
         return {
-            avatar: ""
+            user: null,
+            background: null
         };
     },
-    props: ['user'],
     watch: {
-        user(data) {
-            this.livingPlace = data.user_information.living_place;
-            this.workingPlace = data.user_information.working_place;
-            this.highSchool = data.user_school?.flatMap((r) => r.school_type == 'SCHOOLE_HIGHSCHOOL' ? r : []);
-            this.university = data.user_school?.flatMap((r) => r.school_type == 'SCHOOLE_UNIVERSITY' ? r : []);
+        user(value) {
+            this.background = value.banner;
+        },
+    },
+    mounted() {
+        this.getUserInformation();
+    },
+    methods: {
+        getUserInformation() {
+            getProfile()
+                .then((result) => {
+                    this.user = result.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        openFileExplorer() {
+            this.$refs.file_open.click();
+        },
+        async chooseImageDefault(image) {
+            let imageObject = new Image();
+            imageObject.src = image;
+            this.background = image;
+            this.$refs.file_open.value = null;
+        },
+        previewImage($event) {
+            this.background = URL.createObjectURL($event.target.files[0]);
+        },
+        saveBackground() {
+            let form = new FormData();
+            let _this = this;
+            form.append('background', this.$refs.file_open.files[0] ?? "");
+
+            saveBackground(form).then(result => {
+                _this.$store.state.user = result.data;
+            });
         }
+    },
+};
+</script>
+<style scoped>
+
+.background{
+    height: 20rem !important;
+    object-fit: cover;
+    width: 40rem !important;
+    border-radius: 0 0 20px 20px;
+}
+
+.is-active-step {
+    display: block !important;
+}
+
+@media only screen and (max-width: 540px) {
+
+    .background {
+        height: 7rem !important;
+        width: 14rem !important;
     }
 }
-</script>
+
+@media only screen and (max-width: 320px) {
+    .background{
+        height: 5rem !important;
+        width: 10rem !important;
+    }
+}
+</style>

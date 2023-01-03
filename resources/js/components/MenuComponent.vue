@@ -74,9 +74,9 @@
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
                         <strong>{{ user.name }}</strong>
-                        <span>
+                        <figure class="image ml-2">
                             <img class="is-rounded" :src="user.image">
-                        </span>
+                        </figure>
                     </a>
                     <div class="navbar-dropdown">
                         <router-link @click="increaseKey" class="navbar-item" :to="{ path: '/profile' }">

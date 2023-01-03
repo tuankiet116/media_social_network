@@ -1,9 +1,28 @@
 <template>
-    <div>
+    <div v-if="user">
+        <div class="field">
+            <label class="label">User Name</label>
+            <div class="control has-icons-left has-icons-right">
+                <input
+                    class="input is-success"
+                    type="text"
+                    name="user_name"
+                    v-model="userName"
+                />
+                <span class="icon is-small is-left">
+                    <i class="fa-solid fa-user"></i>
+                </span>
+            </div>
+        </div>
         <div class="field">
             <label class="label">Where do you live?</label>
             <div class="control has-icons-left has-icons-right">
-                <input class="input is-success" type="text" name="living_place" v-model="livingPlace" />
+                <input
+                    class="input is-success"
+                    type="text"
+                    name="living_place"
+                    v-model="livingPlace"
+                />
                 <span class="icon is-small is-left">
                     <i class="fa-solid fa-house"></i>
                 </span>
@@ -12,7 +31,12 @@
         <div class="field">
             <label class="label">Where do you work?</label>
             <div class="control has-icons-left has-icons-right">
-                <input class="input is-success" type="text" name="working_place" v-model="workingPlace" />
+                <input
+                    class="input is-success"
+                    type="text"
+                    name="working_place"
+                    v-model="workingPlace"
+                />
                 <span class="icon is-small is-left">
                     <i class="fa-solid fa-house"></i>
                 </span>
@@ -23,8 +47,12 @@
             <div class="field column">
                 <label class="label">School Name:</label>
                 <div class="control has-icons-left has-icons-right">
-                    <input class="input is-success" type="text" name="highschool_name"
-                        v-model="highschool.school_name" />
+                    <input
+                        class="input is-success"
+                        type="text"
+                        name="highschool_name"
+                        v-model="highschool.school_name"
+                    />
                     <span class="icon is-small is-left">
                         <i class="fa-solid fa-school"></i>
                     </span>
@@ -34,7 +62,11 @@
                 <label class="label">Start Year:</label>
                 <div class="control">
                     <div class="select">
-                        <select class="year-select" name="highschool_start" v-model="highschool.start_year">
+                        <select
+                            class="year-select"
+                            name="highschool_start"
+                            v-model="highschool.start_year"
+                        >
                             <option v-for="year in years">{{ year }}</option>
                         </select>
                     </div>
@@ -44,14 +76,21 @@
                 <label class="label">End Year:</label>
                 <div class="control">
                     <div class="select">
-                        <select class="year-select" name="highschool_start" v-model="highschool.end_year">
+                        <select
+                            class="year-select"
+                            name="highschool_start"
+                            v-model="highschool.end_year"
+                        >
                             <option v-for="year in years">{{ year }}</option>
                         </select>
                     </div>
                 </div>
             </div>
             <div class="field column btn-delete-school">
-                <button @click="deleteHighSchool(index)" class="button is-danger is-outlined">
+                <button
+                    @click="deleteHighSchool(index)"
+                    class="button is-danger is-outlined"
+                >
                     <span>Delete</span>
                     <span class="icon is-small">
                         <i class="fas fa-times"></i>
@@ -60,7 +99,10 @@
             </div>
         </div>
         <div>
-            <button @click="addHighSchoolInput" class="button btn-add-school is-link is-light">
+            <button
+                @click="addHighSchoolInput"
+                class="button btn-add-school is-link is-light"
+            >
                 <span>Add More Highschool</span>
                 &nbsp;
                 <span><i class="fa-solid fa-circle-plus"></i></span>
@@ -71,8 +113,12 @@
             <div class="field column">
                 <label class="label">What's your university?</label>
                 <div class="control has-icons-left has-icons-right">
-                    <input class="input is-success" name="university_name" type="text"
-                        v-model="university.school_name" />
+                    <input
+                        class="input is-success"
+                        name="university_name"
+                        type="text"
+                        v-model="university.school_name"
+                    />
                     <span class="icon is-small is-left">
                         <i class="fa-solid fa-school"></i>
                     </span>
@@ -82,7 +128,11 @@
                 <label class="label">Start Year?</label>
                 <div class="control">
                     <div class="select">
-                        <select class="year-select" name="university_start" v-model="university.start_year">
+                        <select
+                            class="year-select"
+                            name="university_start"
+                            v-model="university.start_year"
+                        >
                             <option v-for="year in years">{{ year }}</option>
                         </select>
                     </div>
@@ -92,14 +142,21 @@
                 <label class="label">Graduated Year?</label>
                 <div class="control">
                     <div class="select">
-                        <select class="year-select" name="university_gradueted" v-model="university.end_year">
+                        <select
+                            class="year-select"
+                            name="university_gradueted"
+                            v-model="university.end_year"
+                        >
                             <option v-for="year in years">{{ year }}</option>
                         </select>
                     </div>
                 </div>
             </div>
             <div class="field column btn-delete-school">
-                <button @click="deleteUniversity(index)" class="button is-danger is-outlined">
+                <button
+                    @click="deleteUniversity(index)"
+                    class="button is-danger is-outlined"
+                >
                     <span>Delete</span>
                     <span class="icon is-small">
                         <i class="fas fa-times"></i>
@@ -108,7 +165,10 @@
             </div>
         </div>
         <div>
-            <button @click="addUniversityInput" class="button btn-add-school is-link is-light">
+            <button
+                @click="addUniversityInput"
+                class="button btn-add-school is-link is-light"
+            >
                 <span>Add More University</span>
                 &nbsp;
                 <span><i class="fa-solid fa-circle-plus"></i></span>
@@ -127,32 +187,54 @@
             </div>
         </div>
         <div class="field is-grouped mt-3 columns is-justify-content-end">
-            <button @click="saveInformation" class="button is-info is-1-desktop column is-full-mobile">
+            <button
+                @click="saveInformation"
+                class="button is-info is-1-desktop is-full-mobile"
+            >
                 Save
             </button>
         </div>
     </div>
+    <div v-else>
+        <LoadingComponent />
+    </div>
 </template>
 
 <script>
-import { updateUserProfile } from "../../api/user";
+import { updateUserProfile, getProfile } from "../../api/user";
+import LoadingComponent from "../Common/LoadingComponent.vue";
 export default {
-    props: ["user"],
+    components: { LoadingComponent },
     data() {
         return {
             years: [],
-            livingPlace: this.user?.user_information.living_place ?? null,
-            workingPlace: this.user?.user_information.working_place ?? null,
-            highSchool: this.user?.user_school?.flatMap((r) =>
-                r.school_type == "SCHOOLE_HIGHSCHOOL" ? r : []
-            ) ?? [],
-            university: this.user?.user_school?.flatMap((r) =>
-                r.school_type == "SCHOOLE_UNIVERSITY" ? r : []
-            ) ?? [],
-            gender: this.user?.user_information.gender ?? null
+            livingPlace: null,
+            workingPlace: null,
+            highSchool: [],
+            university: [],
+            gender: null,
+            userName: null,
+            user: null,
         };
     },
+    watch: {
+        user(data) {
+            this.livingPlace = data?.user_information.living_place;
+            this.workingPlace = data?.user_information.working_place;
+            this.highSchool =
+                data?.user_school?.flatMap((r) =>
+                    r.school_type == "SCHOOLE_HIGHSCHOOL" ? r : []
+                ) ?? [];
+            this.university =
+                data?.user_school?.flatMap((r) =>
+                    r.school_type == "SCHOOLE_UNIVERSITY" ? r : []
+                ) ?? [];
+            this.gender = data?.user_information.gender ?? null;
+            this.userName = data.name;
+        },
+    },
     mounted() {
+        this.getUserInformation();
         let currentYear = new Date().getFullYear() + 10;
         for (let i = currentYear; i >= 1970; i--) {
             this.years.push(i);
@@ -187,13 +269,21 @@ export default {
                 working_place: this.workingPlace,
                 gender: this.gender,
                 university: this.university,
-                highschool: this.highSchool
-            }
-            await updateUserProfile(data).then(result => {
-
-            }).catch(err => {
-
-            });
+                highschool: this.highSchool,
+                name: this.userName
+            };
+            await updateUserProfile(data)
+                .then((result) => {})
+                .catch((err) => {});
+        },
+        getUserInformation() {
+            getProfile()
+                .then((result) => {
+                    this.user = result.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         },
     },
 };
