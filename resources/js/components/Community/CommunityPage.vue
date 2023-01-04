@@ -19,7 +19,7 @@
             <div class="level-item middle-item" :class="{ 'pl-5': isMine }">
                 <div>
                     <figure class="image is-128x128">
-                        <img class="is-rounded" :src="community.image" />
+                        <img class="is-rounded avatar-image" :src="community.image" />
                     </figure>
                     <div class="mt-2 has-text-centered">
                         <span>{{ community.community_name }}</span>

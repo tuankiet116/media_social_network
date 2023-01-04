@@ -16,3 +16,8 @@ $navbar-breakpoint: $tablet;
 .ck-editor__editable {
     height: 300px;
 }
+
+.avatar-image {
+    height: 120px;
+    object-fit: cover;
+}

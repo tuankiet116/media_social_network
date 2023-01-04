@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { getProfile, saveBackground } from "../../api/user";
+import { getProfile, saveUserBackground } from "../../api/user";
 import LoadingComponent from "../Common/LoadingComponent.vue";
 export default {
     components: { LoadingComponent },
@@ -78,7 +78,7 @@ export default {
             let _this = this;
             form.append('background', this.$refs.file_open.files[0] ?? "");
 
-            saveBackground(form).then(result => {
+            saveUserBackground(form).then(result => {
                 _this.$store.state.user = result.data;
             });
         }

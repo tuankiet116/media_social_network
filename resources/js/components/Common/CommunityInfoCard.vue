@@ -6,7 +6,7 @@
     <div v-else class="card">
         <div class="card-image">
             <figure class="image is-2by1">
-                <img :src="communityInformation.background" alt="Placeholder image">
+                <img :src="communityInformation.background" alt="Image">
             </figure>
         </div>
         <div class="card-content">
@@ -14,7 +14,7 @@
                 <router-link :to="{ path: '/community/' + community.id }">
                     <div class="media-left">
                         <figure class="image is-48x48">
-                            <img :src="communityInformation.image" alt="Placeholder image">
+                            <img class="avatar-image" :src="communityInformation.image" alt="Image">
                         </figure>
                     </div>
                     <div class="media-content">

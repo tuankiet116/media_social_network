@@ -3,31 +3,20 @@
     <div class="column is-7">
       <LoadingComponent v-if="loading" />
       <div id="create-post" class="post">
-        <div
-          v-if="user"
-          class="box post-box column is-two-thirds-tablet is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center"
-        >
-          <img class="image is-32x32 mr-2" :src="user?.image" />
-          <input
-            @click="$router.push({ name: 'create_post' })"
-            class="input"
-            placeholder="Create Post"
-          />
+        <div v-if="user"
+          class="box post-box column is-two-thirds-tablet is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center">
+          <figure class="image mr-2">
+            <img class="is-32x32 mr-2 avatar-image is-rounded" :src="user?.image" />
+          </figure>
+          <input @click="$router.push({ name: 'create_post' })" class="input" placeholder="Create Post" />
         </div>
-        <div
-          v-else
-          @click="redirectLogin"
-          class="box post-box column is-two-thirds-tablet is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center"
-        >
+        <div v-else @click="redirectLogin"
+          class="box post-box column is-two-thirds-tablet is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center">
           <input class="input" placeholder="Create Post" />
         </div>
       </div>
       <div class="post">
-        <PostComponent
-          @post-deleted="handleRemovePost"
-          v-for="post in posts"
-          :post="post"
-        />
+        <PostComponent @post-deleted="handleRemovePost" v-for="post in posts" :post="post" />
       </div>
     </div>
     <div class="column">
@@ -87,7 +76,7 @@ export default {
     handleLoadPost(e) {
       if (
         window.innerHeight + window.scrollY >=
-          document.body.offsetHeight - 100 &&
+        document.body.offsetHeight - 100 &&
         this.isLoadMore &&
         !this.outOfPost
       ) {
@@ -130,6 +119,10 @@ export default {
 .card_community {
   position: sticky;
   top: 8rem;
+}
+
+.avatar-image {
+  height: 32px !important;
 }
 
 /deep/ .post-box {

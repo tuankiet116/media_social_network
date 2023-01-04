@@ -15,7 +15,7 @@
                 <template v-slot:option="option">
                     <div class="is-flex m-0 p-0">
                         <figure class="image is-32x32 m-0 p-0">
-                            <img class="is-rounded m-0 p-0" :src="option.image"/>
+                            <img class="is-rounded m-0 p-0 avatar-image" :src="option.image"/>
                         </figure>
                         <p class="ml-2">{{ option.community_name }}</p>
                     </div>

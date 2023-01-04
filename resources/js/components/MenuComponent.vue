@@ -75,7 +75,7 @@
                     <a class="navbar-link">
                         <strong>{{ user.name }}</strong>
                         <figure class="image ml-2">
-                            <img class="is-rounded" :src="user.image">
+                            <img class="is-rounded avatar-image" :src="user.image">
                         </figure>
                     </a>
                     <div class="navbar-dropdown">

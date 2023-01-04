@@ -5,7 +5,7 @@
       <div class="m-0 background-img" v-else></div>
 
       <figure class="image is-64x64 group-brand">
-        <img v-if="community" class="is-rounded" :src="community.image" />
+        <img v-if="community" class="is-rounded avatar-image" :src="community.image" />
         <img v-else class="is-rounded" src="../../../images/defaults/brand.png" />
       </figure>
 

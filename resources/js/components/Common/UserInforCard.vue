@@ -6,7 +6,7 @@
     <div v-else class="card">
         <div class="card-image">
             <figure class="image is-2by1">
-                <img :src="userInformation.banner" alt="Placeholder image">
+                <img :src="userInformation.banner" alt="Image">
             </figure>
         </div>
         <div class="card-content">
@@ -14,7 +14,7 @@
                 <router-link :to="{ path: '/profile/' + user.id }">
                     <div class="media-left">
                         <figure class="image is-48x48">
-                            <img :src="userInformation.image" alt="Placeholder image">
+                            <img :src="userInformation.image" class="avatar-image is-rounded" alt="Image" style="height: 48px">
                         </figure>
                     </div>
                     <div class="media-content">

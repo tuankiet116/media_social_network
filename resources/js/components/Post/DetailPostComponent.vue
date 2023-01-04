@@ -8,7 +8,7 @@
                     <template v-if="post.community">
                         <figure class="image user_image is-32x32" @mouseover="handleShowUserCard">
                             <router-link :to="{ path: '/community/' + post.community.id }">
-                                <img class="is-rounded" :src="post.community.image">
+                                <img class="is-rounded avatar-image" :src="post.community.image">
                             </router-link>
                             <div class="user-card">
                                 <KeepAlive>

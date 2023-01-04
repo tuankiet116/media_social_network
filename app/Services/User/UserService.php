@@ -138,8 +138,20 @@ class UserService
             $fileName = $this->storageService->saveToLocalStorage('/user/avatar/', $avatarImage, false);
             $user->image = $fileName;
         } else if ($fileNameDefault) {
-            $fileName = $this->storageService->copyImagePublicStorage('/user/avatar/', $fileNameDefault);
+            $fileName = $this->storageService->copyImagePublicStorage('/user/avatar/', '/defaults/avatars/' . $fileNameDefault);
             $user->image = $fileName;
+        }
+        $user->save();
+        return $this->getProfile();
+    }
+
+    public function updateBackground($background = null)
+    {
+        $userId = auth()->id();
+        $user = User::where('id', $userId)->first();
+        if ($background) {
+            $fileName = $this->storageService->saveToLocalStorage('/user/background/', $background, false);
+            $user->banner = $fileName;
         }
         $user->save();
         return $this->getProfile();

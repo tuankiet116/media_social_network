@@ -3,7 +3,7 @@
         <figure class="media-left">
             <div class="image is-32x32 user_image">
                 <router-link :to="{ path: '/profile/' + comment.users.id }">
-                    <img class="is-rounded" :src="comment.users.image">
+                    <img class="is-rounded avatar-image" :src="comment.users.image">
                 </router-link>
                 <div class="user-card">
                     <UserInforCard :user="comment.users" />
@@ -97,7 +97,7 @@
                 <article v-if="displayReply && user" class="media sub-comment">
                     <figure class="media-left">
                         <p class="image is-32x32">
-                            <img class="is-rounded" :src="user.image">
+                            <img class="is-rounded avatar-image" :src="user.image">
                         </p>
                     </figure>
                     <div class="media-content">
@@ -346,5 +346,9 @@ hr {
 strong {
     color: black;
     cursor: pointer;
+}
+
+.avatar-image {
+    height: 32px !important;
 }
 </style>

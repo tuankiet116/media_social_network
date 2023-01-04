@@ -71,8 +71,10 @@ class UserInformationController extends Controller
         return $this->responseData($myProfile);
     }
 
-    public function updateBackground()
+    public function updateBackground(Request $request)
     {
+        $myProfile = $this->userService->updateBackground($request->file('background'));
+        return $this->responseData($myProfile);
     }
 
     public function updatePassword()

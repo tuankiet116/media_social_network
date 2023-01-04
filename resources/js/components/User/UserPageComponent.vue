@@ -11,7 +11,7 @@
             <div class="level-item middle-item" :class="{ 'pl-5': isMe }">
                 <div>
                     <figure class="image is-128x128">
-                        <img class="is-rounded" :src="user.image">
+                        <img class="is-rounded avatar-image" :src="user.image">
                     </figure>
                     <div class="mt-2 has-text-centered">
                         <span>{{ user.name }}</span>
@@ -131,6 +131,11 @@ export default {
 
 .heading {
     font-size: 15px;
+}
+
+.avatar-image {
+    height: 120px;
+    object-fit: cover;
 }
 
 @media screen and (min-width: 731px) {

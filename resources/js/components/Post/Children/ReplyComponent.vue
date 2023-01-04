@@ -3,7 +3,7 @@
         <figure class="media-left">
             <div class="image is-32x32 user_image">
                 <router-link :to="{ path: '/profile/' + comment.users.id }">
-                    <img class="is-rounded" :src="comment.users.image">
+                    <img class="is-rounded avatar-image" :src="comment.users.image">
                 </router-link>
                 <div class="user-card">
                     <UserInforCard :user="comment.users" />

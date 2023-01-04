@@ -11,7 +11,7 @@
                 <template v-if="post.community">
                     <figure class="image user_image is-32x32" @mouseover="handleShowUserCard">
                         <router-link :to="{ path: '/community/' + post.community.id }">
-                            <img class="is-rounded" :src="post.community.image">
+                            <img class="is-rounded avatar-image" :src="post.community.image">
                         </router-link>
                         <div class="user-card">
                             <KeepAlive>
@@ -50,7 +50,7 @@
                 <template v-else>
                     <figure class="image user_image is-32x32" @mouseover="handleShowUserCard">
                         <router-link :to="{ path: '/profile/' + post.user.id }">
-                            <img class="is-rounded" :src="post.user.image">
+                            <img class="is-rounded avatar-image" :src="post.user.image">
                         </router-link>
                         <div class="user-card">
                             <KeepAlive>
@@ -246,6 +246,10 @@ canvas {
 .dots-container {
     position: absolute;
     right: 0.2rem;
+}
+
+.avatar-image {
+    height: 32px !important;
 }
 
 @media screen and (max-width: 480px) {
