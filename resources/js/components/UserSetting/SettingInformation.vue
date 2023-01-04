@@ -203,6 +203,8 @@
 <script>
 import { updateUserProfile, getProfile } from "../../api/user";
 import LoadingComponent from "../Common/LoadingComponent.vue";
+import { useToast } from "vue-toastification";
+
 export default {
     components: { LoadingComponent },
     data() {
@@ -264,17 +266,23 @@ export default {
             this.university.splice(index, 1);
         },
         async saveInformation() {
+            let _this = this;
             let data = {
                 living_place: this.livingPlace,
                 working_place: this.workingPlace,
                 gender: this.gender,
                 university: this.university,
                 highschool: this.highSchool,
-                name: this.userName
+                name: this.userName,
             };
             await updateUserProfile(data)
-                .then((result) => {})
-                .catch((err) => {});
+                .then((result) => {
+                    useToast().success('Your information has been updated');
+                    _this.$store.state.user = result.data;
+                })
+                .catch((err) => {
+                    useToast().error('Error when updating your information');
+                });
         },
         getUserInformation() {
             getProfile()

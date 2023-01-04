@@ -66,7 +66,7 @@
                             <p class="m-2">{{ gr.community_name }}</p>
                         </router-link>
                         <hr class="navbar-divider">
-                        <router-link @click="increaseKey" class="navbar-item" :to="{ path: '/profile' }">
+                        <router-link @click="increaseKey" class="navbar-item" :to="{ name: 'profile_list_post', params: {id: user.id} }">
                             See All Community
                         </router-link>
                     </div>
@@ -79,7 +79,7 @@
                         </figure>
                     </a>
                     <div class="navbar-dropdown">
-                        <router-link @click="increaseKey" class="navbar-item" :to="{ path: '/profile' }">
+                        <router-link @click="increaseKey" class="navbar-item" :to="{ name: 'profile_list_post', params: {id: user.id} }">
                             {{ $t('profile') }}
                         </router-link>
                         <hr class="navbar-divider">

@@ -3,6 +3,9 @@ return [
     'common' => [
         'email' => 'Email',
         'password' => 'Mật khẩu',
+        'old_password' => 'Mật khẩu cũ',
+        'new_password' => 'Mật khẩu mới',
+        'confirm_password' => 'Mật khẩu xác nhận',
         'remember_me' => 'Nhớ lần đăng nhập tới',
         'reenter_password' => 'Mật khẩu xác nhận',
         'otp_mail' => 'Nhập mã OTP được gửi đến Email của bạn',
@@ -29,5 +32,8 @@ return [
         'step_1_desc' => 'Ảnh đại diện và hình nền',
         'step_2' => 'Bước 2',
         'step_2_desc' => 'Điền thông tin cơ bản',
+    ],
+    'update_password' => [
+        'old_password_invalid' => 'Mật khẩu cũ không đúng'
     ]
 ];

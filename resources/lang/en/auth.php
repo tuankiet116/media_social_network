@@ -3,6 +3,9 @@ return [
     'common' => [
         'email' => 'Email',
         'password' => 'Password',
+        'old_password' => 'Old Password',
+        'new_password' => 'New Password',
+        'confirm_password' => 'Confirm Password',
         'remember_me' => 'Remember Me',
         'reenter_password' => 'Re enter password',
         'otp_mail' => 'Enter OTP code had been sent to your Email address'
@@ -28,5 +31,8 @@ return [
         'step_1_desc' => 'Avatar and cover photo',
         'step_2' => 'Step 2',
         'step_2_desc' => 'Basic Information',
+    ],
+    'update_password' => [
+        'old_password_invalid' => 'Mật khẩu cũ không đúng'
     ]
 ];

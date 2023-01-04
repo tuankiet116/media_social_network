@@ -35,6 +35,8 @@
 <script>
 import { getProfile, saveUserBackground } from "../../api/user";
 import LoadingComponent from "../Common/LoadingComponent.vue";
+import { useToast } from "vue-toastification";
+
 export default {
     components: { LoadingComponent },
     data() {
@@ -80,6 +82,9 @@ export default {
 
             saveUserBackground(form).then(result => {
                 _this.$store.state.user = result.data;
+                useToast().success('Updated your background image');
+            }).catch((err) => {
+                useToast().error('Error on updating background image');
             });
         }
     },
@@ -90,7 +95,7 @@ export default {
 .background{
     height: 20rem !important;
     object-fit: cover;
-    width: 40rem !important;
+    width: 50rem !important;
     border-radius: 0 0 20px 20px;
 }
 

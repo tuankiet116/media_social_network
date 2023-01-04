@@ -1,5 +1,7 @@
 <template>
-    <div class="box post-box column is-two-thirds-tablet is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5">
+    <div
+        class="box post-box column is-two-thirds-tablet is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5"
+    >
         <div ref="post" class="post">
             <canvas ref="canvas"></canvas>
             <div v-if="post.community">
@@ -9,35 +11,63 @@
             </div>
             <div class="user-info">
                 <template v-if="post.community">
-                    <figure class="image user_image is-32x32" @mouseover="handleShowUserCard">
-                        <router-link :to="{ path: '/community/' + post.community.id }">
-                            <img class="is-rounded avatar-image" :src="post.community.image">
+                    <figure
+                        class="image user_image is-32x32"
+                        @mouseover="handleShowUserCard"
+                    >
+                        <router-link
+                            :to="{ path: '/community/' + post.community.id }"
+                        >
+                            <img
+                                class="is-rounded avatar-image"
+                                :src="post.community.image"
+                            />
                         </router-link>
                         <div class="user-card">
                             <KeepAlive>
-                                <CommunityInfoCard v-if="displayUserInformation" :community="post.community" />
+                                <CommunityInfoCard
+                                    v-if="displayUserInformation"
+                                    :community="post.community"
+                                />
                             </KeepAlive>
                         </div>
                     </figure>
                     <div class="post_user is-flex">
                         <div class="user_name" @mouseover="handleShowUserCard">
-                            <router-link :to="{ path: '/community/' + post.community.id }">
-                                <strong>{{ post.community.community_name }}</strong>
+                            <router-link
+                                :to="{
+                                    path: '/community/' + post.community.id,
+                                }"
+                            >
+                                <strong>{{
+                                    post.community.community_name
+                                }}</strong>
                             </router-link>
                             <div class="user-card">
                                 <KeepAlive>
-                                    <CommunityInfoCard v-if="displayUserInformation" :community="post.community" />
+                                    <CommunityInfoCard
+                                        v-if="displayUserInformation"
+                                        :community="post.community"
+                                    />
                                 </KeepAlive>
                             </div>
                         </div>
                         <span class="ml-2"> Đăng bởi </span>
-                        <div class="user_name ml-2" @mouseover="handleShowUserCard">
-                            <router-link :to="{ path: '/profile/' + post.user.id }">
+                        <div
+                            class="user_name ml-2"
+                            @mouseover="handleShowUserCard"
+                        >
+                            <router-link
+                                :to="{ path: '/profile/' + post.user.id }"
+                            >
                                 <strong>{{ post.user.name }}</strong>
                             </router-link>
                             <div class="user-card">
                                 <KeepAlive>
-                                    <UserInforCard v-if="displayUserInformation" :user="post.user" />
+                                    <UserInforCard
+                                        v-if="displayUserInformation"
+                                        :user="post.user"
+                                    />
                                 </KeepAlive>
                             </div>
                         </div>
@@ -48,24 +78,38 @@
                     </div>
                 </template>
                 <template v-else>
-                    <figure class="image user_image is-32x32" @mouseover="handleShowUserCard">
+                    <figure
+                        class="image user_image is-32x32"
+                        @mouseover="handleShowUserCard"
+                    >
                         <router-link :to="{ path: '/profile/' + post.user.id }">
-                            <img class="is-rounded avatar-image" :src="post.user.image">
+                            <img
+                                class="is-rounded avatar-image"
+                                :src="post.user.image"
+                            />
                         </router-link>
                         <div class="user-card">
                             <KeepAlive>
-                                <UserInforCard v-if="displayUserInformation" :user="post.user" />
+                                <UserInforCard
+                                    v-if="displayUserInformation"
+                                    :user="post.user"
+                                />
                             </KeepAlive>
                         </div>
                     </figure>
                     <div class="post_user is-flex">
                         <div class="user_name" @mouseover="handleShowUserCard">
-                            <router-link :to="{ path: '/profile/' + post.user.id }">
+                            <router-link
+                                :to="{ path: '/profile/' + post.user.id }"
+                            >
                                 <strong>{{ post.user.name }}</strong>
                             </router-link>
                             <div class="user-card">
                                 <KeepAlive>
-                                    <UserInforCard v-if="displayUserInformation" :user="post.user" />
+                                    <UserInforCard
+                                        v-if="displayUserInformation"
+                                        :user="post.user"
+                                    />
                                 </KeepAlive>
                             </div>
                         </div>
@@ -75,18 +119,36 @@
                         </p>
                     </div>
                 </template>
-                <figure v-outsider="handleUnDisplayHelper" class="dots-container is-rounded">
-                    <button class="button is-rounded is-small" @click="this.displayHelper = !this.displayHelper;">
+                <figure
+                    v-outsider="handleUnDisplayHelper"
+                    class="dots-container is-rounded"
+                >
+                    <button
+                        class="button is-rounded is-small"
+                        @click="this.displayHelper = !this.displayHelper"
+                    >
                         <i class="fa-solid fa-ellipsis"></i>
                     </button>
                     <div href="#" class="arrow-box box" v-show="displayHelper">
-                        <a v-if="user && user.id == post.user_id" class="navbar-item" @click="isShowConfirmPost = true">
+                        <a
+                            v-if="user && user.id == post.user_id"
+                            class="navbar-item"
+                            @click="isShowConfirmPost = true"
+                        >
                             <span>Delete</span>
                             <i class="fa-solid fa-trash"></i>
                         </a>
                         <hr />
-                        <a v-if="user && user.id == post.user_id"
-                            @click="$router.push({ name: 'edit_post', params: { id: post.id } })" class="navbar-item">
+                        <a
+                            v-if="user && user.id == post.user_id"
+                            @click="
+                                $router.push({
+                                    name: 'edit_post',
+                                    params: { id: post.id },
+                                })
+                            "
+                            class="navbar-item"
+                        >
                             <span>Edit</span>
                             <i class="fas fa-edit"></i>
                         </a>
@@ -98,46 +160,61 @@
                     </div>
                 </figure>
             </div>
-            <hr class="split-post-user">
+            <hr class="split-post-user" />
             <div class="title">
                 <strong>{{ post.title }}</strong>
             </div>
-            <div class="post-desc" v-html="post.post_description"></div>
+            <div
+                class="post-desc"
+                ref="desc"
+                v-html="post.post_description"
+            ></div>
             <div class="has-text-centered">
                 <video v-if="post.src" width="600" controls>
-                    <source :src="'/api/post/stream/' + post.src" type="video/mp4">
+                    <source
+                        :src="'/api/post/stream/' + post.src"
+                        type="video/mp4"
+                    />
                 </video>
             </div>
-            <hr class="split-reaction-post">
+            <hr class="split-reaction-post" />
             <ReactionComponent @focusComment="redirect" :post="post" />
         </div>
-        <ListCommentComponent ref="listComment" @loadListComment="redirect($event)"
-            @deleteComment="handleDeleteComment($event)" :comments="comments" />
+        <ListCommentComponent
+            ref="listComment"
+            @loadListComment="redirect($event)"
+            @deleteComment="handleDeleteComment($event)"
+            :comments="comments"
+        />
         <hr />
     </div>
-    <ConfirmDeleteComponent v-if="isShowConfirmPost" :message="$t('post.confirm_delete')" @confirm="handleDeletePost"
-        @cancel="isShowConfirmPost = false" />
+    <ConfirmDeleteComponent
+        v-if="isShowConfirmPost"
+        :message="$t('post.confirm_delete')"
+        @confirm="handleDeletePost"
+        @cancel="isShowConfirmPost = false"
+    />
 </template>
 <script>
-import { mapGetters } from 'vuex';
-import { deletePost, deleteCommentAPI } from '../../../api/post';
-import ListCommentComponent from './ListCommentComponent.vue';
-import ReactionComponent from './ReactionComponent.vue';
-import ConfirmDeleteComponent from '../../Common/ConfirmDeleteComponent.vue';
-import { calculateTime } from '../../../helpers/common';
-import UserInforCard from '../../Common/UserInforCard.vue';
-import CommunityInfoCard from '../../Common/CommunityInfoCard.vue';
+import { mapGetters } from "vuex";
+import { deletePost, deleteCommentAPI } from "../../../api/post";
+import ListCommentComponent from "./ListCommentComponent.vue";
+import ReactionComponent from "./ReactionComponent.vue";
+import ConfirmDeleteComponent from "../../Common/ConfirmDeleteComponent.vue";
+import { calculateTime } from "../../../helpers/common";
+import UserInforCard from "../../Common/UserInforCard.vue";
+import CommunityInfoCard from "../../Common/CommunityInfoCard.vue";
 
 export default {
     components: {
-    ListCommentComponent,
-    ReactionComponent,
-    ConfirmDeleteComponent,
-    UserInforCard,
-    CommunityInfoCard
-},
-    props: ['post'],
-    emits: ['postDeleted'],
+        ListCommentComponent,
+        ReactionComponent,
+        ConfirmDeleteComponent,
+        UserInforCard,
+        CommunityInfoCard,
+    },
+    props: ["post"],
+    emits: ["postDeleted"],
     data() {
         return {
             comments: this.post.comments,
@@ -145,45 +222,52 @@ export default {
             idCommentDelete: null,
             displayHelper: false,
             isShowConfirmPost: false,
-            displayUserInformation: false
+            displayUserInformation: false,
         };
     },
     computed: {
-        ...mapGetters({ user: 'getUser' }),
+        ...mapGetters({ user: "getUser" }),
         timeCreated() {
-            return calculateTime(this.post.created_at, this)
-        }
+            return calculateTime(this.post.created_at, this);
+        },
     },
     methods: {
         handleUnDisplayHelper() {
             this.displayHelper = false;
         },
         redirect(offset) {
-            this.$router.push({ name: 'post_detail', params: { id: this.post.id } })
+            this.$router.push({
+                name: "post_detail",
+                params: { id: this.post.id },
+            });
         },
         handleDeleteComment(idCommentDelete) {
-            deleteCommentAPI(idCommentDelete).then(result => {
+            deleteCommentAPI(idCommentDelete).then((result) => {
                 if (result.data == true) {
-                    let indexComment = this.comments.findIndex(cm => cm.id == idCommentDelete);
+                    let indexComment = this.comments.findIndex(
+                        (cm) => cm.id == idCommentDelete
+                    );
                     this.comments.splice(indexComment, 1);
                     this.post.comments_count--;
                 }
-            })
+            });
         },
         async handleDeletePost() {
             let _this = this;
-            await deletePost(this.post.id).then(result => {
-                _this.$emit('postDeleted', this.post.id);
-            }).catch(error => {
-                console.log(error);
-            });
+            await deletePost(this.post.id)
+                .then((result) => {
+                    _this.$emit("postDeleted", this.post.id);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             this.isShowConfirmPost = false;
         },
         handleShowUserCard() {
             this.displayUserInformation = true;
-        }
-    }
-}
+        },
+    },
+};
 </script>
 <style scoped>
 canvas {
@@ -216,7 +300,7 @@ canvas {
     padding: 0.5rem 0.5rem 0 0.5rem;
 }
 
-.user-info>strong {
+.user-info > strong {
     margin-left: 1rem;
 }
 
@@ -262,7 +346,7 @@ canvas {
 .arrow-box {
     position: absolute;
     width: 220px;
-    background: #19B3E6;
+    background: #19b3e6;
     line-height: 40px;
     margin-bottom: 30px;
     text-align: center;
@@ -286,7 +370,7 @@ canvas {
     top: 7px;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-left: 10px solid #19B3E6;
+    border-left: 10px solid #19b3e6;
 }
 
 .arrow-box i {
@@ -296,7 +380,6 @@ canvas {
 .arrow-box hr {
     margin: 0 !important;
 }
-
 
 .user-card {
     position: absolute;

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Exception;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Modules\User\Emails\EmailRegister;
 
@@ -124,7 +125,7 @@ class UserAuthenticationService
     {
         $user = auth()->user();
         if ($user->is_active == ACCOUNT_ACTIVE) {
-            return User::with(['groups' => function($q) {
+            return User::with(['groups' => function ($q) {
                 return $q->limit(3);
             }])->where('id', auth()->id())->first();
         }
@@ -207,5 +208,17 @@ class UserAuthenticationService
             dd($e);
             throw new Exception($e);
         }
+    }
+
+    public function updatePassword($data)
+    {
+        $userId = auth()->id();
+        $user = User::where('id', $userId)->first();
+        if (Hash::check($data['old_password'], $user->password)) {
+            $user->password = $data['new_password'];
+            $user->save();
+            return true;
+        }
+        return false;
     }
 }

@@ -30,7 +30,7 @@
         </div>
         <div class="profile-menu level is-mobile box">
             <div class="level-item is-justify-content-center is-align-items-center">
-                <router-link class="heading" :to="{name: 'list_post'}">
+                <router-link class="heading" :to="{name: 'profile_list_post'}">
                     <span><i class="fa-solid fa-message"></i> Bài viết</span>
                 </router-link>
             </div>
@@ -75,7 +75,8 @@ export default {
     },
     methods: {
         getUserInformation() {
-            let guestID = this.$route.params?.id;
+            let guestID = this.$route.params.id;
+            debugger
             if (guestID) {
                 getUserProfile(guestID).then(result => {
                     this.user = result.data;
@@ -97,6 +98,7 @@ export default {
 .profile-banner {
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
     max-width: 1000px;
     height: 400px;
 }

@@ -58,6 +58,7 @@
 <script>
 import { getProfile, listDefaultAvatar, saveUserImage } from "../../api/user";
 import LoadingComponent from "../Common/LoadingComponent.vue";
+import { useToast } from "vue-toastification";
 export default {
     components: { LoadingComponent },
     data() {
@@ -113,6 +114,9 @@ export default {
 
             saveUserImage(form).then(result => {
                 _this.$store.state.user = result.data;
+                useToast().success('Updated your avatar image');
+            }).catch((error) => {
+                useToast().error('Error on updating avatar image');
             });
         }
     },

@@ -9,6 +9,7 @@ use Modules\User\Http\Requests\UserLoginRequest;
 use Modules\User\Http\Requests\UserRegisterRequest;
 use Exception;
 use Illuminate\Http\Request;
+use Modules\User\Http\Requests\UserUpdatePasswordRequest;
 
 class UserController extends Controller
 {
@@ -94,5 +95,13 @@ class UserController extends Controller
         } catch(Exception $e) {
             return redirect()->back()->withInput();
         }
+    }
+
+    public function updatePassword(UserUpdatePasswordRequest $request) {
+        $result = $this->UserAuthService->updatePassword($request->validated());
+        if ($result == false) {
+            return $this->responseData(array('errors' => ['old_password' => __('auth.update_password.old_password_invalid')]), 422);
+        }
+        return $this->responseData('Password Updated');
     }
 }

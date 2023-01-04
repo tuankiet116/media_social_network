@@ -18,6 +18,7 @@ Route::middleware('auth.api')->group(function() {
     Route::get('/user', 'UserController@getUserInformation'); 
     Route::post('/logout', 'UserController@logout');
     Route::post('/ckfinder/upload', 'CKFinderController@uploadImage');
+    Route::post('/password/update', 'UserController@updatePassword');
 });
 
 Route::middleware('auth.api')->prefix('profile')->name('profile.')->group(function() {
