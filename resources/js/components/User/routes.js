@@ -1,11 +1,12 @@
 import UserPostComponent from './UserPostComponent.vue';
 import FollowersComponent from './FollowersComponent.vue';
+import FollowingComponent from './FollowingComponent.vue'
 import { detectUser } from '../../api/auth';
 
 const userRouters = [
-    { path: ':id', component: UserPostComponent, name: "profile_list_post", beforeEnter: checkUserId },
-    { path: ':id/followers', component: FollowersComponent, name: "list_followers", beforeEnter: checkUserId },
-    { path: 'followers', component: FollowersComponent, name: "list_followers", beforeEnter: checkAuth }
+    { path: '', component: UserPostComponent, name: "profile_list_post" },
+    { path: 'followers', component: FollowersComponent, name: "profile_list_follower" },
+    { path: 'following', component: FollowingComponent, name: "profile_list_following" }
 ];
 
 async function checkUserId(to, from, next) {

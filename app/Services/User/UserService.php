@@ -3,6 +3,7 @@
 namespace App\Services\User;
 
 use App\Models\Community;
+use App\Models\Follower;
 use App\Models\User;
 use App\Models\UserInformation;
 use App\Models\UserSchool;
@@ -23,18 +24,42 @@ class UserService
     public function getProfile()
     {
         $userId = auth()->id();
-        $information = User::with(['userSchool', 'userInformation', 'groups'])->where('id', $userId)->first();
+        $information = User::with(['userSchool', 'userInformation', 'groups'])
+            ->withCount(['follower', 'following'])->where('id', $userId)->first();
         return $information;
     }
 
     public function getUserProfile(int $userId)
     {
-        $information = User::with(['userSchool', 'userInformation'])->where('id', $userId)->first();
+        $information = User::with(['userSchool', 'userInformation'])
+            ->withCount(['follower', 'following'])->where('id', $userId)->first();
         return $information;
     }
 
-    public function followUser($userIdFollow)
+    public function followUser($idFollow)
     {
+        $followerId = auth()->id();
+        $isFollowed = Follower::where(['user_id' => $idFollow, 'follower_id' => $followerId])->first();
+        $userFollow = User::where('id', $idFollow)->first();
+        if (!$isFollowed && $userFollow && $followerId !== $idFollow) {
+            Follower::create([
+                'user_id' => $idFollow,
+                'follower_id' => $followerId
+            ])->save();
+        }
+        return $this->countFollower($idFollow);
+    }
+
+    public function unfollowUser($idFollow)
+    {
+        $followerId = auth()->id();
+        $isFollowed = Follower::where(['user_id' => $idFollow, 'follower_id' => $followerId])->first();
+        $isFollowed->delete();
+        return $this->countFollower($idFollow);
+    }
+
+    public function countFollower($userId) {
+        return Follower::where('user_id', $userId)->count();
     }
 
     public function getAvatar($fileName)
@@ -76,6 +101,7 @@ class UserService
             $universities = $schools->where('school_type', SCHOOLE_UNIVERSITY);
             $this->createSchoolData(SCHOOLE_HIGHSCHOOL, $highschools, $data['highschool'], $userId);
             $this->createSchoolData(SCHOOLE_UNIVERSITY, $universities, $data['university'], $userId);
+            return $this->getProfile();
         } catch (Exception $e) {
             Log::error($e);
             throw new Exception($e);

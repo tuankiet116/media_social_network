@@ -25,6 +25,8 @@ class User extends Authenticatable
         'token'
     ];
 
+    protected $appends = ['isFollowed'];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -73,5 +75,23 @@ class User extends Authenticatable
 
     public function groups() {
         return $this->hasMany(Community::class);
+    }
+
+    public function getIsFollowedAttribute() {
+        $id = $this->id;
+        $currentId = auth()->id();
+        $isFollow = Follower::where(['user_id' => $id, 'follower_id' => $currentId])->first();
+        if ($isFollow || $this->id == auth()->id()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function follower() {
+        return $this->hasMany(Follower::class, 'user_id');
+    }
+
+    public function following() {
+        return $this->hasMany(Follower::class, 'follower_id');
     }
 }

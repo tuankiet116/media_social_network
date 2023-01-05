@@ -47,23 +47,19 @@ export default {
     components: { PostComponent },
     mounted() {
     },
-    computed: {
-        currentUser() {
-            return this.user;
-        }
-    },
     mounted() {
         document.addEventListener('scroll', this.handleLoadPost);
         this.fetchPost(this.user);
     },
     watch: {
-        user(value) {
-            this.fetchPost(value);
+        user(data) {
+            this.posts = [];
+            this.fetchPost(data);
         }
     },
     methods: {
-        fetchPost(currentUser = null) {
-            let userId = currentUser?.id ?? this.$route.params.id;
+        fetchPost(user) {
+            let userId = user.id;
             if (userId) {
                 getPostsByUser(this.offset, userId).then(result => {
                     if (result.data.data.length == 0) {

@@ -9,3 +9,4 @@ export const saveUserImage = (data) => api.post('api/profile/update/avatar', dat
 export const saveUserBackground = (data) => api.post('api/profile/update/background', data, { "Contect-type": "multipart/form-data" });
 
 export const followUser = (data) => api.post('api/profile/follow', data);
+export const unfollowUser = (data) => api.post('api/profile/unfollow', data);

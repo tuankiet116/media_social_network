@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Modules\User\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,8 @@ Route::middleware('auth.api')->prefix('profile')->name('profile.')->group(functi
     Route::put('/update/info', 'UserInformationController@updateInformation');
     Route::post('/update/avatar', 'UserInformationController@updateAvatar');
     Route::post('/update/background', 'UserInformationController@updateBackground');
+    Route::post('/follow', 'UserInformationController@followUser');
+    Route::post('/unfollow', 'UserInformationController@unfollowUser');
 });
 
 Route::middleware('auth.api')->prefix('post')->name('post.')->group(function() {

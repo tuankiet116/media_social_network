@@ -1,48 +1,70 @@
 <template>
     <div id="profile" class="profile">
-        <div class="profile-banner" :style="{ 'background-image': 'url(' + user.banner + ')'}">
-        </div>
-        <div class="profile-picture level is-mobile">
-            <div v-if="!isMe && auth" class="level-item is-justify-content-right">
-                <a class="button is-rounded">
-                    <span><i class="fa-solid fa-message"></i> Chat</span>
-                </a>
-            </div>
-            <div class="level-item middle-item" :class="{ 'pl-5': isMe }">
-                <div>
-                    <figure class="image is-128x128">
-                        <img class="is-rounded avatar-image" :src="user.image">
-                    </figure>
-                    <div class="mt-2 has-text-centered">
-                        <span>{{ user.name }}</span>
+        <div class="profile-banner" :style="{ 'background-image': 'url(' + user.banner + ')' }"></div>
+        <div class="profile-picture is-mobile">
+            <div class="level m-0">
+                <div v-if="!isMe && auth" class="level-item is-justify-content-right">
+                    <a class="button is-rounded">
+                        <span>
+                            <i class="fa-solid fa-message"></i>
+                            Chat
+                        </span>
+                    </a>
+                </div>
+                <div class="level-item middle-item" :class="{ 'pl-5': isMe || !auth }">
+                    <div>
+                        <figure class="image is-128x128">
+                            <img class="is-rounded avatar-image" :src="user.image" />
+                        </figure>
                     </div>
                 </div>
+                <div v-if="auth" class="level-item is-justify-content-left">
+                    <a v-if="!isMe && auth" class="button is-rounded" @click="handleFollowUser">
+                        <span v-if="user.isFollowed">
+                            <i class="fa-solid fa-check"></i>
+                            Followed
+                        </span>
+                        <span v-else>
+                            <i class="fa-solid fa-plus"></i>
+                            Follow
+                        </span>
+                    </a>
+                    <router-link v-else class="button is-rounded" :to="{ name: 'edit_profile_basic' }">
+                        Edit
+                    </router-link>
+                </div>
             </div>
-            <div v-if="auth" class="level-item is-justify-content-left">
-                <a v-if="!isMe && auth" class="button is-rounded">
-                    <span><i class="fa-solid fa-plus"></i> Follow</span>
-                </a>
-                <router-link v-else class="button is-rounded" :to="{name: 'edit_profile_basic'}">
-                    Edit
-                </router-link>
+            <div class="columns">
+                <div class="has-text-weight-bold is-size-5 has-text-centered column" :class="{'is-one-fifth': isMe}">
+                    <span>{{ user.name }}</span>
+                </div>
             </div>
-            <br>
+            <br/>
         </div>
         <div class="profile-menu level is-mobile box">
             <div class="level-item is-justify-content-center is-align-items-center">
-                <router-link class="heading" :to="{name: 'profile_list_post'}">
-                    <span><i class="fa-solid fa-message"></i> Bài viết</span>
+                <router-link class="heading" :to="{ name: 'profile_list_post' }">
+                    <span>
+                        <i class="fa-solid fa-message"></i>
+                        Bài viết
+                    </span>
                 </router-link>
             </div>
             <div class="level-item is-justify-content-center is-align-items-center">
-                <a class="heading">
-                    <span><i class="fa-solid fa-message"></i> Theo dõi</span>
-                </a>
+                <router-link class="heading" :to="{ name: 'profile_list_follower' }">
+                    <span>
+                        <strong>{{ user.follower_count }}</strong>
+                        Theo dõi
+                    </span>
+                </router-link>
             </div>
             <div class="level-item is-justify-content-center is-align-items-center">
-                <a class="heading">
-                    <span><i class="fa-solid fa-message"></i> Đang Theo Dõi</span>
-                </a>
+                <router-link class="heading" :to="{ name: 'profile_list_following' }">
+                    <span>
+                        <strong>{{ user.following_count }}</strong>
+                        Đang Theo Dõi
+                    </span>
+                </router-link>
             </div>
         </div>
         <div>
@@ -51,8 +73,8 @@
     </div>
 </template>
 <script>
-import authMixin from '../../mixins';
-import { getUserProfile, getProfile } from '../../api/user';
+import authMixin from "../../mixins";
+import { getUserProfile, getProfile, followUser, unfollowUser } from "../../api/user";
 
 export default {
     mixins: [authMixin],
@@ -71,28 +93,63 @@ export default {
                 return true;
             }
             return false;
-        }
+        },
+    },
+    watch: {
+        "$route.params.id": {
+            handler() {
+                this.getUserInformation();
+            },
+        },
     },
     methods: {
         getUserInformation() {
             let guestID = this.$route.params.id;
-            debugger
             if (guestID) {
-                getUserProfile(guestID).then(result => {
-                    this.user = result.data;
-                }).catch(error => {
-                    console.log(error)
-                })
+                getUserProfile(guestID)
+                    .then((result) => {
+                        this.user = result.data;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
             } else {
-                getProfile().then(result => {
-                    this.user = result.data;
-                }).catch(error => {
-                    console.log(error)
-                })
+                getProfile()
+                    .then((result) => {
+                        this.user = result.data;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
             }
+        },
+        handleFollowUser() {
+            if (this.user.isFollowed) {
+                this.unfollowUser();
+                this.user.isFollowed = false;
+            } else {
+                this.followUser();
+                this.user.isFollowed = true;
+            }
+        },
+        followUser() {
+            let data = {
+                user_id: this.user.id,
+            };
+            followUser(data).then(result => {
+                this.user.follower_count = result.data.follower_count;
+            });
+        },
+        unfollowUser() {
+            let data = {
+                user_id: this.user.id,
+            };
+            unfollowUser(data).then(result => {
+                this.user.follower_count = result.data.follower_count;
+            });
         }
-    }
-}
+    },
+};
 </script>
 <style scoped>
 .profile-banner {

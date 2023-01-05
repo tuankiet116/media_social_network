@@ -31,8 +31,18 @@ class UserInformationController extends Controller
         return $this->responseData($data);
     }
 
-    public function followUser($userId)
+    public function followUser(Request $request)
     {
+        $idFollow = $request->get('user_id');
+        $result = $this->userService->followUser($idFollow);
+        return $this->responseData(['follower_count' => $result]);
+    }
+
+    public function unfollowUser(Request $request)
+    {
+        $idFollow = $request->get('user_id');
+        $result = $this->userService->unfollowUser($idFollow);
+        return $this->responseData(['follower_count' => $result]);
     }
 
     public function getFollowers()
@@ -48,8 +58,8 @@ class UserInformationController extends Controller
         try {
             $data = $request->all();
             $userId = auth()->id();
-            $this->userService->updateProfile($data);
-            return $this->getUserProfile($userId);
+            $result = $this->userService->updateProfile($data);
+            return $this->responseData($result);
         } catch (Exception $e) {
             return $this->responseData(array('error' => $e, 500));
         }
@@ -75,10 +85,5 @@ class UserInformationController extends Controller
     {
         $myProfile = $this->userService->updateBackground($request->file('background'));
         return $this->responseData($myProfile);
-    }
-
-    public function updatePassword()
-    {
-
     }
 }
