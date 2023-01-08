@@ -68,7 +68,7 @@
             </div>
         </div>
         <div>
-            <router-view :user="user"></router-view>
+            <router-view :key="$route.fullPath" :user="user"></router-view>
         </div>
     </div>
 </template>
@@ -80,6 +80,7 @@ export default {
     mixins: [authMixin],
     data() {
         return {
+            userId: this.$route.params.id,
             user: {},
         };
     },
@@ -95,16 +96,9 @@ export default {
             return false;
         },
     },
-    watch: {
-        "$route.params.id": {
-            handler() {
-                this.getUserInformation();
-            },
-        },
-    },
     methods: {
         getUserInformation() {
-            let guestID = this.$route.params.id;
+            let guestID = this.userId;
             if (guestID) {
                 getUserProfile(guestID)
                     .then((result) => {

@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="box group-container pl-0 pr-0 pt-0">
-      <div class="m-0 background-img" v-if="community" :style="{ 'background-image' : 'url(' + community.background + ')' }"></div>
+      <div class="m-0 background-img" v-if="community"
+        :style="{ 'background-image': 'url(' + community.background + ')' }"></div>
       <div class="m-0 background-img" v-else></div>
 
       <figure class="image is-64x64 group-brand">
@@ -17,24 +18,23 @@
           favorite communities.
         </p>
       </div>
+
+      <div v-if="community && community.rule" class="content p-2 mt-5">
+        <hr/>
+        <p>
+          {{ community.rule }}
+        </p>
+      </div>
+
       <div v-if="user" class="buttons">
-        <a class="button btn-create is-info mr-2 ml-2">Create Post</a>
-        <a
-          class="button btn-create is-info m-2 mt-1 js-modal-trigger"
-          data-target="modal-create-group"
-          @click="isCreateGroup = true"
-          v-if="community == null"
-        >
-          Create Comunity
+        <a class="button btn-create is-info mr-2 ml-2" @click="redirectCreatePost">Create Post</a>
+        <a class="button btn-create is-info m-2 mt-1 js-modal-trigger" data-target="modal-create-group"
+          @click="isCreateGroup = true" v-if="community == null">
+          Create Community
         </a>
       </div>
     </div>
-    <div
-      v-if="user && community == null"
-      id="modal-create-group"
-      class="modal"
-      :class="{ 'is-active': isCreateGroup }"
-    >
+    <div v-if="user && community == null" id="modal-create-group" class="modal" :class="{ 'is-active': isCreateGroup }">
       <div class="modal-background"></div>
       <div class="modal-content">
         <div class="box">
@@ -57,11 +57,7 @@
               </button>
             </div>
           </div>
-          <button
-            class="modal-close is-large"
-            @click="isCreateGroup = false"
-            aria-label="close"
-          ></button>
+          <button class="modal-close is-large" @click="isCreateGroup = false" aria-label="close"></button>
         </div>
       </div>
     </div>
@@ -99,6 +95,14 @@ export default {
         }
       })
     },
+    redirectCreatePost() {
+      if (this.community) {
+        this.$router.push({name: 'create_post', query: {
+          community: this.community.id
+        }})
+      }
+      this.$router.push({name: 'create_post'})
+    }
   },
 }
 </script>
@@ -129,5 +133,9 @@ export default {
 
 .btn-create {
   width: 100%;
+}
+
+.avatar-image {
+  height: 64px !important;
 }
 </style>

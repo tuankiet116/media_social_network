@@ -12,7 +12,7 @@
         </div>
         <div class="field is-grouped">
             <div class="control">
-                <button class="button is-link">Submit</button>
+                <button class="button is-link" @click="updateInformation">Submit</button>
             </div>
             <div class="control">
                 <button class="button is-link is-light">Cancel</button>
@@ -21,6 +21,8 @@
     </div>
 </template>
 <script>
+import { emit } from 'process';
+import { updateCommunityInfo } from '../../api/community';
 export default {
     props: ["community"],
     data() {
@@ -32,8 +34,20 @@ export default {
     watch: {
         community(value) {
             this.community_name = value?.community_name ?? "";
-            this.community_rule = value?.community_rule ?? "";
+            this.community_rule = value?.rule ?? "";
         },
     },
+    methods: {
+        updateInformation() {
+            let data = {
+                'community_name': this.community_name,
+                'rule': this.community_rule
+            };
+            let communityId = this.community.id;
+            updateCommunityInfo(data, communityId).then(result => {
+                this.$emit('updated', result.data);
+            });
+        }
+    }
 };
 </script>

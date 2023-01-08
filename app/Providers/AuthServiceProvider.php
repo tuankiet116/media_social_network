@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 use App\Models\Community;
-use App\Policies\GroupPolicy;
+use App\Policies\CommunityPolicy;
+use App\Policies\UserSettingPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -15,7 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        Community::class => GroupPolicy::class
+        Community::class => CommunityPolicy::class
     ];
 
     /**

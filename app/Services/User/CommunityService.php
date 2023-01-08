@@ -58,8 +58,12 @@ class CommunityService
     {
     }
 
-    public function getCommunityMember()
+    public function getCommunityMember($communityId, $offset)
     {
+        $members = CommunityUser::where('community_id', $communityId)
+            ->orderBy('created_at')->limit(20)
+            ->offset($offset)->get();
+        return $members;
     }
 
     public function getAvatar($fileName)
@@ -106,9 +110,34 @@ class CommunityService
     public function getCommunitiesJoinedByUser($search, $offset = 0)
     {
         $userId = auth()->id();
-        $communities = CommunityUser::with(['community' => function($q) use($search) {
-            return $q->where( 'community_name', 'LIKE', '%' . $search . '%');
+        $communities = CommunityUser::with(['community' => function ($q) use ($search) {
+            return $q->where('community_name', 'LIKE', '%' . $search . '%');
         }])->where('user_id', $userId)->limit(10)->offset($offset)->get();
         return $communities;
+    }
+
+    public function updateCommunityInfo($data, Community $community)
+    {
+        $community->community_name = $data['community_name'];
+        $community->rule = $data['rule'];
+        $community->save();
+        return $community;
+    }
+
+    public function updateAvatar($community, $image) {
+        $fileName =  $community->id . '_' . time() . '.png';
+        $this->storageService->saveToLocalStorage('community/avatar', $image, false, $fileName);
+        $community = Community::where('id', $community->id)->first();
+        $community->image = $fileName;
+        $community->save();
+        return $community;
+    }
+
+    public function updateBackground($community, $image) {
+        $fileName =  $community->id . '_' . time() . '.png';
+        $this->storageService->saveToLocalStorage('community/background', $image, false, $fileName);
+        $community->background = $fileName;
+        $community->save();
+        return $community;
     }
 }

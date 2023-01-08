@@ -47,7 +47,7 @@
                     <template v-else>
                         <figure class="image user_image is-32x32" @mouseover="handleShowUserCard">
                             <router-link :to="{ path: '/profile/' + post.user.id }">
-                                <img class="is-rounded" :src="post.user.image">
+                                <img class="is-rounded avatar-image" :src="post.user.image">
                             </router-link>
                             <div class="user-card">
                                 <KeepAlive>
@@ -113,7 +113,7 @@
             <article v-if="focusComment && user" class="media">
                 <figure class="media-left">
                     <p class="image is-32x32">
-                        <img class="is-rounded" :src="user.image">
+                        <img class="is-rounded avatar-image" :src="user.image">
                     </p>
                 </figure>
                 <div class="box comment-box">
@@ -156,7 +156,7 @@ import ListCommentComponent from './Children/ListCommentComponent.vue';
 import ReactionComponent from './Children/ReactionComponent.vue';
 import ConfirmDeleteComponent from '../Common/ConfirmDeleteComponent.vue';
 import { calculateTime } from '../../helpers/common';
-import NotFoundComponent from '../Common/NotFoundComponent.vue';
+import NotFoundComponent from '../Common/errors/NotFoundComponent.vue';
 import authMixin from '../../mixins';
 import UserInforCard from '../Common/UserInforCard.vue';
 import CommunityInfoCard from '../Common/CommunityInfoCard.vue';
@@ -415,5 +415,9 @@ textarea {
     display: block;
     transform: translate(0, -20px);
     transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+}
+
+.is-32x32 .avatar-image {
+    height: 32px;
 }
 </style>

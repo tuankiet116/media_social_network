@@ -25,8 +25,18 @@
             <PostComponent @post-deleted="handleRemovePost" v-for="post in posts" :post="post" />
         </div>
         <div v-else class="column is-three-fifths-desktop has-text-centered">
-            <div class="box">
-                No Post Yet
+            <div v-if="user"
+                class="box post-box column is-two-thirds-tablet is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center">
+                <figure class="image is-32x32 mr-2">
+                    <img class="mr-2 avatar-image is-rounded" :src="user?.image" />
+                </figure>
+                <input @click="$router.push({ name: 'create_post' })" class="input" placeholder="Create Post" />
+            </div>
+            <div class="box has-text-centered">
+                <p class="content is-size-5">Let's share your first Amazing Things to The Community! </p>
+                <figure class="image is-128x128" style="margin: auto">
+                    <img src="../../../images/gifs/waving_stitch.gif"/>
+                </figure>
             </div>
         </div>
     </div>
@@ -40,28 +50,22 @@ export default {
             posts: [],
             offset: 0,
             isLoadMore: true,
-            outOfPost: false
+            outOfPost: false,
+            userId: this.$route.params.id
         };
     },
     props: ['user'],
     components: { PostComponent },
     mounted() {
-    },
-    mounted() {
         document.addEventListener('scroll', this.handleLoadPost);
+        this.posts = [];
         this.fetchPost(this.user);
     },
-    watch: {
-        user(data) {
-            this.posts = [];
-            this.fetchPost(data);
-        }
-    },
     methods: {
-        fetchPost(user) {
-            let userId = user.id;
+        async fetchPost() {
+            let userId = this.userId;
             if (userId) {
-                getPostsByUser(this.offset, userId).then(result => {
+                await getPostsByUser(this.offset, userId).then(result => {
                     if (result.data.data.length == 0) {
                         this.outOfPost = true;
                     }

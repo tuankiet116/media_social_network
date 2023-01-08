@@ -26,4 +26,16 @@ class StorageService
         Storage::copy('/public' . end($urlDefault), $toFolder . $fileName);
         return $fileName;
     }
+
+    public function saveToS3Storage() {
+
+    }
+
+    public function getImageS3Storage() {
+
+    }
+
+    public function getVideoS3Storage() {
+        
+    }
 }

@@ -19,6 +19,7 @@ class CreateCommunitiesTable extends Migration
             $table->bigInteger('user_id', false, true);
             $table->string('image');
             $table->string('background')->nullable();
+            $table->string('rule')->nullable();
             $table->timestamps();
         });
     }

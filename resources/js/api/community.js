@@ -6,3 +6,7 @@ export const getCommunityPostsAPI = (id, offset) => api.get('api/community/posts
 export const getCommunitiesAPI = (data) => api.get('api/community/list', {
     params: data
 });
+
+export const updateCommunityInfo = (data, id) => api.post(`api/community/setting/info/${id}`, data);
+export const updateCommunityAvatar = (data, id) => api.post(`api/community/setting/avatar/${id}`, data);
+export const updateCommunityBackground = (data, id) => api.post(`api/community/setting/background/${id}`, data);

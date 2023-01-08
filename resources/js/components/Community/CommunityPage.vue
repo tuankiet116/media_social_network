@@ -22,7 +22,7 @@
                         <img class="is-rounded avatar-image" :src="community.image" />
                     </figure>
                     <div class="mt-2 has-text-centered">
-                        <span>{{ community.community_name }}</span>
+                        <span class="content is-size-5 has-text-weight-semibold">{{ community.community_name }}</span>
                     </div>
                 </div>
             </div>
@@ -108,6 +108,7 @@ export default {
 .profile-banner {
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
     max-width: 1000px;
     height: 400px;
 }
@@ -146,6 +147,10 @@ export default {
 
 .btn-setting {
     width: fit-content !important;
+}
+
+.avatar-image {
+    height: 120px;
 }
 
 @media screen and (min-width: 731px) {

@@ -2,14 +2,15 @@
 
 namespace App\Policies;
 
-use App\Models\Group;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 
-class GroupPolicy
+class UserSettingPolicy
 {
     use HandlesAuthorization;
+
     /**
      * Create a new policy instance.
      *
@@ -20,9 +21,10 @@ class GroupPolicy
         //
     }
 
-    public function update(Group $group)
+    public function update(User $user)
     {
-        return $group->user_id === auth()->id()
+        Log::debug('user policy in use');
+        return $user->id === auth()->id()
             ? Response::allow()
             : Response::deny();;
     }

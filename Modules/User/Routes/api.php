@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Modules\User\Http\Controllers\UserController;
 
@@ -26,11 +27,13 @@ Route::middleware('auth.api')->prefix('profile')->name('profile.')->group(functi
     Route::get('/me', 'UserInformationController@getProfile');
     Route::get('/default/avatar', 'UserInformationController@getListUserImageDefault');
     Route::get('/default/background', 'UserInformationController@getBackgroundDefault');
-    Route::put('/update/info', 'UserInformationController@updateInformation');
-    Route::post('/update/avatar', 'UserInformationController@updateAvatar');
-    Route::post('/update/background', 'UserInformationController@updateBackground');
     Route::post('/follow', 'UserInformationController@followUser');
     Route::post('/unfollow', 'UserInformationController@unfollowUser');
+    Route::prefix('update')->name('update.')->group(function() {
+        Route::put('/info', 'UserInformationController@updateInformation');
+        Route::post('/avatar', 'UserInformationController@updateAvatar');
+        Route::post('/background', 'UserInformationController@updateBackground');
+    });
 });
 
 Route::middleware('auth.api')->prefix('post')->name('post.')->group(function() {
@@ -51,15 +54,16 @@ Route::middleware('auth.api')->prefix('comment')->name('comment.')->group(functi
     Route::put('/update', 'CommentController@update')->name('update');
 });
 
-Route::prefix('community')->name('community.')->group(function() {
-    Route::post('/create', 'CommunityController@createCommunity')->middleware('auth.api')->name('create');
-    Route::post('/update', 'CommunityController@update')->middleware(['auth.api','can:update,group'])->name('update');
-    Route::get('/info/{id}', 'CommunityController@getInfo')->name('info');
-    Route::get('/posts/{id}/{offset?}', 'CommunityController@getPosts')->name('posts');
+Route::middleware('auth.api')->prefix('community')->name('community.')->group(function() {
+    Route::post('/create', 'CommunityController@createCommunity')->name('create');
     Route::get('/list', 'CommunityController@getListCommunityJoined')->name('list');
+    Route::post('/setting/info/{community}', 'CommunitySettingController@updateInformation')->middleware('can:update,community');
+    Route::post('/setting/avatar/{community}', 'CommunitySettingController@updateAvatar')->middleware('can:update,community');
+    Route::post('/setting/background/{community}', 'CommunitySettingController@updateBackground')->middleware('can:update,community');
 });
 
-Route::get('/:id', 'CommunityController@getCommunity');
+Route::get('community/posts/{id}/{offset?}', 'CommunityController@getPosts')->name('posts');
+Route::get('community/info/{id}', 'CommunityController@getInfo')->name('info');
 
 Route::post('/user/facebook_login', 'FacebookController@fbLogin');
 
@@ -67,4 +71,7 @@ Route::get('/post/list/{offset?}/{userId?}', 'PostController@getPosts');
 Route::get('/post/stream/{fileName}', 'PostController@stream');
 Route::get('/post/get/{id}', 'PostController@getPost')->name('get_post');
 
-Route::get('/profile/{id}', 'UserInformationController@getUserProfile');
+Route::get('/profile/info/{id}', 'UserInformationController@getUserProfile');
+
+Route::get('/profile/follower', 'FollowController@getFollower');
+Route::get('/profile/following', 'FollowController@getFollowing');

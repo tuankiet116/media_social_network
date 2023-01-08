@@ -1,28 +1,20 @@
 <template>
-    <div v-if="user">
+    <div v-if="community">
         <div class="field">
             <label class="label">Your Background: </label>
             <div class="control is-grouped">
                 <figure class="image">
                     <img class="background" :src="background" />
                 </figure>
-                <input
-                    @change="previewImage"
-                    ref="file_open"
-                    class="is-hidden"
-                    type="file"
-                    accept="image/png, image/jpeg"
-                />
+                <input @change="previewImage" ref="file_open" class="is-hidden" type="file"
+                    accept="image/png, image/jpeg" />
                 <button @click="openFileExplorer" class="button">
                     Change Background
                 </button>
             </div>
         </div>
         <div class="field is-grouped mt-3 columns is-justify-content-end">
-            <button
-                @click="saveBackground"
-                class="button is-info is-1-desktop is-full-mobile"
-            >
+            <button @click="saveBackground" class="button is-info is-1-desktop is-full-mobile">
                 Save
             </button>
         </div>
@@ -33,12 +25,13 @@
 </template>
 
 <script>
-import { getProfile, saveUserBackground } from "../../api/user";
+import { updateCommunityBackground } from "../../api/community";
 import LoadingComponent from "../Common/LoadingComponent.vue";
 import { useToast } from "vue-toastification";
 
 export default {
     components: { LoadingComponent },
+    props: ['community'],
     data() {
         return {
             user: null,
@@ -46,43 +39,23 @@ export default {
         };
     },
     watch: {
-        user(value) {
-            this.background = value.banner;
+        community(value) {
+            this.background = value.background;
         },
-    },
-    mounted() {
-        this.getUserInformation();
     },
     methods: {
-        getUserInformation() {
-            getProfile()
-                .then((result) => {
-                    this.user = result.data;
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        },
         openFileExplorer() {
             this.$refs.file_open.click();
-        },
-        async chooseImageDefault(image) {
-            let imageObject = new Image();
-            imageObject.src = image;
-            this.background = image;
-            this.$refs.file_open.value = null;
         },
         previewImage($event) {
             this.background = URL.createObjectURL($event.target.files[0]);
         },
         saveBackground() {
             let form = new FormData();
-            let _this = this;
             form.append('background', this.$refs.file_open.files[0] ?? "");
 
-            saveUserBackground(form).then(result => {
-                _this.$store.state.user = result.data;
-                useToast().success('Updated your background image');
+            updateCommunityBackground(form, this.community.id).then(result => {
+                this.$emit('updated', result.data);
             }).catch((err) => {
                 useToast().error('Error on updating background image');
             });
@@ -91,8 +64,7 @@ export default {
 };
 </script>
 <style scoped>
-
-.background{
+.background {
     height: 20rem !important;
     object-fit: cover;
     width: 50rem !important;
@@ -108,7 +80,7 @@ export default {
 }
 
 @media only screen and (max-width: 320px) {
-    .background{
+    .background {
         height: 5rem !important;
         width: 10rem !important;
     }
