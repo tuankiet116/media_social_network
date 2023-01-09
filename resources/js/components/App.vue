@@ -2,11 +2,13 @@
     <MenuComponent :user="getUser"></MenuComponent>
     <router-view :key="$route.fullPath"></router-view>
     <ProgressBarComponent v-if="getPostProgressUpload" :percent-value="getPostProgressUpload" class="progress-bar" />
+    <MenuMobileComponent/>
 </template>
 
 
 <script>
 import MenuComponent from './MenuComponent.vue';
+import MenuMobileComponent from './MenuMobileComponent.vue';
 import ProgressBarComponent from './Common/ProgressBarComponent.vue';
 import { mapGetters } from 'vuex';
 
@@ -17,7 +19,8 @@ export default {
     },
     components: {
         MenuComponent,
-        ProgressBarComponent
+        ProgressBarComponent,
+        MenuMobileComponent
     },
     computed: {
         ...mapGetters([

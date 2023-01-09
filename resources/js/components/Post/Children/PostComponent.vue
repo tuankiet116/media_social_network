@@ -1,6 +1,6 @@
 <template>
     <div
-        class="box post-box column is-two-thirds-tablet is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5"
+        class="box post-box column is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5"
     >
         <div ref="post" class="post">
             <canvas ref="canvas"></canvas>

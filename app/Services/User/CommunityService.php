@@ -143,7 +143,7 @@ class CommunityService
         return $community;
     }
 
-    public function joinCommunity($community)
+    public function joinCommunity(Community $community)
     {
         $userId = auth()->id();
         if ($community->user_id != $userId) {
@@ -156,11 +156,44 @@ class CommunityService
         return false;
     }
 
-    public function  getMembers($communityId)
+    public function unjoinCommunity(Community $community)
     {
+        $userId = auth()->id();
+        if ($community->user_id != $userId) {
+            $communityUser = CommunityUser::where([
+                'community_id' => $community->id,
+                'user_id' => $userId
+            ])->first();
+            $communityUser->delete();
+            return true;
+        }
+        return false;
     }
 
-    public function  deleteMember($communityId)
+    public function  getMembers(Community $community, int $offset)
     {
+        $members = CommunityUser::with('user')->where('community_id', $community->id)
+            ->orderBy('created_at', 'DESC')->offset($offset)->limit(20)->get();
+        $newOffset = null;
+        if (count($members)) {
+            $newOffset = $offset + count($members);
+        }
+        return array(
+            'members' => $members,
+            'offset' => $newOffset
+        );
+    }
+
+    public function  deleteMember(Community $community, int $userId)
+    {
+        try {
+            CommunityUser::where([
+                'community_id' => $community->id,
+                'user_id' => $userId
+            ])->delete();
+            return true;
+        } catch (Exception $e) {
+            throw new Exception($e);
+        }
     }
 }

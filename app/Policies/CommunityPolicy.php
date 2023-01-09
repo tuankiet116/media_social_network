@@ -27,4 +27,16 @@ class CommunityPolicy
             ? Response::allow()
             : Response::deny('You have no permission to this community');
     }
+
+    public function join(?User $user, Community $community) {
+        return $community->user_id !== auth()->id()
+            ? Response::allow()
+            : Response::deny('You cannot join to this community');
+    }
+
+    public function unjoin(?User $user, Community $community) {
+        return $community->user_id !== auth()->id()
+            ? Response::allow()
+            : Response::deny('You cannot unjoin to this community');
+    }
 }

@@ -238,15 +238,14 @@ export default {
     max-width: none !important;
 }
 
-@media screen and (min-device-width: 481px) and (max-device-width: 768px) {
+@media screen and (min-device-width: 481px) and (max-device-width: 821px) {
     .container {
-        margin: 5rem 2rem !important;
+        margin: 0!important;
     }
 }
 
 @media screen and (max-width: 480px) {
     .container {
-        margin: 4rem 0 4rem 0 !important;
         padding: 30px 10px;
     }
 

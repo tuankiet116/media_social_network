@@ -45,19 +45,41 @@ class CommunityController extends Controller
         return $this->responseData($result, 200);
     }
 
-    public function getListCommunityJoined(Request $request) {
+    public function getListCommunityJoined(Request $request)
+    {
         $keySearch = $request->get('search');
         $offset = $request->get('offset');
         $result = $this->communityService->getCommunitiesJoinedByUser($keySearch, $offset);
         return $this->responseData($result, 200);
     }
 
-    public function joinCommunity(Community $community) {
+    public function joinCommunity(Community $community)
+    {
         $result = $this->communityService->joinCommunity($community);
         return $this->responseData($result);
     }
 
-    public function unjoinCommunity(Community $community) {
-        
+    public function unjoinCommunity(Community $community)
+    {
+        $result = $this->communityService->unjoinCommunity($community);
+        return $this->responseData($result);
+    }
+
+    public function listMembers(Community $community, Request $request)
+    {
+        $offset = $request->query('offset') ?? 0;
+        $result = $this->communityService->getMembers($community, $offset);
+        return $this->responseData($result);
+    }
+
+    public function deleteMember(Community $community, Request $request)
+    {
+        $userId = $request->get('user_id');
+        try {
+            $result = $this->communityService->deleteMember($community, $userId);
+            return $this->responseData($result);
+        } catch (Exception $e) {
+            return $this->responseData($e, 500);
+        }
     }
 }

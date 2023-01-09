@@ -13,6 +13,9 @@ import mitt from 'mitt';
 import Echo from "laravel-echo";
 import "vue-toastification/dist/index.css";
 import VueSelect from 'vue-select';
+import ElementPlus from 'element-plus'
+// import 'element-plus/dist/index.css';
+// import 'element-plus/theme-chalk/dark/css-vars.css';
 
 window.Pusher = require('pusher-js');
 window.Echo = new Echo({
@@ -47,6 +50,7 @@ app.use(CKEditor);
 app.use(i18n);
 app.use(store);
 app.use(router);
+// app.use(ElementPlus)
 app.use(Toast, {
     position: POSITION.TOP_RIGHT
 });

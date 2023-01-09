@@ -1,5 +1,5 @@
 <template>
-    <div class="reactions columns" v-if="user">
+    <div class="reactions columns is-mobile" v-if="user">
         <div class="column">
             <button ref="button" class="button btn" @click="likeHandle">
                 <span v-if="like">🎉</span>

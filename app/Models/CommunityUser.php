@@ -19,4 +19,8 @@ class CommunityUser extends Model
     public function community() {
         return $this->belongsTo(Community::class);
     }
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }

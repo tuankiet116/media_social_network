@@ -1,30 +1,37 @@
 <template>
-    <div class="box container" :style="{ 'min-height: unset': !members.length }">
-        <div v-if="members.length" class="columns"
-            v-for="i in Math.ceil(members.length / 2)">
-            <div class="column" v-for="user in members.slice((i - 1) * 2, i * 2)">
+    <div v-if="auth" class="box container" :style="{ 'min-height: unset': !members.length }">
+        <div v-if="members.length" class="columns" v-for="i in Math.ceil(members.length / 2)">
+            <div class="column is-half" v-for="(member, index) in members.slice((i - 1) * 2, i * 2)">
                 <div class="is-flex">
                     <div class="user_image" @mouseover="displayUserInformation = true">
-                        <router-link :to="{ name: 'profile_list_post', params: { id: user.follower.id } }">
+                        <router-link :to="{ name: 'profile_list_post', params: { id: member.user.id } }">
                             <figure class="image is-64x64 avatar-image">
-                                <img class="is-rounded" :src="user.follower.image" />
+                                <img class="is-rounded" :src="member.user.image" />
                             </figure>
                         </router-link>
                         <div class="user-card">
                             <KeepAlive>
-                                <UserInforCard v-if="displayUserInformation" :user="user.follower" />
+                                <UserInforCard v-if="displayUserInformation" :user="member.user" />
                             </KeepAlive>
                         </div>
                     </div>
                     <div class="is-justify-content-left ml-2 user_name">
-                        <router-link :to="{ name: 'profile_list_post', params: { id: user.follower.id } }">
-                            {{ user.follower.name }}
+                        <router-link :to="{ name: 'profile_list_post', params: { id: member.user.id } }">
+                            {{ member.user.name }}
                         </router-link>
                         <div class="user-card">
                             <KeepAlive>
-                                <UserInforCard v-if="displayUserInformation" :user="user.follower" />
+                                <UserInforCard v-if="displayUserInformation" :user="member.user" />
                             </KeepAlive>
                         </div>
+                    </div>
+                    <div style="margin-left:auto" class="is-flex is-align-items-center">
+                        <button v-if="community.id != member.user.id" class="button" @click="removeMember(index)">
+                            Delete Member
+                        </button>
+                        <p v-else class="content p-2" style="background-color:blanchedalmond">
+                            Administrator
+                        </p>
                     </div>
                 </div>
             </div>
@@ -32,16 +39,16 @@
         <div v-else class=" has-text-centered">
             <p class="content is-size-4">No members At All.</p>
             <figure>
-                <img src="../../../images/gifs/sad_stitch.gif"/>
+                <img src="../../../images/gifs/sad_stitch.gif" />
             </figure>
         </div>
     </div>
 </template>
 <script>
-import { getFollower } from '../../api/user';
+import { listMembers, deleteMember } from '../../api/community';
 import UserInforCard from '../Common/UserInforCard.vue';
 export default {
-    props: ['user'],
+    props: ['community'],
     components: { UserInforCard },
     data() {
         return {
@@ -51,21 +58,27 @@ export default {
         };
     },
     mounted() {
-        this.getFollower();
+        this.getMembers();
     },
     watch: {
-        user() {
-            this.members = [];
-            this.getFollower();
+        community(data) {
+            this.getMembers();
         }
     },
+    mixins: ['auth'],
     methods: {
-        getFollower() {
-            if (!this.user.id) return;
-            getFollower(this.user.id, this.offset).then(result => {
+        getMembers() {
+            if (!this.community) return;
+            listMembers(this.community.id, this.offset).then(result => {
                 this.members = result.data.members;
                 this.offset = result.data.offset;
             });
+        },
+        removeMember(index) {
+            console.log(index)
+            let data = {
+                'user_id': this.members
+            }
         }
     }
 }
@@ -83,9 +96,14 @@ export default {
     top: 5rem;
 }
 
+.user_image {
+    position: relative;
+}
+
 .user_name {
     display: flex;
     align-items: center;
+    position: relative;
 }
 
 .user_name:hover .user-card {

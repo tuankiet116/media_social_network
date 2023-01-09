@@ -57,6 +57,10 @@ Route::middleware('auth.api')->prefix('comment')->name('comment.')->group(functi
 Route::middleware('auth.api')->prefix('community')->name('community.')->group(function() {
     Route::post('/create', 'CommunityController@createCommunity')->name('create');
     Route::get('/list', 'CommunityController@getListCommunityJoined')->name('list');
+    Route::post('/join/{community}', 'CommunityController@joinCommunity')->middleware('can:join,community');
+    Route::post('/unjoin/{community}', 'CommunityController@unjoinCommunity')->middleware('can:unjoin,community');
+    Route::get('/members/{community}', 'CommunityController@listMembers')->middleware('can:update,community');
+    Route::delete('/members/{community}', 'CommunityController@deleteMember')->middleware('can:update,community');
     Route::post('/setting/info/{community}', 'CommunitySettingController@updateInformation')->middleware('can:update,community');
     Route::post('/setting/avatar/{community}', 'CommunitySettingController@updateAvatar')->middleware('can:update,community');
     Route::post('/setting/background/{community}', 'CommunitySettingController@updateBackground')->middleware('can:update,community');

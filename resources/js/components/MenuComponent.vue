@@ -1,6 +1,5 @@
 <template>
-    <nav id="navbar" class="navbar" role="navigation" aria-label="main navigation"
-        :style="!user ? 'display:flex' : ''">
+    <nav id="navbar" class="navbar" role="navigation" aria-label="main navigation" :style="!user ? 'display:flex' : ''">
         <div class="navbar-brand">
             <router-link @click="increaseKey" class="navbar-item" :to="{ name: 'home' }">
                 <img src="/images/defaults/brand.png">
@@ -19,14 +18,15 @@
                 </router-link>
             </div>
         </div>
-        <div class="control has-icons-right search-box">
-            <input class="input is-rounded" type="search" placeholder="Search...">
-            <span class="icon is-small is-right">
+        <div class="control search-box is-flex is-align-items-center" @keypress.enter="redirectSearch">
+            <input class="input is-rounded" type="search" v-model="search" placeholder="Search...">
+            <button class="is-info button is-rounded is-small ml-2" @click="redirectSearch">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                     <path fill="#ddd"
                         d="M23.822 20.88l-6.353-6.354c.93-1.465 1.467-3.2 1.467-5.059.001-5.219-4.247-9.467-9.468-9.467s-9.468 4.248-9.468 9.468c0 5.221 4.247 9.469 9.468 9.469 1.768 0 3.421-.487 4.839-1.333l6.396 6.396 3.119-3.12zm-20.294-11.412c0-3.273 2.665-5.938 5.939-5.938 3.275 0 5.94 2.664 5.94 5.938 0 3.275-2.665 5.939-5.94 5.939-3.274 0-5.939-2.664-5.939-5.939z" />
                 </svg>
-            </span>
+                Search
+            </button>
         </div>
         <div class="navbar-end buttons-auth is-pulled-right" v-if="user == null">
             <div class="navbar-item items-button">
@@ -56,17 +56,19 @@
                 </div>
                 <div v-if="user.groups.length" class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
-                       Your Community
+                        Your Community
                     </a>
                     <div class="navbar-dropdown">
-                        <router-link v-for="gr of user.groups" @click="increaseKey" class="navbar-item" :to="{ path: `/community/${gr.id}` }">
+                        <router-link v-for="gr of user.groups" @click="increaseKey" class="navbar-item"
+                            :to="{ path: `/community/${gr.id}` }">
                             <figure class="is-64x64 image">
-                                <img class="is-rounded" :src="gr.image"/>
+                                <img class="is-rounded avatar-image" :src="gr.image" />
                             </figure>
                             <p class="m-2">{{ gr.community_name }}</p>
                         </router-link>
                         <hr class="navbar-divider">
-                        <router-link @click="increaseKey" class="navbar-item" :to="{ name: 'profile_list_post', params: {id: user.id} }">
+                        <router-link @click="increaseKey" class="navbar-item"
+                            :to="{ name: 'profile_list_post', params: { id: user.id } }">
                             See All Community
                         </router-link>
                     </div>
@@ -79,7 +81,8 @@
                         </figure>
                     </a>
                     <div class="navbar-dropdown">
-                        <router-link @click="increaseKey" class="navbar-item" :to="{ name: 'profile_list_post', params: {id: user.id} }">
+                        <router-link @click="increaseKey" class="navbar-item"
+                            :to="{ name: 'profile_list_post', params: { id: user.id } }">
                             {{ $t('profile') }}
                         </router-link>
                         <hr class="navbar-divider">
@@ -95,13 +98,14 @@
 
 <script>
 import NotificationComponent from './Common/NotificationComponent.vue';
-
+import { detectMobile } from '../helpers/common';
 export default {
     props: ["user"],
     data() {
         return {
             showNav: false,
-            keyComponent: 0
+            keyComponent: 0,
+            search: ""
         };
     },
     methods: {
@@ -112,6 +116,14 @@ export default {
         increaseKey() {
             this.keyComponent++;
             this.$emit("increaseKey", this.keyComponent);
+        },
+        redirectSearch() {
+            if (this.search) {
+                this.$router.push({ name: 'search_page', query: { search: this.search } });
+            }
+        },
+        isMobile() {
+            return detectMobile();
         }
     },
     components: { NotificationComponent }
@@ -152,7 +164,6 @@ a:focus {
 
 .search-box {
     margin: auto;
-    width: 30rem;
     margin-left: 0;
 }
 

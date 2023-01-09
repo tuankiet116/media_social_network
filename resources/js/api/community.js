@@ -10,3 +10,13 @@ export const getCommunitiesAPI = (data) => api.get('api/community/list', {
 export const updateCommunityInfo = (data, id) => api.post(`api/community/setting/info/${id}`, data);
 export const updateCommunityAvatar = (data, id) => api.post(`api/community/setting/avatar/${id}`, data);
 export const updateCommunityBackground = (data, id) => api.post(`api/community/setting/background/${id}`, data);
+
+export const joinCommunity = (id) => api.post(`api/community/join/${id}`);
+export const unjoinCommunity = (id) => api.post(`api/community/unjoin/${id}`);
+
+export const listMembers = (id, offset) => api.get(`api/community/members/${id}`, {
+    params: {
+        offset: offset
+    }
+});
+export const deleteMember = (id, data) => api.delete(`api/community/members/${id}`, data);

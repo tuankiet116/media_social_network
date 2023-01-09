@@ -4,14 +4,14 @@
       <LoadingComponent v-if="loading" />
       <div id="create-post" class="post">
         <div v-if="user"
-          class="box post-box column is-two-thirds-tablet is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center">
+          class="box post-box column is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center">
           <figure class="image mr-2">
             <img class="is-32x32 mr-2 avatar-image is-rounded" :src="user?.image" />
           </figure>
           <input @click="$router.push({ name: 'create_post' })" class="input" placeholder="Create Post" />
         </div>
         <div v-else @click="redirectLogin"
-          class="box post-box column is-two-thirds-tablet is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center">
+          class="box post-box column is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center">
           <input class="input" placeholder="Create Post" />
         </div>
       </div>
