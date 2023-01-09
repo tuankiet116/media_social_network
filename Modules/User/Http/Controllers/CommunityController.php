@@ -2,10 +2,10 @@
 
 namespace Modules\User\Http\Controllers;
 
+use App\Models\Community;
 use App\Services\User\CommunityService;
 use App\Traits\ApiResponse;
 use Exception;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -50,5 +50,14 @@ class CommunityController extends Controller
         $offset = $request->get('offset');
         $result = $this->communityService->getCommunitiesJoinedByUser($keySearch, $offset);
         return $this->responseData($result, 200);
+    }
+
+    public function joinCommunity(Community $community) {
+        $result = $this->communityService->joinCommunity($community);
+        return $this->responseData($result);
+    }
+
+    public function unjoinCommunity(Community $community) {
+        
     }
 }

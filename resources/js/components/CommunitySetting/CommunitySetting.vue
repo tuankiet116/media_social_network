@@ -34,8 +34,8 @@
                     </p>
                     <ul class="menu-list">
                         <li>
-                            <router-link :to="{ name: 'edit_profile_password' }"
-                                :class="{ 'is-active': $route.name == 'edit_profile_password' }">
+                            <router-link :to="{ name: 'community_setting_member' }"
+                                :class="{ 'is-active': $route.name == 'community_setting_member' }">
                                 List Member
                             </router-link>
                         </li>

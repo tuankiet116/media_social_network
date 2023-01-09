@@ -124,7 +124,8 @@ class CommunityService
         return $community;
     }
 
-    public function updateAvatar($community, $image) {
+    public function updateAvatar($community, $image)
+    {
         $fileName =  $community->id . '_' . time() . '.png';
         $this->storageService->saveToLocalStorage('community/avatar', $image, false, $fileName);
         $community = Community::where('id', $community->id)->first();
@@ -133,11 +134,33 @@ class CommunityService
         return $community;
     }
 
-    public function updateBackground($community, $image) {
+    public function updateBackground($community, $image)
+    {
         $fileName =  $community->id . '_' . time() . '.png';
         $this->storageService->saveToLocalStorage('community/background', $image, false, $fileName);
         $community->background = $fileName;
         $community->save();
         return $community;
+    }
+
+    public function joinCommunity($community)
+    {
+        $userId = auth()->id();
+        if ($community->user_id != $userId) {
+            CommunityUser::create([
+                'community_id' => $community->id,
+                'user_id' => $userId
+            ]);
+            return true;
+        }
+        return false;
+    }
+
+    public function  getMembers($communityId)
+    {
+    }
+
+    public function  deleteMember($communityId)
+    {
     }
 }

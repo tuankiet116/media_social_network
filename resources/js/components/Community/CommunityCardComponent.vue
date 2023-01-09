@@ -21,7 +21,7 @@
 
       <div v-if="community && community.rule" class="content p-2 mt-5">
         <hr/>
-        <p>
+        <p style="word-break: break-word;">
           {{ community.rule }}
         </p>
       </div>
