@@ -128,7 +128,7 @@ export default {
 }
 
 .group-container {
-  width: 20rem;
+  max-width: 20rem;
 }
 
 .btn-create {

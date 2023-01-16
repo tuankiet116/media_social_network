@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="columns">
-                <div class="has-text-weight-bold is-size-5 has-text-centered column" :class="{'is-one-fifth': isMe}">
+                <div class="has-text-weight-bold is-size-5 has-text-centered column" :class="{'is-one-fifth': isMe || !auth}">
                     <span>{{ user.name }}</span>
                 </div>
             </div>

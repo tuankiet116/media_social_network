@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div v-if="auth" class="level-item is-justify-content-left">
-                <a v-if="!isMine && auth" class="button is-rounded" @click="handleJoinCommunity">
+                <a v-if="!isMine && auth" class="button is-rounded" :class="{'is-loading': isLoadingJoin}" @click="handleJoinCommunity">
                     <span v-if="community.isJoined">
                         <i class="fa-solid fa-check"></i>
                         Joined
@@ -60,7 +60,8 @@ export default {
     data() {
         return {
             community: {},
-            isNotFound: false
+            isNotFound: false,
+            isLoadingJoin: false
         };
     },
     mounted() {
@@ -90,16 +91,18 @@ export default {
                     });
             }
         },
-        handleJoinCommunity() {
+        async handleJoinCommunity() {
+            this.isLoadingJoin = true;
             if (this.community.isJoined == false) {
-                joinCommunity(this.community.id).then(result => {
+                await joinCommunity(this.community.id).then(result => {
                     this.community.isJoined = true;
                 });
             } else {
-                unjoinCommunity(this.community.id).then(result => {
+                await unjoinCommunity(this.community.id).then(result => {
                     this.community.isJoined = false;
                 });
             }
+            this.isLoadingJoin = false;
         }
     },
     components: { NotFoundComponent }

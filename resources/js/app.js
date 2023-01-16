@@ -13,7 +13,7 @@ import mitt from 'mitt';
 import Echo from "laravel-echo";
 import "vue-toastification/dist/index.css";
 import VueSelect from 'vue-select';
-import ElementPlus from 'element-plus'
+// import ElementPlus from 'element-plus'
 // import 'element-plus/dist/index.css';
 // import 'element-plus/theme-chalk/dark/css-vars.css';
 

@@ -26,11 +26,12 @@
                         </div>
                     </div>
                     <div style="margin-left:auto" class="is-flex is-align-items-center">
-                        <button v-if="community.id != member.user.id" class="button" @click="removeMember(index)">
-                            Delete Member
+                        <button v-if="community.id != member.user.id" class="button"
+                            @click="removeMember(member.user.id)">
+                            Delete Member {{ i+index }}
                         </button>
                         <p v-else class="content p-2" style="background-color:blanchedalmond">
-                            Administrator
+                            Administrator {{ i+index }}
                         </p>
                     </div>
                 </div>
@@ -47,6 +48,7 @@
 <script>
 import { listMembers, deleteMember } from '../../api/community';
 import UserInforCard from '../Common/UserInforCard.vue';
+import authMixin from '../../mixins';
 export default {
     props: ['community'],
     components: { UserInforCard },
@@ -65,7 +67,7 @@ export default {
             this.getMembers();
         }
     },
-    mixins: ['auth'],
+    mixins: [authMixin],
     methods: {
         getMembers() {
             if (!this.community) return;
@@ -74,11 +76,14 @@ export default {
                 this.offset = result.data.offset;
             });
         },
-        removeMember(index) {
-            console.log(index)
-            let data = {
-                'user_id': this.members
-            }
+        async removeMember(userId, idx) {
+            debugger
+            await deleteMember(this.community.id, userId).then(result => {
+                if (result.data == true) {
+                    let indexMember = this.members.findIndex(el => el.user.id == userId);
+                    this.members.splice(indexMember, 1);
+                }
+            });
         }
     }
 }

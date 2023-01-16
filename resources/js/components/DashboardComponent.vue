@@ -1,17 +1,17 @@
 <template>
-  <div id="post-container" class="columns">
-    <div class="column is-7">
+  <div id="post-container" class="columns p-0 m-0" style="width: 100%">
+    <div class="column is-8">
       <LoadingComponent v-if="loading" />
       <div id="create-post" class="post">
         <div v-if="user"
-          class="box post-box column is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center">
+          class="box column is-flex is-align-items-center is-half-fullhd mr-0">
           <figure class="image mr-2">
             <img class="is-32x32 mr-2 avatar-image is-rounded" :src="user?.image" />
           </figure>
           <input @click="$router.push({ name: 'create_post' })" class="input" placeholder="Create Post" />
         </div>
         <div v-else @click="redirectLogin"
-          class="box post-box column is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center">
+          class="box column is-flex is-align-items-center is-half-fullhd mr-0">
           <input class="input" placeholder="Create Post" />
         </div>
       </div>
@@ -19,7 +19,7 @@
         <PostComponent @post-deleted="handleRemovePost" v-for="post in posts" :post="post" />
       </div>
     </div>
-    <div class="column">
+    <div class="column is-hidden-mobile">
       <CommunityCardComponent class="card_community" />
     </div>
   </div>
@@ -102,10 +102,10 @@ export default {
 
 <style scoped>
 #create-post .box {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 600px;
+  margin: auto;
+  max-width: 800px;
   margin-bottom: 2rem;
+  width: auto;
 }
 
 #create-post .box textarea {
@@ -123,9 +123,5 @@ export default {
 
 .avatar-image {
   height: 32px !important;
-}
-
-/deep/ .post-box {
-  margin-right: 1rem !important;
 }
 </style>

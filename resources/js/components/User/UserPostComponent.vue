@@ -25,7 +25,7 @@
             <PostComponent @post-deleted="handleRemovePost" v-for="post in posts" :post="post" />
         </div>
         <div v-else class="column is-three-fifths-desktop has-text-centered">
-            <div v-if="user"
+            <div v-if="user && isMe"
                 class="box post-box column is-two-thirds-tablet is-one-desktop is-one-third-widescreen is-half-fullhd mx-sm-5 is-flex is-align-items-center">
                 <figure class="image is-32x32 mr-2">
                     <img class="mr-2 avatar-image is-rounded" :src="user?.image" />
@@ -89,6 +89,9 @@ export default {
                 this.fetchPost(this.user);
             }
         },
+        isMe() {
+            return this.user.id == this.$store.state.user.id
+        }
     },
     beforeUnmount() {
         document.removeEventListener("scroll", this.handleLoadPost);

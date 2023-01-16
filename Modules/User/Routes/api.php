@@ -66,6 +66,11 @@ Route::middleware('auth.api')->prefix('community')->name('community.')->group(fu
     Route::post('/setting/background/{community}', 'CommunitySettingController@updateBackground')->middleware('can:update,community');
 });
 
+Route::prefix('search')->group(function() {
+    Route::get('history', 'SearchController@searchHistory');
+    Route::get('all', 'SearchController@searchAll');
+});
+
 Route::get('community/posts/{id}/{offset?}', 'CommunityController@getPosts')->name('posts');
 Route::get('community/info/{id}', 'CommunityController@getInfo')->name('info');
 

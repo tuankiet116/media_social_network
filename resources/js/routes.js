@@ -6,11 +6,12 @@ import UserPageComponent from './components/User/UserPageComponent.vue';
 import UserSettingComponent from './components/UserSetting/UserSettingComponent.vue';
 import CommunityPage from './components/Community/CommunityPage.vue';
 import CommunitySetting from './components/CommunitySetting/CommunitySetting.vue';
-import SearchResultComponent from './components/Search/SearchResultComponent'
+import SearchPage from './components/Search/SearchPage'
 
 import userRouters from './components/User/routes';
 import userSetting from './components/UserSetting/routes';
 import communityRouters from './components/Community/routes';
+import searchRoutes from './components/Search/routes';
 import communitySettingRouters from './components/CommunitySetting/routes';
 import { detectUser } from './api/auth';
 
@@ -65,8 +66,8 @@ const routes = [
     },
     {
         path: '/search',
-        component: SearchResultComponent,
-        name: 'search_page'
+        children: searchRoutes,
+        component: SearchPage
     }
 ];
 

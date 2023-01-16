@@ -1,6 +1,6 @@
 <template>
     <div id="post">
-        <div v-if="!isNotFound" class="box post-box column is-two-thirds-tablet is-one-desktop 
+        <div v-if="!isNotFound" :class="{ 'box': !isMobile() }" class="post-box column is-two-thirds-tablet is-one-desktop 
         is-one-third-widescreen is-half-fullhd mx-sm-5">
             <div v-if="post" ref="post" class="post">
                 <canvas ref="canvas"></canvas>
@@ -108,7 +108,7 @@
                     </video>
                 </div>
                 <hr class="split-reaction-post">
-                <ReactionComponent @focusComment="handleFocusComment" :post="post" />
+                <ReactionComponent class="box-reactions" @focusComment="handleFocusComment" :post="post" />
             </div>
             <article v-if="focusComment && user" class="media">
                 <figure class="media-left">
@@ -125,7 +125,7 @@
                                 </textarea>
                             </p>
                         </div>
-                        <nav class="level">
+                        <nav class="level is-mobile">
                             <div class="level-left">
                                 <div class="level-item">
                                     <a @click="handleCommentToPost" class="button is-small is-info">Submit</a>
@@ -155,7 +155,7 @@ import { createComment, getListCommentAPI, deleteCommentAPI, deletePost, getPost
 import ListCommentComponent from './Children/ListCommentComponent.vue';
 import ReactionComponent from './Children/ReactionComponent.vue';
 import ConfirmDeleteComponent from '../Common/ConfirmDeleteComponent.vue';
-import { calculateTime } from '../../helpers/common';
+import { calculateTime, detectMobile } from '../../helpers/common';
 import NotFoundComponent from '../Common/errors/NotFoundComponent.vue';
 import authMixin from '../../mixins';
 import UserInforCard from '../Common/UserInforCard.vue';
@@ -163,13 +163,13 @@ import CommunityInfoCard from '../Common/CommunityInfoCard.vue';
 
 export default {
     components: {
-    ListCommentComponent,
-    ReactionComponent,
-    ConfirmDeleteComponent,
-    NotFoundComponent,
-    UserInforCard,
-    CommunityInfoCard
-},
+        ListCommentComponent,
+        ReactionComponent,
+        ConfirmDeleteComponent,
+        NotFoundComponent,
+        UserInforCard,
+        CommunityInfoCard
+    },
     mixins: [authMixin],
     emits: ['postDeleted'],
     data() {
@@ -273,6 +273,9 @@ export default {
         },
         handleShowUserCard(event) {
             this.displayUserInformation = true;
+        },
+        isMobile() {
+            return detectMobile();
         }
     }
 }
@@ -419,5 +422,11 @@ textarea {
 
 .is-32x32 .avatar-image {
     height: 32px;
+}
+
+@media screen and (max-width: 450px) {
+    .box-reactions /deep/ button {
+        font-size: 10px !important;
+    }
 }
 </style>

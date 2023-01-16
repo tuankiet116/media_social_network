@@ -74,7 +74,7 @@ class CommunityController extends Controller
 
     public function deleteMember(Community $community, Request $request)
     {
-        $userId = $request->get('user_id');
+        $userId = $request->query('userId');
         try {
             $result = $this->communityService->deleteMember($community, $userId);
             return $this->responseData($result);

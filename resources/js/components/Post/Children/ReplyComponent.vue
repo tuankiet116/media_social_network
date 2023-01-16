@@ -19,7 +19,7 @@
                             </textarea>
                         </p>
                     </div>
-                    <nav class="level">
+                    <nav class="level is-mobile">
                         <div class="level-left">
                             <div class="level-item">
                                 <a @click="handleEdit" class="button is-small is-info">Edit</a>

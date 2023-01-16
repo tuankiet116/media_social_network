@@ -107,14 +107,14 @@
                                     autofocus></textarea>
                             </p>
                         </div>
-                        <nav class="level">
+                        <nav class="level is-mobile">
                             <div class="level-left">
                                 <div class="level-item">
-                                    <a class="button is-info is-rounded is-small" @click="handleReply">Submit</a>
+                                    <a class="button is-info is-small" @click="handleReply">Submit</a>
                                 </div>
                                 <div class="level-item">
                                     <a @click="displayReply = false"
-                                        class="button is-light is-small is-rounded">Cancel</a>
+                                        class="button is-light is-small">Cancel</a>
                                 </div>
                             </div>
                             <div class="level-left">
