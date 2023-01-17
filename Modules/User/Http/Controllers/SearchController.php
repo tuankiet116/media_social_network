@@ -24,15 +24,39 @@ class SearchController extends Controller
         return $this->responseData($result);
     }
 
-    public function searchPost(Request $request)
+    public function searchAll(Request $request)
     {
-        $keyword = $request->query('keyword');
-    }
-
-    public function searchAll(Request $request) {
         $keyword = $request->query('keyword');
         $offset = $request->query('offset');
         $result = $this->searchService->searchAll($keyword, $offset);
         return $this->responseData($result);
+    }
+
+    public function searchPost(Request $request)
+    {
+        $keyword = $request->query('keyword');
+        $offset = $request->query('offset');
+        $result = $this->searchService->searchPost($keyword, $offset);
+        return $this->responseData($result);
+    }
+
+    public function searchUser(Request $request)
+    {
+        $keyword = $request->query('keyword');
+        $offset = $request->query('offset');
+        $result = $this->searchService->searchUser($keyword, $offset);
+        return $this->responseData($result);
+    }
+
+    public function searchCommunity(Request $request)
+    {
+        $keyword = $request->query('keyword');
+        $offset = $request->query('offset');
+        $result = $this->searchService->searchCommunity($keyword, $offset);
+        return $this->responseData($result);
+    }
+
+    public function insertHistoryResult(Request $request) {
+        
     }
 }

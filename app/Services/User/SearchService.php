@@ -2,6 +2,7 @@
 
 namespace App\Services\User;
 
+use App\Models\Community;
 use App\Models\HistorySearch;
 use App\Models\Post;
 use App\Models\User;
@@ -34,14 +35,17 @@ class SearchService
             ];
             $isExist = HistorySearch::where($dataKeywordSearch)->count();
             if ($result_type && $result_id) {
-                HistorySearch::create([
-                    'keyword' => $keyword,
-                    'user_id' => $userId,
-                    'result_type' => $result_type,
-                    'result_id' => $result_id
-                ]);
                 if ($isExist) {
-                    HistorySearch::where($dataKeywordSearch)->delete();
+                    $history = HistorySearch::where($dataKeywordSearch)->first();
+                    $history->result_id = $result_id;
+                    $history->result_type = $result_type;
+                } else {
+                    HistorySearch::create([
+                        'keyword' => $keyword,
+                        'user_id' => $userId,
+                        'result_type' => $result_type,
+                        'result_id' => $result_id
+                    ]);
                 }
             } else if (!$isExist) {
                 HistorySearch::create([
@@ -63,6 +67,9 @@ class SearchService
             ->orWhereHas('community', function ($query) use ($keyword) {
                 return $query->where('community_name', 'like', '%' . $keyword . '%');
             })
+            ->orWhereHas('user', function ($query) use ($keyword) {
+                return $query->where('name', 'like', '%' . $keyword . '%');
+            })
             ->orderBy('created_at', 'DESC')
             ->limit(LIMIT);
         if ($offset) {
@@ -82,28 +89,59 @@ class SearchService
         return array('posts' => $posts, 'offset' => $newOffset ?? null);
     }
 
-    public function searchPosts($keyword, $offset = 0)
+    public function searchPost($keyword, $offset = 0)
     {
-        $posts = Post::where('title', 'like', '%' . $keyword . '%')
+        self::insertHistory($keyword);
+        $postQuery = Post::with(['user:id,name,image', 'community'])
+            ->withCount('reactionUser', 'comments')
+            ->where('title', 'like', '%' . $keyword . '%')
             ->orWhere('post_description', 'like', '%' . $keyword . '%')
             ->orderBy('created_at', 'DESC')
-            ->limit(LIMIT)->offset($offset)->get();
-        if (count($posts)) {
-            $newOffset = count($posts) + LIMIT;
+            ->limit(LIMIT);
+        if ($offset) {
+            $postQuery = $postQuery->offset($offset);
         }
-        $result = [
-            'posts' => $posts,
-            'offset' => $newOffset
-        ];
-        return $result;
+        $posts = $postQuery->get();
+
+        $posts->each(function ($post) {
+            $post->load(['comments' => function ($q) {
+                return $q->withCount('likes')->where('belong_id', null)->orderBy('created_at', 'DESC')->limit(LIMIT_COMMENT_OVERVIEW)->with('users');
+            }]);
+        });
+
+        if ($posts) {
+            $newOffset = $posts->count() + $offset;
+        }
+        return array('posts' => $posts, 'offset' => $newOffset ?? null);
     }
 
     public function searchUser($keyword, $offset)
     {
-        $users = User::where('name', 'like', '%' . $keyword . '%');
+        $users = User::where('name', 'like', '%' . $keyword . '%')
+            ->limit(LIMIT)
+            ->offset($offset)
+            ->get();
+        $newOffset = 0;
+        if (count($users)) {
+            $newOffset = count($users) + LIMIT;
+        }
+        return array(
+            'users' => $users,
+            'offset' => $newOffset
+        );
     }
 
     public function searchCommunity($keyword, $offset)
     {
+        $communities = Community::where('community_name', 'like', '$' . $keyword . '%')
+            ->limit(LIMIT)->offset($offset)->get();
+        $newOffset = 0;
+        if (count($communities)) {
+            $newOffset = count($communities) + LIMIT;
+        }
+        return array(
+            'communities' => $communities,
+            'offset' => $newOffset
+        );
     }
 }

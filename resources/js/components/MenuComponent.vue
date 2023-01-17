@@ -116,7 +116,7 @@ export default {
         },
         redirectSearch() {
             if (this.search) {
-                this.$router.push({ name: 'search_page', query: { search: this.search } });
+                this.$router.push({ name: 'search_page', params: { keyword: this.search } });
             }
         },
         isMobile() {

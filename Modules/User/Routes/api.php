@@ -69,6 +69,9 @@ Route::middleware('auth.api')->prefix('community')->name('community.')->group(fu
 Route::prefix('search')->group(function() {
     Route::get('history', 'SearchController@searchHistory');
     Route::get('all', 'SearchController@searchAll');
+    Route::get('post', 'SearchController@searchPost');
+    Route::get('user', 'SearchController@searchUser');
+    Route::get('community', 'SearchController@searchCommunity');
 });
 
 Route::get('community/posts/{id}/{offset?}', 'CommunityController@getPosts')->name('posts');

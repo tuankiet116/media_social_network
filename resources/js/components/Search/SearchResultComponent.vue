@@ -5,20 +5,25 @@
     <div v-else>
         <NotFoundComponent/>
     </div>
+    <div v-if="isLoading">
+        <LoadingComponent/>
+    </div>
 </template>
 <script>
 import authMixin from '../../mixins';
 import { searchAll } from '../../api/search';
 import PostComponent from '../Post/Children/PostComponent.vue';
 import NotFoundComponent from '../Common/errors/NotFoundComponent.vue';
+import LoadingComponent from '../Common/LoadingComponent.vue';
 export default {
-    components: { PostComponent, NotFoundComponent },
+    components: { PostComponent, NotFoundComponent, LoadingComponent },
     data() {
         return {
             keyword: this.$route.params.keyword,
             results: [],
             offset: 0,
-            isNotFound: false
+            isNotFound: false,
+            isLoading: false
         }
     },
     mixins: [authMixin],
@@ -27,6 +32,7 @@ export default {
     },
     methods: {
         async search() {
+            this.isLoading = true;
             await searchAll(this.keyword).then(res => {
                 console.log(res);
                 this.results = res.data.posts;
@@ -35,6 +41,7 @@ export default {
                     this.isNotFound = true
                 }
             });
+            this.isLoading = false;
         }
     }
 }
