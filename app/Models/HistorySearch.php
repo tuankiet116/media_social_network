@@ -16,9 +16,18 @@ class HistorySearch extends Model
         'result_id'
     ];
 
+    protected $appends = ['result'];
+
     protected $table = 'history_search';
 
-    public function result() {
-        
+    public function getResultAttribute()
+    {
+        if ($this->result_type == SEARCH_TYPE_USER) {
+            return User::where('id', $this->result_id)->first();
+        }
+
+        if ($this->result_type == SEARCH_TYPE_COMMUNITY) {
+            return Community::where('id', $this->result_id)->first();
+        }
     }
 }

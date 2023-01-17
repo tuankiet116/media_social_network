@@ -72,6 +72,7 @@ Route::prefix('search')->group(function() {
     Route::get('post', 'SearchController@searchPost');
     Route::get('user', 'SearchController@searchUser');
     Route::get('community', 'SearchController@searchCommunity');
+    Route::post('history', 'SearchController@insertHistory');
 });
 
 Route::get('community/posts/{id}/{offset?}', 'CommunityController@getPosts')->name('posts');

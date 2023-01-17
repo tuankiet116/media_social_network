@@ -35,17 +35,27 @@ class SearchService
             ];
             $isExist = HistorySearch::where($dataKeywordSearch)->count();
             if ($result_type && $result_id) {
-                if ($isExist) {
-                    $history = HistorySearch::where($dataKeywordSearch)->first();
-                    $history->result_id = $result_id;
-                    $history->result_type = $result_type;
-                } else {
-                    HistorySearch::create([
-                        'keyword' => $keyword,
-                        'user_id' => $userId,
-                        'result_type' => $result_type,
-                        'result_id' => $result_id
-                    ]);
+                $resultExist = false;
+                if ($result_type == SEARCH_TYPE_COMMUNITY) {
+                    $resultExist = Community::where('id', $result_id)->first() ? true : false;
+                } else if ($result_type == SEARCH_TYPE_USER) {
+                    $resultExist = User::where('id', $result_id)->first() ? true : false;
+                }
+
+                if ($resultExist) {
+                    if ($isExist) {
+                        $history = HistorySearch::where($dataKeywordSearch)->first();
+                        $history->result_id = $result_id;
+                        $history->result_type = $result_type;
+                        $history->save();
+                    } else {
+                        HistorySearch::create([
+                            'keyword' => $keyword,
+                            'user_id' => $userId,
+                            'result_type' => $result_type,
+                            'result_id' => $result_id
+                        ]);
+                    }
                 }
             } else if (!$isExist) {
                 HistorySearch::create([
@@ -120,6 +130,7 @@ class SearchService
         $users = User::where('name', 'like', '%' . $keyword . '%')
             ->limit(LIMIT)
             ->offset($offset)
+            ->orderBy('created_at', 'DESC')
             ->get();
         $newOffset = 0;
         if (count($users)) {
@@ -133,8 +144,9 @@ class SearchService
 
     public function searchCommunity($keyword, $offset)
     {
-        $communities = Community::where('community_name', 'like', '$' . $keyword . '%')
-            ->limit(LIMIT)->offset($offset)->get();
+        $communities = Community::where('community_name', 'like', '%' . $keyword . '%')
+            ->limit(LIMIT)->offset($offset)
+            ->orderBy('created_at', 'DESC')->get();
         $newOffset = 0;
         if (count($communities)) {
             $newOffset = count($communities) + LIMIT;

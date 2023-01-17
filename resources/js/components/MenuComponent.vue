@@ -84,7 +84,8 @@
                 </div>
             </div>
         </nav>
-        <SearchBoxComponent v-if="openSearch" :keywords="search" @redirectSearch="openSearch=false" class="search-box-result" />
+        <SearchBoxComponent v-if="openSearch" :keywords="search" @redirectSearch="openSearch = false"
+            class="search-box-result" />
     </div>
 </template>
 
@@ -115,9 +116,14 @@ export default {
             this.$emit("increaseKey", this.keyComponent);
         },
         redirectSearch() {
-            if (this.search) {
-                this.$router.push({ name: 'search_page', params: { keyword: this.search } });
-            }
+            let routerName = this.$route.name;
+            if (routerName == 'search_page' ||
+                routerName == 'search_user' ||
+                routerName == 'search_post' || 
+                routerName == 'search_community')
+                if (this.search) {
+                    this.$router.push({ name: routerName, params: { keyword: this.search } });
+                }
         },
         isMobile() {
             return detectMobile();

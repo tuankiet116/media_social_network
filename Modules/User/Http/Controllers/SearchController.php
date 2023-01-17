@@ -56,7 +56,11 @@ class SearchController extends Controller
         return $this->responseData($result);
     }
 
-    public function insertHistoryResult(Request $request) {
-        
+    public function insertHistory(Request $request) {
+        $keyword = $request->get('keyword');
+        $resultType = $request->get('result_type');
+        $resultId = $request->get('result_id');
+        $result = $this->searchService->insertHistory($keyword, $resultType, $resultId);
+        return $this->responseData($result);
     }
 }

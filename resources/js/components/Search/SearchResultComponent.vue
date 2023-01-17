@@ -3,7 +3,7 @@
         <PostComponent :post="r"/>
     </div>
     <div v-else>
-        <NotFoundComponent/>
+        <NotFoundSearchComponent/>
     </div>
     <div v-if="isLoading">
         <LoadingComponent/>
@@ -13,10 +13,10 @@
 import authMixin from '../../mixins';
 import { searchAll } from '../../api/search';
 import PostComponent from '../Post/Children/PostComponent.vue';
-import NotFoundComponent from '../Common/errors/NotFoundComponent.vue';
+import NotFoundSearchComponent from '../Common/errors/NotFoundSearchComponent.vue';
 import LoadingComponent from '../Common/LoadingComponent.vue';
 export default {
-    components: { PostComponent, NotFoundComponent, LoadingComponent },
+    components: { PostComponent, NotFoundSearchComponent, LoadingComponent },
     data() {
         return {
             keyword: this.$route.params.keyword,
