@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Post;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -10,19 +11,19 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class EventListPost implements ShouldBroadcast
+class NotificationPost
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $id;
+    private $post;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($id)
+    public function __construct(Post $post)
     {
-        $this->id = $id;
+        $this->post = $post;
     }
 
     /**
@@ -32,6 +33,6 @@ class EventListPost implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('user_notification');
+        return new PrivateChannel('user_notification.' . $this->post->user_id);
     }
 }

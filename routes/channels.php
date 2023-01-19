@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,6 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('user_notification', function($user) {
-    return true;
-}, ['guards' => ['web']]);
+Broadcast::channel('user_notification.{userId}', function ($user, $userId) {
+    return $user->id === $userId;
+});
