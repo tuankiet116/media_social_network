@@ -31,7 +31,7 @@ class NotificationEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('user_notification');
+        return new PrivateChannel('user_notification.' . self::$notification->user_id);
     }
 
     public function broadcastWith() {

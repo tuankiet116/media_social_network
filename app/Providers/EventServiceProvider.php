@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-use App\Events\NotificationPost;
-use App\Listeners\SendNotification;
+use Modules\User\Listeners\SendNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use Modules\User\Events\NotificationEvent;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -20,6 +20,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        NotificationEvent::class => [
+            SendNotification::class
+        ]
     ];
 
     protected $subscribe = [

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Listeners;
+namespace Modules\User\Listeners;
 
 use App\Events\NotificationPost;
 use App\Services\User\NotificationService;

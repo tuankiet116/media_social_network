@@ -41,8 +41,9 @@ class CommentService
             'read' => NOTIFICATION_UNREAD,
             'type' => NOTIFICATION_USER_COMMENT_POST
         ]);
-        event(new NotificationEvent($notification));
-
+        // NotificationEvent::dispatch($notification);
+        // event(new NotificationEvent($notification));
+        broadcast(event(new NotificationEvent($notification)));
         return $comment;
     }
 
