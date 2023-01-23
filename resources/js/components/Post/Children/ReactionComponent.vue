@@ -4,7 +4,7 @@
             <button ref="button" class="button btn" @click="likeHandle">
                 <span v-if="like">🎉</span>
                 <i v-else class="fa-regular fa-thumbs-up"></i>
-                <span>Like</span>
+                <span>{{ $t('post.love') }}</span>
                 |
                 <span>{{ post.reaction_user_count }}</span>
             </button>
@@ -12,7 +12,7 @@
         <div class="column">
             <button class="btn button" @click="$emit('focusComment')">
                 <i class="fa-regular fa-message"></i>
-                <span>Comment</span>
+                <span>{{ $t('post.comment') }}</span>
                 |
                 <span>{{ post.comments_count }}</span>
             </button>
@@ -20,14 +20,14 @@
         <div class="column">
             <button class="btn button">
                 <i class="fa-solid fa-share"></i>
-                <span>Share</span>
+                <span>{{ $t('post.share') }}</span>
             </button>
         </div>
     </div>
     <div class="columns" v-else>
         <div class="column no-reactions">
             <span>{{ $t('post.auth_react') }} &nbsp; &nbsp;</span>
-            <a href='/user/login' class='button is-small is-info'>Đăng Nhập</a>
+            <a href='/user/login' class='button is-small is-info'>{{ $t('login') }}</a>
         </div>
     </div>
 </template>

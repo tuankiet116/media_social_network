@@ -6,8 +6,9 @@ use App\Models\UserNotification;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class NotificationEvent implements ShouldBroadcast
 {
@@ -31,7 +32,7 @@ class NotificationEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('user_notification.' . self::$notification->user_id);
+        return new PrivateChannel('user_notification.' . $this->notification->user_id);
     }
 
     public function broadcastWith() {

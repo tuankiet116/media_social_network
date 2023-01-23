@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Models\CommentUser;
 use App\Models\Post;
 use App\Models\UserNotification;
+use Illuminate\Support\Facades\Log;
 use Modules\User\Events\NotificationEvent;
 
 class CommentService
@@ -41,9 +42,12 @@ class CommentService
             'read' => NOTIFICATION_UNREAD,
             'type' => NOTIFICATION_USER_COMMENT_POST
         ]);
+        Log::info('Broadcast Driver:', [env('BROADCAST_DRIVER')]);
+        Log::info('Notification created:', $notification->toArray());
+
         // NotificationEvent::dispatch($notification);
-        // event(new NotificationEvent($notification));
-        broadcast(event(new NotificationEvent($notification)));
+        event(new NotificationEvent($notification));
+        // broadcast(new NotificationEvent($notification));
         return $comment;
     }
 

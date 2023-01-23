@@ -5,6 +5,9 @@
     "profile": "Trang Cá Nhân",
     "login": "Đăng Nhập",
     "signup": "Đăng Ký",
+    "load_more": "Tải thêm",
+    "edit": "Chỉnh sửa",
+    "cancel": "Thoát",
     "menu": {
         "create_post": "Đăng bài",
         "notification": "Thông báo"
@@ -36,7 +39,9 @@
     "post": {
         "auth_react": "Bạn cần đăng nhập để bình luận và tương tác.",
         "love": "Yêu thích",
-        "confirm_delete": "Bạn có chắc chắn muốn xóa bài viết này không?"
+        "confirm_delete": "Bạn có chắc chắn muốn xóa bài viết này không?",
+        "comment": "Bình luận",
+        "share": "Chia sẻ"
     },
     "comment": {
         "confirm_delete": "Bạn có muốn xóa bình luận của mình?",
@@ -50,5 +55,12 @@
         "date": " Ngày trước",
         "month": " Tháng trước",
         "year": " Năm trước"
+    },
+    "user_page": {
+        "no_infor": "Không có thông tin.",
+        "first_welcome": "Hãy chia sẽ điều tuyệt vời đầu tiên đến cộng đồng MS!",
+        "chat": "Nhắn tin",
+        "follow": "Theo dõi",
+        "following": "Đang theo dõi"
     }
 }

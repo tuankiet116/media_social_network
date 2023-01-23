@@ -15,7 +15,7 @@
                 <button class="button is-link" @click="updateInformation">Submit</button>
             </div>
             <div class="control">
-                <button class="button is-link is-light">Cancel</button>
+                <button class="button is-link is-light">{{ $t('cancel') }}</button>
             </div>
         </div>
     </div>

@@ -17,7 +17,7 @@
                     </p>
                 </blockquote>
                 <blockquote v-else>
-                    <p>No Information</p>
+                    <p>{{ $t('user_page.no_infor') }}</p>
                 </blockquote>
             </div>
         </div>

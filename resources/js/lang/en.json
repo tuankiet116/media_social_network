@@ -5,6 +5,9 @@
     "profile": "Your Profile",
     "login": "Login",
     "signup": "Signup",
+    "load_more": "Load More",
+    "edit": "Edit",
+    "cancel": "Cancel",
     "menu": {
         "create_post": "Create Post",
         "notification": "Notification"
@@ -36,7 +39,9 @@
     "post": {
         "auth_react": "You need to login before comment and reactions",
         "love": "Like",
-        "confirm_delete": "Do you want to delete your post?"
+        "confirm_delete": "Do you want to delete your post?",
+        "comment": "Comment",
+        "share": "Share"
     },
     "comment": {
         "confirm_delete": "Do you want to delete your comment?",
@@ -50,5 +55,12 @@
         "date": " Days Ago",
         "month": " Months Ago",
         "year": " Years Ago"
+    },
+    "user_page": {
+        "no_infor": "No Information About This Account",
+        "first_welcome": "Let's share your first Amazing Things to The Community!",
+        "chat": "Chat",
+        "follow": "Follow",
+        "following": "Following"
     }
 }

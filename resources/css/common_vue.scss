@@ -12,6 +12,7 @@ $navbar-breakpoint: $tablet;
 @import "../../node_modules/bulma/sass/layout/section.sass";
 @import "../../node_modules/bulma/sass/grid/columns.sass";
 @import 'vue-select/dist/vue-select.css';
+@import '../../node_modules/bulma-quickview/dist/css/bulma-quickview.sass';
 
 .ck-editor__editable {
     height: 300px;

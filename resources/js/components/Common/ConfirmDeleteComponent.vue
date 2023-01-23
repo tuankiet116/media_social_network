@@ -7,7 +7,7 @@
                 <p>{{ message }}</p>
                 <div class="buttons is-justify-content-center">
                     <button class="button is-primary" @click="handleConfirm">OK</button>
-                    <button class="button" @click="closeModal">Cancel</button>
+                    <button class="button" @click="closeModal">{{ $t('cancel') }}</button>
                 </div>
             </div>
         </div>

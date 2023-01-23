@@ -95,7 +95,7 @@
                                 params: { id: post.id },
                             })
                         " class="navbar-item">
-                            <span>Edit</span>
+                            <span>{{ $t('edit') }}</span>
                             <i class="fas fa-edit"></i>
                         </a>
                         <hr />

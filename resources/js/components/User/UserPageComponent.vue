@@ -7,7 +7,7 @@
                     <a class="button is-rounded">
                         <span>
                             <i class="fa-solid fa-message"></i>
-                            Chat
+                            {{ $t('user_page.chat') }}
                         </span>
                     </a>
                 </div>
@@ -30,7 +30,7 @@
                         </span>
                     </a>
                     <router-link v-else class="button is-rounded" :to="{ name: 'edit_profile_basic' }">
-                        Edit
+                        {{ $t('edit') }}
                     </router-link>
                 </div>
             </div>

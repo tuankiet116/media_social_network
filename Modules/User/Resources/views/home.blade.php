@@ -10,11 +10,17 @@
   <link href="{{ asset('/css/common.css') }}" rel="stylesheet">
   <link href="{{ asset('/css/bulma.css') }}" rel="stylesheet">
   <script src="https://kit.fontawesome.com/62474f8a4e.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bulma-quickview@2.0.0/dist/js/bulma-quickview.min.js"></script>
 </head>
 
 <body>
   <div id="app"></div>
   <script src="{{ asset('vue/js/app.js') }}"></script>
+  <script>
+    window.onload = function() {
+      var quickviews = bulmaQuickview.attach()
+    };
+  </script>
 </body>
 
 </html>

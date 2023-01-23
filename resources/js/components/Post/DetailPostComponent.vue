@@ -1,7 +1,7 @@
 <template>
     <div id="post">
         <div v-if="!isNotFound" :class="{ 'box': !isMobile() }" class="post-box column is-two-thirds-tablet is-one-desktop 
-        is-one-third-widescreen is-half-fullhd mx-sm-5">
+        is-half-fullhd mx-sm-5">
             <div v-if="post" ref="post" class="post">
                 <canvas ref="canvas"></canvas>
                 <div class="user-info">
@@ -86,7 +86,7 @@
                             <a v-if="user && user.id == post.user_id"
                                 @click="$router.push({ name: 'edit_post', params: { id: post.id } })"
                                 class="navbar-item">
-                                <span>Edit</span>
+                                <span>{{ $t('edit') }}</span>
                                 <i class="fas fa-edit"></i>
                             </a>
                             <hr />
@@ -131,7 +131,7 @@
                                     <a @click="handleCommentToPost" class="button is-small is-info">Submit</a>
                                 </div>
                                 <div class="level-item">
-                                    <a @click="focusComment = false" class="button is-small is-light">Cancel</a>
+                                    <a @click="focusComment = false" class="button is-small is-light">{{ $t('cancel') }}</a>
                                 </div>
                             </div>
                         </nav>

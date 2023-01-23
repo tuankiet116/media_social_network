@@ -22,10 +22,10 @@
                     <nav class="level is-mobile">
                         <div class="level-left">
                             <div class="level-item">
-                                <a @click="handleEdit" class="button is-small is-info">Edit</a>
+                                <a @click="handleEdit" class="button is-small is-info">{{ $t('edit') }}</a>
                             </div>
                             <div class="level-item">
-                                <a @click="hideEdit" class="button is-small is-light">Cancel</a>
+                                <a @click="hideEdit" class="button is-small is-light">{{ $t('cancel') }}</a>
                             </div>
                         </div>
                     </nav>
@@ -61,7 +61,7 @@
                                 </a>
                                 <hr />
                                 <a v-if="user && user.id == comment.user_id" class="navbar-item" @click="showEdit">
-                                    <span>Edit</span>
+                                    <span>{{ $t('edit') }}</span>
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <hr />

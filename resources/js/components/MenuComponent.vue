@@ -37,13 +37,10 @@
                         <i class="fa-regular fa-square-plus"></i>
                         <span>&nbsp;{{ $t('menu.create_post') }}</span>
                     </router-link>
-                    <div class="navbar-item is-hidden-mobile has-dropdown is-hoverable">
-                        <a class="navbar-link">
-                            <i class="fa-solid fa-bell"></i>
-                            <span>&nbsp;{{ $t('menu.notification') }}</span>
-                        </a>
-                        <NotificationComponent />
-                    </div>
+                    <a class="navbar-item is-hidden-mobile" data-show="quickview" data-target="quickviewDefault">
+                        <i class="fa-solid fa-bell"></i>
+                        <span>&nbsp;{{ $t('menu.notification') }}</span>
+                    </a>
                     <div v-if="user.groups.length" class="navbar-item has-dropdown is-hoverable">
                         <a class="navbar-link">
                             Your Community
@@ -87,6 +84,7 @@
         <SearchBoxComponent v-if="openSearch" :keywords="search" @redirectSearch="openSearch = false"
             class="search-box-result" />
     </div>
+    <NotificationComponent />
 </template>
 
 <script>

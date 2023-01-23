@@ -5,7 +5,7 @@
             @isEditting="$emit('isEditting')" />
     </div>
     <div class="load-more">
-        <a v-if="isLoadMore && comments.length" @click="loadReplies">Load More</a>
+        <a v-if="isLoadMore && comments.length" @click="loadReplies">{{ $t('load_more') }}</a>
     </div>
 </template>
 
