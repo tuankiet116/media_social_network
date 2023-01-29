@@ -62,5 +62,19 @@
         "chat": "Chat",
         "follow": "Follow",
         "following": "Following"
+    },
+    "notification": {
+        "notification": "Notifications",
+        "no_more": "No more notification",
+        "comment_post": "Commented on your post",
+        "react_post": "Loved your post",
+        "react_comment": "Liked your comment",
+        "reply_comment": "Reply your comment",
+        "reply_comment_post": "Reply a comment of your post",
+        "join_community": "Has been joined your community",
+        "leave_community": "Has been left your communtiy"
+    },
+    "chat": {
+        "title": "Message"
     }
 }

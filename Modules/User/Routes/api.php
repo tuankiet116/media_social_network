@@ -66,6 +66,13 @@ Route::middleware('auth.api')->prefix('community')->name('community.')->group(fu
     Route::post('/setting/background/{community}', 'CommunitySettingController@updateBackground')->middleware('can:update,community');
 });
 
+Route::middleware('auth.api')->prefix('notification')->group(function() {
+    Route::get('list', 'NotificationController@getNotifications');
+    Route::get('count-unread', 'NotificationController@getCountUnread');
+    Route::post('mark-read/{id}', 'NotificationController@markReadNotification');
+    Route::post('mark-read-all', 'NotificationController@markReadAllNotifications');
+});
+
 Route::prefix('search')->group(function() {
     Route::get('history', 'SearchController@searchHistory');
     Route::get('all', 'SearchController@searchAll');
@@ -73,6 +80,14 @@ Route::prefix('search')->group(function() {
     Route::get('user', 'SearchController@searchUser');
     Route::get('community', 'SearchController@searchCommunity');
     Route::post('history', 'SearchController@insertHistory');
+});
+
+Route::middleware('auth.api')->prefix('message')->group(function() {
+    Route::post('send', 'MessageController@message');
+    Route::post('mark-read', 'MessageController@markReadChat');
+    Route::get('list-chat', 'MessageController@getListChat');
+    Route::get('unread-chat', 'MessageController@getUnreadChat');
+    Route::get('chat/{receiver}', 'MessageController@getMessages');
 });
 
 Route::get('community/posts/{id}/{offset?}', 'CommunityController@getPosts')->name('posts');

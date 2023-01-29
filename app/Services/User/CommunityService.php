@@ -5,9 +5,11 @@ namespace App\Services\User;
 use App\Models\Community;
 use App\Models\CommunityUser;
 use App\Models\Post;
+use App\Models\UserNotification;
 use App\Services\Inf\StorageService;
 use Exception;
 use Illuminate\Support\Facades\Storage;
+use Modules\User\Events\NotificationEvent;
 
 class CommunityService
 {
@@ -151,6 +153,14 @@ class CommunityService
                 'community_id' => $community->id,
                 'user_id' => $userId
             ]);
+            $notification = UserNotification::create([
+                'user_id' => $community->user_id,
+                'user_sender_id' => $userId,
+                'community_sender_id' => $community->id,
+                'type' => NOTIFICATION_JOIN_COMMUNITY
+            ]);
+            NotificationEvent::dispatch($notification);
+
             return true;
         }
         return false;
@@ -165,6 +175,15 @@ class CommunityService
                 'user_id' => $userId
             ])->first();
             $communityUser->delete();
+
+            $notification = UserNotification::create([
+                'user_id' => $community->user_id,
+                'user_sender_id' => $userId,
+                'community_sender_id' => $community->id,
+                'type' => NOTIFICATION_LEAVE_COMMUNITY
+            ]);
+            NotificationEvent::dispatch($notification);
+
             return true;
         }
         return false;

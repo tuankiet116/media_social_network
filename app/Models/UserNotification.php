@@ -14,6 +14,19 @@ class UserNotification extends Model
         'user_sender_id',
         'community_sender_id',
         'type',
-        'read'
+        'read',
+        'post_id',
+        'comment_id',
+        'community_id'
     ];
+
+    public function userSender()
+    {
+        return $this->belongsTo(User::class, 'user_sender_id');
+    }
+
+    public function communitySender()
+    {
+        return $this->belongsTo(Community::class, 'community_sender_id');
+    }
 }

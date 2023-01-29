@@ -35,19 +35,17 @@ class CommentService
         $comment = Comment::with('users')->find($result->id);
         $userId = auth()->id();
         $post = Post::where('id', $data['post_id'])->first();
-        $notification = UserNotification::create([
-            'user_id' => $post->user_id,
-            'user_sender_id' => $userId,
-            'community_sender_id' => null,
-            'read' => NOTIFICATION_UNREAD,
-            'type' => NOTIFICATION_USER_COMMENT_POST
-        ]);
-        Log::info('Broadcast Driver:', [env('BROADCAST_DRIVER')]);
-        Log::info('Notification created:', $notification->toArray());
-
-        // NotificationEvent::dispatch($notification);
-        event(new NotificationEvent($notification));
-        // broadcast(new NotificationEvent($notification));
+        if ($post->user_id != $userId) {
+            $notification = UserNotification::create([
+                'user_id' => $post->user_id,
+                'user_sender_id' => $userId,
+                'community_sender_id' => null,
+                'comment_id' => $comment->id,
+                'post_id' => $post->id,
+                'type' => NOTIFICATION_USER_COMMENT_POST
+            ]);
+            NotificationEvent::dispatch($notification);
+        }
         return $comment;
     }
 
@@ -83,17 +81,30 @@ class CommentService
     public function likeComment($res)
     {
         $userId = auth()->id();
+        $commentId = $res['comment_id'];
         $data = array(
             'user_id' => $userId,
-            'comment_id' => $res['comment_id']
+            'comment_id' => $commentId
         );
         $liked = CommentUser::where($data)->first();
         if (!$liked && $res['like'] == true) {
             CommentUser::create($data);
+            $comment = Comment::where('id', $commentId)->first();
+            if ($comment->user_id != $userId) {
+                $notification = UserNotification::create([
+                    'user_id' => $comment->user_id,
+                    'user_sender_id' => $userId,
+                    'community_sender_id' => null,
+                    'comment_id' => $commentId,
+                    'post_id' => $comment->post_id,
+                    'type' => NOTIFICATION_USER_REACT_COMMENT
+                ]);
+                NotificationEvent::dispatch($notification);
+            }
         } else {
             $liked->delete();
         }
-        $numberLikes = CommentUser::where('comment_id', $res['comment_id'])->count();
+        $numberLikes = CommentUser::where('comment_id', $commentId)->count();
         return $numberLikes;
     }
 
@@ -107,6 +118,33 @@ class CommentService
             'post_id' => $req['post_id']
         );
         $comment = Comment::create($data);
+        $commentParent = Comment::where('id', $req['belong_id'])->first();
+        $post = Post::where('id', $req['post_id'])->first();
+        if ($commentParent->user_id != $userID) {
+            $notiCommentOwner = UserNotification::create([
+                'user_id' => $commentParent->user_id,
+                'user_sender_id' => $userID,
+                'community_sender_id' => null,
+                'comment_id' => $req['belong_id'],
+                'post_id' => $comment->post_id,
+                'type' => NOTIFICATION_USER_REPLY_COMMENT
+            ]);
+
+            NotificationEvent::dispatch($notiCommentOwner);
+        }
+
+        if ($post->user_id !== $userID) {
+            $notiPostOwner = UserNotification::create([
+                'user_id' => $post->user_id,
+                'user_sender_id' => $userID,
+                'community_sender_id' => null,
+                'comment_id' => $req['belong_id'],
+                'post_id' => $comment->post_id,
+                'type' => NOTIFICATION_USER_REPLY_COMMENT_IN_POST
+            ]);
+
+            NotificationEvent::dispatch($notiPostOwner);
+        }
         return Comment::with('users')->where('id', $comment->id)->first();
     }
 

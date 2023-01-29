@@ -212,7 +212,7 @@ export default {
         handleFocusComment() {
             this.focusComment = !this.focusComment;
             this.$refs.listComment.loadComments();
-            this.$refs.listComment.$refs.comment.forEach((cm) => {
+            this.$refs.listComment.$refs.comment?.forEach((cm) => {
                 cm.hideEdit();
             })
         },

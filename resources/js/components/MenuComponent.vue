@@ -30,20 +30,11 @@
                 </div>
             </div>
 
-            <div id="navbar-menus-user" class="navbar-menu" v-else :class="{ 'is-active': showNav }">
+            <div id="navbar-menus-user" class="navbar-menu is-active is-hidden-mobile" v-else>
                 <div class="navbar-end">
-                    <router-link @click="increaseKey" class="navbar-item is-hidden-mobile"
-                        :to="{ name: 'create_post' }">
-                        <i class="fa-regular fa-square-plus"></i>
-                        <span>&nbsp;{{ $t('menu.create_post') }}</span>
-                    </router-link>
-                    <a class="navbar-item is-hidden-mobile" data-show="quickview" data-target="quickviewDefault">
-                        <i class="fa-solid fa-bell"></i>
-                        <span>&nbsp;{{ $t('menu.notification') }}</span>
-                    </a>
                     <div v-if="user.groups.length" class="navbar-item has-dropdown is-hoverable">
                         <a class="navbar-link">
-                            Your Community
+                            Community
                         </a>
                         <div class="navbar-dropdown">
                             <router-link v-for="gr of user.groups" @click="increaseKey" class="navbar-item"
@@ -60,6 +51,22 @@
                             </router-link>
                         </div>
                     </div>
+                    <router-link @click="increaseKey" class="navbar-item is-hidden-mobile"
+                        :to="{ name: 'create_post' }">
+                        <i class="fa-regular fa-square-plus"></i>
+                        <span>&nbsp;{{ $t('menu.create_post') }}</span>
+                    </router-link>
+                    <a class="navbar-item is-hidden-mobile" @click="markReadAllNotification" data-show="quickview"
+                        data-target="quickviewDefault">
+                        <i class="fa-solid fa-bell"></i>
+                        <span>&nbsp;{{ $t('menu.notification') }}</span>
+                        <span v-if="unreadNotifications" class="badge">&nbsp;{{ unreadNotifications }}</span>
+                    </a>
+                    <router-link class="navbar-item is-hidden-mobile" :to="{ name: 'list_chat' }">
+                        <i class="fa-solid fa-comments"></i>
+                        <span>&nbsp;{{ $t('chat.title') }}</span>
+                        <span v-if="messageCount" class="badge">&nbsp;{{ messageCount }}</span>
+                    </router-link>
                     <div class="navbar-item has-dropdown is-hoverable">
                         <a class="navbar-link">
                             <strong>{{ user.name }}</strong>
@@ -91,6 +98,7 @@
 import NotificationComponent from './Common/NotificationComponent.vue';
 import SearchBoxComponent from './Search/SearchBoxComponent.vue';
 import { detectMobile } from '../helpers/common';
+import { markReadAll } from '../api/notification';
 export default {
     props: ["user"],
     data() {
@@ -98,11 +106,22 @@ export default {
             showNav: false,
             keyComponent: 0,
             search: "",
-            openSearch: false
+            openSearch: false,
+            unreadNotifications: 0,
+            messageCount: 0
         };
     },
+    watch: {
+        '$store.getters.getUnreadNotifications': function (data) {
+            this.unreadNotifications = data;
+        },
+        '$store.getters.getUnreadMessages': function (data) {
+            this.messageCount = data.length;
+        }
+    },
     mounted() {
-        document.querySelector('body').addEventListener('click', this.handleClickOutside)
+        document.querySelector('body').addEventListener('click', this.handleClickOutside);
+        this.createEchoListeningMessage();
     },
     methods: {
         logout() {
@@ -117,7 +136,7 @@ export default {
             let routerName = this.$route.name;
             if (routerName == 'search_page' ||
                 routerName == 'search_user' ||
-                routerName == 'search_post' || 
+                routerName == 'search_post' ||
                 routerName == 'search_community')
                 if (this.search) {
                     this.$router.push({ name: routerName, params: { keyword: this.search } });
@@ -129,6 +148,34 @@ export default {
         handleClickOutside(event) {
             if (!event.target.closest('.search-box-result') && !event.target.closest('.search-box')) {
                 this.openSearch = false;
+            }
+        },
+        markReadAllNotification() {
+            markReadAll().then(result => {
+                if (result) {
+                    this.$store.state.unreadNotifications = 0;
+                }
+            });
+        },
+        createEchoListeningMessage() {
+            let user = JSON.parse(sessionStorage.getItem('user'));
+            if (user) {
+                Echo.private('fd25b0f2-fdaa-4c67-a8d4-f09c48e6790a.' + user.id)
+                    .listen('.message', (result) => {
+                        let userMessage = result.userMessage;
+                        userMessage.user_receive = result.userSendMessage;
+                        let unreadExist = this.$store.state.unreadMessages.find((val) => val.id == userMessage.id);
+                        let newMessageIdx = this.$store.state.newMessages.findIndex((val) => val.id == userMessage.id);
+                        if (!unreadExist) {
+                            this.$store.state.unreadMessages.unshift(result.userMessage);
+                        }
+
+                        if (newMessageIdx) {
+                            this.$store.state.newMessages.splice(newMessageIdx, 1);
+                        }
+                        this.$store.state.newMessages.unshift(result.userMessage);
+                        this.$store.state.messages.push(result.message);
+                    });
             }
         }
     },
@@ -146,6 +193,9 @@ export default {
 
 .navbar-menu {
     flex-grow: 0 !important;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
 }
 
 .navbar-start>a {
@@ -176,6 +226,26 @@ a:focus {
 .search-box-result {
     position: absolute;
     width: 30rem;
+}
+
+.badge {
+    padding: 2px;
+    background: crimson;
+    border-radius: 100%;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-end {
+    align-items: center !important;
+    background-color: #19B3E6;
+}
+
+.navbar-end a {
+    height: 100% !important;
 }
 
 @media screen and (max-width: 768px) {

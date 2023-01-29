@@ -40,9 +40,9 @@
                             </router-link>
                         </li>
                         <li>
-                            <router-link :to="{ name: 'edit_profile_password' }"
-                                :class="{ 'is-active': $route.name == 'edit_profile_password' }">
-                                Banned Member
+                            <router-link class="is-danger" :to="{ name: 'community_setting_delete' }"
+                                :class="{ 'is-active': $route.name == 'community_setting_delete' }">
+                                Delete Community
                             </router-link>
                         </li>
                     </ul>

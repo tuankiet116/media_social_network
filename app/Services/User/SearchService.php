@@ -127,11 +127,13 @@ class SearchService
 
     public function searchUser($keyword, $offset)
     {
-        $users = User::where('name', 'like', '%' . $keyword . '%')
-            ->limit(LIMIT)
-            ->offset($offset)
-            ->orderBy('created_at', 'DESC')
-            ->get();
+        $userId = auth()->id();
+        $users = User::where('name', 'like', '%' . $keyword . '%');
+        if ($userId) {
+            $users = $users->where('id', '!=', $userId);
+        }
+        $users = $users->limit(LIMIT)->offset($offset)
+            ->orderBy('created_at', 'DESC')->get();
         $newOffset = 0;
         if (count($users)) {
             $newOffset = count($users) + LIMIT;

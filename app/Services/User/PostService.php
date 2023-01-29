@@ -4,9 +4,11 @@ namespace App\Services\User;
 
 use App\Models\Post;
 use App\Models\PostUser;
+use App\Models\UserNotification;
 use App\Services\Inf\StorageService;
 use App\Services\Inf\VideoStream;
 use Illuminate\Support\Facades\Storage;
+use Modules\User\Events\NotificationEvent;
 
 class PostService
 {
@@ -88,17 +90,29 @@ class PostService
     public function reactToPost($req)
     {
         $userId = auth()->id();
+        $postId = $req['postId'];
         $data = [
             'user_id' => $userId,
-            'post_id' => $req['postId']
+            'post_id' => $postId
         ];
+        $post = Post::where('id', $postId)->first();
         $liked = PostUser::where($data)->first();
         if ($liked && $req['like'] == false) {
             PostUser::where($data)->delete();
         } else {
             PostUser::create($data);
+            if ($post->user_id != $userId) {
+                $notification = UserNotification::create([
+                    'user_id' => $post->user_id,
+                    'user_sender_id' => $userId,
+                    'post_id' => $postId,
+                    'type' => NOTIFICATION_USER_REACT_POST
+                ]);
+    
+                NotificationEvent::dispatch($notification);
+            }
         }
-        $amountReaction = PostUser::where('post_id', $req['postId'])->count();
+        $amountReaction = PostUser::where('post_id', $postId)->count();
         return $amountReaction;
     }
 

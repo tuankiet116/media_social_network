@@ -32,10 +32,18 @@ class NotificationEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('user_notification.' . $this->notification->user_id);
+        return new PrivateChannel('9a2fadf0-c697-4b83-ba75-89873b996845.' . $this->notification->user_id);
     }
 
-    public function broadcastWith() {
-        return $this->notification->toArray();
+    public function broadcastWith()
+    {
+        return [
+            'notification' => $this->notification->load('userSender', 'communitySender')
+        ];
+    }
+
+    public function broadcastAs()
+    {
+        return 'notification';
     }
 }

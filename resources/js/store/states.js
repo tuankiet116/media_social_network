@@ -1,5 +1,9 @@
 export default {
     user: null,
     postUploadProgress: 0,
-    offset: null
+    offset: null,
+    unreadNotifications: 0,
+    unreadMessages: [],
+    newMessages: [],
+    messages: []
 }

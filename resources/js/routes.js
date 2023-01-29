@@ -6,13 +6,15 @@ import UserPageComponent from './components/User/UserPageComponent.vue';
 import UserSettingComponent from './components/UserSetting/UserSettingComponent.vue';
 import CommunityPage from './components/Community/CommunityPage.vue';
 import CommunitySetting from './components/CommunitySetting/CommunitySetting.vue';
-import SearchPage from './components/Search/SearchPage'
+import SearchPage from './components/Search/SearchPage';
+import ListMessages from './components/Messages/ListMessages.vue';
 
 import userRouters from './components/User/routes';
 import userSetting from './components/UserSetting/routes';
 import communityRouters from './components/Community/routes';
 import searchRoutes from './components/Search/routes';
 import communitySettingRouters from './components/CommunitySetting/routes';
+import chatRoutes from './components/Messages/routes';
 import { detectUser } from './api/auth';
 
 const routes = [
@@ -68,6 +70,12 @@ const routes = [
         path: '/search',
         children: searchRoutes,
         component: SearchPage
+    },
+    {
+        path: '/chat',
+        children: chatRoutes,
+        component: ListMessages,
+        name: 'chat'
     }
 ];
 

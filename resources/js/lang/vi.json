@@ -62,5 +62,19 @@
         "chat": "Nhắn tin",
         "follow": "Theo dõi",
         "following": "Đang theo dõi"
+    },
+    "notification": {
+        "notification": "Thông báo",
+        "no_more": "Không còn thông báo",
+        "comment_post": "Đã bình luận trong một bài viết của bạn",
+        "react_post": "Đã yêu thích bài viết của bạn",
+        "react_comment": "Đã thích bình luận của bạn",
+        "reply_comment": "Đã phản hồi một bình luận của bạn",
+        "reply_comment_post": "Đã phản hồi một bình luận trong bài viết của bạn",
+        "join_community": "Đã đã tham gia một cộng đồng của bạn",
+        "leave_community": "Đã rời khỏi cộng đồng của bạn"
+    },
+    "chat": {
+        "title": "Tin nhắn"
     }
 }

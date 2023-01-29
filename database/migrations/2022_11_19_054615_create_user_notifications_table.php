@@ -19,7 +19,11 @@ class CreateUserNotificationsTable extends Migration
             $table->bigInteger('user_sender_id', false, true)->nullable();
             $table->bigInteger('community_sender_id', false, true)->nullable();
             $table->string('type');
-            $table->boolean('read');
+            $table->unsignedBigInteger('post_id')->nullable();
+            $table->unsignedBigInteger('comment_id')->nullable();
+            $table->unsignedBigInteger('community_id')->nullable();
+            $table->boolean('read')->default(NOTIFICATION_UNREAD);
+            $table->boolean('read_all')->default(NOTIFICATION_UNREAD);
             $table->timestamps();
         });
     }

@@ -214,7 +214,9 @@ export default {
                             (progressEvent.loaded * 100) / progressEvent.total
                         );
                         _this.$store.state.postUploadProgress = progress;
-                        this.$router.push({ name: "home" });
+                        if(progressEvent.loaded == 0) {
+                            this.$router.push({ name: "home" });
+                        }
                     },
                 })
                     .then((result) => {

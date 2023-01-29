@@ -26,13 +26,13 @@
                         </div>
                     </div>
                     <div style="margin-left:auto" class="is-flex is-align-items-center">
-                        <button v-if="community.id != member.user.id" class="button"
-                            @click="removeMember(member.user.id)">
-                            Delete Member {{ i+index }}
-                        </button>
-                        <p v-else class="content p-2" style="background-color:blanchedalmond">
-                            Administrator {{ i+index }}
+                        <p v-if="community.user_id == member.user.id" class="content p-2" style="background-color:blanchedalmond">
+                            Administrator
                         </p>
+                        <button v-else class="button"
+                            @click="removeMember(member.user.id)">
+                            Delete Member
+                        </button>
                     </div>
                 </div>
             </div>
