@@ -29,6 +29,34 @@
                 </div>
             </div>
         </template>
+        <template v-if="user" v-for="item in newMessages">
+            <div v-if="item.sender == $route.params.id && userChat" class="message-left is-flex">
+                <div>
+                    <figure class="image is-48x48">
+                        <img class="is-rounded" :src="userChat.image" />
+                    </figure>
+                </div>
+                <div>
+                    <p class="name">{{ userChat.name }}</p>
+                    <p class="message-content p-2 ml-2">
+                        {{ item.message }}
+                    </p>
+                </div>
+            </div>
+            <div v-if="item.sender == user.id" class="message-right is-flex mr-1 mb-2">
+                <div class="message-content-right">
+                    <p class="name">{{ user.name }}</p>
+                    <span class="message-content p-2 mr-1">
+                        {{ item.message }}
+                    </span>
+                </div>
+                <div>
+                    <figure class="image is-48x48">
+                        <img class="is-rounded" :src="user.image" />
+                    </figure>
+                </div>
+            </div>
+        </template>
     </div>
     <div class="is-flex m-2 send-message">
         <input class="input" type="textarea" v-model="chatMessage" />
@@ -46,7 +74,8 @@ export default {
             chatMessage: "",
             offset: 0,
             user: JSON.parse(sessionStorage.getItem('user')),
-            userChat: null
+            userChat: null,
+            newMessages: []
         }
     },
     components: { ObserverComponent },
@@ -64,11 +93,13 @@ export default {
                 let messages = data.map((val) => {
                     if (val.sender == this.userChat.id) return val;
                 })
-                this.messages.push(...messages);
-                this.scrollBottomChat();
+                this.newMessages = messages;
             },
             deep: true
         }
+    },
+    updated() {
+        this.scrollBottomChat();
     },
     methods: {
         loadMoreMessage() {
