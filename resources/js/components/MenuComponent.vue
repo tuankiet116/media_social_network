@@ -65,7 +65,7 @@
                     <router-link class="navbar-item is-hidden-mobile" :to="{ name: 'list_chat' }">
                         <i class="fa-solid fa-comments"></i>
                         <span>&nbsp;{{ $t('chat.title') }}</span>
-                        <span v-if="messageCount" class="badge">&nbsp;{{ messageCount }}</span>
+                        <span v-if="unreadMessagesCount" class="badge">&nbsp;{{ unreadMessagesCount }}</span>
                     </router-link>
                     <div class="navbar-item has-dropdown is-hoverable">
                         <a class="navbar-link">
@@ -108,20 +108,22 @@ export default {
             search: "",
             openSearch: false,
             unreadNotifications: 0,
-            messageCount: 0
+            unreadMessagesCount: 0
         };
     },
     watch: {
         '$store.getters.getUnreadNotifications': function (data) {
             this.unreadNotifications = data;
         },
-        '$store.getters.getUnreadMessages': function (data) {
-            this.messageCount = data.length;
+        '$store.getters.getUnreadMessages': {
+            handler: function(data) {
+                this.unreadMessagesCount = data.length;
+            },
+            deep: true
         }
     },
     mounted() {
         document.querySelector('body').addEventListener('click', this.handleClickOutside);
-        this.createEchoListeningMessage();
     },
     methods: {
         logout() {
@@ -156,27 +158,6 @@ export default {
                     this.$store.state.unreadNotifications = 0;
                 }
             });
-        },
-        createEchoListeningMessage() {
-            let user = JSON.parse(sessionStorage.getItem('user'));
-            if (user) {
-                Echo.private('fd25b0f2-fdaa-4c67-a8d4-f09c48e6790a.' + user.id)
-                    .listen('.message', (result) => {
-                        let userMessage = result.userMessage;
-                        userMessage.user_receive = result.userSendMessage;
-                        let unreadExist = this.$store.state.unreadMessages.find((val) => val.id == userMessage.id);
-                        let newMessageIdx = this.$store.state.newMessages.findIndex((val) => val.id == userMessage.id);
-                        if (!unreadExist) {
-                            this.$store.state.unreadMessages.unshift(result.userMessage);
-                        }
-
-                        if (newMessageIdx) {
-                            this.$store.state.newMessages.splice(newMessageIdx, 1);
-                        }
-                        this.$store.state.newMessages.unshift(result.userMessage);
-                        this.$store.state.messages.push(result.message);
-                    });
-            }
         }
     },
     components: { NotificationComponent, SearchBoxComponent }

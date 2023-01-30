@@ -2,263 +2,24 @@
     <div class="columns mt-2 chat-container ">
         <div v-if="isMobile() && $route.params.id == null || !isMobile()"
             class="column is-2-desktop is-4-tablet chat-list">
-            <template>
-
-            </template>
-            <div class="columns is-mobile">
-                <div class="column is-3 is-justify-content-center is-flex ml-2 p-0">
-                    <figure class="image is-64x64">
-                        <img class="is-rounded avatar-image"
-                            src="https://images.unsplash.com/photo-1506803682981-6e718a9dd3ee?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=c3a31eeb7efb4d533647e3cad1de9257" />
-                    </figure>
-                </div>
-                <div class="column pl-1">
-                    <p class="is-flex">
-                        <strong>ABC</strong>
-                        <span style="margin-left:auto">3 minutes</span>
-                    </p>
-                    <p><span>You:</span> asdfasfasfasfas...</p>
-                </div>
-            </div>
-            <div class="columns is-mobile">
-                <div class="column is-3 is-justify-content-center is-flex ml-2 p-0">
-                    <figure class="image is-64x64">
-                        <img class="is-rounded avatar-image"
-                            src="https://images.unsplash.com/photo-1506803682981-6e718a9dd3ee?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=c3a31eeb7efb4d533647e3cad1de9257" />
-                    </figure>
-                </div>
-                <div class="column pl-1">
-                    <p class="is-flex">
-                        <strong>ABC</strong>
-                        <span style="margin-left:auto">3 minutes</span>
-                    </p>
-                    <p><span>You:</span> asdfasfasfasfas...</p>
-                </div>
-            </div>
-            <div class="columns is-mobile">
-                <div class="column is-3 is-justify-content-center is-flex ml-2 p-0">
-                    <figure class="image is-64x64">
-                        <img class="is-rounded avatar-image"
-                            src="https://images.unsplash.com/photo-1506803682981-6e718a9dd3ee?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=c3a31eeb7efb4d533647e3cad1de9257" />
-                    </figure>
-                </div>
-                <div class="column pl-1">
-                    <p class="is-flex">
-                        <strong>ABC</strong>
-                        <span style="margin-left:auto">3 minutes</span>
-                    </p>
-                    <p><span>You:</span> asdfasfasfasfas...</p>
-                </div>
-            </div>
-            <div class="columns is-mobile">
-                <div class="column is-3 is-justify-content-center is-flex ml-2 p-0">
-                    <figure class="image is-64x64">
-                        <img class="is-rounded avatar-image"
-                            src="https://images.unsplash.com/photo-1506803682981-6e718a9dd3ee?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=c3a31eeb7efb4d533647e3cad1de9257" />
-                    </figure>
-                </div>
-                <div class="column pl-1">
-                    <p class="is-flex">
-                        <strong>ABC</strong>
-                        <span style="margin-left:auto">3 minutes</span>
-                    </p>
-                    <p><span>You:</span> asdfasfasfasfas...</p>
-                </div>
-            </div>
-            <div class="columns is-mobile">
-                <div class="column is-3 is-justify-content-center is-flex ml-2 p-0">
-                    <figure class="image is-64x64">
-                        <img class="is-rounded avatar-image"
-                            src="https://images.unsplash.com/photo-1506803682981-6e718a9dd3ee?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=c3a31eeb7efb4d533647e3cad1de9257" />
-                    </figure>
-                </div>
-                <div class="column pl-1">
-                    <p class="is-flex">
-                        <strong>ABC</strong>
-                        <span style="margin-left:auto">3 minutes</span>
-                    </p>
-                    <p><span>You:</span> asdfasfasfasfas...</p>
-                </div>
-            </div>
-            <div class="columns is-mobile">
-                <div class="column is-3 is-justify-content-center is-flex ml-2 p-0">
-                    <figure class="image is-64x64">
-                        <img class="is-rounded avatar-image"
-                            src="https://images.unsplash.com/photo-1506803682981-6e718a9dd3ee?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=c3a31eeb7efb4d533647e3cad1de9257" />
-                    </figure>
-                </div>
-                <div class="column pl-1">
-                    <p class="is-flex">
-                        <strong>ABC</strong>
-                        <span style="margin-left:auto">3 minutes</span>
-                    </p>
-                    <p><span>You:</span> asdfasfasfasfas...</p>
-                </div>
-            </div>
-            <div class="columns is-mobile">
-                <div class="column is-3 is-justify-content-center is-flex ml-2 p-0">
-                    <figure class="image is-64x64">
-                        <img class="is-rounded avatar-image"
-                            src="https://images.unsplash.com/photo-1506803682981-6e718a9dd3ee?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=c3a31eeb7efb4d533647e3cad1de9257" />
-                    </figure>
-                </div>
-                <div class="column pl-1">
-                    <p class="is-flex">
-                        <strong>ABC</strong>
-                        <span style="margin-left:auto">3 minutes</span>
-                    </p>
-                    <p><span>You:</span> asdfasfasfasfas...</p>
-                </div>
-            </div>
-            <div class="columns is-mobile">
-                <div class="column is-3 is-justify-content-center is-flex ml-2 p-0">
-                    <figure class="image is-64x64">
-                        <img class="is-rounded avatar-image"
-                            src="https://images.unsplash.com/photo-1506803682981-6e718a9dd3ee?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=c3a31eeb7efb4d533647e3cad1de9257" />
-                    </figure>
-                </div>
-                <div class="column pl-1">
-                    <p class="is-flex">
-                        <strong>ABC</strong>
-                        <span style="margin-left:auto">3 minutes</span>
-                    </p>
-                    <p><span>You:</span> asdfasfasfasfas...</p>
-                </div>
-            </div>
-            <div class="columns is-mobile">
-                <div class="column is-3 is-justify-content-center is-flex ml-2 p-0">
-                    <figure class="image is-64x64">
-                        <img class="is-rounded avatar-image"
-                            src="https://images.unsplash.com/photo-1506803682981-6e718a9dd3ee?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=c3a31eeb7efb4d533647e3cad1de9257" />
-                    </figure>
-                </div>
-                <div class="column pl-1">
-                    <p class="is-flex">
-                        <strong>ABC</strong>
-                        <span style="margin-left:auto">3 minutes</span>
-                    </p>
-                    <p><span>You:</span> asdfasfasfasfas...</p>
-                </div>
-            </div>
-            <div class="columns is-mobile">
-                <div class="column is-3 is-justify-content-center is-flex ml-2 p-0">
-                    <figure class="image is-64x64">
-                        <img class="is-rounded avatar-image"
-                            src="https://images.unsplash.com/photo-1506803682981-6e718a9dd3ee?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=c3a31eeb7efb4d533647e3cad1de9257" />
-                    </figure>
-                </div>
-                <div class="column pl-1">
-                    <p class="is-flex">
-                        <strong>ABC</strong>
-                        <span style="margin-left:auto">3 minutes</span>
-                    </p>
-                    <p><span>You:</span> asdfasfasfasfas...</p>
-                </div>
-            </div>
-            <div class="columns is-mobile">
-                <div class="column is-3 is-justify-content-center is-flex ml-2 p-0">
-                    <figure class="image is-64x64">
-                        <img class="is-rounded avatar-image"
-                            src="https://images.unsplash.com/photo-1506803682981-6e718a9dd3ee?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=c3a31eeb7efb4d533647e3cad1de9257" />
-                    </figure>
-                </div>
-                <div class="column pl-1">
-                    <p class="is-flex">
-                        <strong>ABC</strong>
-                        <span style="margin-left:auto">3 minutes</span>
-                    </p>
-                    <p><span>You:</span> asdfasfasfasfas...</p>
-                </div>
-            </div>
-            <div class="columns is-mobile">
-                <div class="column is-3 is-justify-content-center is-flex ml-2 p-0">
-                    <figure class="image is-64x64">
-                        <img class="is-rounded avatar-image"
-                            src="https://images.unsplash.com/photo-1506803682981-6e718a9dd3ee?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=c3a31eeb7efb4d533647e3cad1de9257" />
-                    </figure>
-                </div>
-                <div class="column pl-1">
-                    <p class="is-flex">
-                        <strong>ABC</strong>
-                        <span style="margin-left:auto">3 minutes</span>
-                    </p>
-                    <p><span>You:</span> asdfasfasfasfas...</p>
-                </div>
-            </div>
-            <div class="columns is-mobile">
-                <div class="column is-3 is-justify-content-center is-flex ml-2 p-0">
-                    <figure class="image is-64x64">
-                        <img class="is-rounded avatar-image"
-                            src="https://images.unsplash.com/photo-1506803682981-6e718a9dd3ee?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=c3a31eeb7efb4d533647e3cad1de9257" />
-                    </figure>
-                </div>
-                <div class="column pl-1">
-                    <p class="is-flex">
-                        <strong>ABC</strong>
-                        <span style="margin-left:auto">3 minutes</span>
-                    </p>
-                    <p><span>You:</span> asdfasfasfasfas...</p>
-                </div>
-            </div>
-            <div class="columns is-mobile">
-                <div class="column is-3 is-justify-content-center is-flex ml-2 p-0">
-                    <figure class="image is-64x64">
-                        <img class="is-rounded avatar-image"
-                            src="https://images.unsplash.com/photo-1506803682981-6e718a9dd3ee?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=c3a31eeb7efb4d533647e3cad1de9257" />
-                    </figure>
-                </div>
-                <div class="column pl-1">
-                    <p class="is-flex">
-                        <strong>ABC</strong>
-                        <span style="margin-left:auto">3 minutes</span>
-                    </p>
-                    <p><span>You:</span> asdfasfasfasfas...</p>
-                </div>
-            </div>
-            <div class="columns is-mobile">
-                <div class="column is-3 is-justify-content-center is-flex ml-2 p-0">
-                    <figure class="image is-64x64">
-                        <img class="is-rounded avatar-image"
-                            src="https://images.unsplash.com/photo-1506803682981-6e718a9dd3ee?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=c3a31eeb7efb4d533647e3cad1de9257" />
-                    </figure>
-                </div>
-                <div class="column pl-1">
-                    <p class="is-flex">
-                        <strong>ABC</strong>
-                        <span style="margin-left:auto">3 minutes</span>
-                    </p>
-                    <p><span>You:</span> asdfasfasfasfas...</p>
-                </div>
-            </div>
-            <div class="columns is-mobile">
-                <div class="column is-3 is-justify-content-center is-flex ml-2 p-0">
-                    <figure class="image is-64x64">
-                        <img class="is-rounded avatar-image"
-                            src="https://images.unsplash.com/photo-1506803682981-6e718a9dd3ee?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=c3a31eeb7efb4d533647e3cad1de9257" />
-                    </figure>
-                </div>
-                <div class="column pl-1">
-                    <p class="is-flex">
-                        <strong>ABC</strong>
-                        <span style="margin-left:auto">3 minutes</span>
-                    </p>
-                    <p><span>You:</span> asdfasfasfasfas...</p>
-                </div>
-            </div>
-            <div class="columns is-mobile">
-                <div class="column is-3 is-justify-content-center is-flex ml-2 p-0">
-                    <figure class="image is-64x64">
-                        <img class="is-rounded avatar-image"
-                            src="https://images.unsplash.com/photo-1506803682981-6e718a9dd3ee?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=c3a31eeb7efb4d533647e3cad1de9257" />
-                    </figure>
-                </div>
-                <div class="column pl-1">
-                    <p class="is-flex">
-                        <strong>ABC</strong>
-                        <span style="margin-left:auto">3 minutes</span>
-                    </p>
-                    <p><span>You:</span> asdfasfasfasfas...</p>
-                </div>
+            <div class="link-chat" v-for="item in chat">
+                <router-link @click="markRead(item.id)" class="is-flex is-align-items-center" :to="{ name: 'message', params: { id: item.user_receive_id } }">
+                    <i v-if="!item.read" class="fa-solid fa-circle" style="font-size: 10px;"></i>
+                    <div class="columns is-mobile">
+                        <div class="column is-3 is-justify-content-center is-flex mb-2 p-0" :class="{ 'ml-2': item.read }">
+                            <figure class="image is-64x64">
+                                <img class="is-rounded avatar-image" :src="item.user_receive.image" />
+                            </figure>
+                        </div>
+                        <div class="column pl-1">
+                            <p class="is-flex">
+                                <strong>{{ item.user_receive.name }}</strong>
+                                <span style="margin-left:auto">{{ calculateTime(item.last_time_message) }}</span>
+                            </p>
+                            <p><span v-if="item.lastMessage.sender == user.id">You:</span> {{ item.lastMessage.message }}</p>
+                        </div>
+                    </div>
+                </router-link>
             </div>
             <ObserverComponent @intersect="loadMoreChatList" />
         </div>
@@ -309,9 +70,9 @@
 <script>
 import authMixin from '../../mixins';
 import ObserverComponent from '../Common/ObserverComponent.vue';
-import { detectMobile } from '../../helpers/common';
+import { detectMobile, calculateTime } from '../../helpers/common';
 import { searchUser } from '../../api/search';
-import { listChat } from '../../api/chat';
+import { listChat, markReadChat } from '../../api/chat';
 export default {
     components: { ObserverComponent },
     data() {
@@ -326,10 +87,10 @@ export default {
         };
     },
     watch: {
-        auth (data) {
+        auth(data) {
             if (!data) {
                 window.location.replace('user/login')
-            } 
+            }
         },
         keyword(value) {
             if (value) {
@@ -338,15 +99,25 @@ export default {
             } else {
                 this.isDisplaySearch = false;
             }
+        },
+        '$store.getters.getNewChat': {
+            handler: function (data) {
+                let newChat = data[0];
+                if (newChat) {
+                    let newChatExist = this.chat.findIndex((val => val.id == newChat.id));
+                    if (newChatExist !== -1) {
+                        this.chat.splice(newChatExist, 1);
+                    }
+                    this.chat.unshift(newChat);
+                }
+            },
+            deep: true
         }
     },
     computed: {
         height: () => {
             return window.innerHeight;
         }
-    },
-    mounted() {
-        this.loadMoreChatList();
     },
     mixins: [authMixin],
     methods: {
@@ -365,11 +136,25 @@ export default {
             searchUser(this.keyword).then(result => {
                 this.userAccounts = result.data.users;
             });
+        },
+        calculateTime(time) {
+            return calculateTime(time, this)
+        },
+        markRead(idChat) {
+            markReadChat({
+                'id_chat': idChat
+            }).then(result => {
+                let chatIdex = this.$store.state.unreadMessages.findIndex((val) => val.id == idChat);
+                let chatInCurrent = this.chat.find(val => val.id == idChat);
+                chatInCurrent.read = 1;
+                if (chatIdex !== -1) {
+                    this.$store.state.unreadMessages.splice(chatIdex, 1);
+                }
+            });
         }
     },
     unmounted() {
-        this.$store.state.messages = [];
-        this.$store.state.newMessages = [];
+        this.$store.state.newChat = [];
     }
 }
 </script>
@@ -386,5 +171,13 @@ export default {
 
 .columns {
     margin: 0;
+}
+
+.link-chat a {
+    color: black
+}
+
+.link-chat:hover {
+    background-color: #C5C5C5;
 }
 </style>

@@ -2,14 +2,14 @@
     <div id="profile" class="profile">
         <div class="profile-banner" :style="{ 'background-image': 'url(' + user.banner + ')' }"></div>
         <div class="profile-picture is-mobile">
-            <div class="level m-0">
+            <div class="level m-0" v-if="Object.keys(user).length">
                 <div v-if="!isMe && auth" class="level-item is-justify-content-right">
-                    <a class="button is-rounded">
+                    <router-link :to="{ name: 'message', params: { id: user.id } }" class="button is-rounded">
                         <span>
                             <i class="fa-solid fa-message"></i>
                             {{ $t('user_page.chat') }}
                         </span>
-                    </a>
+                    </router-link>
                 </div>
                 <div class="level-item middle-item" :class="{ 'pl-5': isMe || !auth }">
                     <div>
@@ -35,11 +35,12 @@
                 </div>
             </div>
             <div class="columns">
-                <div class="has-text-weight-bold is-size-5 has-text-centered column" :class="{'is-one-fifth': isMe || !auth}">
+                <div class="has-text-weight-bold is-size-5 has-text-centered column"
+                    :class="{ 'is-one-fifth': isMe || !auth }">
                     <span>{{ user.name }}</span>
                 </div>
             </div>
-            <br/>
+            <br />
         </div>
         <div class="profile-menu level is-mobile box">
             <div class="level-item is-justify-content-center is-align-items-center">

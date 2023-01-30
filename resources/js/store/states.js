@@ -4,6 +4,6 @@ export default {
     offset: null,
     unreadNotifications: 0,
     unreadMessages: [],
-    newMessages: [],
+    newChat: [],
     messages: []
 }

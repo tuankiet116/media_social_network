@@ -11,8 +11,8 @@ export default {
     getUnreadMessages(state) {
         return state.unreadMessages;
     },
-    getNewMessages(state) {
-        return state.newMessages;
+    getNewChat(state) {
+        return state.newChat;
     },
     getMessages(state) {
         return state.messages;

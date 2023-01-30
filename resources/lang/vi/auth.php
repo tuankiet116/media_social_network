@@ -22,7 +22,7 @@ return [
         'form_title' => 'Tạo Tài Khoản',
         'register' => 'Đăng Ký',
         'or_register_with' => 'Hoặc đăng ký bằng',
-        'if_have_account' => 'Nếu bạn đã có tài khoản hãy đăng nhập <a href=":link">tại đây</a>',
+        'if_have_account' => 'Nếu bạn đã có tài khoản hãy đăng nhập <a href=:link>tại đây</a>',
         'error_register' => 'Hệ thông lỗi, không thể đăng ký tài khoản',
         'email_duplicate' => 'Email đã được sử dụng để đăng ký tài khoản, vui lòng kiểm tra lại'
     ],

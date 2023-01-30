@@ -16,8 +16,8 @@ class MessageService
         DB::beginTransaction();
         try {
             $userId = auth()->id();
-            $chatSender = UserMessage::where('user_receive_id', $to)->first();
-            $chatReceiver = UserMessage::where('user_id', $userId)->first();
+            $chatSender = UserMessage::where(['user_receive_id' => $to, 'user_id' => $userId])->first();
+            $chatReceiver = UserMessage::where(['user_receive_id' => $userId, 'user_id' => $to])->first();
             $userSendMessage = User::where('id', $userId)->first();
 
             if (!$chatSender) {
@@ -31,20 +31,29 @@ class MessageService
                 $chatReceiver = self::addUserToChatList($to, $userId);
             } else {
                 $chatReceiver->last_time_message = now();
+                $chatReceiver->read = UNREAD_MESSAGE;
                 $chatReceiver->save();
             }
+
+            $chatSender = UserMessage::where('id', $chatSender->id)->first();
+            $chatReceiver = UserMessage::where('id', $chatReceiver->id)->first();
 
             $message = Message::create([
                 'sender' => $userId,
                 'receiver' => $to,
                 'message' => $message
             ]);
+            $chatSender->load('userReceive');
             MessageEvent::dispatch($message, $chatReceiver, $userSendMessage);
             DB::commit();
+            return array(
+                'message' => $message,
+                'chat' => $chatSender
+            );
         } catch (Exception $e) {
             DB::rollBack();
         }
-        return $message;
+        return false;
     }
 
     public function listChat(int $offset = 0)
@@ -65,10 +74,12 @@ class MessageService
         $messages = Message::where([
             'sender' => $userId,
             'receiver' => $receiver
-        ])->orWhere([
-            'sender' => $receiver,
-            'receiver' => $userId
-        ])->orderBy('created_at', 'DESC')
+        ])->orWhere(function ($q) use($receiver, $userId) {
+            $q->where([
+                'sender' => $receiver,
+                'receiver' => $userId
+            ]);
+        })->orderBy('created_at', 'DESC')
             ->limit(LIMIT_CHAT_MESSAGE)->offset($offset)->get();
         $newOffset = count($messages) == LIMIT_CHAT_MESSAGE ? $offset += LIMIT_CHAT_MESSAGE : null;
         $result = array(
@@ -90,7 +101,8 @@ class MessageService
         return true;
     }
 
-    public function getUnreadChat() {
+    public function getUnreadChat()
+    {
         $userId = auth()->id();
         return UserMessage::where([
             'user_id' => $userId,

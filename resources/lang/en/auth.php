@@ -8,20 +8,21 @@ return [
         'confirm_password' => 'Confirm Password',
         'remember_me' => 'Remember Me',
         'reenter_password' => 'Re enter password',
-        'otp_mail' => 'Enter OTP code had been sent to your Email address'
+        'otp_mail' => 'Enter OTP code had been sent to your Email address',
+        'name' => 'Your Name'
     ],
     'login' => [
         'form_title' => 'Login',
         'login' => 'Login',
         'error_login' => 'Your email or password is incorrect, please check again.',
-        'if_dont_have_account' => "<a href=`:link`>Don't you have an account? Sign up now!</a>",
+        'if_dont_have_account' => "Don't you have an account? <a href=:link>Sign up now!</a>",
         'or_login_with' => 'Or Login With'
     ],
     'register' => [
         'form_title' => 'Create a new account',
         'register' => 'Register',
         'or_register_with' => 'Or register with',
-        'if_have_account' => 'If you have account please <a href=":link">login here</a>',
+        'if_have_account' => 'If you have account please <a href=:link>login here</a>',
         'error_register' => 'Could not register your account, try again latter',
         'email_duplicate' => 'This Email has been used.'
     ],
