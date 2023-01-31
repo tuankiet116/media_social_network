@@ -1,7 +1,7 @@
 <template>
     <div v-if="user">
         <div class="field">
-            <label class="label">Your Background: </label>
+            <label class="label">{{ $t('user_setting.background.your_background') }}: </label>
             <div class="control is-grouped">
                 <figure class="image">
                     <img class="background" :src="background" />
@@ -14,7 +14,7 @@
                     accept="image/png, image/jpeg"
                 />
                 <button @click="openFileExplorer" class="button">
-                    Change Background
+                    {{ $t('user_setting.background.change_background') }}
                 </button>
             </div>
         </div>
@@ -23,7 +23,7 @@
                 @click="saveBackground"
                 class="button is-info is-1-desktop is-full-mobile"
             >
-                Save
+                {{ $t('save') }}
             </button>
         </div>
     </div>
@@ -82,9 +82,9 @@ export default {
 
             saveUserBackground(form).then(result => {
                 _this.$store.state.user = result.data;
-                useToast().success('Updated your background image');
+                useToast().success(this.$t('user_setting.background.success_update'));
             }).catch((err) => {
-                useToast().error('Error on updating background image');
+                useToast().error(this.$t('user_setting.background.error_update'));
             });
         }
     },

@@ -12,10 +12,9 @@
 
       <div class="content p-2 mt-5">
         <h2 class="ml-2" v-if="community">{{ community.community_name }}</h2>
-        <p v-if="community">Your frontpage now is in {{ community.community_name }} Community. Welcome you!</p>
+        <p v-if="community">{{ $t('community.your_page_in_1') }} {{ community.community_name }} {{ $t('community.your_page_in_2') }}</p>
         <p v-else>
-          Your personal Reddit frontpage. Come here to check in with your
-          favorite communities.
+          {{ $t('community.your_page_in_home') }}
         </p>
       </div>
 
@@ -30,7 +29,7 @@
         <a class="button btn-create is-info mr-2 ml-2" @click="redirectCreatePost">Create Post</a>
         <a class="button btn-create is-info m-2 mt-1 js-modal-trigger" data-target="modal-create-group"
           @click="isCreateGroup = true" v-if="community == null">
-          Create Community
+          {{ $t('community.create') }}
         </a>
       </div>
     </div>
@@ -39,7 +38,7 @@
       <div class="modal-content">
         <div class="box">
           <div class="content">
-            <h3>Create Your Own Community</h3>
+            <h3>{{ $t('community.create_own') }}</h3>
           </div>
           <div class="field">
             <label>Your Community Name:</label>

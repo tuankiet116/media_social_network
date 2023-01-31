@@ -11,7 +11,7 @@
             </div>
             <div v-if="r.isJoined" class="is-flex justify-content-center is-align-items-center" style="margin-left: auto">
                 <button class="button is-info is-rounded disabled">
-                    Followed
+                    {{ $t('community.followed') }}
                 </button>
             </div>
         </router-link>

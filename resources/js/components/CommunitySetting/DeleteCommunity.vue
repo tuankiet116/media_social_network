@@ -1,6 +1,6 @@
 <template>
     <button class="button is-danger" @click="isShow = true">
-        Delete Community
+        {{ $t('community_setting.delete') }}
     </button>
     <ConfirmDeleteComponent v-if="isShow" :message="messageConfirm"
         @confirm="handleConfirm" @cancel="hideConfirm" />
@@ -14,7 +14,7 @@ export default {
     data() {
         return {
             isShow: false,
-            messageConfirm: 'If you delete this community, all of the post will be deleted and could be revert. Are you sure?'
+            messageConfirm: this.$t('community_setting.delete_warning')
         }
     },
     methods: {

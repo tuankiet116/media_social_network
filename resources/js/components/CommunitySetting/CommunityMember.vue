@@ -27,18 +27,18 @@
                     </div>
                     <div style="margin-left:auto" class="is-flex is-align-items-center">
                         <p v-if="community.user_id == member.user.id" class="content p-2" style="background-color:blanchedalmond">
-                            Administrator
+                            {{ $t('community_setting.member.admin') }}
                         </p>
                         <button v-else class="button"
                             @click="removeMember(member.user.id)">
-                            Delete Member
+                            {{ $t('community_setting.member.delete') }}
                         </button>
                     </div>
                 </div>
             </div>
         </div>
         <div v-else class=" has-text-centered">
-            <p class="content is-size-4">No members At All.</p>
+            <p class="content is-size-4">{{ $t('community_setting.member.no_member') }}</p>
             <figure>
                 <img src="../../../images/gifs/sad_stitch.gif" />
             </figure>

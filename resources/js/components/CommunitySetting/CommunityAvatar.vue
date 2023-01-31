@@ -1,7 +1,7 @@
 <template>
     <div v-if="community">
         <div class="field">
-            <label class="label">Your Avatar: </label>
+            <label class="label">{{ $t('community_setting.avatar.title') }}: </label>
             <div class="control is-grouped">
                 <figure class="is-rounded image is-128x128">
                     <img class="is-rounded avatar" :src="avatar" />
@@ -14,7 +14,7 @@
                     accept="image/png, image/jpeg"
                 />
                 <button @click="openFileExplorer" class="button">
-                    Change Avatar
+                    {{ $t('community_setting.avatar.change_avatar') }}
                 </button>
             </div>
         </div>
@@ -23,7 +23,7 @@
                 @click="saveAvatar"
                 class="button is-info is-1-desktop is-full-mobile"
             >
-                Save
+                {{ $t('save') }}
             </button>
         </div>
     </div>
@@ -65,27 +65,13 @@ export default {
             updateCommunityAvatar(form, this.community.id).then(result => {
                 this.$emit('updated', result.data);
             }).catch((error) => {
-                useToast().error('Error on updating avatar image');
+                useToast().error(this.$t('community_setting.avatar.success_update'));
             });
         }
     },
 };
 </script>
 <style scoped>
-.image-default-container {
-    position: relative;
-}
-.default-image {
-    cursor: pointer;
-}
-
-.image-tick {
-    position: absolute;
-    width: 50%;
-    height: 50%;
-    top: -1rem;
-    right: -1rem;
-}
 
 .avatar {
     height: 120px;

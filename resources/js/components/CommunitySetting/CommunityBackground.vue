@@ -1,7 +1,7 @@
 <template>
     <div v-if="community">
         <div class="field">
-            <label class="label">Your Background: </label>
+            <label class="label">{{ $t('community_setting.background.title') }}: </label>
             <div class="control is-grouped">
                 <figure class="image">
                     <img class="background" :src="background" />
@@ -9,13 +9,13 @@
                 <input @change="previewImage" ref="file_open" class="is-hidden" type="file"
                     accept="image/png, image/jpeg" />
                 <button @click="openFileExplorer" class="button">
-                    Change Background
+                    {{ $t('community_setting.background.change_background') }}
                 </button>
             </div>
         </div>
         <div class="field is-grouped mt-3 columns is-justify-content-end">
             <button @click="saveBackground" class="button is-info is-1-desktop is-full-mobile">
-                Save
+                {{ $t('save') }}
             </button>
         </div>
     </div>
@@ -57,7 +57,7 @@ export default {
             updateCommunityBackground(form, this.community.id).then(result => {
                 this.$emit('updated', result.data);
             }).catch((err) => {
-                useToast().error('Error on updating background image');
+                useToast().error(this.$t('community_setting.background.error_update'));
             });
         }
     },

@@ -30,7 +30,7 @@
             <router-link :to="{ name: 'search_page', params: { keyword: keywords }}" @click="$emit('redirectSearch')">
                 <span>
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    Searching for "{{ keywords }}"
+                    {{ $t('search_page.search_for') }} "{{ keywords }}"
                 </span>
             </router-link>
         </div>

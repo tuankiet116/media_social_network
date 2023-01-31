@@ -22,11 +22,11 @@
                     <a v-if="!isMe && auth" class="button is-rounded" @click="handleFollowUser">
                         <span v-if="user.isFollowed">
                             <i class="fa-solid fa-check"></i>
-                            Followed
+                            {{ $t('user_page.followed') }}
                         </span>
                         <span v-else>
                             <i class="fa-solid fa-plus"></i>
-                            Follow
+                            {{ $t('user_page.follow') }}
                         </span>
                     </a>
                     <router-link v-else class="button is-rounded" :to="{ name: 'edit_profile_basic' }">
@@ -47,7 +47,7 @@
                 <router-link class="heading" :to="{ name: 'profile_list_post' }">
                     <span>
                         <i class="fa-solid fa-message"></i>
-                        Bài viết
+                        {{ $t('user_page.post') }}
                     </span>
                 </router-link>
             </div>
@@ -55,7 +55,7 @@
                 <router-link class="heading" :to="{ name: 'profile_list_follower' }">
                     <span>
                         <strong>{{ user.follower_count }}</strong>
-                        Theo dõi
+                        {{ $t('user_page.follow') }}
                     </span>
                 </router-link>
             </div>
@@ -63,7 +63,7 @@
                 <router-link class="heading" :to="{ name: 'profile_list_following' }">
                     <span>
                         <strong>{{ user.following_count }}</strong>
-                        Đang Theo Dõi
+                        {{ $t('user_page.following') }}
                     </span>
                 </router-link>
             </div>

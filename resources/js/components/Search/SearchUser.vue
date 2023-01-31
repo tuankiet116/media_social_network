@@ -13,7 +13,7 @@
             <div v-if="r.isFollowed" class="is-flex justify-content-center is-align-items-center"
                 style="margin-left: auto">
                 <button class="button is-info is-rounded">
-                    Followed
+                    {{ $t('user_page.followed') }}
                 </button>
             </div>
         </router-link>

@@ -3,10 +3,12 @@
         <div v-if="isMobile() && $route.params.id == null || !isMobile()"
             class="column is-2-desktop is-4-tablet chat-list">
             <div class="link-chat" v-for="item in chat">
-                <router-link @click="markRead(item.id)" class="is-flex is-align-items-center" :to="{ name: 'message', params: { id: item.user_receive_id } }">
+                <router-link @click="markRead(item.id)" class="is-flex is-align-items-center"
+                    :to="{ name: 'message', params: { id: item.user_receive_id } }">
                     <i v-if="!item.read" class="fa-solid fa-circle" style="font-size: 10px;"></i>
                     <div class="columns is-mobile">
-                        <div class="column is-3 is-justify-content-center is-flex mb-2 p-0" :class="{ 'ml-2': item.read }">
+                        <div class="column is-3 is-justify-content-center is-flex mb-2 p-0"
+                            :class="{ 'ml-2': item.read }">
                             <figure class="image is-64x64">
                                 <img class="is-rounded avatar-image" :src="item.user_receive.image" />
                             </figure>
@@ -16,7 +18,9 @@
                                 <strong>{{ item.user_receive.name }}</strong>
                                 <span style="margin-left:auto">{{ calculateTime(item.last_time_message) }}</span>
                             </p>
-                            <p><span v-if="item.lastMessage.sender == user.id">You:</span> {{ item.lastMessage.message }}</p>
+                            <p><span v-if="item.lastMessage.sender == user.id">{{ $t( 'chat.you') }}:</span> {{
+                                item.lastMessage.message
+                            }}</p>
                         </div>
                     </div>
                 </router-link>
@@ -25,11 +29,11 @@
         </div>
         <div v-if="isMobile() && $route.params.id || !isMobile()" class="column">
             <router-link :to="{ name: 'chat' }" class="button ml-2">
-                <i class="fa-solid fa-left-long"></i> &nbsp;Back
+                <i class="fa-solid fa-left-long"></i> &nbsp;{{ $t('chat.back') }}
             </router-link>
             <div class="field is-horizontal m-2">
                 <div class="field-label is-normal" style="flex-grow: 0.5;">
-                    <label class="label">Message To:</label>
+                    <label class="label">{{ $t('chat.message_to') }}:</label>
                 </div>
                 <div class="field-body">
                     <div class="field">
@@ -38,7 +42,7 @@
                         </p>
                         <nav class="panel" v-if="isDisplaySearch">
                             <p class="panel-heading">
-                                User
+                                {{ $t('chat.user') }}
                             </p>
                             <template v-for="user in userAccounts">
                                 <router-link class="panel-block" :to="{ name: 'message', params: { id: user.id } }">
@@ -57,7 +61,7 @@
             <div class="message" style="height: 75vh; background-color:white;">
                 <div v-if="idChat == null" class="content is-flex is-justify-content-center is-align-items-center m-2"
                     style="background-color:white; height: 100%">
-                    <h3>Pick or search an user and let's chat!</h3>
+                    <h3>{{ $t('chat.welcome_chat') }}</h3>
                     <figure class="image is-128x128">
                         <img src="../../../images/defaults/chat.png" />
                     </figure>

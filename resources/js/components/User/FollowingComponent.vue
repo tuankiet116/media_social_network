@@ -30,7 +30,7 @@
             </div>
         </div>
         <div v-else class="has-text-centered">
-            <p class="content is-size-4">You are not following anyone.</p>
+            <p class="content is-size-4">{{ $t('user_page.not_following') }}</p>
             <figure>
                 <img src="../../../images/gifs/alone_stitch.gif"/>
             </figure>

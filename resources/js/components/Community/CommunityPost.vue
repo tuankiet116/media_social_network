@@ -7,7 +7,7 @@
             <div class="box">
                 <div>
                 </div>
-                No Post Yet
+                {{ $t('community.no_post') }}
             </div>
         </div>
         <div class="column">

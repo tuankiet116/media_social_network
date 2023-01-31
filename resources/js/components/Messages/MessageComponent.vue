@@ -5,7 +5,7 @@
         </figure>
         <strong class="ml-2">{{ userChat.name }}</strong>
         <router-link class="button is-rounded" :to="{ name: 'profile_list_post', params: { id: userChat.id } }">
-            Information
+            {{ $t('search_page.info') }}
         </router-link>
     </div>
     <div class="fill-message">
@@ -42,7 +42,7 @@
     </div>
     <div class="is-flex m-2 send-message">
         <input ref="input" class="input" type="textarea" v-model="chatMessage" @keyup.enter="sendMessage" />
-        <button @click="sendMessage" class="button is-info ml-2">Send</button>
+        <button @click="sendMessage" class="button is-info ml-2">{{ $t('chat.send') }}</button>
     </div>
 </template>
 <script>

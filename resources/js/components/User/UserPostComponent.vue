@@ -2,17 +2,17 @@
     <div class="columns">
         <div class="column cl-infor">
             <div class="box content">
-                <h4>Giới Thiệu</h4>
+                <h4>{{ $t('user_page.introduce') }}</h4>
                 <blockquote v-if="user.user_information && user.user_school.length">
                     <p v-if="user.user_information?.living_place">
-                        Đang sống ở {{ user.user_information.living_place }}
+                        {{ $t('user_page.living') }} {{ user.user_information.living_place }}
                     </p>
                     <p v-for="user_school in user.user_school">
                         <span v-if="user_school.end_year < new Date().getFullYear()">
-                            Đã tốt nghiệp {{ user_school.school_name }}
+                            {{ $t('user_page.graduated') }} {{ user_school.school_name }}
                         </span>
                         <span v-else>
-                            Đang học {{ user_school.school_name }}
+                            {{ $t('user_page.studying') }} {{ user_school.school_name }}
                         </span>
                     </p>
                 </blockquote>
@@ -32,8 +32,14 @@
                 </figure>
                 <input @click="$router.push({ name: 'create_post' })" class="input" placeholder="Create Post" />
             </div>
-            <div class="box has-text-centered">
-                <p class="content is-size-5">Let's share your first Amazing Things to The Community! </p>
+            <div v-if="isMe" class="box has-text-centered">
+                <p class="content is-size-5">{{ $t('user_page.share_first_thing') }}</p>
+                <figure class="image is-128x128" style="margin: auto">
+                    <img src="../../../images/gifs/waving_stitch.gif"/>
+                </figure>
+            </div>
+            <div v-else class="box has-text-centered">
+                <p class="content is-size-5">{{ $t('user_page.welcome_to_page') }} </p>
                 <figure class="image is-128x128" style="margin: auto">
                     <img src="../../../images/gifs/waving_stitch.gif"/>
                 </figure>

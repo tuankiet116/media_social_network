@@ -1,7 +1,7 @@
 <template>
     <div v-if="user">
         <div class="field">
-            <label class="label">User Name</label>
+            <label class="label">{{ $t('user_setting.info.user_name') }}</label>
             <div class="control has-icons-left has-icons-right">
                 <input
                     class="input is-success"
@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="field">
-            <label class="label">Where do you live?</label>
+            <label class="label">{{ $t('user_setting.info.ask_live') }}</label>
             <div class="control has-icons-left has-icons-right">
                 <input
                     class="input is-success"
@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="field">
-            <label class="label">Where do you work?</label>
+            <label class="label">{{ $t('user_setting.info.ask_work') }}</label>
             <div class="control has-icons-left has-icons-right">
                 <input
                     class="input is-success"
@@ -42,10 +42,10 @@
                 </span>
             </div>
         </div>
-        <label class="label">High School</label>
+        <label class="label">{{ $t('user_setting.info.highschool') }}</label>
         <div v-for="(highschool, index) in highSchool" class="columns">
             <div class="field column">
-                <label class="label">School Name:</label>
+                <label class="label">{{ $t('user_setting.info.school_name') }}</label>
                 <div class="control has-icons-left has-icons-right">
                     <input
                         class="input is-success"
@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div class="field column">
-                <label class="label">Start Year:</label>
+                <label class="label">{{ $t('user_setting.info.start_year') }}:</label>
                 <div class="control">
                     <div class="select">
                         <select
@@ -73,7 +73,7 @@
                 </div>
             </div>
             <div class="field column">
-                <label class="label">End Year:</label>
+                <label class="label">{{ $t('user_setting.info.end_year') }}:</label>
                 <div class="control">
                     <div class="select">
                         <select
@@ -91,7 +91,7 @@
                     @click="deleteHighSchool(index)"
                     class="button is-danger is-outlined"
                 >
-                    <span>Delete</span>
+                    <span>{{ $t('delete') }}</span>
                     <span class="icon is-small">
                         <i class="fas fa-times"></i>
                     </span>
@@ -103,15 +103,15 @@
                 @click="addHighSchoolInput"
                 class="button btn-add-school is-link is-light"
             >
-                <span>Add More Highschool</span>
+                <span>{{ $t('user_setting.info.highschool_addmore') }}</span>
                 &nbsp;
                 <span><i class="fa-solid fa-circle-plus"></i></span>
             </button>
         </div>
-        <label class="label">University</label>
+        <label class="label">{{ $t('user_setting.info.university') }}</label>
         <div v-for="university in university" class="columns">
             <div class="field column">
-                <label class="label">What's your university?</label>
+                <label class="label">{{ $t('user_setting.info.university_name') }}</label>
                 <div class="control has-icons-left has-icons-right">
                     <input
                         class="input is-success"
@@ -125,7 +125,7 @@
                 </div>
             </div>
             <div class="field column">
-                <label class="label">Start Year?</label>
+                <label class="label">{{ $t('user_setting.info.start_year') }}</label>
                 <div class="control">
                     <div class="select">
                         <select
@@ -139,7 +139,7 @@
                 </div>
             </div>
             <div class="field column">
-                <label class="label">Graduated Year?</label>
+                <label class="label">{{ $t('user_setting.info.graduated_year') }}</label>
                 <div class="control">
                     <div class="select">
                         <select
@@ -157,7 +157,7 @@
                     @click="deleteUniversity(index)"
                     class="button is-danger is-outlined"
                 >
-                    <span>Delete</span>
+                    <span>{{ $t('delete') }}</span>
                     <span class="icon is-small">
                         <i class="fas fa-times"></i>
                     </span>
@@ -169,19 +169,19 @@
                 @click="addUniversityInput"
                 class="button btn-add-school is-link is-light"
             >
-                <span>Add More University</span>
+                <span>{{ $t('user_setting.info.university_addmore') }}</span>
                 &nbsp;
                 <span><i class="fa-solid fa-circle-plus"></i></span>
             </button>
         </div>
         <div class="field">
-            <label class="label">I'm a ...</label>
+            <label class="label">{{ $t('user_setting.info.iam') }}</label>
             <div class="control">
                 <div class="select">
                     <select name="gender" v-model="gender">
-                        <option>Male</option>
-                        <option>Female</option>
-                        <option>Other</option>
+                        <option value="male">{{ $t('user_setting.info.male') }}</option>
+                        <option value="female">{{ $t('user_setting.info.female') }}</option>
+                        <option value="other">{{ $t('user_setting.info.other') }}</option>
                     </select>
                 </div>
             </div>
@@ -191,7 +191,7 @@
                 @click="saveInformation"
                 class="button is-info is-1-desktop is-full-mobile"
             >
-                Save
+                {{ $t('save') }}
             </button>
         </div>
     </div>
@@ -277,11 +277,11 @@ export default {
             };
             await updateUserProfile(data)
                 .then((result) => {
-                    useToast().success('Your information has been updated');
+                    useToast().success(this.$t('user_setting.info.update_success'));
                     _this.$store.state.user = result.data;
                 })
                 .catch((err) => {
-                    useToast().error('Error when updating your information');
+                    useToast().error(this.$t('user_setting.info.update_error'));
                 });
         },
         getUserInformation() {

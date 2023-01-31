@@ -1,18 +1,18 @@
 <template>
     <div>
         <div class="field">
-            <label>Community Name:</label>
+            <label>{{ $t('community_setting.name') }}:</label>
             <input type="text" v-model="community_name" class="input" />
         </div>
         <div class="field">
-            <label>Community Rule:</label>
+            <label>{{ $t('community_setting.rule') }}:</label>
             <div class="control">
                 <textarea class="textarea" v-model="community_rule"></textarea>
             </div>
         </div>
         <div class="field is-grouped">
             <div class="control">
-                <button class="button is-link" @click="updateInformation">Submit</button>
+                <button class="button is-link" @click="updateInformation">{{ $t('save') }}</button>
             </div>
             <div class="control">
                 <button class="button is-link is-light">{{ $t('cancel') }}</button>
@@ -21,7 +21,6 @@
     </div>
 </template>
 <script>
-import { emit } from 'process';
 import { updateCommunityInfo } from '../../api/community';
 export default {
     props: ["community"],

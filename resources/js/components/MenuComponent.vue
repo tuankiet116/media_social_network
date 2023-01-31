@@ -15,7 +15,7 @@
             </div>
             <div class="control search-box is-flex is-align-items-center" @keypress.enter="redirectSearch">
                 <input class="input is-rounded" type="search" @click="openSearch = true" v-model="search"
-                    placeholder="Search...">
+                    :placeholder="$t('search')">
             </div>
             <div class="navbar-end buttons-auth is-pulled-right" v-if="user == null">
                 <div class="navbar-item items-button">
@@ -34,7 +34,7 @@
                 <div class="navbar-end">
                     <div v-if="user.groups.length" class="navbar-item has-dropdown is-hoverable">
                         <a class="navbar-link">
-                            Community
+                            {{ $t('community_text') }}
                         </a>
                         <div class="navbar-dropdown">
                             <router-link v-for="gr of user.groups" @click="increaseKey" class="navbar-item"
@@ -45,10 +45,10 @@
                                 <p class="m-2">{{ gr.community_name }}</p>
                             </router-link>
                             <hr class="navbar-divider">
-                            <router-link @click="increaseKey" class="navbar-item"
+                            <!-- <router-link @click="increaseKey" class="navbar-item"
                                 :to="{ name: 'profile_list_post', params: { id: user.id } }">
                                 See All Community
-                            </router-link>
+                            </router-link> -->
                         </div>
                     </div>
                     <router-link @click="increaseKey" class="navbar-item is-hidden-mobile"

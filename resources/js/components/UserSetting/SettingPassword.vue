@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="field">
-            <label>Old Password: </label>
+            <label>{{ $t('user_setting.password.old') }}: </label>
             <input
                 type="password"
                 name="old_password"
@@ -17,7 +17,7 @@
         </div>
         <hr />
         <div class="field">
-            <label>New Password: </label>
+            <label>{{ $t('user_setting.password.new') }}: </label>
             <input
                 type="password"
                 name="new_password"
@@ -32,7 +32,7 @@
             </p>
         </div>
         <div class="field">
-            <label>Confirm Password: </label>
+            <label>{{ $t('user_setting.password.confirm') }}: </label>
             <input
                 type="password"
                 name="confirm_password"
@@ -51,7 +51,7 @@
                 @click="updatePassword"
                 class="button is-info is-1-desktop is-full-mobile"
             >
-                Save
+                {{ $t('save') }}
             </button>
         </div>
     </div>
@@ -83,7 +83,7 @@ export default {
             };
             updatePassword(data)
                 .then((result) => {
-                    useToast().success('Your password has been updated');
+                    useToast().success(this.$t('user_setting.password.updated'));
                     this.errors = {};
                     this.$router.push({path: '/profile'});
                 })

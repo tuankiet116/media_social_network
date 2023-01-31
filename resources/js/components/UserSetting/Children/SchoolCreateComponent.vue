@@ -1,7 +1,7 @@
 <template>
     <div v-for="highschool in highSchool" class="columns">
         <div class="field column">
-            <label class="label">School Name:</label>
+            <label class="label">{{ $t('user_setting.info.school_name') }}:</label>
             <div class="control has-icons-left has-icons-right">
                 <input class="input is-success" type="text" name="highschool_name" v-model="highschool.school_name">
                 <span class="icon is-small is-left">
@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="field column">
-            <label class="label">Start Year:</label>
+            <label class="label">{{ $t('user_setting.info.start_year') }}:</label>
             <div class="control">
                 <div class="select">
                     <select class="year-select" name="highschool_start" v-model="highschool.start_year">
@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="field column">
-            <label class="label">End Year:</label>
+            <label class="label">{{ $t('user_setting.info.end_year') }}:</label>
             <div class="control">
                 <div class="select">
                     <select class="year-select" name="highschool_start" v-model="highschool.end_year">

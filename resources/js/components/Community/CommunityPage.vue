@@ -16,11 +16,11 @@
                 <a v-if="!isMine && auth" class="button is-rounded" :class="{'is-loading': isLoadingJoin}" @click="handleJoinCommunity">
                     <span v-if="community.isJoined">
                         <i class="fa-solid fa-check"></i>
-                        Joined
+                        {{ $t('community.joined') }}
                     </span>
                     <span v-else>
                         <i class="fa-solid fa-plus"></i>
-                        Join
+                        {{ $t('community.join') }}
                     </span>
                 </a>
                 <router-link v-else class="button btn-setting is-rounded" :to="{
@@ -28,7 +28,7 @@
                     params: { id: community.id },
                 }">
                     <span>
-                        <i class="fa-solid fa-gear"></i> Setting Community
+                        <i class="fa-solid fa-gear"></i> {{ $t('community_setting.setting') }}
                     </span>
                 </router-link>
             </div>
@@ -39,7 +39,7 @@
                 <router-link class="heading" :to="{ name: 'community_page' }">
                     <span>
                         <i class="fa-solid fa-message"></i>
-                        Bài viết
+                        {{ $t('community.post') }}
                     </span>
                 </router-link>
             </div>

@@ -8,7 +8,7 @@
           <figure class="image mr-2">
             <img class="is-32x32 mr-2 avatar-image is-rounded" :src="user?.image" />
           </figure>
-          <input @click="$router.push({ name: 'create_post' })" class="input" placeholder="Create Post" />
+          <input @click="$router.push({ name: 'create_post' })" class="input" :placeholder="$t('create_post_text')" />
         </div>
         <div v-else @click="redirectLogin"
           class="box column is-flex is-align-items-center is-half-fullhd mr-0">

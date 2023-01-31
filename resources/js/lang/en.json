@@ -8,6 +8,11 @@
     "load_more": "Load More",
     "edit": "Edit",
     "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "create_post_text": "Create Post",
+    "community_text": "Community",
+    "search": "Search",
     "menu": {
         "create_post": "Create Post",
         "notification": "Notification"
@@ -61,7 +66,65 @@
         "first_welcome": "Let's share your first Amazing Things to The Community!",
         "chat": "Chat",
         "follow": "Follow",
-        "following": "Following"
+        "following": "Following",
+        "introduce": "Introduction",
+        "living": "Living at ",
+        "studying": "Studying at",
+        "graduated": "Graduated",
+        "share_first_thing": "Let's share your first Amazing Things to The Community!",
+        "welcome_to_page": "Welcome to my page!",
+        "followed": "Followed",
+        "post": "Post",
+        "no_follower": "No Followers.",
+        "not_following": "Not Following Anyone"
+    },
+    "user_setting": {
+        "setting": "Setting your profile",
+        "basic": "Basic information",
+        "general": "General",
+        "avatar_setting": "Avatar",
+        "background_setting": "Background",
+        "account": "Account",
+        "password_setting": "Password",
+        "avatar": {
+            "your_avatar": "Your Avatar",
+            "change_avatar": "Change Avatar",
+            "or_choose_default": "Or you can choose default",
+            "success_update": "Updated your avatar image",
+            "error_update": "Error on updating avatar image"
+        },
+        "background": {
+            "your_background": "Your Background",
+            "change_background": "Change Background",
+            "success_update": "Updated your background image",
+            "error_update": "Error on updating background image"
+        },
+        "info": {
+            "user_name": "User Name",
+            "ask_live": "Living Place",
+            "ask_work": "Working Place",
+            "highschool": "Highschool",
+            "highschool_addmore": "Add More Highschool",
+            "university_addmore": "Add More University",
+            "school_name": "School Name",
+            "start_year": "Start Year",
+            "end_year": "End Year",
+            "graduated_year": "Graduated Year",
+            "university": "University",
+            "university_name": "University Name",
+            "iam": "I am ",
+            "male": "Male",
+            "female": "Female",
+            "other": "Other",
+            "update_success": "Your information has been updated",
+            "update_error": "An error occurred, could not update"
+        },
+        "password": {
+            "old": "Old password",
+            "new": "New password",
+            "confirm": "Confirm password",
+            "updated": "Your password has been updated"
+        }
     },
     "notification": {
         "notification": "Notifications",
@@ -75,6 +138,64 @@
         "leave_community": "Has been left your communtiy"
     },
     "chat": {
-        "title": "Message"
+        "title": "Message",
+        "info": "Information",
+        "send": "Send",
+        "you": "You",
+        "back": "Back",
+        "message_to": "Message To",
+        "user": "User",
+        "welcome_chat": "Pick a chat in chat list or search an user and let's chat!"
+    },
+    "search_page" : {
+        "all": "All",
+        "post": "Post",
+        "user": "User",
+        "community": "Community",
+        "filter": "Filter",
+        "search_for": "Search for"
+    },
+    "community": {
+        "followed": "Followed",
+        "no_post": "No Post",
+        "join": "Join",
+        "joined": "Joined",
+        "post": "Post",
+        "your_page_in_1": "Your frontpage now is in ",
+        "your_page_in_2": " Community. Welcome you!",
+        "your_page_in_home": "Your personal Media Social frontpage. Come here to check in with your favorite communities.",
+        "create": "Create community",
+        "create_own": "Create your own community",
+    },
+    "community_setting": {
+        "name": "Community Name",
+        "rule": "Community Rule",
+        "setting": "Setting community",
+        "basic": "Basic information",
+        "general": "General",
+        "avatar_setting": "Avatar",
+        "background_setting": "Background",
+        "member_setting": "Member",
+        "list_member": "List Member",
+        "delete": "Delete community",
+        "updated": "Your community updated",
+        "avatar": {
+            "title": "Avatar of community",
+            "change_avatar": "Change Avatar",
+            "success_update": "Updated avatar image of community",
+            "error_update": "Error on updating avatar image"
+        },
+        "background": {
+            "title": "Background of community",
+            "change_background": "Change Background",
+            "success_update": "Updated your background image",
+            "error_update": "Error on updating background image"
+        },
+        "member": {
+            "admin": "Administrator",
+            "delete": "Delete",
+            "no_member": "Your community has no members"
+        },
+        "delete_warning": "If you delete this community, all of the post will be deleted and could be revert. Are you sure?"
     }
 }
