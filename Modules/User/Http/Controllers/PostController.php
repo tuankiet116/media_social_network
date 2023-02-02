@@ -2,6 +2,7 @@
 
 namespace Modules\User\Http\Controllers;
 
+use App\Models\Post;
 use App\Services\User\PostService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
@@ -50,9 +51,9 @@ class PostController extends Controller
         // return $this->responseData($data, 404);
     }
 
-    public function delete(int $postId)
+    public function delete(Post $post)
     {
-        $result = $this->postService->deletePost($postId);
+        $result = $this->postService->deletePost($post);
         return $this->responseData($result, 200);
     }
 

@@ -221,6 +221,7 @@ export default {
                 })
                     .then((result) => {
                         useToast().success(messageSuccess);
+                        this.$router.push({ name: "home" });
                     })
                     .catch((err) => {
                         useToast().error(messageFailed);

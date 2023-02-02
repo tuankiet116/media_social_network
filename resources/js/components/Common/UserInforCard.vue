@@ -1,6 +1,6 @@
 <template>
     <div v-if="userInformation == null" class="card" style="padding: 20px">
-        <p class="content">Loading...</p>
+        <p class="content">{{ $t('loading') }}</p>
         <loading-component :style="'position: initial;'"/>
     </div>
     <div v-else class="card">
@@ -24,17 +24,17 @@
             </div>
 
             <div class="content">
-                <h4>Giới Thiệu</h4>
+                <h4>{{ $t('user_page.introduce') }}</h4>
                 <blockquote v-if="userInformation.user_information && userInformation.user_school.length">
                     <p v-if="userInformation.user_information?.living_place">
-                        Đang sống ở {{ userInformation.user_information.living_place }}
+                        {{ $t('user_page.living') }} {{ userInformation.user_information.living_place }}
                     </p>
                     <p v-for="user_school in userInformation.user_school">
                         <span v-if="user_school.end_year < new Date().getFullYear()">
-                            Đã tốt nghiệp {{ user_school.school_name }}
+                            {{ $t('user_page.graduated') }} {{ user_school.school_name }}
                         </span>
                         <span v-else>
-                            Đang học {{ user_school.school_name }}
+                            {{ $t('user_page.studying') }} {{ user_school.school_name }}
                         </span>
                     </p>
                 </blockquote>

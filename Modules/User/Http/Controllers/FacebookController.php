@@ -21,7 +21,14 @@ class FacebookController extends Controller
     public function fbLogin(Request $request)
     {
         try {
-            $this->userAuthenticationService->facebookLogin($request);
+            $token = $this->userAuthenticationService->facebookLogin($request);
+            if ($token) {
+                return $this->responseData([
+                    'message' => 'register_success',
+                    'token' => $token,
+                    'code' => 200
+                ], 200);
+            }
             return $this->responseData([
                 'message' => 'login_success',
                 'code' => 200

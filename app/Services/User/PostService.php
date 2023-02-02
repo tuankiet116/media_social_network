@@ -125,10 +125,9 @@ class PostService
         return $post;
     }
 
-    public function deletePost(int $id)
+    public function deletePost(Post $post)
     {
-        $userId = auth()->id();
-        $result = Post::where(['id' => $id, 'user_id' => $userId])->delete();
+        $result = $post->delete();
         return $result;
     }
 

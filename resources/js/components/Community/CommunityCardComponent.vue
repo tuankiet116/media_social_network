@@ -12,21 +12,22 @@
 
       <div class="content p-2 mt-5">
         <h2 class="ml-2" v-if="community">{{ community.community_name }}</h2>
-        <p v-if="community">{{ $t('community.your_page_in_1') }} {{ community.community_name }} {{ $t('community.your_page_in_2') }}</p>
+        <p v-if="community">{{ $t('community.your_page_in_1') }} {{ community.community_name }} {{
+          $t('community.your_page_in_2')
+        }}</p>
         <p v-else>
           {{ $t('community.your_page_in_home') }}
         </p>
       </div>
 
       <div v-if="community && community.rule" class="content p-2 mt-5">
-        <hr/>
-        <p style="word-break: break-word;">
-          {{ community.rule }}
+        <hr />
+        <p style="word-break: break-word;" v-html="community.rule">
         </p>
       </div>
 
       <div v-if="user" class="buttons">
-        <a class="button btn-create is-info mr-2 ml-2" @click="redirectCreatePost">Create Post</a>
+        <a class="button btn-create is-info mr-2 ml-2" @click="redirectCreatePost">{{ $t('create_post_text') }}</a>
         <a class="button btn-create is-info m-2 mt-1 js-modal-trigger" data-target="modal-create-group"
           @click="isCreateGroup = true" v-if="community == null">
           {{ $t('community.create') }}
@@ -41,18 +42,18 @@
             <h3>{{ $t('community.create_own') }}</h3>
           </div>
           <div class="field">
-            <label>Your Community Name:</label>
+            <label>{{ $t('community_setting.name') }}</label>
             <input class="input" type="text" v-model="communityName" />
           </div>
           <div class="field is-grouped">
             <div class="control">
               <button class="button is-success" @click="createCommunity">
-                Create
+                {{ $t('create') }}
               </button>
             </div>
             <div class="control">
               <button class="button" @click="isCreateGroup = false">
-                Cancel
+                {{ $t('cancel') }}
               </button>
             </div>
           </div>
@@ -96,11 +97,13 @@ export default {
     },
     redirectCreatePost() {
       if (this.community) {
-        this.$router.push({name: 'create_post', query: {
-          community: this.community.id
-        }})
+        this.$router.push({
+          name: 'create_post', query: {
+            community: this.community.id
+          }
+        })
       }
-      this.$router.push({name: 'create_post'})
+      this.$router.push({ name: 'create_post' })
     }
   },
 }

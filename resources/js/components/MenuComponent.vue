@@ -32,7 +32,7 @@
 
             <div id="navbar-menus-user" class="navbar-menu is-active is-hidden-mobile" v-else>
                 <div class="navbar-end">
-                    <div v-if="user.groups.length" class="navbar-item has-dropdown is-hoverable">
+                    <div v-if="user.groups.length" class="navbar-item has-dropdown is-hoverable" style="height: 100%;">
                         <a class="navbar-link">
                             {{ $t('community_text') }}
                         </a>

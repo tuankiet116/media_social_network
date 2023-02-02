@@ -1,6 +1,6 @@
 <template>
     <div class="box m-6">
-        <span class="is-pulled-left">Your post is uploading...</span>
+        <span class="is-pulled-left">{{ $t('post_uploading') }}</span>
         <span class="is-pulled-right">{{ percentValue }}%</span>
         <progress class="progress is-small is-info" :value="percentValue" max="100">{{ percentValue }}%</progress>
     </div>

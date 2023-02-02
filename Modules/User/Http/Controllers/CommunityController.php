@@ -82,4 +82,10 @@ class CommunityController extends Controller
             return $this->responseData($e, 500);
         }
     }
+
+    public function deleteCommunity(Community $community)
+    {
+        $result = $this->communityService->deleteCommunity($community);
+        return $this->responseData($result);
+    }
 }

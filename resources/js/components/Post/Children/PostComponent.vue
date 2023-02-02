@@ -2,11 +2,6 @@
     <div class="box post-box is-half-fullhd mr-0">
         <div ref="post" class="post">
             <canvas ref="canvas"></canvas>
-            <div v-if="post.community">
-                <div>
-                    <span></span>
-                </div>
-            </div>
             <div class="user-info">
                 <template v-if="post.community">
                     <figure class="image user_image is-32x32" @mouseover="handleShowUserCard">
@@ -34,7 +29,7 @@
                                 </KeepAlive>
                             </div>
                         </div>
-                        <span class="ml-2"> Đăng bởi </span>
+                        <span class="ml-2"> {{ $t("post.post_by") }} </span>
                         <div class="user_name ml-2" @mouseover="handleShowUserCard">
                             <router-link :to="{ path: '/profile/' + post.user.id }">
                                 <strong>{{ post.user.name }}</strong>
@@ -84,8 +79,9 @@
                         <i class="fa-solid fa-ellipsis"></i>
                     </button>
                     <div href="#" class="arrow-box box" v-show="displayHelper">
-                        <a v-if="user && user.id == post.user_id" class="navbar-item" @click="isShowConfirmPost = true">
-                            <span>Delete</span>
+                        <a v-if="user && (user.id == post.user_id || (post.community && user.id == post.community.user_id))"
+                            class="navbar-item" @click="isShowConfirmPost = true">
+                            <span>{{ $t('delete') }}</span>
                             <i class="fa-solid fa-trash"></i>
                         </a>
                         <hr />
@@ -100,7 +96,7 @@
                         </a>
                         <hr />
                         <a class="navbar-item" @click="displayHelper = false">
-                            <span>Close</span>
+                            <span>{{ $t('close') }}</span>
                             <i class="fa-solid fa-xmark"></i>
                         </a>
                     </div>
@@ -110,7 +106,7 @@
             <div class="title">
                 <strong>{{ post.title }}</strong>
             </div>
-            <div class="post-desc" ref="desc" v-html="post.post_description"></div>
+            <div class="post-desc" ref="desc" @click="handleClick($event)" v-html="post.post_description"></div>
             <div class="has-text-centered">
                 <video v-if="post.src" width="800" controls>
                     <source :src="'/api/post/stream/' + post.src" type="video/mp4" />
@@ -125,6 +121,7 @@
     </div>
     <ConfirmDeleteComponent v-if="isShowConfirmPost" :message="$t('post.confirm_delete')" @confirm="handleDeletePost"
         @cancel="isShowConfirmPost = false" />
+    <ImageModal v-if="showImage" :image="imageUrl" @close="showImage = false"></ImageModal>
 </template>
 <script>
 import { mapGetters } from "vuex";
@@ -135,6 +132,7 @@ import ConfirmDeleteComponent from "../../Common/ConfirmDeleteComponent.vue";
 import { calculateTime } from "../../../helpers/common";
 import UserInforCard from "../../Common/UserInforCard.vue";
 import CommunityInfoCard from "../../Common/CommunityInfoCard.vue";
+import ImageModal from "../../Common/ImageModal.vue";
 
 export default {
     components: {
@@ -143,6 +141,7 @@ export default {
         ConfirmDeleteComponent,
         UserInforCard,
         CommunityInfoCard,
+        ImageModal
     },
     props: ["post"],
     emits: ["postDeleted"],
@@ -154,6 +153,8 @@ export default {
             displayHelper: false,
             isShowConfirmPost: false,
             displayUserInformation: false,
+            showImage: false,
+            imageUrl: ''
         };
     },
     computed: {
@@ -161,6 +162,9 @@ export default {
         timeCreated() {
             return calculateTime(this.post.created_at, this);
         },
+    },
+    mounted() {
+        // this.$refs.desc.addEventListener('click')
     },
     methods: {
         handleUnDisplayHelper() {
@@ -197,6 +201,12 @@ export default {
         handleShowUserCard() {
             this.displayUserInformation = true;
         },
+        handleClick(event) {
+            if (event.target.tagName == 'IMG' && event.target.src != null) {
+                this.imageUrl = event.target.src;
+                this.showImage = true;
+            }
+        }
     },
 };
 </script>
@@ -267,6 +277,10 @@ canvas {
     height: 32px !important;
 }
 
+.post-desc /deep/ .image {
+    max-width: 600px !important;
+}
+
 @media screen and (max-width: 754px) {
     .post-box {
         margin-left: 0;
@@ -334,8 +348,12 @@ canvas {
 }
 
 @media screen and (max-width: 450px) {
-    .box-reactions /deep/ button{
+    .box-reactions /deep/ button {
         font-size: 10px !important;
+    }
+
+    .post-desc /deep/ .image {
+        max-width: 300px !important;
     }
 }
 </style>

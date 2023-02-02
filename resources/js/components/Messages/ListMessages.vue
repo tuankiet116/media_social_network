@@ -36,11 +36,11 @@
                     <label class="label">{{ $t('chat.message_to') }}:</label>
                 </div>
                 <div class="field-body">
-                    <div class="field">
+                    <div class="field search-user-container">
                         <p class="control">
                             <input class="input" v-model="keyword" type="text" placeholder="Search User">
                         </p>
-                        <nav class="panel" v-if="isDisplaySearch">
+                        <nav class="panel search-user" v-if="isDisplaySearch">
                             <p class="panel-heading">
                                 {{ $t('chat.user') }}
                             </p>
@@ -183,5 +183,19 @@ export default {
 
 .link-chat:hover {
     background-color: #C5C5C5;
+}
+
+.search-user-container {
+    position: relative;
+}
+
+.search-user {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
+
+.search-user a {
+    background-color: white;
 }
 </style>

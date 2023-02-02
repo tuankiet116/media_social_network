@@ -40,7 +40,7 @@ Route::middleware('auth.api')->prefix('post')->name('post.')->group(function() {
     Route::post('/create', 'PostController@create')->name('create');
     Route::post('/reaction', 'PostController@reaction')->name('reaction');
     Route::post('/reaction/count', 'PostUserController@getNumberLikePost')->name('reaction.count');
-    Route::delete('/delete/{postId}', 'PostController@delete')->name('delete');
+    Route::delete('/delete/{post}', 'PostController@delete')->middleware('can:delete,post')->name('delete');
     Route::put('/update', 'PostController@update')->name('update');
 });
 
@@ -58,6 +58,7 @@ Route::middleware('auth.api')->prefix('community')->name('community.')->group(fu
     Route::post('/create', 'CommunityController@createCommunity')->name('create');
     Route::get('/list', 'CommunityController@getListCommunityJoined')->name('list');
     Route::post('/join/{community}', 'CommunityController@joinCommunity')->middleware('can:join,community');
+    Route::delete('/delete/{community}', 'CommunityController@deleteCommunity')->middleware('can:delete,community');
     Route::post('/unjoin/{community}', 'CommunityController@unjoinCommunity')->middleware('can:unjoin,community');
     Route::get('/members/{community}', 'CommunityController@listMembers')->middleware('can:update,community');
     Route::delete('/members/{community}', 'CommunityController@deleteMember')->middleware('can:update,community');

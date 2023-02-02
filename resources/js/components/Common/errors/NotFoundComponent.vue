@@ -2,9 +2,9 @@
     <div class="aks-404-page">
         <div class="aks-404-page-content">
             <h1>404</h1>
-            <h3>Page not found</h3>
+            <h3>{{ $t('error.page_not_found') }}</h3>
             <router-link :to="{name: 'home'}" class="aks-404-page-btn">
-                GO TO HOME
+                {{ $t('error.back_home') }}
             </router-link>
         </div>
     </div>

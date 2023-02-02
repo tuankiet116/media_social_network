@@ -27,7 +27,7 @@
                                     </KeepAlive>
                                 </div>
                             </div>
-                            <span class="ml-2"> Đăng bởi </span>
+                            <span class="ml-2"> {{ $t("post.post_by") }} </span>
                             <div class="user_name ml-2" @mouseover="handleShowUserCard">
                                 <router-link :to="{ path: '/profile/' + post.user.id }">
                                     <strong>{{ post.user.name }}</strong>
@@ -77,9 +77,9 @@
                             <i class="fa-solid fa-ellipsis"></i>
                         </button>
                         <div href="#" class="arrow-box box" v-show="displayHelper">
-                            <a v-if="user && user.id == post.user_id" class="navbar-item"
-                                @click="isShowConfirmPost = true">
-                                <span>Delete</span>
+                            <a v-if="user && (user.id == post.user_id || (post.community && user.id == post.community.user_id))"
+                                class="navbar-item" @click="isShowConfirmPost = true">
+                                <span>{{ $t('delete') }}</span>
                                 <i class="fa-solid fa-trash"></i>
                             </a>
                             <hr />
@@ -91,7 +91,7 @@
                             </a>
                             <hr />
                             <a class="navbar-item" @click="displayHelper = false">
-                                <span>Close</span>
+                                <span>{{ $t('close') }}</span>
                                 <i class="fa-solid fa-xmark"></i>
                             </a>
                         </div>
@@ -131,7 +131,9 @@
                                     <a @click="handleCommentToPost" class="button is-small is-info">Submit</a>
                                 </div>
                                 <div class="level-item">
-                                    <a @click="focusComment = false" class="button is-small is-light">{{ $t('cancel') }}</a>
+                                    <a @click="focusComment = false" class="button is-small is-light">{{
+                                        $t('cancel')
+                                    }}</a>
                                 </div>
                             </div>
                         </nav>

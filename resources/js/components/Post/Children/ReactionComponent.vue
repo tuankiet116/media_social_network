@@ -18,7 +18,7 @@
             </button>
         </div>
         <div class="column">
-            <button class="btn button">
+            <button class="btn button" @click="sharePost">
                 <i class="fa-solid fa-share"></i>
                 <span>{{ $t('post.share') }}</span>
             </button>
@@ -82,6 +82,9 @@ export default {
             reactPostAPI(data).then(function (result) {
                 _this.post.reaction_user_count = result.data.amount_reaction;
             }).catch(function (err) { });
+        },
+        sharePost() {
+            this.$router.push({name: 'share_post', query: {post: this.post.id}})
         }
     }
 }

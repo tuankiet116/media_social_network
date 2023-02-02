@@ -7,7 +7,8 @@
         <div class="field">
             <label>{{ $t('community_setting.rule') }}:</label>
             <div class="control">
-                <textarea class="textarea" v-model="community_rule"></textarea>
+                <ckeditor ref="editor" class="input is-primary" :editor="editor" v-model="community_rule"
+                    :config="editorConfig"></ckeditor>
             </div>
         </div>
         <div class="field is-grouped">
@@ -22,12 +23,18 @@
 </template>
 <script>
 import { updateCommunityInfo } from '../../api/community';
+import ClassicEditor from "../../../Libraries/CKEditor5/build/ckeditor";
+
 export default {
     props: ["community"],
     data() {
         return {
             community_name: "",
             community_rule: "",
+            editor: ClassicEditor,
+            editorConfig: {
+                toolbar: ['fontfamily', 'fontsize', '|', 'bold', 'italic', 'link', 'undo', 'redo']
+            }
         };
     },
     watch: {

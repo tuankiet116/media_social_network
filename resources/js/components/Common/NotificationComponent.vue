@@ -11,7 +11,6 @@
 
         <div class="quickview-body">
             <div class="quickview-block pt-3 pb-3" v-for="noti in notifications" :class="{ 'read': noti.read }">
-                {{ noti.id }}
                 <router-link v-if="noti.community_sender" @click="markRead(noti.id)"
                     :to="{ name: 'community_page', params: { id: noti.community_sender.id } }" style="color: black">
                     <div class="columns is-align-items-center ml-2" style="flex-wrap: wrap;">

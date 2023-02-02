@@ -8,6 +8,8 @@ use App\Models\Post;
 use App\Models\UserNotification;
 use App\Services\Inf\StorageService;
 use Exception;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Modules\User\Events\NotificationEvent;
 
@@ -214,5 +216,22 @@ class CommunityService
         } catch (Exception $e) {
             throw new Exception($e);
         }
+    }
+
+    public function deleteCommunity(Community $community)
+    {
+        DB::beginTransaction();
+        $id = $community->id;
+        try {
+            Post::where('community_id', $id)->delete();
+            CommunityUser::where('community_id', $id)->delete();
+            $community->delete();
+            DB::commit();
+        } catch (Exception $e) {
+            Log::error('[Delete] Community:' . $e->getMessage());
+            DB::rollBack();
+            return false;
+        }
+        return true;
     }
 }

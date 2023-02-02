@@ -46,6 +46,7 @@ class UserAuthenticationService
 
     public function createUser($data, $accountType = null, $step = 0)
     {
+        if (User::where('email', $data['email'])->count()) throw new Exception(__('auth.register.email_duplicate'));
         try {
             DB::beginTransaction();
             $token = base64_encode((string) Str::uuid());
@@ -70,9 +71,7 @@ class UserAuthenticationService
         } catch (Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
-            if ($this->step = LIMIT_REGISTER_QUERY) {
-                throw new Exception(__('auth.register.error_register'));
-            }
+            throw new Exception(__('auth.register.error_register'));
             $this->createUser($data, $accountType, $step += 1);
         }
     }
@@ -96,10 +95,11 @@ class UserAuthenticationService
             else $user = null;
             if (!$user) {
                 $user = $this->createUser($data, FB);
+                return $user->token;
+            } else {
+                auth('web')->login($user, true);
             }
-            auth('web')->login($user, true);
-            $plainToken = $user->createToken("API TOKEN");
-            return $plainToken;
+            return null;
         } catch (Exception $e) {
             auth()->logout();
             Log::error($e->getMessage());

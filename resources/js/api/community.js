@@ -20,3 +20,4 @@ export const listMembers = (id, offset) => api.get(`api/community/members/${id}`
     }
 });
 export const deleteMember = (id, userId) => api.delete(`api/community/members/${id}?userId=${userId}`);
+export const deleteCommunity = (id) => api.delete(`api/community/delete/${id}`);

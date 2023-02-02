@@ -8,6 +8,15 @@
     "load_more": "Tải thêm",
     "edit": "Chỉnh sửa",
     "cancel": "Thoát",
+    "save": "Lưu",
+    "delete": "Xóa",
+    "create_post_text": "Tạo bài viết",
+    "community_text": "Cộng đồng",
+    "search": "Tìm kiếm",
+    "loading": "Đang tải ...",
+    "post_uploading": "Đang tải lên bài viết của bạn ...",
+    "create": "Tạo",
+    "close": "Đóng",
     "menu": {
         "create_post": "Đăng bài",
         "notification": "Thông báo"
@@ -41,7 +50,9 @@
         "love": "Yêu thích",
         "confirm_delete": "Bạn có chắc chắn muốn xóa bài viết này không?",
         "comment": "Bình luận",
-        "share": "Chia sẻ"
+        "share": "Chia sẻ",
+        "post_by": "Đăng bởi",
+        "error_get_post": "Không tìm thấy thông tin bài viết."
     },
     "comment": {
         "confirm_delete": "Bạn có muốn xóa bình luận của mình?",
@@ -61,7 +72,65 @@
         "first_welcome": "Hãy chia sẽ điều tuyệt vời đầu tiên đến cộng đồng MS!",
         "chat": "Nhắn tin",
         "follow": "Theo dõi",
-        "following": "Đang theo dõi"
+        "following": "Đang theo dõi",
+        "introduce": "Giới thiệu",
+        "living": "Nơi ở hiện tại ",
+        "studying": "Đang học tại ",
+        "graduated": "Đã tốt nghiệp",
+        "share_first_thing": "Hãy chia sẻ điều đầu tiên đến Media Social!",
+        "welcome_to_page": "Chào bạn đến trang của tôi!",
+        "followed": "Đã theo dõi",
+        "post": "Bài viết",
+        "no_follower": "Không có ai theo dõi.",
+        "not_following": "Không theo dõi ai"
+    },
+    "user_setting": {
+        "setting": "Cài đặt hồ sơ",
+        "basic": "Thông tin cơ bản",
+        "general": "Chung",
+        "avatar_setting": "Ảnh đại diện",
+        "background_setting": "Hình nền",
+        "account": "Tài khoản",
+        "password_setting": "Mật khẩu",
+        "avatar": {
+            "your_avatar": "Ảnh đại diện của bạn",
+            "change_avatar": "Thay đổi ảnh đại diện",
+            "or_choose_default": "Hoạc bạn có thể chọn những hình ảnh mặc định",
+            "success_update": "Đã cập nhật ảnh đại diện",
+            "error_update": "Lỗi không thể cập nhật ảnh đại diện"
+        },
+        "background": {
+            "your_background": "Hình nền của bạn",
+            "change_background": "Thay đổi hình nền",
+            "success_update": "Đã thay đổi hình nền thành công",
+            "error_update": "Lỗi không thể thay đổi hình nền"
+        },
+        "info": {
+            "user_name": "Tên người dùng",
+            "ask_live": "Nơi sinh sống",
+            "ask_work": "Nơi làm việc",
+            "highschool": "Trường trung học",
+            "highschool_addmore": "Thêm trường trung học",
+            "university_addmore": "Thêm đại học",
+            "school_name": "Tên trường",
+            "start_year": "Năm bắt đầu",
+            "end_year": "Năm kết thúc",
+            "graduated_year": "Năm tốt nghiệp",
+            "university": "Đại học",
+            "university_name": "Tên trường đại học",
+            "iam": "Tôi là ",
+            "male": "Name",
+            "female": "Nữ",
+            "other": "Khác",
+            "update_success": "Thông tin của bạn đã được thay đổi",
+            "update_error": "Xảy ra lỗi không thể thay đổi thông tin"
+        },
+        "password": {
+            "old": "Mật khẩu cũ",
+            "new": "Mật khẩu mới",
+            "confirm": "Xác nhận mật khẩu",
+            "updated": "Mật khẩu của bạn đã được thay đổi"
+        }
     },
     "notification": {
         "notification": "Thông báo",
@@ -75,6 +144,71 @@
         "leave_community": "Đã rời khỏi cộng đồng của bạn"
     },
     "chat": {
-        "title": "Tin nhắn"
+        "title": "Tin nhắn",
+        "info": "Thông tin",
+        "send": "Gửi",
+        "you": "Bạn",
+        "back": "Quay lại",
+        "message_to": "Nhắn đến",
+        "user": "Mọi người",
+        "welcome_chat": "Hãy chọn một tin nhắn trong danh sách hoặc tìm kiếm người khác để bắt đầu trò chuyện"
+    },
+    "search_page" : {
+        "all": "Tất cả",
+        "post": "Bài viết",
+        "user": "Mọi người",
+        "community": "Cộng đồng",
+        "filter": "Lọc",
+        "search_for": "Tìm kiếm cho"
+    },
+    "community": {
+        "followed": "Đã theo dõi",
+        "no_post": "Không có bài viết",
+        "join": "Tham gia",
+        "joined": "Đã tham gia",
+        "post": "Bài viết",
+        "your_page_in_1": "Trang chủ của bạn hiện đang ở cộng đồng",
+        "your_page_in_2": " .Chào mừng bạn!",
+        "your_page_in_home": "Bạn hiện đang ở trang chủ Media Social. Hãy bắt đầu tạo cộng đồng mới hoặc tham gia một cộng đồng",
+        "create": "Tạo cộng đồng",
+        "create_own": "Tạo cộng đồng của bạn"
+    },
+    "community_setting": {
+        "name": "Tên cộng đồng",
+        "rule": "Quy tắc cộng đồng",
+        "setting": "Cài đặt cộng đồng",
+        "basic": "Thông tin cơ bản",
+        "general": "Chung",
+        "avatar_setting": "Ảnh đại diện",
+        "background_setting": "Hình nền",
+        "member_setting": "Thành viên",
+        "list_member": "Danh sách thành viên",
+        "delete": "Xóa cộng đồng",
+        "updated": "Cộng đồng của bạn đã được thay đổi",
+        "avatar": {
+            "title": "Ảnh đại diện của cộng đồng",
+            "change_avatar": "Thay đổi ảnh đại diện",
+            "success_update": "Đã thay đổi ảnh đại diện của cộng đồng",
+            "error_update": "Xảy ra lỗi không thể thay đổi"
+        },
+        "background": {
+            "title": "Ảnh bìa của cộng đồng",
+            "change_background": "Thay đổi ảnh bìa",
+            "success_update": "Đã thay đổi ảnh bìa",
+            "error_update": "Lỗi không thể thay đổi ảnh bìa"
+        },
+        "member": {
+            "admin": "Quản trị viên",
+            "delete": "Xóa",
+            "no_member": "Cộng đồng của bạn không có thành viên"
+        },
+        "delete_warning": "Nếu bạn thực hiện xóa cộng đồng, toàn bộ bài viết sẽ bị xóa bỏ và không thể quay lại. Bạn chắc chứ?",
+        "deleted": "Đã xóa cộng đồng của bạn",
+        "deleted_fail": "Hiện tại chưa thể xóa cộng đồng của bạn."
+    },
+    "error": {
+        "page_not_found": "Trang không tồn tại",
+        "back_home": "QUAY LẠI",
+        "no_result_match": "Không có kết quả phù hợp!"
     }
 }

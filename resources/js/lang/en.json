@@ -13,6 +13,10 @@
     "create_post_text": "Create Post",
     "community_text": "Community",
     "search": "Search",
+    "loading": "Loading ...",
+    "post_uploading": "Your post is uploading ...",
+    "create": "Create",
+    "close": "Close",
     "menu": {
         "create_post": "Create Post",
         "notification": "Notification"
@@ -46,7 +50,9 @@
         "love": "Like",
         "confirm_delete": "Do you want to delete your post?",
         "comment": "Comment",
-        "share": "Share"
+        "share": "Share",
+        "post_by": "Posted by",
+        "error_get_post": "Post is not found or something crash"
     },
     "comment": {
         "confirm_delete": "Do you want to delete your comment?",
@@ -165,7 +171,7 @@
         "your_page_in_2": " Community. Welcome you!",
         "your_page_in_home": "Your personal Media Social frontpage. Come here to check in with your favorite communities.",
         "create": "Create community",
-        "create_own": "Create your own community",
+        "create_own": "Create your own community"
     },
     "community_setting": {
         "name": "Community Name",
@@ -196,6 +202,13 @@
             "delete": "Delete",
             "no_member": "Your community has no members"
         },
-        "delete_warning": "If you delete this community, all of the post will be deleted and could be revert. Are you sure?"
+        "delete_warning": "If you delete this community, all of the post will be deleted and could be revert. Are you sure?",
+        "deleted": "Your community deleted",
+        "deleted_fail": "Your community could not deleted right now."
+    },
+    "error": {
+        "page_not_found": "Page not found",
+        "back_home": "GO TO HOME",
+        "no_result_match": "There are no results that match your search!"
     }
 }

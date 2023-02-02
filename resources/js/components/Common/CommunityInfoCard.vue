@@ -1,6 +1,6 @@
 <template>
     <div v-if="communityInformation == null" class="card" style="padding: 20px">
-        <p class="content">Loading...</p>
+        <p class="content">{{ $t('loading') }}</p>
         <LoadingComponent :style="'position: initial;'"/>
     </div>
     <div v-else class="card">

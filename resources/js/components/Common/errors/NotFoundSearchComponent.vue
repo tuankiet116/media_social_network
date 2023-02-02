@@ -4,7 +4,7 @@
             <img src="../../../../images/gifs/not_found.gif"/>
         </figure>
         <div class="content is-justify-content-center is-align-items-center" style="display: flex">
-            <h3>There are no results that match your search!</h3>
+            <h3>{{ $t('error.no_result_match') }}</h3>
         </div>
     </div>
 </template>
