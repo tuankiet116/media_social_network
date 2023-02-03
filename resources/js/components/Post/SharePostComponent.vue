@@ -30,8 +30,7 @@
                 {{ errors.description }}
             </p>
         </div>
-        <div class="is-rounded box" v-if="sharePost">
-            
+        <div class="is-rounded box share-post" v-if="sharePost">
             <div class="title">
                 <strong>{{ sharePost.title }}</strong>
             </div>
@@ -318,21 +317,6 @@ export default {
     }
 }
 
-.file-label {
-    width: 100%;
-    text-align: center;
-}
-
-.video-preview-box {
-    max-height: 500px;
-}
-
-video {
-    max-width: 100%;
-    max-height: 300px;
-    width: auto;
-}
-
 .search_community {
     width: 150px;
     margin-left: auto;
@@ -346,11 +330,6 @@ video {
 
 .post_user {
     margin: 0.2rem;
-}
-
-.post {
-    position: relative;
-    cursor: pointer;
 }
 
 .user-info {
@@ -378,19 +357,6 @@ video {
     margin: 0.5rem 0;
 }
 
-.split-reaction-post {
-    margin: 0 !important;
-}
-
-.split-reaction-post {
-    margin: 0 !important;
-}
-
-.dots-container {
-    position: absolute;
-    right: 0.2rem;
-}
-
 .avatar-image {
     height: 32px !important;
 }
@@ -400,50 +366,8 @@ video {
 }
 
 @media screen and (max-width: 754px) {
-    .post-box {
-        margin-left: 0;
-        margin-right: 0;
-    }
 }
 
-.arrow-box {
-    position: absolute;
-    width: 220px;
-    background: #19b3e6;
-    line-height: 40px;
-    margin-bottom: 30px;
-    text-align: center;
-    right: 2rem;
-    padding: 0;
-    top: 0;
-    z-index: 10;
-}
-
-.arrow-box a {
-    color: white;
-}
-
-.arrow-box a:hover {
-    color: black;
-}
-
-.arrow-box:before {
-    content: "";
-    position: absolute;
-    right: -7px;
-    top: 7px;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 10px solid #19b3e6;
-}
-
-.arrow-box i {
-    margin-left: auto;
-}
-
-.arrow-box hr {
-    margin: 0 !important;
-}
 
 .user-card {
     position: absolute;
@@ -465,10 +389,13 @@ video {
     transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
 }
 
+.share-post {
+    max-width: 600px;
+    border-radius: 20px;
+    margin: auto;
+}
+
 @media screen and (max-width: 450px) {
-    .box-reactions /deep/ button {
-        font-size: 10px !important;
-    }
 
     .post-desc /deep/ .image {
         max-width: 300px !important;
