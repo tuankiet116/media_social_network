@@ -99,8 +99,10 @@ import NotificationComponent from './Common/NotificationComponent.vue';
 import SearchBoxComponent from './Search/SearchBoxComponent.vue';
 import { detectMobile } from '../helpers/common';
 import { markReadAll } from '../api/notification';
+import authMixin from '../mixins.js';
 export default {
     props: ["user"],
+    mixins: [authMixin],
     data() {
         return {
             showNav: false,
@@ -116,7 +118,7 @@ export default {
             this.unreadNotifications = data;
         },
         '$store.getters.getUnreadMessages': {
-            handler: function(data) {
+            handler: function (data) {
                 this.unreadMessagesCount = data.length;
             },
             deep: true
@@ -166,10 +168,9 @@ export default {
 
 <style scoped>
 .navbar {
-    background-color: #19B3E6;
-    padding: 0 10px;
     position: sticky;
     top: 0;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
 }
 
 .navbar-menu {
@@ -177,15 +178,6 @@ export default {
     padding: 0;
     margin: 0;
     box-shadow: none;
-}
-
-.navbar-start>a {
-    color: white;
-}
-
-.navbar-start>a:hover,
-a:focus {
-    color: black;
 }
 
 .navbar img {
@@ -222,7 +214,6 @@ a:focus {
 
 .navbar-end {
     align-items: center !important;
-    background-color: #19B3E6;
 }
 
 .navbar-end a {

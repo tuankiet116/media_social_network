@@ -49,8 +49,6 @@
     </div>
 </template>
 <script>
-import authMixin from '../../mixins';
 export default {
-    mixins: [authMixin]
 }
 </script>

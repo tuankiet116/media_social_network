@@ -74,11 +74,9 @@
     </div>
 </template>
 <script>
-import authMixin from "../../mixins";
 import { getUserProfile, getProfile, followUser, unfollowUser } from "../../api/user";
 
 export default {
-    mixins: [authMixin],
     data() {
         return {
             userId: this.$route.params.id,
@@ -96,6 +94,9 @@ export default {
             }
             return false;
         },
+        auth() {
+            return this.$store.getters.getUser;
+        }
     },
     methods: {
         getUserInformation() {

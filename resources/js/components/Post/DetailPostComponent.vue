@@ -1,6 +1,6 @@
 <template>
     <div id="post">
-        <div v-if="!isNotFound" :class="{ 'box': !isMobile() }" class="post-box column is-two-thirds-tablet is-one-desktop 
+        <div v-if="!isNotFound" :class="{ 'box': !isMobile() }" class="post-box mt-5 mb-5 column is-two-thirds-tablet is-one-desktop 
         is-half-fullhd mx-sm-5">
             <div v-if="post" ref="post" class="post">
                 <canvas ref="canvas"></canvas>
@@ -101,13 +101,98 @@
                 <div class="title">
                     <strong>{{ post.title }}</strong>
                 </div>
-                <div class="post-desc" v-html="post.post_description"></div>
+                <div class="post-desc" ref="desc" @click="handleClick($event)" v-html="post.post_description"></div>
                 <div class="has-text-centered">
-                    <video v-if="post.src" width="600" controls>
+                    <video v-if="post.src" width="800" controls>
                         <source :src="'/api/post/stream/' + post.src" type="video/mp4">
                     </video>
                 </div>
-                <hr class="split-reaction-post">
+                <div class="is-rounded box share-post p-0" v-if="post.share">
+                    <div class="post-desc pt-4" ref="desc_share" @click="handleClick($event, post.share.id)"
+                        v-html="post.share.post_description">
+                    </div>
+                    <div class="has-text-centered">
+                        <video v-if="post.share.src" width="800" controls>
+                            <source :src="'/api/post/stream/' + post.share.src" type="video/mp4" />
+                        </video>
+                    </div>
+                    <hr class="split-post-user m-0" />
+                    <div class="user-info pb-2">
+                        <template v-if="post.share.community">
+                            <figure class="image user_image is-32x32" @mouseover="handleShowUserCard">
+                                <router-link :to="{ path: '/community/' + post.share.community.id }">
+                                    <img class="is-rounded avatar-image" :src="post.share.community.image" />
+                                </router-link>
+                                <div class="user-card">
+                                    <KeepAlive>
+                                        <CommunityInfoCard v-if="displayUserInformation"
+                                            :community="post.share.community" />
+                                    </KeepAlive>
+                                </div>
+                            </figure>
+                            <div class="post_user is-flex">
+                                <div class="user_name" @mouseover="handleShowUserCard">
+                                    <router-link :to="{
+                                        path: '/community/' + post.share.community.id,
+                                    }">
+                                        <strong>{{
+                                            post.share.community.community_name
+                                        }}</strong>
+                                    </router-link>
+                                    <div class="user-card">
+                                        <KeepAlive>
+                                            <CommunityInfoCard v-if="displayUserInformation"
+                                                :community="post.share.community" />
+                                        </KeepAlive>
+                                    </div>
+                                </div>
+                                <span class="ml-2"> {{ $t("post.post_by") }} </span>
+                                <div class="user_name ml-2" @mouseover="handleShowUserCard">
+                                    <router-link :to="{ path: '/profile/' + post.share.user.id }">
+                                        <strong>{{ post.share.user.name }}</strong>
+                                    </router-link>
+                                    <div class="user-card">
+                                        <KeepAlive>
+                                            <UserInforCard v-if="displayUserInformation" :user="post.share.user" />
+                                        </KeepAlive>
+                                    </div>
+                                </div>
+                                <p class="ml-2">
+                                    <i class="fa-regular fa-clock"></i>&nbsp;
+                                    <small>{{ timeSharePostCreated }}</small>
+                                </p>
+                            </div>
+                        </template>
+                        <template v-else>
+                            <figure class="image user_image is-32x32" @mouseover="handleShowUserCard">
+                                <router-link :to="{ path: '/profile/' + post.share.user.id }">
+                                    <img class="is-rounded avatar-image" :src="post.share.user.image" />
+                                </router-link>
+                                <div class="user-card">
+                                    <KeepAlive>
+                                        <UserInforCard v-if="displayUserInformation" :user="post.share.user" />
+                                    </KeepAlive>
+                                </div>
+                            </figure>
+                            <div class="post_user is-flex">
+                                <div class="user_name" @mouseover="handleShowUserCard">
+                                    <router-link :to="{ path: '/profile/' + post.share.user.id }">
+                                        <strong>{{ post.share.user.name }}</strong>
+                                    </router-link>
+                                    <div class="user-card">
+                                        <KeepAlive>
+                                            <UserInforCard v-if="displayUserInformation" :user="post.share.user" />
+                                        </KeepAlive>
+                                    </div>
+                                </div>
+                                <p class="ml-2">
+                                    <i class="fa-regular fa-clock"></i>&nbsp;
+                                    <small>{{ timeSharePostCreated }}</small>
+                                </p>
+                            </div>
+                        </template>
+                    </div>
+                </div>
                 <ReactionComponent class="box-reactions" @focusComment="handleFocusComment" :post="post" />
             </div>
             <article v-if="focusComment && user" class="media">
@@ -120,8 +205,8 @@
                     <div class="media-content">
                         <div class="field">
                             <p class="control">
-                                <textarea v-model="commentContent" class="textarea" placeholder="Add a comment..."
-                                    autofocus>
+                                <textarea @keyup.enter="handleCommentToPost" v-model="commentContent" class="textarea"
+                                    placeholder="Add a comment..." autofocus>
                                 </textarea>
                             </p>
                         </div>
@@ -149,6 +234,8 @@
         </div>
         <ConfirmDeleteComponent v-if="isShowConfirmPost" :message="$t('post.confirm_delete')"
             @confirm="handleDeletePost" @cancel="isShowConfirmPost = false" />
+        <vue-easy-lightbox :minZoom="1" :visible="showImage" :imgs="images" :index="imageIndex"
+            @hide="handleHide"></vue-easy-lightbox>
     </div>
 </template>
 <script>
@@ -159,7 +246,6 @@ import ReactionComponent from './Children/ReactionComponent.vue';
 import ConfirmDeleteComponent from '../Common/ConfirmDeleteComponent.vue';
 import { calculateTime, detectMobile } from '../../helpers/common';
 import NotFoundComponent from '../Common/errors/NotFoundComponent.vue';
-import authMixin from '../../mixins';
 import UserInforCard from '../Common/UserInforCard.vue';
 import CommunityInfoCard from '../Common/CommunityInfoCard.vue';
 
@@ -172,7 +258,6 @@ export default {
         UserInforCard,
         CommunityInfoCard
     },
-    mixins: [authMixin],
     emits: ['postDeleted'],
     data() {
         return {
@@ -184,13 +269,19 @@ export default {
             post: null,
             id: this.$route.params.id,
             isNotFound: false,
-            displayUserInformation: false
+            displayUserInformation: false,
+            showImage: false,
+            imageIndex: 0,
+            images: []
         };
     },
     computed: {
         ...mapGetters({ user: 'getUser' }),
         timeCreated() {
             return calculateTime(this.post.created_at, this)
+        },
+        timeSharePostCreated() {
+            return calculateTime(this.post.share.created_at, this);
         }
     },
     mounted() {
@@ -232,6 +323,7 @@ export default {
                 _this.focusComment = false;
                 _this.commentContent = "";
                 _this.post.comments_count++;
+                _this.$refs.listComment.offset++;
             }).catch(function (error) {
                 console.log(error);
             });
@@ -260,6 +352,7 @@ export default {
                     let indexComment = this.comments.findIndex(cm => cm.id == idCommentDelete);
                     this.comments.splice(indexComment, 1);
                     this.post.comments_count--;
+                    _this.$refs.listComment.offset--;
                 }
             })
         },
@@ -278,6 +371,31 @@ export default {
         },
         isMobile() {
             return detectMobile();
+        },
+        handleClick(event, shareId = null) {
+            if (event.target.tagName == 'IMG' && event.target.src != null) {
+                let imgTags = jQuery(this.$refs.desc).find('img');
+                if (shareId) {
+                    imgTags = jQuery(this.$refs.desc_share).find('img');
+                }
+                this.images = [];
+                imgTags.each((index, img) => {
+                    this.images.push(img.src);
+                    if (event.target.src == img.src) {
+                        this.imageIndex = index;
+                    }
+                });
+                this.showImage = true;
+                jQuery('body').css('height', '100vh');
+                jQuery('body').css('overflow-y', 'hidden;')
+            } else if (shareId) {
+                this.$router.push({ name: 'post_detail', params: { id: shareId } })
+            }
+        },
+        handleHide() {
+            this.showImage = false;
+            jQuery('body').css('height', '100%');
+            jQuery('body').css('overflow-y', 'auto;')
         }
     }
 }
@@ -285,11 +403,18 @@ export default {
 <style scoped>
 .post-box {
     margin: auto;
-    max-width: 600px;
+    max-width: 800px;
+    border-radius: 20px;
+    background-color: white;
 }
 
 .post_user {
     margin: 0.2rem;
+    position: relative;
+}
+
+.post_user .user-card {
+    top: 2.5rem !important;
 }
 
 .comment-box {
@@ -347,6 +472,7 @@ export default {
     .post-box {
         margin-left: 0;
         margin-right: 0;
+        border-radius: 0 !important;
     }
 }
 
@@ -424,6 +550,15 @@ textarea {
 
 .is-32x32 .avatar-image {
     height: 32px;
+}
+
+.share-post {
+    max-width: 800px;
+    border-radius: 20px;
+    margin: auto;
+    border: solid 1px black;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
+    cursor: pointer;
 }
 
 @media screen and (max-width: 450px) {

@@ -8,6 +8,7 @@ export const getPostsByUser = (offset, userId) => api.get(`api/post/list/${offse
 export const getPost = (postID) => api.get(`api/post/get/${postID}`);
 export const deletePost = (postID) => api.delete(`api/post/delete/${postID}`);
 export const reactPostAPI = (data) => api.post('api/post/reaction', data);
+export const getReactPostAPI = (postId, offset) => api.get(`api/post/reaction/get/${postId}?offset=${offset}`);
 export const updatePost = (data) => api.put('api/post/update', data);
 
 export const createComment = (data) => api.post('api/comment/create', data);

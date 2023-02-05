@@ -6,4 +6,4 @@ const routes = [
     { path: ':id', name: 'message', component: MessageComponent }
 ];
 
-export default routes; 
+export default routes;

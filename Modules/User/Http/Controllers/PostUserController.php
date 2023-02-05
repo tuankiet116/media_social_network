@@ -6,6 +6,7 @@ use App\Services\User\PostUserService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\User\Http\Requests\PostUser\PostUserListRequest;
 
 class PostUserController extends Controller
 {
@@ -21,5 +22,12 @@ class PostUserController extends Controller
     {
         $result = $this->postUserService->getNumberLikeByPost($postId);
         return $this->responseData($result, 200);
+    }
+
+    public function getReactions(PostUserListRequest $request, int $postId)
+    {
+        $data = $request->validated();
+        $result = $this->postUserService->getUserLikesByPost($postId, $data['offset']);
+        return $this->responseData($result);
     }
 }

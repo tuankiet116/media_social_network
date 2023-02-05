@@ -12,7 +12,7 @@ class Post extends Model
     protected $fillable = [
         'user_id',
         'community_id',
-        'title',
+        'share_id',
         'src',
         'thumbnail_src',
         'post_description'
@@ -45,5 +45,13 @@ class Post extends Model
 
     public function community() {
         return $this->belongsTo(Community::class);
+    }
+
+    public function share() {
+        return $this->hasOne(Post::class, 'id', 'share_id');
+    }
+
+    public function shared() {
+        return $this->hasMany(Post::class, 'share_id');
     }
 }

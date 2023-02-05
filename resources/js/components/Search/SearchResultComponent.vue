@@ -10,7 +10,6 @@
     </div>
 </template>
 <script>
-import authMixin from '../../mixins';
 import { searchAll } from '../../api/search';
 import PostComponent from '../Post/Children/PostComponent.vue';
 import NotFoundSearchComponent from '../Common/errors/NotFoundSearchComponent.vue';
@@ -26,7 +25,6 @@ export default {
             isLoading: false
         }
     },
-    mixins: [authMixin],
     mounted() {
         this.search();
     },

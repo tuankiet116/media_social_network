@@ -17,6 +17,7 @@
     "post_uploading": "Your post is uploading ...",
     "create": "Create",
     "close": "Close",
+    "you": "You",
     "menu": {
         "create_post": "Create Post",
         "notification": "Notification"
@@ -141,7 +142,11 @@
         "reply_comment": "Reply your comment",
         "reply_comment_post": "Reply a comment of your post",
         "join_community": "Has been joined your community",
-        "leave_community": "Has been left your communtiy"
+        "leave_community": "Has been left your communtiy",
+        "share_post": "Shared your post",
+        "insert_post_community": "Posted in your community",
+        "community_del_member": "Admin deleted you from community",
+        "community_del_post": "Admin deleted your post"
     },
     "chat": {
         "title": "Message",

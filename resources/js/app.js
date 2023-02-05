@@ -13,6 +13,7 @@ import mitt from 'mitt';
 import Echo from "laravel-echo";
 import "vue-toastification/dist/index.css";
 import VueSelect from 'vue-select';
+import VueEasyLightbox from 'vue-easy-lightbox';
 // import ElementPlus from 'element-plus'
 // import 'element-plus/dist/index.css';
 // import 'element-plus/theme-chalk/dark/css-vars.css';
@@ -45,7 +46,10 @@ const i18n = createI18n({
 const router = createRouter({
     base: '/',
     history: createWebHistory(),
-    routes
+    routes,
+    scrollBehavior(to, from, savedPosition) {
+        return { top: 0, behavior: 'smooth' }
+    },
 });
 
 const store = createStore(stores);
@@ -56,6 +60,7 @@ app.use(CKEditor);
 app.use(i18n);
 app.use(store);
 app.use(router);
+app.use(VueEasyLightbox)
 // app.use(ElementPlus)
 app.use(Toast, {
     position: POSITION.TOP_RIGHT

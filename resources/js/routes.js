@@ -1,5 +1,4 @@
 import CreatePostComponent from './components/Post/CreatePostComponent';
-import SharePostComponent from './components/Post/SharePostComponent'
 import DashboardComponent from './components/DashboardComponent';
 import EditPostComponent from './components/Post/EditPostComponent';
 import DetailPostComponent from './components/Post/DetailPostComponent.vue';
@@ -28,12 +27,6 @@ const routes = [
         path: '/post/create',
         component: CreatePostComponent,
         name: 'create_post',
-        beforeEnter: checkAuth
-    },
-    {
-        path: '/post/share',
-        component: SharePostComponent,
-        name: 'share_post',
         beforeEnter: checkAuth
     },
     {
@@ -82,7 +75,8 @@ const routes = [
         path: '/chat',
         children: chatRoutes,
         component: ListMessages,
-        name: 'chat'
+        name: 'chat',
+        beforeEnter: checkAuth
     }
 ];
 

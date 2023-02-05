@@ -217,6 +217,7 @@ export default {
                     this.replies.push(result.data);
                     this.contentReply = "";
                     this.comment.amountReply++;
+                    this.$refs.listReplies.offset++;
                 }).catch(err => {
                     console.log(err);
                 });
@@ -244,6 +245,7 @@ export default {
                 let indexComment = this.replies.findIndex(cm => cm.id == idReply);
                 this.replies.splice(indexComment, 1);
                 this.comment.amountReply--;
+                this.$refs.listReplies.offset--;
             }).catch(err => {
                 console.log(err);
             })

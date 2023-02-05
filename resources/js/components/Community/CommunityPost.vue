@@ -1,7 +1,7 @@
 <template>
     <div class="columns">
         <div v-if="posts.length" class="column is-three-fifths-desktop">
-            <PostComponent @post-deleted="handleRemovePost" v-for="post in posts" :post="post" />
+            <PostComponent @post-deleted="handleRemovePost" :community="community" v-for="post in posts" :post="post" />
         </div>
         <div v-else class="column is-three-fifths-desktop has-text-centered">
             <div class="box">
@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="column">
-            <CommunityCardComponent class="card_community" :community="community"/>
+            <CommunityCardComponent class="card_community" :community="community" />
         </div>
     </div>
 </template>
@@ -33,6 +33,16 @@ export default {
     mounted() {
         document.addEventListener('scroll', this.handleLoadPost);
         this.fetchPost();
+    },
+    watch: {
+        '$store.state.eventUpdateCommunityPost': function (data) {
+            if (data = true) {
+                this.$store.state.eventUpdateCommunityPost = false;
+                this.offset = 0;
+                this.posts = [];
+                this.fetchPost();
+            }
+        }
     },
     methods: {
         fetchPost() {

@@ -1,11 +1,6 @@
 <template>
     <div class="box container">
         <h1 class="is-size-3 has-text-left create_post_title">{{ $t('edit_post.title') }}</h1>
-        <div class="field">
-            <label class="label">{{ $t('edit_post.post_title') }}</label>
-            <input class="input is-primary" v-model="post.title" type="text" />
-            <p v-if="errors.title" class="help is-danger">{{ errors.title }}</p>
-        </div>
 
         <div class="field">
             <label class="label">{{ $t('edit_post.post_desc') }}</label>
@@ -13,11 +8,11 @@
                 :config="editorConfig"></ckeditor>
             <p v-if="errors.description" class="help is-danger">{{ errors.description }}</p>
         </div>
-
+        <SharePostComponent :post="post.share"/>
         <div class="field">
             <div class="buttons is-right mt-5">
                 <button class="button is-primary" @click="handleUploadPost()">{{ $t('edit_post.edit') }}</button>
-                <button class="button is-light">{{ $t('edit_post.cancel') }}</button>
+                <button class="button is-light" @click="$router.go(-1)">{{ $t('edit_post.cancel') }}</button>
             </div>
         </div>
     </div>
@@ -26,9 +21,11 @@
 import { updatePost, getPost } from '../../api/post';
 import { useToast } from "vue-toastification";
 import ClassicEditor from '../../../Libraries/CKEditor5/build/ckeditor';
-import authMixin from '../../mixins';
+import UserInforCard from '../Common/UserInforCard.vue';
+import CommunityInfoCard from '../Common/CommunityInfoCard.vue';
+import SharePostComponent from './Children/SharePostComponent.vue';
 export default {
-    mixins: [authMixin],
+    components: { UserInforCard, CommunityInfoCard, SharePostComponent },
     data() {
         return {
             editor: ClassicEditor,
@@ -62,14 +59,15 @@ export default {
             },
             post: {
                 id: this.$route.params.id,
-                title: "",
-                description: ""
+                description: "",
+                share: null
             },
             errors: {
                 title: "",
                 description: "",
                 file: ""
-            }
+            },
+            displayUserInformation: false
         }
     },
     mounted() {
@@ -79,7 +77,7 @@ export default {
         user() {
             let user = this.$store.getters.getUser;
             if (user == null) {
-                this.$router.push({name: 'home'});
+                this.$router.push({ name: 'home' });
             }
             return user;
         }
@@ -90,21 +88,18 @@ export default {
             getPost(this.post.id).then(result => {
                 let data = result.data;
                 _this.post.description = data.post_description;
-                _this.post.title = data.title;
+                _this.post.share = data.share;
             }).catch(error => {
 
             });
         },
         validateData() {
-            if (!this.post.title) this.errors.title = this.$t("create_post.validate_title");
-            else this.errors.title = "";
             if (!this.post.description) this.errors.description = this.$t("create_post.validate_description");
             else this.errors.description = "";
         },
         async handleUploadPost() {
             let data = {
                 id: this.post.id,
-                title: this.post.title,
                 post_description: this.post.description
             };
             let _this = this;
@@ -123,12 +118,12 @@ export default {
 </script>
 <style scoped>
 .container {
-    margin: 10rem 20rem;
+    margin: 10rem auto;
     background-color: whitesmoke;
-    max-width: none !important;
+    max-width: 800px !important;
 }
 
-@media screen and (min-device-width: 481px) and (max-device-width: 768px)  {
+@media screen and (min-device-width: 481px) and (max-device-width: 768px) {
     .container {
         margin: 5rem 2rem !important;
     }
@@ -136,7 +131,7 @@ export default {
 
 @media screen and (max-width: 480px) {
     .container {
-        margin: 4rem 0 4rem 0!important;
+        margin: 4rem 0 4rem 0 !important;
         padding: 30px 10px;
     }
 

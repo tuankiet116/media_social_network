@@ -48,7 +48,6 @@
 <script>
 import { listMembers, deleteMember } from '../../api/community';
 import UserInforCard from '../Common/UserInforCard.vue';
-import authMixin from '../../mixins';
 export default {
     props: ['community'],
     components: { UserInforCard },
@@ -67,7 +66,11 @@ export default {
             this.getMembers();
         }
     },
-    mixins: [authMixin],
+    computed: {
+        auth() {
+            return this.$store.getters.getUser;
+        }
+    },
     methods: {
         getMembers() {
             if (!this.community) return;

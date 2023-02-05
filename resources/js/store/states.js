@@ -5,5 +5,7 @@ export default {
     unreadNotifications: 0,
     unreadMessages: [],
     newChat: [],
-    messages: []
+    messages: [],
+    eventUpdateCommunityPost: false,
+    eventUpdateCommunityUser: false
 }

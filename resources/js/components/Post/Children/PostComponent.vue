@@ -79,8 +79,10 @@
                         <i class="fa-solid fa-ellipsis"></i>
                     </button>
                     <div href="#" class="arrow-box box" v-show="displayHelper">
-                        <a v-if="user && (user.id == post.user_id || (post.community && user.id == post.community.user_id))"
-                            class="navbar-item" @click="isShowConfirmPost = true">
+                        <a v-if="user && (user.id == post.user_id
+                        || (post.community && user.id == post.community.user_id)
+                        || (community && community.user_id == user.id))" class="navbar-item"
+                            @click="isShowConfirmPost = true">
                             <span>{{ $t('delete') }}</span>
                             <i class="fa-solid fa-trash"></i>
                         </a>
@@ -112,7 +114,8 @@
                     <source :src="'/api/post/stream/' + post.src" type="video/mp4" />
                 </video>
             </div>
-            <hr class="split-reaction-post" />
+
+            <PostShareComponent :post="post.share" />
             <ReactionComponent class="box-reactions" @focusComment="redirect" :post="post" />
         </div>
         <ListCommentComponent ref="listComment" @loadListComment="redirect($event)"
@@ -121,7 +124,8 @@
     </div>
     <ConfirmDeleteComponent v-if="isShowConfirmPost" :message="$t('post.confirm_delete')" @confirm="handleDeletePost"
         @cancel="isShowConfirmPost = false" />
-    <ImageModal v-if="showImage" :image="imageUrl" @close="showImage = false"></ImageModal>
+    <vue-easy-lightbox @scroll.prevent :minZoom="1" :visible="showImage" :imgs="images" :index="imageIndex"
+        @hide="handleHide"></vue-easy-lightbox>
 </template>
 <script>
 import { mapGetters } from "vuex";
@@ -132,7 +136,7 @@ import ConfirmDeleteComponent from "../../Common/ConfirmDeleteComponent.vue";
 import { calculateTime } from "../../../helpers/common";
 import UserInforCard from "../../Common/UserInforCard.vue";
 import CommunityInfoCard from "../../Common/CommunityInfoCard.vue";
-import ImageModal from "../../Common/ImageModal.vue";
+import PostShareComponent from "./SharePostComponent.vue";
 
 export default {
     components: {
@@ -141,9 +145,9 @@ export default {
         ConfirmDeleteComponent,
         UserInforCard,
         CommunityInfoCard,
-        ImageModal
+        PostShareComponent
     },
-    props: ["post"],
+    props: ["post", "community"],
     emits: ["postDeleted"],
     data() {
         return {
@@ -154,7 +158,8 @@ export default {
             isShowConfirmPost: false,
             displayUserInformation: false,
             showImage: false,
-            imageUrl: ''
+            imageIndex: 0,
+            images: []
         };
     },
     computed: {
@@ -162,9 +167,9 @@ export default {
         timeCreated() {
             return calculateTime(this.post.created_at, this);
         },
-    },
-    mounted() {
-        // this.$refs.desc.addEventListener('click')
+        timeSharePostCreated() {
+            return calculateTime(this.post.share.created_at, this);
+        }
     },
     methods: {
         handleUnDisplayHelper() {
@@ -203,9 +208,27 @@ export default {
         },
         handleClick(event) {
             if (event.target.tagName == 'IMG' && event.target.src != null) {
-                this.imageUrl = event.target.src;
+                let imgTags = jQuery(this.$refs.desc).find('img');
+                this.images = [];
+                imgTags.each((index, img) => {
+                    this.images.push(img.src);
+                    if (event.target.src == img.src) {
+                        this.imageIndex = index;
+                    }
+                });
                 this.showImage = true;
+                let TopScroll = window.pageYOffset || document.documentElement.scrollTop;
+                let LeftScroll = window.pageXOffset || document.documentElement.scrollLeft;
+
+                // if scroll happens, set it to the previous value
+                window.onscroll = function () {
+                    window.scrollTo(LeftScroll, TopScroll);
+                };
             }
+        },
+        handleHide() {
+            this.showImage = false;
+            window.onscroll = function () { };
         }
     },
 };
@@ -224,10 +247,16 @@ canvas {
     margin: auto;
     max-width: 800px;
     margin-bottom: 2rem;
+    border-radius: 20px;
 }
 
 .post_user {
     margin: 0.2rem;
+    position: relative;
+}
+
+.post_user .user-card {
+    top: 2.5rem !important;
 }
 
 .post {
@@ -278,7 +307,7 @@ canvas {
 }
 
 .post-desc /deep/ .image {
-    max-width: 600px !important;
+    max-width: 800px !important;
 }
 
 @media screen and (max-width: 754px) {

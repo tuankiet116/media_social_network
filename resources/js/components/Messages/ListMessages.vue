@@ -1,8 +1,8 @@
 <template>
-    <div class="columns mt-2 chat-container ">
+    <div class="columns pt-2 chat-container ">
         <div v-if="isMobile() && $route.params.id == null || !isMobile()"
-            class="column is-2-desktop is-4-tablet chat-list">
-            <div class="link-chat" v-for="item in chat">
+            class="column is-2-desktop is-4-tablet chat-list p-0">
+            <div class="link-chat" v-for="item, id in chat">
                 <router-link @click="markRead(item.id)" class="is-flex is-align-items-center"
                     :to="{ name: 'message', params: { id: item.user_receive_id } }">
                     <i v-if="!item.read" class="fa-solid fa-circle" style="font-size: 10px;"></i>
@@ -24,10 +24,11 @@
                         </div>
                     </div>
                 </router-link>
+                <hr class="p-0 m-0" v-if="id < chat.length - 1" />
             </div>
             <ObserverComponent @intersect="loadMoreChatList" />
         </div>
-        <div v-if="isMobile() && $route.params.id || !isMobile()" class="column">
+        <div v-if="isMobile() && $route.params.id || !isMobile()" class="column p-0">
             <router-link :to="{ name: 'chat' }" class="button ml-2">
                 <i class="fa-solid fa-left-long"></i> &nbsp;{{ $t('chat.back') }}
             </router-link>
@@ -60,19 +61,18 @@
             </div>
             <div class="message" style="height: 75vh; background-color:white;">
                 <div v-if="idChat == null" class="content is-flex is-justify-content-center is-align-items-center m-2"
-                    style="background-color:white; height: 100%">
+                    style="height: 100%">
                     <h3>{{ $t('chat.welcome_chat') }}</h3>
                     <figure class="image is-128x128">
                         <img src="../../../images/defaults/chat.png" />
                     </figure>
                 </div>
-                <router-view v-else></router-view>
+                <router-view :user="user" v-else></router-view>
             </div>
         </div>
     </div>
 </template>
 <script>
-import authMixin from '../../mixins';
 import ObserverComponent from '../Common/ObserverComponent.vue';
 import { detectMobile, calculateTime } from '../../helpers/common';
 import { searchUser } from '../../api/search';
@@ -91,11 +91,6 @@ export default {
         };
     },
     watch: {
-        auth(data) {
-            if (!data) {
-                window.location.replace('user/login')
-            }
-        },
         keyword(value) {
             if (value) {
                 this.isDisplaySearch = true;
@@ -123,7 +118,6 @@ export default {
             return window.innerHeight;
         }
     },
-    mixins: [authMixin],
     methods: {
         loadMoreChatList() {
             if (this.offset !== null && this.user) {
@@ -162,7 +156,7 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
 .chat-list {
     border-right: 1px solid black;
     max-width: 100%;
@@ -171,10 +165,12 @@ export default {
 
 .chat-container {
     max-height: 90%;
+    background-color: white;
 }
 
 .columns {
     margin: 0;
+    width: 100%;
 }
 
 .link-chat a {
@@ -182,7 +178,7 @@ export default {
 }
 
 .link-chat:hover {
-    background-color: #C5C5C5;
+    background-color: #eceaea;
 }
 
 .search-user-container {
@@ -197,5 +193,13 @@ export default {
 
 .search-user a {
     background-color: white;
+}
+
+.router-link-exact-active {
+    background-color: #eceaea;
+}
+
+html, body, #app {
+    background: white !important;
 }
 </style>

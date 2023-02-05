@@ -1,5 +1,5 @@
 <template>
-    <div class="user-info is-flex is-align-items-center mb-1 p-1" v-if="userChat">
+    <div class="user-info is-flex is-align-items-center m-2 p-1" v-if="userChat">
         <figure class="image is-64x64">
             <img class="is-rounded" style="height: 64px; width: 64px; object-fit:cover" :src="userChat.image" />
         </figure>
@@ -8,7 +8,7 @@
             {{ $t('chat.info') }}
         </router-link>
     </div>
-    <div class="fill-message">
+    <div class="fill-message p-2">
         <ObserverComponent @intersect="loadMoreMessage" />
         <template v-if="user" v-for="(item, index) in messages">
             <div :id="item.id" v-if="item.sender == $route.params.id && userChat"
@@ -55,10 +55,10 @@ export default {
             messages: [],
             chatMessage: "",
             offset: 0,
-            user: JSON.parse(sessionStorage.getItem('user')),
             userChat: null
         }
     },
+    props: ['user'],
     components: { ObserverComponent },
     mounted() {
         document.onreadystatechange = () => {

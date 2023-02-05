@@ -89,8 +89,8 @@ class CommunityService
 
     public function getPosts($communityId, $offset)
     {
-        $postQuery = Post::with(['user:id,name,image'])
-            ->withCount('reactionUser', 'comments')
+        $postQuery = Post::with(['user:id,name,image', 'share', 'share.user', 'share.community'])
+            ->withCount('reactionUser', 'comments', 'shared')
             ->orderBy('created_at', 'DESC')
             ->limit(LIMIT);
         $postQuery->where('community_id', $communityId);

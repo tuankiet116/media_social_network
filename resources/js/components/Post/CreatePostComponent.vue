@@ -4,55 +4,34 @@
             <span class="is-size-3 has-text-left create_post_title">
                 {{ $t("create_post.title") }}
             </span>
-            <vue-select
-                class="search_community"
-                :options="communities"
-                label="community_name"
-                @search="fetchCommunities"
-                @open="fetchCommunities"
-                v-model="community"
-            >
+            <vue-select class="search_community" :options="communities" label="community_name"
+                @search="fetchCommunities" @open="fetchCommunities" v-model="community">
                 <template v-slot:option="option">
                     <div class="is-flex m-0 p-0">
                         <figure class="image is-32x32 m-0 p-0">
-                            <img class="is-rounded m-0 p-0 avatar-image" :src="option.image"/>
+                            <img class="is-rounded m-0 p-0 avatar-image" :src="option.image" />
                         </figure>
                         <p class="ml-2">{{ option.community_name }}</p>
                     </div>
                 </template>
             </vue-select>
         </div>
-        <div class="field">
-            <label class="label">{{ $t("create_post.post_title") }}</label>
-            <input class="input is-primary" v-model="post.title" type="text" />
-            <p v-if="errors.title" class="help is-danger">{{ errors.title }}</p>
-        </div>
 
         <div class="field">
             <label class="label">{{ $t("create_post.post_desc") }}</label>
-            <ckeditor
-                ref="editor"
-                class="input is-primary"
-                :editor="editor"
-                v-model="post.description"
-                :config="editorConfig"
-            ></ckeditor>
+            <ckeditor ref="editor" class="input is-primary" :editor="editor" v-model="post.description"
+                :config="editorConfig"></ckeditor>
             <p v-if="errors.description" class="help is-danger">
                 {{ errors.description }}
             </p>
         </div>
 
-        <div class="field">
+        <div class="field" v-if="sharePost == null">
             <label class="label">{{ $t("create_post.post_video") }}</label>
             <div class="file is-large is-boxed" v-show="post.file == ''">
                 <label class="file-label">
-                    <input
-                        class="file-input"
-                        ref="video"
-                        type="file"
-                        accept="video/*"
-                        @change="handleFileUpload($event)"
-                    />
+                    <input class="file-input" ref="video" type="file" accept="video/*"
+                        @change="handleFileUpload($event)" />
                     <span class="file-cta">
                         <span class="file-icon">
                             <i class="fas fa-upload"></i>
@@ -61,39 +40,35 @@
                     </span>
                 </label>
             </div>
-            <div
-                class="box video-preview-box has-text-centered"
-                v-show="post.file != ''"
-            >
+            <div class="box video-preview-box has-text-centered" v-show="post.file != ''">
                 <video ref="video_preview" id="video-preview" controls />
                 <div class="has-text-right">
-                    <button
-                        class="button is-info"
-                        @click="handleCancelVideo($event)"
-                    >
+                    <button class="button is-info" @click="handleCancelVideo($event)">
                         {{ $t("create_post.cancel_video") }}
                     </button>
                 </div>
             </div>
-            <div class="buttons is-right mt-5">
-                <button class="button is-primary" :class="{'is-loading': isHandlePreview}" @click="handleUploadPost()">
-                    {{ $t("create_post.create") }}
-                </button>
-                <button class="button is-light">
-                    {{ $t("create_post.cancel") }}
-                </button>
-            </div>
+        </div>
+        <PostShareComponent :post="sharePost"/>
+        <div class="buttons is-right mt-5">
+            <button class="button is-primary" :class="{ 'is-loading': isHandlePreview }"
+                @click="handleUploadPost()">
+                {{ $t("create_post.create") }}
+            </button>
+            <button class="button is-light">
+                {{ $t("create_post.cancel") }}
+            </button>
         </div>
     </div>
 </template>
 <script>
-import { createPost } from "../../api/post";
+import { createPost, getPost } from "../../api/post";
 import { useToast } from "vue-toastification";
 import ClassicEditor from "../../../Libraries/CKEditor5/build/ckeditor";
-import authMixin from "../../mixins";
 import { getCommunitiesAPI } from "../../api/community";
+import PostShareComponent from "./Children/SharePostComponent.vue";
 export default {
-    mixins: [authMixin],
+    components: { PostShareComponent, PostShareComponent },
     data() {
         return {
             editor: ClassicEditor,
@@ -130,7 +105,6 @@ export default {
                 },
             },
             post: {
-                title: "",
                 description: "",
                 file: "",
             },
@@ -141,10 +115,15 @@ export default {
             },
             communities: [],
             community: null,
-            isHandlePreview: false
+            isHandlePreview: false,
+            sharePost: null
         };
     },
-    mounted() {},
+    mounted() {
+        if(this.$route.query.post && !isNaN(this.$route.query.post)) {
+            this.getPost();
+        }
+    },
     computed: {
         user() {
             let user = this.$store.getters.getUser;
@@ -162,7 +141,7 @@ export default {
                 search: search ?? '',
             };
             await getCommunitiesAPI(data).then(function (result) {
-                _this.communities = result.data.flatMap(r => r.community??[]);
+                _this.communities = result.data.flatMap(r => r.community ?? []);
             });
             if (loading) loading(false);
         },
@@ -179,9 +158,6 @@ export default {
             this.$refs.video.value = null;
         },
         validateData() {
-            if (!this.post.title)
-                this.errors.title = this.$t("create_post.validate_title");
-            else this.errors.title = "";
             if (!this.post.description)
                 this.errors.description = this.$t(
                     "create_post.validate_description"
@@ -191,10 +167,14 @@ export default {
         async handleUploadPost() {
             let form = new FormData();
             let _this = this;
-            form.append("title", this.post.title);
             form.append("description", this.post.description);
             form.append("video", this.post.file);
-            form.append("community", this.community?.id ?? 0);
+            if (this.community) {
+                form.append("community", this.community.id);
+            }
+            if (this.sharePost) {
+                form.append("share", this.sharePost?.id);
+            }
             form.append(
                 "_token",
                 document
@@ -214,7 +194,7 @@ export default {
                             (progressEvent.loaded * 100) / progressEvent.total
                         );
                         _this.$store.state.postUploadProgress = progress;
-                        if(progressEvent.loaded == 0) {
+                        if (progressEvent.loaded == 0) {
                             this.$router.push({ name: "home" });
                         }
                     },
@@ -231,19 +211,40 @@ export default {
                     });
             }
         },
+        async getPost() {
+            let idPost = this.$route.query.post;
+            getPost(idPost).then(result => {
+                if (result.data) {
+                    this.sharePost = result.data;
+                } else {
+                    useToast().error(this.$t('post.error_get_post', {
+                        position: "top-center",
+                        hideProgressBar: true
+                    }));
+                    this.$router.push({ name: 'home' });
+                }
+            }).catch(result => {
+                useToast().error(this.$t('post.error_get_post', {
+                    position: "top-center",
+                    hideProgressBar: true
+                }));
+                this.$router.push({ name: 'home' });
+            });
+        },
     },
 };
 </script>
 <style scoped>
 .container {
-    margin: 10rem 20rem;
-    background-color: whitesmoke;
-    max-width: none !important;
+    margin: 5rem auto;
+    background-color: white;
+    border-radius: 20px;
+    max-width: 800px !important;
 }
 
 @media screen and (min-device-width: 481px) and (max-device-width: 821px) {
     .container {
-        margin: 0!important;
+        margin: 0 !important;
     }
 }
 

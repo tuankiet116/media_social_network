@@ -72,8 +72,7 @@ class SearchService
         self::insertHistory($keyword);
         $postQuery = Post::with(['user:id,name,image', 'community'])
             ->withCount('reactionUser', 'comments')
-            ->where('title', 'like', '%' . $keyword . '%')
-            ->orWhere('post_description', 'like', '%' . $keyword . '%')
+            ->where('post_description', 'like', '%' . $keyword . '%')
             ->orWhereHas('community', function ($query) use ($keyword) {
                 return $query->where('community_name', 'like', '%' . $keyword . '%');
             })
@@ -104,8 +103,7 @@ class SearchService
         self::insertHistory($keyword);
         $postQuery = Post::with(['user:id,name,image', 'community'])
             ->withCount('reactionUser', 'comments')
-            ->where('title', 'like', '%' . $keyword . '%')
-            ->orWhere('post_description', 'like', '%' . $keyword . '%')
+            ->where('post_description', 'like', '%' . $keyword . '%')
             ->orderBy('created_at', 'DESC')
             ->limit(LIMIT);
         if ($offset) {

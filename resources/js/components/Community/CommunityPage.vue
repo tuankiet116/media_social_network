@@ -51,12 +51,10 @@
     <NotFoundComponent v-else />
 </template>
 <script>
-import authMixin from "../../mixins";
 import { getCommunityAPI, joinCommunity, unjoinCommunity } from "../../api/community";
 import NotFoundComponent from "../Common/errors/NotFoundComponent.vue";
 
 export default {
-    mixins: [authMixin],
     data() {
         return {
             community: {},
@@ -75,6 +73,9 @@ export default {
             }
             return false;
         },
+        auth() {
+            return this.$store.getters.getUser;
+        }
     },
     methods: {
         getCommunity() {

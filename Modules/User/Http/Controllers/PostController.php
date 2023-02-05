@@ -7,6 +7,7 @@ use App\Services\User\PostService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\User\Http\Requests\Post\PostCreateRequest;
 
 class PostController extends Controller
 {
@@ -18,9 +19,10 @@ class PostController extends Controller
         $this->postService = $postService;
     }
 
-    public function create(Request $request)
+    public function create(PostCreateRequest $request)
     {
-        $result = $this->postService->uploadPost($request);
+        $data = $request->validated();
+        $result = $this->postService->uploadPost($data);
         return $this->responseData($result, 200);
     }
 
@@ -48,7 +50,7 @@ class PostController extends Controller
         if ($data) {
             return $this->responseData($data, 200);
         }
-        // return $this->responseData($data, 404);
+        return $this->responseData($data, 404);
     }
 
     public function delete(Post $post)

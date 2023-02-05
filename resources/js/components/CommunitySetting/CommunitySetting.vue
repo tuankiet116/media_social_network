@@ -59,7 +59,6 @@
 </template>
 <script>
 import { getCommunityAPI } from '../../api/community';
-import authMixin from '../../mixins';
 import NotFoundComponent from '../Common/errors/NotFoundComponent.vue';
 import { useToast } from 'vue-toastification';
 export default {
@@ -70,7 +69,6 @@ export default {
             isNotfound: false
         };
     },
-    mixins: [authMixin],
     mounted() {
         this.getcommunityInformation();
     },

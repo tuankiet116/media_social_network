@@ -27,7 +27,6 @@
 
 <script>
 import { getPosts } from '../api/post'
-import authMixin from '../mixins'
 import PostComponent from './Post/Children/PostComponent.vue'
 import LoadingComponent from './Common/LoadingComponent.vue'
 import { mapGetters } from 'vuex'
@@ -39,7 +38,6 @@ export default {
     LoadingComponent,
     CommunityCardComponent,
   },
-  mixins: [authMixin],
   data() {
     return {
       loading: true,
