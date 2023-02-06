@@ -176,7 +176,8 @@
         "your_page_in_2": " Community. Welcome you!",
         "your_page_in_home": "Your personal Media Social frontpage. Come here to check in with your favorite communities.",
         "create": "Create community",
-        "create_own": "Create your own community"
+        "create_own": "Create your own community",
+        "follow_user": "Following you"
     },
     "community_setting": {
         "name": "Community Name",

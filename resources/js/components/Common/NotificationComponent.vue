@@ -93,6 +93,28 @@
                             </div>
                         </div>
                     </router-link>
+                    <router-link v-else-if="noti.user_sender && !noti.post_id"
+                        @click="handleGotoNotification(noti.id, 'profile_list_post', noti.user_id)"
+                        :to="{ name: 'profile_list_post', params: { id: noti.user_id } }" style="color: black">
+                        <div class="columns is-align-items-center ml-2" style="flex-wrap: wrap;">
+                            <router-link class="is-flex is-align-items-center column-1" style="color: black"
+                                :to="{ name: 'profile_list_post', params: { id: noti.user_sender.id } }">
+                                <figure class="image avatar-image is-64x64">
+                                    <img class="is-rounded" :src="noti.user_sender.image" />
+                                </figure>
+                            </router-link>
+
+                            <div class="column m-0 p-0">
+                                <span class="has-text-weight-bold">
+                                    {{ noti.user_sender.name }}
+                                </span>
+                                &nbsp;
+                                <span v-if="noti.type == 'NOTIFICATION_FOLLOW_USER'">
+                                    {{ $t('notification.follow_user') }}
+                                </span>
+                            </div>
+                        </div>
+                    </router-link>
                 </div>
                 <hr v-if="index !== notifications.length - 1" class="m-0">
             </template>
@@ -201,6 +223,9 @@ export default {
                     break;
                 case 'NOTIFICATION_COMMUNITY_DEL_MEMBER':
                     contentNotification += this.$t('notification.community_del_member');
+                    break;
+                case 'NOTIFICATION_FOLLOW_USER':
+                    contentNotification += this.$t('notification.follow_user');
                     break;
             }
 

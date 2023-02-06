@@ -208,10 +208,19 @@ class CommunityService
     public function  deleteMember(Community $community, int $userId)
     {
         try {
+            if ($community->user_id == $userId) return true;
             CommunityUser::where([
                 'community_id' => $community->id,
                 'user_id' => $userId
             ])->delete();
+
+            $notification = UserNotification::create([
+                'user_id' => $userId,
+                'community_sender_id' => $community->id,
+                'community_id' => $community->id,
+                'type' => NOTIFICATION_COMMUNITY_DEL_MEMBER
+            ]);
+            NotificationEvent::dispatch($notification);
             return true;
         } catch (Exception $e) {
             throw new Exception($e);

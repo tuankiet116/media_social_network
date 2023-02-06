@@ -146,7 +146,8 @@
         "share_post": "Đã chia sẻ bài viết của bạn",
         "insert_post_community": "Đã đăng bài viết trong nhóm của bạn",
         "community_del_member": "Quản trị viên đã xóa bạn ra khỏi cộng đồng",
-        "community_del_post": "Quản trị viên đã xóa bài viết của bạn"
+        "community_del_post": "Quản trị viên đã xóa bài viết của bạn",
+        "follow_user": "Đang theo dõi bạn"
     },
     "chat": {
         "title": "Tin nhắn",

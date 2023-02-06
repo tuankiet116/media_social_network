@@ -6,11 +6,13 @@ use App\Models\Community;
 use App\Models\Follower;
 use App\Models\User;
 use App\Models\UserInformation;
+use App\Models\UserNotification;
 use App\Models\UserSchool;
 use App\Services\Inf\StorageService;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Modules\User\Events\NotificationEvent;
 
 class UserService
 {
@@ -46,6 +48,13 @@ class UserService
                 'user_id' => $idFollow,
                 'follower_id' => $followerId
             ])->save();
+
+            $notification = UserNotification::create([
+                'user_id' => $idFollow,
+                'user_sender_id' => $followerId,
+                'type' => NOTIFICATION_FOLLOW_USER
+            ]);
+            NotificationEvent::dispatch($notification);
         }
         return $this->countFollower($idFollow);
     }
