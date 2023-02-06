@@ -4,9 +4,15 @@
             <img class="is-rounded" style="height: 64px; width: 64px; object-fit:cover" :src="userChat.image" />
         </figure>
         <strong class="ml-2">{{ userChat.name }}</strong>
-        <router-link class="button is-rounded" :to="{ name: 'profile_list_post', params: { id: userChat.id } }">
-            {{ $t('chat.info') }}
-        </router-link>
+        <div class="container-right">
+            <button @click="openNewWindow" class="button is-rounded mr-2">
+                Video Call
+                <i class="fa-solid fa-video ml-1"></i>
+            </button>
+            <router-link class="button is-rounded" :to="{ name: 'profile_list_post', params: { id: userChat.id } }">
+                {{ $t('chat.info') }}
+            </router-link>
+        </div>
     </div>
     <div class="fill-message p-2">
         <ObserverComponent @intersect="loadMoreMessage" />
@@ -133,7 +139,10 @@ export default {
                 return true;
             }
             return false;
-        }
+        },
+        openNewWindow() {
+            window.open(this.$router.resolve({name: 'video-call', params: {id: this.userChat.id}}).fullPath, 'Video Call', "height=800,width=800");
+        },
     },
     unmounted() {
         this.$store.state.messages = [];
@@ -206,7 +215,7 @@ figure img {
     border-radius: 10px;
 }
 
-.user-info .button {
+.user-info .container-right {
     margin-left: auto;
 }
 </style>

@@ -16,27 +16,27 @@ use Modules\User\Http\Controllers\UserController;
 */
 
 Route::get('/ckfinder/get-image/{fileName}', 'CKFinderController@getImage')->name('ckfinder.get_image');
-Route::middleware('auth.api')->group(function() {
-    Route::get('/user', 'UserController@getUserInformation'); 
+Route::middleware('auth.api')->group(function () {
+    Route::get('/user', 'UserController@getUserInformation');
     Route::post('/logout', 'UserController@logout');
     Route::post('/ckfinder/upload', 'CKFinderController@uploadImage');
     Route::post('/password/update', 'UserController@updatePassword');
 });
 
-Route::middleware('auth.api')->prefix('profile')->name('profile.')->group(function() {
+Route::middleware('auth.api')->prefix('profile')->name('profile.')->group(function () {
     Route::get('/me', 'UserInformationController@getProfile');
     Route::get('/default/avatar', 'UserInformationController@getListUserImageDefault');
     Route::get('/default/background', 'UserInformationController@getBackgroundDefault');
     Route::post('/follow', 'UserInformationController@followUser');
     Route::post('/unfollow', 'UserInformationController@unfollowUser');
-    Route::prefix('update')->name('update.')->group(function() {
+    Route::prefix('update')->name('update.')->group(function () {
         Route::put('/info', 'UserInformationController@updateInformation');
         Route::post('/avatar', 'UserInformationController@updateAvatar');
         Route::post('/background', 'UserInformationController@updateBackground');
     });
 });
 
-Route::middleware('auth.api')->prefix('post')->name('post.')->group(function() {
+Route::middleware('auth.api')->prefix('post')->name('post.')->group(function () {
     Route::post('/create', 'PostController@create')->name('create');
     Route::post('/reaction', 'PostController@reaction')->name('reaction');
     Route::post('/reaction/count', 'PostUserController@getNumberLikePost')->name('reaction.count');
@@ -45,7 +45,7 @@ Route::middleware('auth.api')->prefix('post')->name('post.')->group(function() {
     Route::put('/update', 'PostController@update')->name('update');
 });
 
-Route::middleware('auth.api')->prefix('comment')->name('comment.')->group(function() {
+Route::middleware('auth.api')->prefix('comment')->name('comment.')->group(function () {
     Route::post('/create', 'CommentController@create')->name('create');
     Route::get('/list/{postId}/{offset?}', 'CommentController@getComments')->name('list');
     Route::delete('/delete/{commentId}', 'CommentController@deleteComment')->name('delete');
@@ -55,7 +55,7 @@ Route::middleware('auth.api')->prefix('comment')->name('comment.')->group(functi
     Route::put('/update', 'CommentController@update')->name('update');
 });
 
-Route::middleware('auth.api')->prefix('community')->name('community.')->group(function() {
+Route::middleware('auth.api')->prefix('community')->name('community.')->group(function () {
     Route::post('/create', 'CommunityController@createCommunity')->name('create');
     Route::get('/list', 'CommunityController@getListCommunityJoined')->name('list');
     Route::post('/join/{community}', 'CommunityController@joinCommunity')->middleware('can:join,community');
@@ -68,14 +68,14 @@ Route::middleware('auth.api')->prefix('community')->name('community.')->group(fu
     Route::post('/setting/background/{community}', 'CommunitySettingController@updateBackground')->middleware('can:update,community');
 });
 
-Route::middleware('auth.api')->prefix('notification')->group(function() {
+Route::middleware('auth.api')->prefix('notification')->group(function () {
     Route::get('list', 'NotificationController@getNotifications');
     Route::get('count-unread', 'NotificationController@getCountUnread');
     Route::post('mark-read/{id}', 'NotificationController@markReadNotification');
     Route::post('mark-read-all', 'NotificationController@markReadAllNotifications');
 });
 
-Route::prefix('search')->group(function() {
+Route::prefix('search')->group(function () {
     Route::get('history', 'SearchController@searchHistory');
     Route::get('all', 'SearchController@searchAll');
     Route::get('post', 'SearchController@searchPost');
@@ -84,12 +84,17 @@ Route::prefix('search')->group(function() {
     Route::post('history', 'SearchController@insertHistory');
 });
 
-Route::middleware('auth.api')->prefix('message')->group(function() {
+Route::middleware('auth.api')->prefix('message')->group(function () {
     Route::post('send', 'MessageController@message');
     Route::post('mark-read', 'MessageController@markReadChat');
     Route::get('list-chat', 'MessageController@getListChat');
     Route::get('unread-chat', 'MessageController@getUnreadChat');
     Route::get('chat/{receiver}', 'MessageController@getMessages');
+});
+
+Route::middleware('auth.api')->prefix('video')->group(function () {
+    Route::post('/call-user', 'Video\VideoChatController@callUser');
+    Route::post('/accept-call', 'Video\VideoChatController@acceptCall');
 });
 
 Route::get('community/posts/{id}/{offset?}', 'CommunityController@getPosts')->name('posts');

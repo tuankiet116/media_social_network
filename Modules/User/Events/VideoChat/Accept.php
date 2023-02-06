@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\User\Events;
+namespace Modules\User\Events\VideoChat;
 
 use Illuminate\Queue\SerializesModels;
 
-class StartVideoChat
+class Accept
 {
     use SerializesModels;
 

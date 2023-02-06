@@ -2,6 +2,7 @@
     <MenuComponent :user="getUser"></MenuComponent>
     <router-view ref="child" :key="$route.fullPath"></router-view>
     <ProgressBarComponent v-if="getPostProgressUpload" :percent-value="getPostProgressUpload" class="progress-bar" />
+    <VideoReceiverCall/>
     <MenuMobileComponent />
 </template>
 
@@ -10,6 +11,7 @@
 import MenuComponent from './MenuComponent.vue';
 import MenuMobileComponent from './MenuMobileComponent.vue';
 import ProgressBarComponent from './Common/ProgressBarComponent.vue';
+import VideoReceiverCall from './Common/VideoReceiverCall.vue';
 import { mapGetters } from 'vuex';
 import { getUnreadChat } from '../api/chat';
 
@@ -21,7 +23,8 @@ export default {
     components: {
         MenuComponent,
         ProgressBarComponent,
-        MenuMobileComponent
+        MenuMobileComponent,
+        VideoReceiverCall
     },
     computed: {
         ...mapGetters([

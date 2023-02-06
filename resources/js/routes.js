@@ -8,6 +8,7 @@ import CommunityPage from './components/Community/CommunityPage.vue';
 import CommunitySetting from './components/CommunitySetting/CommunitySetting.vue';
 import SearchPage from './components/Search/SearchPage';
 import ListMessages from './components/Messages/ListMessages.vue';
+import VideoChatComponent from './components/Video/VideoChatComponent.vue';
 
 import userRouters from './components/User/routes';
 import userSetting from './components/UserSetting/routes';
@@ -76,6 +77,12 @@ const routes = [
         children: chatRoutes,
         component: ListMessages,
         name: 'chat',
+        beforeEnter: checkAuth
+    },
+    {
+        path: '/call/:id',
+        component: VideoChatComponent,
+        name: 'video-call',
         beforeEnter: checkAuth
     }
 ];
