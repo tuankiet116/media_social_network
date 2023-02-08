@@ -115,7 +115,7 @@
                 </video>
             </div>
 
-            <PostShareComponent :post="post.share" />
+            <PostShareComponent :post="post.share" :id="post.share_id"/>
             <ReactionComponent class="box-reactions" @focusComment="redirect" :post="post" />
         </div>
         <ListCommentComponent ref="listComment" @loadListComment="redirect($event)"

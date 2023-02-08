@@ -53,7 +53,8 @@
         "comment": "Comment",
         "share": "Share",
         "post_by": "Posted by",
-        "error_get_post": "Post is not found or something crash"
+        "error_get_post": "Post is not found or something crash",
+        "post_not_exist": "Post is not exist"
     },
     "comment": {
         "confirm_delete": "Do you want to delete your comment?",

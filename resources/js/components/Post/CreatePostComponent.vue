@@ -49,7 +49,7 @@
                 </div>
             </div>
         </div>
-        <PostShareComponent :post="sharePost"/>
+        <PostShareComponent :post="sharePost" :id="sharePost.id"/>
         <div class="buttons is-right mt-5">
             <button class="button is-primary" :class="{ 'is-loading': isHandlePreview }"
                 @click="handleUploadPost()">
@@ -68,7 +68,7 @@ import ClassicEditor from "../../../Libraries/CKEditor5/build/ckeditor";
 import { getCommunitiesAPI } from "../../api/community";
 import PostShareComponent from "./Children/SharePostComponent.vue";
 export default {
-    components: { PostShareComponent, PostShareComponent },
+    components: { PostShareComponent },
     data() {
         return {
             editor: ClassicEditor,

@@ -188,7 +188,7 @@ export default {
 }
 
 .fill-message {
-    height: 90%;
+    height: 80%;
     width: 100%;
     bottom: 8rem;
     overflow: auto;

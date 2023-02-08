@@ -1,5 +1,5 @@
 <template>
-    <div class="is-rounded box share-post p-0" v-if="post">
+    <div class="is-rounded box share-post p-0" v-if="post && id">
         <div class="post-desc pt-4" ref="desc_share" @click="handleClick($event, post.id)"
             v-html="post.post_description"></div>
         <div class="has-text-centered">
@@ -82,6 +82,9 @@
             </template>
         </div>
     </div>
+    <div class="is-rounded box share-post p-5" v-else-if="id">
+        <strong>{{ $t('post.post_not_exist') }}</strong>
+    </div>
     <vue-easy-lightbox @scroll.prevent :minZoom="1" :visible="showImage" :imgs="images" :index="imageIndex"
         @hide="handleHide"></vue-easy-lightbox>
 </template>
@@ -95,7 +98,7 @@ export default {
         UserInforCard,
         CommunityInfoCard
     },
-    props: ["post"],
+    props: ["post", "id"],
     data() {
         return {
             displayUserInformation: false,

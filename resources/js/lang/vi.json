@@ -53,7 +53,8 @@
         "comment": "Bình luận",
         "share": "Chia sẻ",
         "post_by": "Đăng bởi",
-        "error_get_post": "Không tìm thấy thông tin bài viết."
+        "error_get_post": "Không tìm thấy thông tin bài viết.",
+        "post_not_exist": "Bài viết không tồn tại"
     },
     "comment": {
         "confirm_delete": "Bạn có muốn xóa bình luận của mình?",

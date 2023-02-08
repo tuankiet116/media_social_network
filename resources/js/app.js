@@ -24,15 +24,8 @@ window.Echo = new Echo({
     key: process.env.MIX_PUSHER_APP_KEY,
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     forceTLS: true,
-    // authEndpoint: 'pusher/user-auth',
-    // csrfToken: document
-    //     .querySelector('meta[name="csrf-token"]')
-    //     .getAttribute("content"),
     encrypted: true,
-    enabledTransports: ['ws', 'wss'],
-    // wsHost: window.location.hostname,
-    // wsPort: 6001,
-    // disableStats: true
+    enabledTransports: ['ws', 'wss']
 });
 
 const i18n = createI18n({
