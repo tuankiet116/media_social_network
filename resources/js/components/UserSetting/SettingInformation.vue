@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="field column is-6">
-                <label class="label">{{ $t('user_setting.info.start_year') }}:</label>
+                <label class="label">{{ $t('user_setting.info.time_range') }}:</label>
                 <div class="control">
                     <Datepicker v-model="highschool.time_range" :format="format" range multi-calendars
                         :enable-time-picker="false" @update:model-value="handleDateHighschool(index, $event)" />
@@ -75,7 +75,7 @@
                 </div>
             </div>
             <div class="field column is-6">
-                <label class="label">{{ $t('user_setting.info.start_year') }}</label>
+                <label class="label">{{ $t('user_setting.info.time_range') }}</label>
                 <div class="control">
                     <Datepicker v-model="university.time_range" :format="format" range multi-calendars
                         :enable-time-picker="false" @update:model-value="handleDateUniversity(index, $event)" />

@@ -121,8 +121,6 @@
             "highschool_addmore": "Add More Highschool",
             "university_addmore": "Add More University",
             "school_name": "School Name",
-            "start_year": "Start Year",
-            "end_year": "End Year",
             "graduated_year": "Graduated Year",
             "university": "University",
             "university_name": "University Name",
@@ -131,7 +129,8 @@
             "female": "Female",
             "other": "Other",
             "update_success": "Your information has been updated",
-            "update_error": "An error occurred, could not update"
+            "update_error": "An error occurred, could not update",
+            "time_range": "Time range"
         },
         "password": {
             "old": "Old password",

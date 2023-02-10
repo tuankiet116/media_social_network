@@ -121,8 +121,6 @@
             "highschool_addmore": "Thêm trường trung học",
             "university_addmore": "Thêm đại học",
             "school_name": "Tên trường",
-            "start_year": "Năm bắt đầu",
-            "end_year": "Năm kết thúc",
             "graduated_year": "Năm tốt nghiệp",
             "university": "Đại học",
             "university_name": "Tên trường đại học",
@@ -131,7 +129,8 @@
             "female": "Nữ",
             "other": "Khác",
             "update_success": "Thông tin của bạn đã được thay đổi",
-            "update_error": "Xảy ra lỗi không thể thay đổi thông tin"
+            "update_error": "Xảy ra lỗi không thể thay đổi thông tin",
+            "time_range": "Khoảng thời gian"
         },
         "password": {
             "old": "Mật khẩu cũ",

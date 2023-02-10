@@ -44,7 +44,7 @@
                         </p>
                         <nav class="panel search-user" v-if="isDisplaySearch">
                             <p class="panel-heading">
-                                {{ user.name }}
+                                {{ $t('chat.user') }}
                             </p>
                             <template v-for="user in userAccounts">
                                 <router-link class="panel-block" :to="{ name: 'message', params: { id: user.id } }">
