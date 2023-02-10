@@ -1,7 +1,7 @@
 <template>
     <div class="columns pt-2 chat-container ">
         <div v-if="isMobile() && $route.params.id == null || !isMobile()"
-            class="column is-2-desktop is-4-tablet chat-list p-0">
+            class="column is-2-fullhd is-3-desktop is-4-tablet chat-list p-0">
             <div class="link-chat" v-for="item, id in chat">
                 <router-link @click="markRead(item.id)" class="is-flex is-align-items-center"
                     :to="{ name: 'message', params: { id: item.user_receive_id } }">

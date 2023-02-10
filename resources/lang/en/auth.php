@@ -24,7 +24,9 @@ return [
         'or_register_with' => 'Or register with',
         'if_have_account' => 'If you have account please <a href=:link>login here</a>',
         'error_register' => 'Could not register your account, try again latter',
-        'email_duplicate' => 'This Email has been used.'
+        'email_duplicate' => 'This Email has been used.',
+        'registered_success' => 'Registered Successfully',
+        'registered_message' => 'A verify link has been sent to your E-mail. Please open and verify your E-mail address. You could close this window now.'
     ],
     'setting_account' => [
         'title' => 'Account Setting',
@@ -32,6 +34,18 @@ return [
         'step_1_desc' => 'Avatar and cover photo',
         'step_2' => 'Step 2',
         'step_2_desc' => 'Basic Information',
+        'or_choose_default' => "Or you can choose default images below",
+        'next' => 'Next Step',
+        'where_live' => 'Your current living space:',
+        'where_work' => 'Your current working space:',
+        'high_school' => 'Your highschool',
+        'university' => 'Your university',
+        'time_range' => 'Time range:',
+        'i_am' => 'I am ...',
+        'male' => 'Male',
+        'female' => 'Female',
+        'other' => 'Other',
+        'now' => 'Now'
     ],
     'update_password' => [
         'old_password_invalid' => 'Mật khẩu cũ không đúng'

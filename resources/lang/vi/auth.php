@@ -24,7 +24,9 @@ return [
         'or_register_with' => 'Hoặc đăng ký bằng',
         'if_have_account' => 'Nếu bạn đã có tài khoản hãy đăng nhập <a href=:link>tại đây</a>',
         'error_register' => 'Hệ thông lỗi, không thể đăng ký tài khoản',
-        'email_duplicate' => 'Email đã được sử dụng để đăng ký tài khoản, vui lòng kiểm tra lại'
+        'email_duplicate' => 'Email đã được sử dụng để đăng ký tài khoản, vui lòng kiểm tra lại',
+        'registered_success' => 'Đăng ký thành công',
+        'registered_message' => 'Đường liên kết để xác thực Email đã được gửi đến bạn, bạn có thể đóng tab này và kiểm tra Email của mình để xác nhận nhé.'
     ],
     'setting_account' => [
         'title' => 'Cài đặt tài khoản',

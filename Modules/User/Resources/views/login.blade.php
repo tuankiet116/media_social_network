@@ -14,7 +14,7 @@
         <section class="section">
           <div class="has-text-centered">
             <a href="{{ route('home') }}" class="align-items-center" style="color: white">
-              <img style="width: 120px" src="/images/default/brand.png">
+              <img style="width: 120px" src="/images/defaults/brand.png">
               <div class="brand-title" style="font-size: 2rem; color: blueviolet; font-family: monospace;">
                 <h3>{{ config('app.name') }}</h3>
               </div>
