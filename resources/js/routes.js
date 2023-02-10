@@ -78,12 +78,6 @@ const routes = [
         component: ListMessages,
         name: 'chat',
         beforeEnter: checkAuth
-    },
-    {
-        path: '/call/:id',
-        component: VideoChatComponent,
-        name: 'video-call',
-        beforeEnter: checkAuth
     }
 ];
 

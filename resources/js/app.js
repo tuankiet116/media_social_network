@@ -14,9 +14,22 @@ import Echo from "laravel-echo";
 import "vue-toastification/dist/index.css";
 import VueSelect from 'vue-select';
 import VueEasyLightbox from 'vue-easy-lightbox';
+import Datepicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
+import Moveable, { VueMoveableInstance } from "vue3-moveable";
+import { getCurrentLang } from './api/user';
 // import ElementPlus from 'element-plus'
 // import 'element-plus/dist/index.css';
 // import 'element-plus/theme-chalk/dark/css-vars.css';
+let lang = 'vi';
+
+async function detectLang() {
+    await getCurrentLang().then(result => {
+        lang = result.data;
+    });
+}
+detectLang();
+
 
 window.Pusher = require('pusher-js');
 window.Echo = new Echo({
@@ -29,7 +42,7 @@ window.Echo = new Echo({
 });
 
 const i18n = createI18n({
-    locale: 'vi',
+    locale: lang,
     messages: {
         en: en,
         vi: vi
@@ -59,6 +72,8 @@ app.use(Toast, {
     position: POSITION.TOP_RIGHT
 });
 app.component('vue-select', VueSelect);
+app.component('Datepicker', Datepicker);
+app.component('Moveable', Moveable);
 app.config.globalProperties.emitter = emitter;
 app.directive('outsider', {
     mounted: (el, binding) => {

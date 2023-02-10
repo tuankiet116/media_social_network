@@ -71,4 +71,32 @@ export default {
 }
 </script>
 <style scoped>
+.container {
+    min-height: 20rem;
+}
+
+.user-card {
+    position: absolute;
+    z-index: 10;
+    width: 300px;
+    display: none;
+    top: 5rem;
+}
+
+.user_name {
+    display: flex;
+    align-items: center;
+}
+
+.user_name:hover .user-card {
+    display: block;
+    transform: translate(0, -20px);
+    transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+}
+
+.user_image:hover .user-card {
+    display: block;
+    transform: translate(0, -20px);
+    transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+}
 </style>

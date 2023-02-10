@@ -5,10 +5,11 @@
         </figure>
         <strong class="ml-2">{{ userChat.name }}</strong>
         <div class="container-right">
-            <button @click="openNewWindow" class="button is-rounded mr-2">
+            <!-- TODO: Turn on Video Call -->
+            <!-- <button @click="callToUser" class="button is-rounded mr-2">
                 Video Call
                 <i class="fa-solid fa-video ml-1"></i>
-            </button>
+            </button> -->
             <router-link class="button is-rounded" :to="{ name: 'profile_list_post', params: { id: userChat.id } }">
                 {{ $t('chat.info') }}
             </router-link>
@@ -55,6 +56,7 @@
 import ObserverComponent from '../Common/ObserverComponent.vue';
 import { sendMessage, getMessages } from '../../api/chat';
 import { getUserProfile } from '../../api/user';
+import { callUser } from '../../api/video';
 export default {
     data() {
         return {
@@ -141,8 +143,13 @@ export default {
             return false;
         },
         openNewWindow() {
-            window.open(this.$router.resolve({name: 'video-call', params: {id: this.userChat.id}}).fullPath, 'Video Call', "height=800,width=800");
+            window.open(this.$router.resolve({ name: 'video-call', params: { id: this.userChat.id } }).fullPath, 'Video Call', "height=800,width=800");
         },
+        callToUser() {
+            callUser({ to: this.userChat.id }).then(result => {
+                this.$store.state.videoUUID = result.data.uuid;
+            });
+        }
     },
     unmounted() {
         this.$store.state.messages = [];
@@ -188,7 +195,7 @@ export default {
 }
 
 .fill-message {
-    height: 80%;
+    height: 90%;
     width: 100%;
     bottom: 8rem;
     overflow: auto;

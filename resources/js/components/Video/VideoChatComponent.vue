@@ -1,71 +1,40 @@
 <template>
-    <div>
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-primary mr-2" v-for="user in allusers" :key="user.id"
-                            @click="placeVideoCall(user.id, user.name)">
-                            Call {{ user.name }}
-                            <span class="badge badge-light">{{
-                                getUserOnlineStatus(user.id)
-                            }}</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <!--Placing Video Call-->
-            <div class="row mt-5" id="video-row">
-                <div class="col-12 video-container" v-if="callPlaced">
-                    <video ref="userVideo" muted playsinline autoplay class="cursor-pointer"
-                        :class="isFocusMyself === true ? 'user-video' : 'partner-video'" @click="toggleCameraArea" />
-                    <video ref="partnerVideo" playsinline autoplay class="cursor-pointer"
-                        :class="isFocusMyself === true ? 'partner-video' : 'user-video'" @click="toggleCameraArea"
-                        v-if="videoCallParams.callAccepted" />
-                    <div class="partner-video" v-else>
-                        <div v-if="callPartner" class="column items-center q-pt-xl">
-                            <div class="col q-gutter-y-md text-center">
-                                <p class="q-pt-md">
-                                    <strong>{{ callPartner }}</strong>
-                                </p>
-                                <p>calling...</p>
-                            </div>
+    <div class="container videocall">
+        <!--Placing Video Call-->
+        <div class="row mt-5" id="video-row">
+            <div class="col-12 video-container" v-if="call_uuid">
+                <video ref="userVideo" muted playsinline autoplay class="cursor-pointer"
+                    :class="isFocusMyself === true ? 'user-video' : 'partner-video'" @click="toggleCameraArea" />
+                <video ref="partnerVideo" playsinline autoplay class="cursor-pointer"
+                    :class="isFocusMyself === true ? 'partner-video' : 'user-video'" @click="toggleCameraArea"
+                    v-if="videoCallParams.callAccepted" />
+                <div class="partner-video" v-else>
+                    <div v-if="callPartner" class="column items-center q-pt-xl">
+                        <div class="col q-gutter-y-md text-center">
+                            <p class="q-pt-md">
+                                <strong>{{ callPartner }}</strong>
+                            </p>
+                            <p>calling...</p>
                         </div>
                     </div>
-                    <div class="action-btns">
-                        <button type="button" class="btn btn-info" @click="toggleMuteAudio">
-                            {{ mutedAudio? "Unmute": "Mute" }}
-                        </button>
-                        <button type="button" class="btn btn-primary mx-4" @click="toggleMuteVideo">
-                            {{ mutedVideo? "ShowVideo": "HideVideo" }}
-                        </button>
-                        <button type="button" class="btn btn-danger" @click="endCall">
-                            EndCall
-                        </button>
-                    </div>
+                </div>
+                <div class="action-btns">
+                    <button type="button" class="btn btn-info" @click="toggleMuteAudio">
+                        {{ mutedAudio? "Unmute": "Mute" }}
+                    </button>
+                    <button type="button" class="btn btn-primary mx-4" @click="toggleMuteVideo">
+                        {{ mutedVideo? "ShowVideo": "HideVideo" }}
+                    </button>
+                    <button type="button" class="btn btn-danger" @click="endCall">
+                        EndCall
+                    </button>
                 </div>
             </div>
-            <!-- End of Placing Video Call  -->
-
-            <!-- Incoming Call  -->
-            <div class="row" v-if="incomingCallDialog">
-                <div class="col">
-                    <p>
-                        Incoming Call From <strong>{{ callerDetails.name }}</strong>
-                    </p>
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal" @click="declineCall">
-                            Decline
-                        </button>
-                        <button type="button" class="btn btn-success ml-5" @click="acceptCall">
-                            Accept
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <!-- End of Incoming Call  -->
         </div>
+        <!-- End of Placing Video Call  -->
     </div>
+    <Moveable className="moveable" v-bind:target="['.videocall']" v-bind:draggable="true" v-bind:scalable="true"
+        v-bind:rotatable="true" />
 </template>
 
 <script>
@@ -73,17 +42,12 @@ import Peer from "simple-peer";
 import { getPermissions } from "../../helpers/videochat";
 export default {
     props: [
-        "allusers",
-        "authuserid",
-        "turn_url",
-        "turn_username",
-        "turn_credential",
+        "call_uuid",
+        "callPartner"
     ],
     data() {
         return {
             isFocusMyself: true,
-            callPlaced: false,
-            callPartner: null,
             mutedAudio: false,
             mutedVideo: false,
             videoCallParams: {
@@ -100,19 +64,11 @@ export default {
         };
     },
     mounted() {
-        this.initializeChannel(); // this initializes laravel echo
+        this.initializeChannel();
         this.initializeCallListeners(); // subscribes to video presence channel and listens to video events
     },
+    props: ['call_uuid'],
     computed: {
-        incomingCallDialog() {
-            if (
-                this.videoCallParams.receivingCall &&
-                this.videoCallParams.caller !== this.authuserid
-            ) {
-                return true;
-            }
-            return false;
-        },
         callerDetails() {
             if (
                 this.videoCallParams.caller &&
@@ -131,7 +87,7 @@ export default {
     },
     methods: {
         initializeChannel() {
-            this.videoCallParams.channel = Echo.join("presence-video-channel");
+            this.videoCallParams.channel = Echo.join("presence-video-channel." + this.call_uuid);
         },
         async getMediaPermission() {
             return await getPermissions()
@@ -150,7 +106,6 @@ export default {
                 this.videoCallParams.users = users;
             });
             this.videoCallParams.channel.joining((user) => {
-                // check user availability
                 const joiningUserIndex = this.videoCallParams.users.findIndex(
                     (data) => data.id === user.id
                 );
@@ -345,6 +300,15 @@ export default {
             setTimeout(() => {
                 this.callPlaced = false;
             }, 3000);
+        },
+        onDrag({ transform }) {
+            this.$refs.target.style.transform = transform;
+        },
+        onScale({ drag }) {
+            this.$refs.target.style.transform = drag.transform;
+        },
+        onRotate({ drag }) {
+            this.$refs.target.style.transform = drag.transform;
         },
     },
 };

@@ -1,10 +1,16 @@
 <template>
     <div>
         <a @click="showModalUserLike" class="show-users" v-if="post.isLiked">
-            You <span v-if="post.reaction_user_count > 1"> and {{ post.reaction_user_count - 1 }} people</span> loved
-            this post</a>
-        <a @click="showModalUserLike" class="show-users" v-else>
-            {{ post.reaction_user_count }} people loved this post</a>
+            {{ $t('you') }}
+            <a v-if="post.reaction_user_count > 1"> 
+                {{ $t('post.and') }} {{ post.reaction_user_count - 1 }} {{ $t('post.people') }} 
+            </a>
+            {{ $t('post.loved_post') }}
+        </a>
+        <a @click="showModalUserLike" class="show-users" v-else-if="post.reaction_user_count">
+            {{ post.reaction_user_count }} {{ $t('post.people') }} {{ $t('post.loved_post') }}
+        </a>
+        <a @click="showModalUserLike" class="show-users" v-else>{{ $t('post.no_one_love') }}</a>
         <hr class="m-0" />
         <div class="reactions columns is-mobile m-0" v-if="user">
             <div class="column is-flex">
@@ -39,7 +45,7 @@
                 <a href='/user/login' class='button is-small is-info'>{{ $t('login') }}</a>
             </div>
         </div>
-        <UserLikeComponent @close="showModalLikes = false" v-if="showModalLikes" :post="post"/>
+        <UserLikeComponent @close="showModalLikes = false" v-if="showModalLikes" :post="post" />
     </div>
 </template>
 <script>

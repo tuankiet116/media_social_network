@@ -15,12 +15,13 @@
                         </div>
                         <div class="column pl-1">
                             <p class="is-flex">
-                                <strong>{{ item.user_receive.name }}</strong>
+                                <strong>{{ truncate(item.user_receive.name) }}</strong>
                                 <span style="margin-left:auto">{{ calculateTime(item.last_time_message) }}</span>
                             </p>
-                            <p><span v-if="item.lastMessage.sender == user.id">{{ $t( 'chat.you') }}:</span> {{
-                                item.lastMessage.message
-                            }}</p>
+                            <p>
+                                <span v-if="item.lastMessage.sender == user.id">{{ $t( 'chat.you') }}:</span>
+                                {{ item.lastMessage.message }}
+                            </p>
                         </div>
                     </div>
                 </router-link>
@@ -43,7 +44,7 @@
                         </p>
                         <nav class="panel search-user" v-if="isDisplaySearch">
                             <p class="panel-heading">
-                                {{ $t('chat.user') }}
+                                {{ user.name }}
                             </p>
                             <template v-for="user in userAccounts">
                                 <router-link class="panel-block" :to="{ name: 'message', params: { id: user.id } }">
@@ -136,7 +137,10 @@ export default {
             });
         },
         calculateTime(time) {
-            return calculateTime(time, this)
+            let date = calculateTime(time, this);
+            let arrDate = date.split(',');
+            if (arrDate.length > 1) date = arrDate[1] + ',' + arrDate[2];
+            return date
         },
         markRead(idChat) {
             markReadChat({
@@ -149,6 +153,9 @@ export default {
                     this.$store.state.unreadMessages.splice(chatIdex, 1);
                 }
             });
+        },
+        truncate(source, size = 12) {
+            return source.length > size ? source.slice(0, size - 1) + "…" : source;
         }
     },
     unmounted() {
@@ -166,6 +173,7 @@ export default {
 .chat-container {
     max-height: 90%;
     background-color: white;
+    height: 100%;
 }
 
 .columns {
@@ -199,7 +207,9 @@ export default {
     background-color: #eceaea;
 }
 
-html, body, #app {
+html,
+body,
+#app {
     background: white !important;
 }
 </style>

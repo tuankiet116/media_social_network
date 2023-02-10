@@ -18,6 +18,7 @@
     "create": "Create",
     "close": "Close",
     "you": "You",
+    "now": "now",
     "menu": {
         "create_post": "Create Post",
         "notification": "Notification"
@@ -54,7 +55,11 @@
         "share": "Share",
         "post_by": "Posted by",
         "error_get_post": "Post is not found or something crash",
-        "post_not_exist": "Post is not exist"
+        "post_not_exist": "Post is not exist",
+        "loved_post": "love",
+        "people": "another",
+        "and": "and",
+        "no_one_love": "No one love this post yet" 
     },
     "comment": {
         "confirm_delete": "Do you want to delete your comment?",
@@ -84,7 +89,8 @@
         "followed": "Followed",
         "post": "Post",
         "no_follower": "No Followers.",
-        "not_following": "Not Following Anyone"
+        "not_following": "Not Following Anyone",
+        "working": "working at"
     },
     "user_setting": {
         "setting": "Setting your profile",

@@ -1,7 +1,7 @@
 import { detectUser } from "./api/auth";
 const authMixin = {
-    beforeCreate() {
-        detectUser().then(result => {
+    async created() {
+        await detectUser().then(result => {
             sessionStorage.setItem("user", JSON.stringify(result.data));
             this.$store.commit('getUserInformation', result.data);
         }).catch(err => {

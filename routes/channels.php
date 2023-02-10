@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Post;
+use App\Models\VideoChat;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Log;
 
@@ -33,8 +34,17 @@ Broadcast::channel('fd25b0f2-fdaa-4c67-a8d4-f09c48e6790a.{userId}', function ($u
     return $user->id == $userId;
 });
 
-Broadcast::channel('presence-video-channel', function ($user) {
-    return ['id' => $user->id, 'name' => $user->name];
+Broadcast::channel('presence-video-channel.{uuid}', function ($user, $uuid) {
+    $videoChat = VideoChat::where('uuid', $uuid)
+        ->where('caller', '!=', 'receiver')
+        ->orWhere([
+            'caller' => $user->id,
+            'receiver' => $user->id
+        ])->first();
+    if ($videoChat) {
+        return ['id' => $user->id, 'name' => $user->name];
+    }
+    return false;
 });
 
 Broadcast::channel('video-chat-incomming.{user_id}', function ($user, $user_id) {

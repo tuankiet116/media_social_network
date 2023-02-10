@@ -125,23 +125,25 @@ class UserService
             $idDelete = array_diff($idExist, $idData);
             if ($idDelete) UserSchool::whereIn('id', $idDelete)->delete();
             foreach ($data as $d) {
-                if ($d['id']) {
-                    $record = UserSchool::where(['id' => $d['id'], 'user_id' => $userId])->first();
-                    if ($record) {
-                        $record->school_name = $d['school_name'];
-                        $record->start_year = $d['start_year'];
-                        $record->end_year = $d['end_year'];
-                        $record->save();
+                if ($d['school_name'] && $d['start'] && $d['end']) {
+                    if ($d['id']) {
+                        $record = UserSchool::where(['id' => $d['id'], 'user_id' => $userId])->first();
+                        if ($record) {
+                            $record->school_name = $d['school_name'];
+                            $record->start = $d['start'];
+                            $record->end = $d['end'];
+                            $record->save();
+                        }
+                    } else {
+                        $dataCreate = array(
+                            "school_name" => $d['school_name'],
+                            "start" => $d['start'],
+                            "end" => $d['end'],
+                            "school_type" => $type,
+                            'user_id' => $userId
+                        );
+                        UserSchool::create($dataCreate);
                     }
-                } else {
-                    $dataCreate = array(
-                        "school_name" => $d['school_name'],
-                        "start_year" => $d['start_year'],
-                        "end_year" => $d['end_year'],
-                        "school_type" => $type,
-                        'user_id' => $userId
-                    );
-                    UserSchool::create($dataCreate);
                 }
             }
         } catch (Exception $e) {

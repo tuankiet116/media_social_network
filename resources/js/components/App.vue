@@ -2,7 +2,8 @@
     <MenuComponent :user="getUser"></MenuComponent>
     <router-view ref="child" :key="$route.fullPath"></router-view>
     <ProgressBarComponent v-if="getPostProgressUpload" :percent-value="getPostProgressUpload" class="progress-bar" />
-    <VideoReceiverCall/>
+    <VideoReceiverCall v-if="userCall" :user-call="userCall" />
+    <VideoChatComponent v-if="call_uuid" :call_uuid="call_uuid"/>
     <MenuMobileComponent />
 </template>
 
@@ -12,19 +13,25 @@ import MenuComponent from './MenuComponent.vue';
 import MenuMobileComponent from './MenuMobileComponent.vue';
 import ProgressBarComponent from './Common/ProgressBarComponent.vue';
 import VideoReceiverCall from './Common/VideoReceiverCall.vue';
+import VideoChatComponent from './Video/VideoChatComponent.vue';
 import { mapGetters } from 'vuex';
 import { getUnreadChat } from '../api/chat';
+import authMixin from '../mixins';
 
 export default {
     data() {
         return {
+            call_uuid: null,
+            userCall: null
         };
     },
+    mixins: [authMixin],
     components: {
         MenuComponent,
         ProgressBarComponent,
         MenuMobileComponent,
-        VideoReceiverCall
+        VideoReceiverCall,
+        VideoChatComponent
     },
     computed: {
         ...mapGetters([
@@ -32,9 +39,17 @@ export default {
             'getUser'
         ])
     },
-    mounted() {
-        this.getUnreadMessageCount();
-        this.createEchoListeningMessage();
+    watch: {
+        auth: function (data) {
+            if (data) {
+                this.getUnreadMessageCount();
+                this.createEchoListeningMessage();
+                this.createEchoListeningVideoCall();
+            }
+        },
+        '$store.state.videoUUID': function(data) {
+            this.call_uuid = data;
+        }
     },
     methods: {
         getUnreadMessageCount() {
@@ -61,6 +76,16 @@ export default {
                         }
                         this.$store.state.newChat.unshift(result.userMessage);
                         this.$store.state.messages.push(result.message);
+                    });
+            }
+        },
+        createEchoListeningVideoCall() {
+            let user = JSON.parse(sessionStorage.getItem('user'));
+            if (user) {
+                Echo.private('video-chat-incomming.' + user.id)
+                    .listen('.incomming', (data) => {
+                        this.$store.state.videoUUID = data.videoChat.uuid;
+                        this.userCall = data.caller;
                     });
             }
         }

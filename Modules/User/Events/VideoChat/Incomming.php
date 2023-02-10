@@ -2,6 +2,7 @@
 
 namespace Modules\User\Events\VideoChat;
 
+use App\Models\User;
 use App\Models\VideoChat;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -14,14 +15,16 @@ class Incomming implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $videoChat;
+    public $caller;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(VideoChat $videoChat)
+    public function __construct(VideoChat $videoChat, User $caller)
     {
         $this->videoChat = $videoChat;
+        $this->caller = $caller;
     }
 
     /**

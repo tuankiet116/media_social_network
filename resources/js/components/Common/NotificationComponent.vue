@@ -118,10 +118,10 @@
                 </div>
                 <hr v-if="index !== notifications.length - 1" class="m-0">
             </template>
+            <ObserverComponent v-if="notifications.length" @intersect="getNotifications" style="height: 1rem;"/>
             <div class="quickview-block is-flex is-justify-content-center is-align-items-center" v-if="offset == null">
                 <span class="has-text-weight-bold">{{ $t('notification.no_more') }}</span>
             </div>
-            <ObserverComponent @intersect="getNotifications" />
         </div>
     </div>
 </template>
@@ -134,13 +134,23 @@ export default {
         return {
             notifications: [],
             offset: 0,
-            user: JSON.parse(sessionStorage.getItem('user'))
+            connected: false,
+            user: null
         }
     },
     components: { ObserverComponent },
-    mounted() {
-        this.getCountUnreadNotification();
-        this.createEchoListening(this.user);
+    watch: {
+        '$store.state.user': function (data) {
+            if (data && this.connected == false) {
+                this.user = data;
+                this.connected = true;
+                this.createEchoListening();
+                this.getCountUnreadNotification();
+                this.getNotifications();
+            } else {
+                this.notifications = [];
+            }
+        }
     },
     methods: {
         getNotifications() {
@@ -158,9 +168,9 @@ export default {
                 });
             }
         },
-        createEchoListening(user) {
-            if (user) {
-                Echo.private('9a2fadf0-c697-4b83-ba75-89873b996845.' + user.id)
+        createEchoListening() {
+            if (this.user) {
+                Echo.private('9a2fadf0-c697-4b83-ba75-89873b996845.' + this.user.id)
                     .listen('.notification', (result) => {
                         this.$store.state.unreadNotifications += 1;
                         this.notifications.unshift(result.notification);

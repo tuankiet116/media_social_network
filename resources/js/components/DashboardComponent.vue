@@ -17,6 +17,7 @@
       </div>
       <div class="post">
         <PostComponent @post-deleted="handleRemovePost" v-for="post in posts" :post="post" />
+        <ObserverComponent @intersect="fetchPost"/>
       </div>
     </div>
     <div class="column is-hidden-mobile">
@@ -31,12 +32,14 @@ import PostComponent from './Post/Children/PostComponent.vue'
 import LoadingComponent from './Common/LoadingComponent.vue'
 import { mapGetters } from 'vuex'
 import CommunityCardComponent from './Community/CommunityCardComponent.vue'
+import ObserverComponent from './Common/ObserverComponent.vue'
 
 export default {
   components: {
     PostComponent,
     LoadingComponent,
     CommunityCardComponent,
+    ObserverComponent
   },
   data() {
     return {
@@ -52,10 +55,20 @@ export default {
       user: 'getUser',
     }),
   },
+  watch: {
+    '$store.state.eventUpdateDashboard': async function(data) {
+      if (data) {
+        debugger
+        this.$store.state.eventUpdateDashboard = false;
+        this.posts = [];
+        this.offset = 0;
+        this.outOfPost = false;
+        this.fetchPost();
+      }
+    }
+  },
   mounted() {
-    this.fetchPost()
     this.loading = false
-    document.addEventListener('scroll', this.handleLoadPost)
   },
   methods: {
     fetchPost() {
@@ -71,17 +84,6 @@ export default {
           console.log(err)
         })
     },
-    handleLoadPost(e) {
-      if (
-        window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 100 &&
-        this.isLoadMore &&
-        !this.outOfPost
-      ) {
-        this.isLoadMore = false
-        this.fetchPost()
-      }
-    },
     handleRemovePost(postID) {
       let postIndex = this.posts.findIndex((p) => {
         return p.id == postID
@@ -91,10 +93,7 @@ export default {
     redirectLogin() {
       window.location.replace('user/login')
     },
-  },
-  beforeUnmount() {
-    document.removeEventListener('scroll', this.handleLoadPost)
-  },
+  }
 }
 </script>
 
@@ -121,5 +120,6 @@ export default {
 
 .avatar-image {
   height: 32px !important;
+  width: 32px !important;
 }
 </style>

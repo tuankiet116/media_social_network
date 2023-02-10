@@ -13,10 +13,11 @@ const userSetting = [
 ];
 
 async function checkAuth(to, from, next) {
-    let user = await detectUser().then(result => result.data).catch(error => {});
+    let user = await detectUser().then(result => result.data).catch(error => { });
     if (user) {
         next();
     } else {
+        window.sessionStorage.removeItem('user');
         window.location.href = '/user/login';
     }
 }

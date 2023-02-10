@@ -33,4 +33,12 @@ class VideoChatController extends Controller
         $data['type'] = 'callAccepted';
         broadcast(new StartVideoChat($data))->toOthers();
     }
+
+    public function declineCall(Request $request)
+    {
+        $data['signal'] = $request->signal;
+        $data['to'] = $request->to;
+        $data['type'] = 'callAccepted';
+        broadcast(new StartVideoChat($data))->toOthers();
+    }
 }

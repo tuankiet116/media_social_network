@@ -7,5 +7,7 @@ export default {
     newChat: [],
     messages: [],
     eventUpdateCommunityPost: false,
-    eventUpdateCommunityUser: false
+    eventUpdateCommunityUser: false,
+    eventUpdateDashboard: false,
+    videoUUID: null
 }

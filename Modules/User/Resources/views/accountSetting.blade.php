@@ -12,14 +12,30 @@
   <script src="{{ asset('js/accountSetting.js') }}" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
   <link rel="stylesheet" href="{{ asset('css/accountSetting.css') }}">
 </head>
 
 <body>
   <div class="container container-header">
-    <h1 class="title">Welcome, {{ auth()->user()->name }} !</h1>
-    <p>First, you need to setup your account and the basic information.</p>
+    <h1 class="title">{{ __('auth.setting_account.welcome', ['name' => auth()->user()->name]) }}</h1>
+    <p>{{ __('auth.setting_account.first_need') }}</p>
   </div>
+  @if ($errors->any())
+    <article class="message is-danger container">
+      <div class="message-header">
+        <p>Error</p>
+        <button class="delete" aria-label="delete"></button>
+      </div>
+      <div class="message-body">
+        @foreach ($errors->all() as $error)
+          <p><strong><i class="fa-solid fa-circle-exclamation"></i></strong> {{ $error }}</p>
+        @endforeach
+      </div>
+    </article>
+  @endif
   <div class="container">
     <div class="step_section columns is-mobile">
       <div class="column has-text-centered">
@@ -37,7 +53,7 @@
       @csrf
       <section class="step_1 box is-active-step animate__backInLeft">
         <div class="columns is-mobile m-0 field">
-          <label class="column-2 label">Ảnh đại diện: </label>
+          <label class="column-2 label">{{ __('attributes.avatar_image') }}: </label>
           <div class="column-6">
             <figure class="image avatar-image is-128x128 ml-3">
               <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
@@ -49,12 +65,13 @@
           <input class="file input-avatar-image" name="avatar_image" type="file">
           <input id="avatar_image_choose" name="avatar_image_choose" type="hidden">
         </div>
-        <p class="content mt-2">Or you can choosed one of those image for your avatar: </p>
+        <p class="content mt-2">{{ __('auth.setting_account.or_choose_default') }}</p>
         <div class="select-default-avatar is-flex is-justify-content-center">
           @foreach ($avatarImages['files'] as $avatar)
             <figure class="image is-128x128 m-3 image-choosing">
               <div class="image-tick">
-                <img class="is-rounded" style="background-color: #bfd5d6" src="{{ asset('images/defaults/tick_image.png') }}">
+                <img class="is-rounded" style="background-color: #bfd5d6"
+                  src="{{ asset('images/defaults/tick_image.png') }}">
               </div>
               <img class="is-rounded" style="background-color: #bfd5d6" src="{{ $avatar }}">
             </figure>
@@ -62,7 +79,7 @@
         </div>
 
         <div class="columns mt-3 is-mobile m-0 field">
-          <label class="column-2 label">Ảnh bìa: </label>
+          <label class="column-2 label">{{ __('attributes.banner_image') }}: </label>
           <div class="column">
             <figure class="banner-image image ml-3">
               <img src="{{ asset('images/defaults/background/background.png') }}">
@@ -76,24 +93,24 @@
 
         <div class="fields mt-3 columns is-justify-content-end">
           <a class="button step_btn is-info is-1-desktop column is-full-mobile mt-2 to_step_2">
-            <p>Next</p>
+            <p>{{ __('auth.setting_account.next') }}</p>
           </a>
         </div>
       </section>
       <section class="step_2 box">
         <div class="field">
-          <label class="label">Where do you live?</label>
+          <label class="label">{{ __('auth.setting_account.where_live') }}</label>
           <div class="control has-icons-left has-icons-right">
-            <input class="input is-success" type="text" name="living_place" value="">
+            <input class="input is-success" type="text" name="living_place" value="{{ old('living_place') }}">
             <span class="icon is-small is-left">
               <i class="fa-solid fa-house"></i>
             </span>
           </div>
         </div>
         <div class="field">
-          <label class="label">Where do you work?</label>
+          <label class="label">{{ __('auth.setting_account.where_work') }}</label>
           <div class="control has-icons-left has-icons-right">
-            <input class="input is-success" type="text" name="working_place" value="">
+            <input class="input is-success" type="text" name="working_place" value="{{ old('working_place') }}">
             <span class="icon is-small is-left">
               <i class="fa-solid fa-house"></i>
             </span>
@@ -101,70 +118,60 @@
         </div>
         <div class="columns">
           <div class="field column">
-            <label class="label">What's your high school?</label>
+            <label class="label">{{ __('auth.setting_account.high_school') }}</label>
             <div class="control has-icons-left has-icons-right">
-              <input class="input is-success" type="text" name="highschool_name" value="">
+              <input class="input is-success" type="text" name="highschool_name"
+                value="{{ old('highschool_name') }}">
               <span class="icon is-small is-left">
                 <i class="fa-solid fa-school"></i>
               </span>
             </div>
           </div>
           <div class="field column">
-            <label class="label">Start Year?</label>
+            <label class="label">{{ __('auth.setting_account.time_range') }}</label>
             <div class="control">
               <div class="select">
-                <select class="year-select" name="highschool_start">
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="field column">
-            <label class="label">Graduated Year?</label>
-            <div class="control">
-              <div class="select">
-                <select class="year-select" name="highschool_gradueted">
-                </select>
+                <input class="input time-select-highschool" />
+                <input class="input" name="highschool_time_start" type="hidden"
+                  value="{{ old('highschool_time_start') }}">
+                <input class="input" name="highschool_time_end" type="hidden"
+                  value="{{ old('highschool_time_end') }}">
               </div>
             </div>
           </div>
         </div>
         <div class="columns">
           <div class="field column">
-            <label class="label">What's your university?</label>
+            <label class="label">{{ __('auth.setting_account.university') }}</label>
             <div class="control has-icons-left has-icons-right">
-              <input class="input is-success" name="university_name" type="text" value="">
+              <input class="input is-success" name="university_name" type="text"
+                value="{{ old('university_name') }}">
               <span class="icon is-small is-left">
                 <i class="fa-solid fa-school"></i>
               </span>
             </div>
           </div>
           <div class="field column">
-            <label class="label">Start Year?</label>
+            <label class="label">{{ __('auth.setting_account.time_range') }}</label>
             <div class="control">
               <div class="select">
-                <select class="year-select" name="university_start">
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="field column">
-            <label class="label">Graduated Year?</label>
-            <div class="control">
-              <div class="select">
-                <select class="year-select" name="university_gradueted">
-                </select>
+                <input class="input time-select-university" type="text" value="">
+                <input class="input" name="university_time_start" type="hidden"
+                  value="{{ old('university_time_start') }}">
+                <input class="input" name="university_time_end" type="hidden"
+                  value="{{ old('university_time_end') }}">
               </div>
             </div>
           </div>
         </div>
         <div class="field">
-          <label class="label">I'm a ...</label>
+          <label class="label">{{ __('auth.setting_account.i_am') }}</label>
           <div class="control">
             <div class="select">
               <select name="gender">
-                <option>Male</option>
-                <option>Female</option>
-                <option>Other</option>
+                <option value="male">{{ __('auth.setting_account.male') }}</option>
+                <option value="female">{{ __('auth.setting_account.female') }}</option>
+                <option value="other">{{ __('auth.setting_account.other') }}</option>
               </select>
             </div>
           </div>
@@ -181,5 +188,55 @@
     </form>
   </div>
 </body>
+<script>
+  $(document).ready(function() {
+    const formatDate = 'DD/MM/YYYY';
+    const startFormat = moment().format(formatDate);
+    const endFormat = moment().format(formatDate);
+
+    let highschool_time_start = "{{ old('highschool_time_start') }}" == "" ? startFormat : "{{ old('highschool_time_start') }}";
+    let highschool_time_end = "{{ old('highschool_time_end') }}" == "" ? endFormat : "{{ old('highschool_time_end') }}";
+    let university_time_start = "{{ old('university_time_start') }}" == "" ? startFormat : "{{ old('university_time_start') }}";
+    let university_time_end = "{{ old('university_time_end') }}" == "" ? endFormat : "{{ old('university_time_end') }}";
+
+    $('input[name="highschool_time_start"]').val(highschool_time_start);
+    $('input[name="highschool_time_end"]').val(highschool_time_end);
+    $('input[name="university_time_start"]').val(university_time_start);
+    $('input[name="university_time_end"]').val(university_time_end);
+
+    console.log(highschool_time_end)
+    $('.time-select-highschool').daterangepicker({
+      opens: 'left',
+      autoApply: true,
+      startDate: highschool_time_start,
+      endDate: highschool_time_end,
+      locale: {
+        format: formatDate
+      }
+    }, function(start, end, label) {
+      const startFormat = start.format(formatDate);
+      const endFormat = end.format(formatDate);
+      $('input[name="highschool_time_start"]').val(startFormat);
+      $('input[name="highschool_time_end"]').val(endFormat);
+      return startFormat + ' - ' + endFormat
+    });
+
+    $('.time-select-university').daterangepicker({
+      opens: 'left',
+      autoApply: true,
+      startDate: moment(new Date(university_time_start)).format(formatDate),
+      endDate: moment(new Date(university_time_end)).format(formatDate),
+      locale: {
+        format: formatDate
+      }
+    }, function(start, end, label) {
+      const startFormat = start.format(formatDate);
+      const endFormat = end.format(formatDate);
+      $('input[name="university_time_start"]').val(startFormat);
+      $('input[name="university_time_end"]').val(endFormat);
+      return startFormat + ' - ' + endFormat
+    });
+  });
+</script>
 
 </html>

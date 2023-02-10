@@ -2,6 +2,7 @@ export function calculateTime(time, component) {
     let convertedTime = new Date(time);
     let now = new Date();
     let timestamp = now - convertedTime;
+    let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     if (timestamp > 1000) {
         let seconds = toSeconds(now - convertedTime);
         if (seconds > 60) {
@@ -19,7 +20,7 @@ export function calculateTime(time, component) {
                     //     return Math.round(months) + component.$t('times_ago.month');
                     // }
                     // return Math.round(dates) + component.$t('times_ago.date');
-                    return new Date(time).toISOString().split('T')[0];
+                    return new Date(time).toLocaleDateString(navigator.languages[0], options);
                 }
                 return Math.round(hours) + component.$t('times_ago.hour');
             }

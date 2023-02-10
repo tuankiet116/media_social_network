@@ -5,14 +5,37 @@
                 <h4>{{ $t('user_page.introduce') }}</h4>
                 <blockquote v-if="user.user_information && user.user_school.length">
                     <p v-if="user.user_information?.living_place">
-                        {{ $t('user_page.living') }} {{ user.user_information.living_place }}
+                        {{ $t('user_page.living') }}
+                        <strong>
+                            <a :href="'https://maps.google.com/?q=' + user.user_information.living_place">
+                                {{ user.user_information.living_place }} <i class="fa-solid fa-link"></i>
+                            </a>
+                        </strong>
+                    </p>
+                    <p v-if="user.user_information?.working_place">
+                        {{ $t('user_page.working') }}
+                        <strong>
+                            <a :href="'https://maps.google.com/?q=' + user.user_information.working_place">
+                                {{ user.user_information.working_place }} <i class="fa-solid fa-link"></i>
+                            </a>
+                        </strong>
                     </p>
                     <p v-for="user_school in user.user_school">
-                        <span v-if="user_school.end_year < new Date().getFullYear()">
-                            {{ $t('user_page.graduated') }} {{ user_school.school_name }}
+                        <span v-if="new Date(user_school.end) < new Date()">
+                            {{ $t('user_page.graduated') }}
+                            <strong>
+                                <a :href="'https://maps.google.com/?q=' + user_school.school_name">
+                                    {{ user_school.school_name }} <i class="fa-solid fa-link"></i>
+                                </a>
+                            </strong>
                         </span>
                         <span v-else>
-                            {{ $t('user_page.studying') }} {{ user_school.school_name }}
+                            {{ $t('user_page.studying') }}
+                            <strong>
+                                <a :href="'https://maps.google.com/?q=' + user_school.school_name">
+                                    {{ user_school.school_name }} <i class="fa-solid fa-link"></i>
+                                </a>
+                            </strong>
                         </span>
                     </p>
                 </blockquote>
@@ -35,13 +58,13 @@
             <div v-if="isMe" class="box has-text-centered">
                 <p class="content is-size-5">{{ $t('user_page.share_first_thing') }}</p>
                 <figure class="image is-128x128" style="margin: auto">
-                    <img src="../../../images/gifs/waving_stitch.gif"/>
+                    <img src="../../../images/gifs/waving_stitch.gif" />
                 </figure>
             </div>
             <div v-else class="box has-text-centered">
                 <p class="content is-size-5">{{ $t('user_page.welcome_to_page') }} </p>
                 <figure class="image is-128x128" style="margin: auto">
-                    <img src="../../../images/gifs/waving_stitch.gif"/>
+                    <img src="../../../images/gifs/waving_stitch.gif" />
                 </figure>
             </div>
         </div>

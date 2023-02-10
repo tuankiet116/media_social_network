@@ -28,10 +28,24 @@ return [
     ],
     'setting_account' => [
         'title' => 'Cài đặt tài khoản',
+        'welcome' => 'Chào mừng, :name',
+        'first_need' => 'Đầu tiên hãy cài đặt thông tin cá nhân cơ bản của bạn nhé! Hãy bỏ qua nếu bạn thấy không cần thiết.',
         'step_1' => 'Bước 1',
         'step_1_desc' => 'Ảnh đại diện và hình nền',
         'step_2' => 'Bước 2',
         'step_2_desc' => 'Điền thông tin cơ bản',
+        'or_choose_default' => "Bạn cũng có thể chọn các ảnh mặc định ở dưới",
+        'next' => 'Bước tiếp theo',
+        'where_live' => 'Nơi ở hiện tại của bạn:',
+        'where_work' => 'Bạn đang làm việc ở đâu:',
+        'high_school' => 'Trường trung học của bạn?',
+        'university' => 'Trường đại học của bạn?',
+        'time_range' => 'Khoảng thời gian:',
+        'i_am' => 'Tôi là ...',
+        'male' => 'Giới tính nam',
+        'female' => 'Giới tính nữ',
+        'other' => 'Khác',
+        'now' => 'Hiện tại'
     ],
     'update_password' => [
         'old_password_invalid' => 'Mật khẩu cũ không đúng'

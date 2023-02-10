@@ -8,7 +8,7 @@
             </div>
             <div class="navbar-menu">
                 <div class="navbar-start">
-                    <router-link @click="increaseKey" class="navbar-item" :to="{ name: 'home' }">
+                    <router-link @click="updateHome" class="navbar-item" :to="{ name: 'home' }">
                         {{ $t('homepage') }}
                     </router-link>
                 </div>
@@ -99,10 +99,8 @@ import NotificationComponent from './Common/NotificationComponent.vue';
 import SearchBoxComponent from './Search/SearchBoxComponent.vue';
 import { detectMobile } from '../helpers/common';
 import { markReadAll } from '../api/notification';
-import authMixin from '../mixins.js';
 export default {
     props: ["user"],
-    mixins: [authMixin],
     data() {
         return {
             showNav: false,
@@ -160,6 +158,9 @@ export default {
                     this.$store.state.unreadNotifications = 0;
                 }
             });
+        },
+        updateHome() {
+            this.$store.state.eventUpdateDashboard = true;
         }
     },
     components: { NotificationComponent, SearchBoxComponent }

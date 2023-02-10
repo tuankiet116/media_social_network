@@ -7,6 +7,7 @@ use App\Models\FacebookUser;
 use App\Models\UserInformation;
 use App\Models\UserSchool;
 use App\Services\Inf\StorageService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -164,8 +165,8 @@ class UserAuthenticationService
             if ($data['highschool_name']) {
                 UserSchool::create([
                     'school_name' => $data['highschool_name'],
-                    'start_year' => $data['highschool_start'],
-                    'end_year' => $data['highschool_gradueted'],
+                    'start' => Carbon::createFromFormat('d/m/Y', $data['highschool_time_start'])->format('Y-m-d') ,
+                    'end' => Carbon::createFromFormat('d/m/Y',  $data['highschool_time_end'])->format('Y-m-d'),
                     'school_type' => SCHOOLE_HIGHSCHOOL,
                     'user_id' => $userId
                 ]);
@@ -174,9 +175,9 @@ class UserAuthenticationService
             if ($data['university_name']) {
                 UserSchool::create([
                     'school_name' => $data['university_name'],
-                    'start_year' => $data['university_start'],
-                    'end_year' => $data['university_gradueted'],
-                    'schoole_type' => SCHOOLE_UNIVERSITY,
+                    'start' => Carbon::createFromFormat('d/m/Y',  $data['university_time_start'])->format('Y-m-d'),
+                    'end' => Carbon::createFromFormat('d/m/Y',  $data['university_time_end'])->format('Y-m-d'),
+                    'school_type' => SCHOOLE_UNIVERSITY,
                     'user_id' => $userId
                 ]);
             }

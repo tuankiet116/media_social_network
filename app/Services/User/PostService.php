@@ -35,24 +35,26 @@ class PostService
     public function uploadPost($data)
     {
         $userId = auth()->id();
+        $dataShareId = isset($data['share']) ? $data['share'] : null;
+        $dataCommunityId = isset($data['community']) ? $data['community'] : null;
         $dataInsert = [
             'user_id' => $userId,
-            'community_id' => $data['community'] ?? 0,
-            'share_id' => $data['share'] ?? null,
+            'community_id' => $dataCommunityId,
+            'share_id' => $dataShareId,
             'post_description' => $data['description'],
             'thumbnail_src' => '',
             'src' => ''
         ];
 
-        if ($data['video'] && !$data['share']) {
+        if ($data['video'] && !$dataShareId) {
             $result = $this->videoUpload($data['video']);
             $dataInsert['src'] = $result;
         }
 
         $post = Post::create($dataInsert);
 
-        $postShare = Post::find($data['share'] ?? null);
-        if (isset($data['share']) && $postShare && $userId != $postShare->user_id) {
+        $postShare = Post::find($dataShareId);
+        if ($dataShareId && $postShare && $userId != $postShare->user_id) {
             $notification = UserNotification::create([
                 'user_id' => $postShare->user_id,
                 'user_sender_id' => $userId,
@@ -63,8 +65,8 @@ class PostService
             NotificationEvent::dispatch($notification);
         }
 
-        $community = Community::find($data['community'] ?? 0);
-        if (isset($data['community']) && $community && $userId != $community->user_id) {
+        $community = Community::find($dataCommunityId);
+        if ($dataCommunityId && $community && $userId != $community->user_id) {
             $notification = UserNotification::create([
                 'user_id' => $community->user_id,
                 'user_sender_id' => $userId,

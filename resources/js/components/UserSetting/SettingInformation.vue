@@ -3,12 +3,7 @@
         <div class="field">
             <label class="label">{{ $t('user_setting.info.user_name') }}</label>
             <div class="control has-icons-left has-icons-right">
-                <input
-                    class="input is-success"
-                    type="text"
-                    name="user_name"
-                    v-model="userName"
-                />
+                <input class="input is-success" type="text" name="user_name" v-model="userName" />
                 <span class="icon is-small is-left">
                     <i class="fa-solid fa-user"></i>
                 </span>
@@ -17,12 +12,7 @@
         <div class="field">
             <label class="label">{{ $t('user_setting.info.ask_live') }}</label>
             <div class="control has-icons-left has-icons-right">
-                <input
-                    class="input is-success"
-                    type="text"
-                    name="living_place"
-                    v-model="livingPlace"
-                />
+                <input class="input is-success" type="text" name="living_place" v-model="livingPlace" />
                 <span class="icon is-small is-left">
                     <i class="fa-solid fa-house"></i>
                 </span>
@@ -31,12 +21,7 @@
         <div class="field">
             <label class="label">{{ $t('user_setting.info.ask_work') }}</label>
             <div class="control has-icons-left has-icons-right">
-                <input
-                    class="input is-success"
-                    type="text"
-                    name="working_place"
-                    v-model="workingPlace"
-                />
+                <input class="input is-success" type="text" name="working_place" v-model="workingPlace" />
                 <span class="icon is-small is-left">
                     <i class="fa-solid fa-house"></i>
                 </span>
@@ -47,50 +32,22 @@
             <div class="field column">
                 <label class="label">{{ $t('user_setting.info.school_name') }}</label>
                 <div class="control has-icons-left has-icons-right">
-                    <input
-                        class="input is-success"
-                        type="text"
-                        name="highschool_name"
-                        v-model="highschool.school_name"
-                    />
+                    <input class="input is-success" type="text" name="highschool_name"
+                        v-model="highschool.school_name" />
                     <span class="icon is-small is-left">
                         <i class="fa-solid fa-school"></i>
                     </span>
                 </div>
             </div>
-            <div class="field column">
+            <div class="field column is-6">
                 <label class="label">{{ $t('user_setting.info.start_year') }}:</label>
                 <div class="control">
-                    <div class="select">
-                        <select
-                            class="year-select"
-                            name="highschool_start"
-                            v-model="highschool.start_year"
-                        >
-                            <option v-for="year in years">{{ year }}</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="field column">
-                <label class="label">{{ $t('user_setting.info.end_year') }}:</label>
-                <div class="control">
-                    <div class="select">
-                        <select
-                            class="year-select"
-                            name="highschool_start"
-                            v-model="highschool.end_year"
-                        >
-                            <option v-for="year in years">{{ year }}</option>
-                        </select>
-                    </div>
+                    <Datepicker v-model="highschool.time_range" :format="format" range multi-calendars
+                        :enable-time-picker="false" @update:model-value="handleDateHighschool(index, $event)" />
                 </div>
             </div>
             <div class="field column btn-delete-school">
-                <button
-                    @click="deleteHighSchool(index)"
-                    class="button is-danger is-outlined"
-                >
+                <button @click="deleteHighSchool(index)" class="button is-danger is-outlined">
                     <span>{{ $t('delete') }}</span>
                     <span class="icon is-small">
                         <i class="fas fa-times"></i>
@@ -99,64 +56,33 @@
             </div>
         </div>
         <div>
-            <button
-                @click="addHighSchoolInput"
-                class="button btn-add-school is-link is-light"
-            >
+            <button @click="addHighSchoolInput" class="button btn-add-school is-link is-light">
                 <span>{{ $t('user_setting.info.highschool_addmore') }}</span>
                 &nbsp;
                 <span><i class="fa-solid fa-circle-plus"></i></span>
             </button>
         </div>
         <label class="label">{{ $t('user_setting.info.university') }}</label>
-        <div v-for="university in university" class="columns">
+        <div v-for="university, index in university" class="columns">
             <div class="field column">
                 <label class="label">{{ $t('user_setting.info.university_name') }}</label>
                 <div class="control has-icons-left has-icons-right">
-                    <input
-                        class="input is-success"
-                        name="university_name"
-                        type="text"
-                        v-model="university.school_name"
-                    />
+                    <input class="input is-success" name="university_name" type="text"
+                        v-model="university.school_name" />
                     <span class="icon is-small is-left">
                         <i class="fa-solid fa-school"></i>
                     </span>
                 </div>
             </div>
-            <div class="field column">
+            <div class="field column is-6">
                 <label class="label">{{ $t('user_setting.info.start_year') }}</label>
                 <div class="control">
-                    <div class="select">
-                        <select
-                            class="year-select"
-                            name="university_start"
-                            v-model="university.start_year"
-                        >
-                            <option v-for="year in years">{{ year }}</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="field column">
-                <label class="label">{{ $t('user_setting.info.graduated_year') }}</label>
-                <div class="control">
-                    <div class="select">
-                        <select
-                            class="year-select"
-                            name="university_gradueted"
-                            v-model="university.end_year"
-                        >
-                            <option v-for="year in years">{{ year }}</option>
-                        </select>
-                    </div>
+                    <Datepicker v-model="university.time_range" :format="format" range multi-calendars
+                        :enable-time-picker="false" @update:model-value="handleDateUniversity(index, $event)" />
                 </div>
             </div>
             <div class="field column btn-delete-school">
-                <button
-                    @click="deleteUniversity(index)"
-                    class="button is-danger is-outlined"
-                >
+                <button @click="deleteUniversity(index)" class="button is-danger is-outlined">
                     <span>{{ $t('delete') }}</span>
                     <span class="icon is-small">
                         <i class="fas fa-times"></i>
@@ -165,10 +91,7 @@
             </div>
         </div>
         <div>
-            <button
-                @click="addUniversityInput"
-                class="button btn-add-school is-link is-light"
-            >
+            <button @click="addUniversityInput" class="button btn-add-school is-link is-light">
                 <span>{{ $t('user_setting.info.university_addmore') }}</span>
                 &nbsp;
                 <span><i class="fa-solid fa-circle-plus"></i></span>
@@ -187,10 +110,7 @@
             </div>
         </div>
         <div class="field is-grouped mt-3 columns is-justify-content-end">
-            <button
-                @click="saveInformation"
-                class="button is-info is-1-desktop is-full-mobile"
-            >
+            <button @click="saveInformation" class="button is-info is-1-desktop is-full-mobile">
                 {{ $t('save') }}
             </button>
         </div>
@@ -209,7 +129,6 @@ export default {
     components: { LoadingComponent },
     data() {
         return {
-            years: [],
             livingPlace: null,
             workingPlace: null,
             highSchool: [],
@@ -217,38 +136,41 @@ export default {
             gender: null,
             userName: null,
             user: null,
+            format: (date) => {
+                const startDate = new Date(date[0]).toLocaleDateString(navigator.languages[0]);
+                const endDate = date[1] ? new Date(date[1]).toLocaleDateString(navigator.languages[0]) : startDate;
+                return `${startDate} - ${endDate}`;
+            }
         };
     },
     watch: {
         user(data) {
             this.livingPlace = data?.user_information.living_place;
             this.workingPlace = data?.user_information.working_place;
-            this.highSchool =
-                data?.user_school?.flatMap((r) =>
-                    r.school_type == "SCHOOLE_HIGHSCHOOL" ? r : []
-                ) ?? [];
+            this.highSchool = data?.user_school?.flatMap((r) => {
+                r.time_range = [r.start, r.end];
+                return r.school_type == "SCHOOLE_HIGHSCHOOL" ? r : [] ?? [];
+            });
             this.university =
-                data?.user_school?.flatMap((r) =>
-                    r.school_type == "SCHOOLE_UNIVERSITY" ? r : []
-                ) ?? [];
+                data?.user_school?.flatMap((r) => {
+                    r.time_range = [r.start, r.end];
+                    return r.school_type == "SCHOOLE_UNIVERSITY" ? r : []
+                }) ?? [];
             this.gender = data?.user_information.gender ?? null;
             this.userName = data.name;
         },
     },
     mounted() {
         this.getUserInformation();
-        let currentYear = new Date().getFullYear() + 10;
-        for (let i = currentYear; i >= 1970; i--) {
-            this.years.push(i);
-        }
     },
     methods: {
         addHighSchoolInput() {
             this.highSchool.push({
                 id: null,
                 school_name: "",
-                start_year: "",
-                end_year: "",
+                start: "",
+                end: "",
+                time_range: []
             });
         },
         deleteHighSchool(index) {
@@ -258,9 +180,27 @@ export default {
             this.university.push({
                 id: null,
                 school_name: "",
-                start_year: "",
-                end_year: "",
+                start: "",
+                end: "",
+                time_range: []
             });
+        },
+        handleDateUniversity(index, date) {
+            let result = this.formatDate(date);
+            this.university[index].start = result[0];
+            this.university[index].end = result[1];
+        },
+        handleDateHighschool(index, date) {
+            let result = this.formatDate(date);
+            this.highSchool[index].start = result[0];
+            this.highSchool[index].end = result[1];
+        },
+        formatDate(date) {
+            let startDate = new Date(date[0]);
+            let endDate = date[1] ? new Date(date[1]) : new Date();
+            let startDateFormated = `${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()}`;
+            let endDateFormated = `${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}`;
+            return [startDateFormated, endDateFormated];
         },
         deleteUniversity(index) {
             this.university.splice(index, 1);

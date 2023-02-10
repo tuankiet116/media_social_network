@@ -12,8 +12,8 @@ class UserSchool extends Model
     public $fillable = [
         'user_id',
         'school_name',
-        'start_year',
-        'end_year',
+        'start',
+        'end',
         'school_type'
     ];
 }

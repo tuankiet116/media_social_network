@@ -49,7 +49,7 @@
                 </div>
             </div>
         </div>
-        <PostShareComponent :post="sharePost" :id="sharePost.id"/>
+        <PostShareComponent :post="sharePost" :id="sharePost?.id ?? null"/>
         <div class="buttons is-right mt-5">
             <button class="button is-primary" :class="{ 'is-loading': isHandlePreview }"
                 @click="handleUploadPost()">

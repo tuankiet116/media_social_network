@@ -18,6 +18,7 @@
     "create": "Tạo",
     "close": "Đóng",
     "you": "Bạn",
+    "now": "Hiện tại",
     "menu": {
         "create_post": "Đăng bài",
         "notification": "Thông báo"
@@ -54,7 +55,11 @@
         "share": "Chia sẻ",
         "post_by": "Đăng bởi",
         "error_get_post": "Không tìm thấy thông tin bài viết.",
-        "post_not_exist": "Bài viết không tồn tại"
+        "post_not_exist": "Bài viết không tồn tại",
+        "loved_post": "đã yêu thích",
+        "people": "người",
+        "and": "và",
+        "no_one_love": "Chưa có ai yêu thích" 
     },
     "comment": {
         "confirm_delete": "Bạn có muốn xóa bình luận của mình?",
@@ -84,7 +89,8 @@
         "followed": "Đã theo dõi",
         "post": "Bài viết",
         "no_follower": "Không có ai theo dõi.",
-        "not_following": "Không theo dõi ai"
+        "not_following": "Không theo dõi ai",
+        "working": "đang làm việc tại "
     },
     "user_setting": {
         "setting": "Cài đặt hồ sơ",

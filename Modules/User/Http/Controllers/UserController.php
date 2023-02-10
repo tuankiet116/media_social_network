@@ -9,6 +9,7 @@ use Modules\User\Http\Requests\UserLoginRequest;
 use Modules\User\Http\Requests\UserRegisterRequest;
 use Exception;
 use Illuminate\Http\Request;
+use Modules\User\Http\Requests\User\RegisterSettingRequest;
 use Modules\User\Http\Requests\UserUpdatePasswordRequest;
 
 class UserController extends Controller
@@ -86,10 +87,10 @@ class UserController extends Controller
         }
     }
 
-    public function settingRegister(Request $request) {
+    public function settingRegister(RegisterSettingRequest $request) {
         try {
+            $data = $request->validated();
             $files = $request->allFiles();
-            $data = $request->all();
             $this->UserAuthService->settingUpRegister($data, $files);
             return redirect()->route('home');
         } catch(Exception $e) {

@@ -15,6 +15,9 @@ class VideoChat extends Model
         'caller',
         'receiver',
         'start_time',
-        'end_time'
+        'end_time',
+        'uuid',
+        'is_answer',
+        'is_accepted'
     ];
 }

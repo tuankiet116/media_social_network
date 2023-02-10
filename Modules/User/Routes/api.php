@@ -94,7 +94,8 @@ Route::middleware('auth.api')->prefix('message')->group(function () {
 
 Route::middleware('auth.api')->prefix('video')->group(function () {
     Route::post('/call-user', 'Video\VideoChatController@callUser');
-    Route::post('/accept-call', 'Video\VideoChatController@acceptCall');
+    Route::post('/accept', 'Video\VideoChatController@accept');
+    Route::post('/decline', 'Video\VideoChatController@decline');
 });
 
 Route::get('community/posts/{id}/{offset?}', 'CommunityController@getPosts')->name('posts');
@@ -110,3 +111,5 @@ Route::get('/profile/info/{id}', 'UserInformationController@getUserProfile');
 
 Route::get('/profile/follower', 'FollowController@getFollower');
 Route::get('/profile/following', 'FollowController@getFollowing');
+
+Route::get('/detect-lang', 'LanguageController@getCurrentLang');

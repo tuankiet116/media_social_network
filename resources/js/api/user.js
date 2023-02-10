@@ -12,3 +12,5 @@ export const followUser = (data) => api.post('api/profile/follow', data);
 export const unfollowUser = (data) => api.post('api/profile/unfollow', data);
 export const getFollower = (userId, offset) => api.get(`api/profile/follower?userId=${userId}&offset=${offset}`);
 export const getFollowing = (userId, offset) => api.get(`api/profile/following?userId=${userId}&offset=${offset}`);
+
+export const getCurrentLang = () => api.get('api/detect-lang');

@@ -7,6 +7,7 @@ use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\User\Http\Requests\User\UpdateInformationRequest;
 
 class UserInformationController extends Controller
 {
@@ -53,15 +54,15 @@ class UserInformationController extends Controller
     {
     }
 
-    public function updateInformation(Request $request)
+    public function updateInformation(UpdateInformationRequest $request)
     {
         try {
-            $data = $request->all();
+            $data = $request->validated();
             $userId = auth()->id();
             $result = $this->userService->updateProfile($data);
             return $this->responseData($result);
         } catch (Exception $e) {
-            return $this->responseData(array('error' => $e, 500));
+            return $this->responseData(array('error' => $e->getMessage()), 500);
         }
     }
 

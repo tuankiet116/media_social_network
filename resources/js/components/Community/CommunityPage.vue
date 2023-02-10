@@ -1,11 +1,11 @@
 <template>
     <div v-if="!isNotFound" id="profile" class="profile">
-        <div class="profile-banner" :style="{ 'background-image': 'url(' + community.background + ')' }"></div>
+        <div class="profile-banner" @click="showImage(community.background)" :style="{ 'background-image': 'url(' + community.background + ')' }"></div>
         <div class="profile-picture level is-mobile">
             <div class="level-item middle-item pl-5">
                 <div>
                     <figure class="image is-128x128">
-                        <img class="is-rounded avatar-image" :src="community.image" />
+                        <img @click="showImage(community.image)" class="is-rounded avatar-image" :src="community.image" />
                     </figure>
                     <div class="mt-2 has-text-centered">
                         <span class="content is-size-5 has-text-weight-semibold">{{ community.community_name }}</span>
@@ -13,7 +13,8 @@
                 </div>
             </div>
             <div v-if="auth" class="level-item is-justify-content-left">
-                <a v-if="!isMine && auth" class="button is-rounded" :class="{'is-loading': isLoadingJoin}" @click="handleJoinCommunity">
+                <a v-if="!isMine && auth" class="button is-rounded" :class="{ 'is-loading': isLoadingJoin }"
+                    @click="handleJoinCommunity">
                     <span v-if="community.isJoined">
                         <i class="fa-solid fa-check"></i>
                         {{ $t('community.joined') }}
@@ -49,6 +50,8 @@
         </div>
     </div>
     <NotFoundComponent v-else />
+    <vue-easy-lightbox @scroll.prevent :minZoom="1" :visible="isShowImage" :imgs="images" :index="0"
+            @hide="handleHide"></vue-easy-lightbox>
 </template>
 <script>
 import { getCommunityAPI, joinCommunity, unjoinCommunity } from "../../api/community";
@@ -59,7 +62,9 @@ export default {
         return {
             community: {},
             isNotFound: false,
-            isLoadingJoin: false
+            isLoadingJoin: false,
+            isShowImage: false,
+            images: []
         };
     },
     mounted() {
@@ -104,6 +109,14 @@ export default {
                 });
             }
             this.isLoadingJoin = false;
+        },
+        showImage(image) {
+            this.isShowImage = true;
+            this.images = [image];
+        },
+        handleHide() {
+            this.images = [];
+            this.isShowImage = false;
         }
     },
     components: { NotFoundComponent }

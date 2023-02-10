@@ -1,6 +1,6 @@
 <template>
     <div id="profile" class="profile">
-        <div class="profile-banner" :style="{ 'background-image': 'url(' + user.banner + ')' }"></div>
+        <div class="profile-banner" @click="showImage(user.banner)" :style="{ 'background-image': 'url(' + user.banner + ')' }"></div>
         <div class="profile-picture is-mobile">
             <div class="level m-0" v-if="Object.keys(user).length">
                 <div v-if="!isMe && auth" class="level-item is-justify-content-right">
@@ -14,7 +14,7 @@
                 <div class="level-item middle-item" :class="{ 'pl-5': isMe || !auth }">
                     <div>
                         <figure class="image is-128x128">
-                            <img class="is-rounded avatar-image" :src="user.image" />
+                            <img @click="showImage(user.image)" class="is-rounded avatar-image" :src="user.image" />
                         </figure>
                     </div>
                 </div>
@@ -71,6 +71,8 @@
         <div>
             <router-view :key="$route.fullPath" :user="user"></router-view>
         </div>
+        <vue-easy-lightbox @scroll.prevent :minZoom="1" :visible="isShowImage" :imgs="images" :index="0"
+            @hide="handleHide"></vue-easy-lightbox>
     </div>
 </template>
 <script>
@@ -81,6 +83,8 @@ export default {
         return {
             userId: this.$route.params.id,
             user: {},
+            isShowImage: false,
+            images: []
         };
     },
     mounted() {
@@ -143,6 +147,14 @@ export default {
             unfollowUser(data).then(result => {
                 this.user.follower_count = result.data.follower_count;
             });
+        },
+        showImage(image) {
+            this.isShowImage = true;
+            this.images = [image];
+        },
+        handleHide() {
+            this.images = [];
+            this.isShowImage = false;
         }
     },
 };
